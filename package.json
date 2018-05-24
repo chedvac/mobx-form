@@ -18,7 +18,9 @@
     "eject": "react"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-plugin-emotion": "^9.1.0",
+    "babel-preset-es2017": "^6.24.1",
     "babel-preset-mobx": "^1.0.2",
     "mobx": "^4.1.1",
     "react-app-rewire-mobx": "^1.0.8",
