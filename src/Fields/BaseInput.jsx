@@ -22,7 +22,7 @@ export default class BaseInput extends React.Component{
                 <input
                     id={this.lastUniqueId()}
                     onChange={(e)=>updateValue(e.target.value,field)}
-                    value={field.value}
+                    value={field}
                     className="text-field" 
                 />             
                 {/* <Error error={field.message}/> */}
