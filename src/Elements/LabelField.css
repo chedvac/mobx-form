@@ -1,0 +1,4 @@
+.label-field.required:before{
+    content: '*';;
+    color:red;
+}
