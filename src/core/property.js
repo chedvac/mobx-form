@@ -1,40 +1,47 @@
-
 export default function property(settings = {}) {
     return function (target, name, descriptor) {
-        target[name] = {};
-        const self = target[name];
-        self.value= settings.defaultValue
-        self.validations = settings.validations
-        self.isValid = true
-        self.message=''
-        self.defaultValue= settings.defaultValue
+        let value = descriptor.value;
+        let defaultValue= descriptor.value;
+        let validations = settings.validations
+        let isValid = true;
+        let message = '';
+
+        delete descriptor.initializer;
+        delete descriptor.value;
+        delete descriptor.writable ;
+
+  
        
-       Object.defineProperty(target, name, { get: function() { return self.value } });
+        descriptor.get = function() { 
+            return value;
+        };
 
         //todo:isRequired
    
-        self.setValue = (newValue)=> {
-            this.validate()
-            if(this.isValid) { this.value = newValue}
+        descriptor.set = (newValue)=> {
+            validate()
+            if(isValid) { value = newValue}
         //todo: public value to parent
-        }
-        self.getValue=()=>{
-            return this.value;
-        }
+        };
 
-        self.validate=()=>{
-            var failedValidation= this.validations.find(item =>((!item.condition || item.condition()) && item.rule.validator(this.value,item.params)=== false) )
+        const validate=()=>{
+            var failedValidation= validations.find(item =>((!item.condition || item.condition()) && item.rule.validator(this.value,item.params)=== false) )
             if(! failedValidation){
                 return
             }
-            this.message = failedValidation.message 
-            this.isValid = false
+            message = failedValidation.message 
+            isValid = false
         }
-        self.map=(value)=>{
-            return value;
+        const map=(value)=>{
+            return typeof settings.map === 'function' ? settings.map() : value;
         }
-        self.reset=()=>{
-            this.setValue(this.defaultValue)   
+        const reset=()=>{
+            descriptor.set(defaultValue)   
         }
+        const parent = target.getParent();
+        parent.validations[name] = validations;
+        parent.reset[name] = reset;
+
+        return descriptor;
     }
 }
