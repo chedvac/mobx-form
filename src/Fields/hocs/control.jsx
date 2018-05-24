@@ -2,11 +2,10 @@ import React from 'react';
 import validationProps from '../utils/validationProps'
 import {enableUniqueIds} from 'react-html-id'
 import { typecheck } from "mobx-state-tree";
-import { extractMessage } from "../../validations/utils";
+//import { extractMessage } from "../../validations/utils";
 import { getEventValue } from "../utils";
 
 import '../CSS/control.css'
-import withRegister from './withRegister';
 
  function control (WrappedComponent) {
   return class extends React.Component {
@@ -43,7 +42,7 @@ import withRegister from './withRegister';
               }
             return message
         } catch (e) {
-            return extractMessage(e.message)
+            return e.message
         }
         return '';    
     }

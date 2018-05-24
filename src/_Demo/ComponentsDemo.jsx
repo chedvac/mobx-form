@@ -7,9 +7,6 @@ import TabSettings from '../components/navigation/TabSettings';
 import TabsRouter from '../components/navigation/Router';
 import Toolbar from '../components/toolbar/Toolbar';
 
-import rootStore from './rootStore'
-
-
 export default class ComponentsDemo extends Component { // destruct non-valid props
     constructor(props){
         super(props)

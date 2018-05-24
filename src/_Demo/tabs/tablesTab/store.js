@@ -1,6 +1,6 @@
 import {observable, autorun, action} from "mobx";
-import property from "../../core/property"
-import complexType from "../../core/complexType"
+import property from "../../../../../core/property"
+import complexType from "../../../../../core/complexType"
 
 //import addressValidation from './../../../types/addressTypes';
 
@@ -19,10 +19,10 @@ class TablesTab {
     }
     this.actions ={
         updateEmail:(newValue)=> {
-            self.email = newValue
+           // self.email = newValue
         },
         updateHouseNumber:(newValue)=> {
-            self.houseNumber = newValue
+            //self.houseNumber = newValue
         }
     
       }

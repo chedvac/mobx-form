@@ -4,7 +4,8 @@ import LanguageStore from '../components/language/store'
 import { types } from "mobx-state-tree";
 
 
-import PersonalInformation from './components/PersonalInformation/store';
+import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/store'
+//./components/PersonalInformation/store';
 import {toJS} from 'mobx'
 
 export default  class RootStore {
