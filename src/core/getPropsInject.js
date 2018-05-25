@@ -1,6 +1,5 @@
 
 import {inject} from 'mobx-react';
-import {getChildType} from 'mobx-state-tree';
 import {lessThan,greaterThan} from '../validations/number'
 
 const validations =(store)=>{
@@ -19,9 +18,9 @@ const getPropsInject =(wrappedObject,store,name)=>{
         ({
             field: store[name],
             update: store["set_"+name],
-            type: getChildType(store, name),
-            validations:validations(store)[name],
-            language: stores.rootStore.formlanguage.name
+            // type: getChildType(store, name),
+            // validations:validations(store)[name],
+            language: /*stores.rootStore.formlanguage.name*/'hebrew'
         })
     )(wrappedObject);
 }

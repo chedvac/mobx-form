@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter,  Route } from 'react-router-dom';
-
 import TabsNavigation from './TabsNavigation'
+
 export default class TabsRouter extends React.Component{
     
     constructor(props) {

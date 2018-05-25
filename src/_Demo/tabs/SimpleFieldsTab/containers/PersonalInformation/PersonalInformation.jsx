@@ -1,6 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import {getChildType} from 'mobx-state-tree'
+
 import Input from '../../../../../Fields/Input';
 import Textarea from '../../../../../Fields/Textarea';
 import Select from '../../../../../Fields/Select';
@@ -49,28 +49,28 @@ import control from '../../../../../Fields/hocs/control'
         this.currentResources = this.currentResources.bind(this);
         this.statusOptions=[{key:'1',value:'נשוי'},{key:'2',value:'רווק'},{key:'3',value:'גרוש'}]
         this.getProps =this.getProps.bind(this);
-        this.validations =this.validations.bind(this);
+        //this.validations =this.validations.bind(this);
     }
     currentResources = function(){
-        return this.texts[this.props.generalStore.formLanguage.name];
+        return this.texts[/*this.props.generalStore.formLanguage.name*/'hebrew'];//todo: get language
     };        
 
     getProps =(name)=>{
         return {
-            field: this.props.store[name],
-            update: this.props.store["set_"+name],
-            type: getChildType(this.props.store, name),
-            language: this.props.generalStore.formLanguage.name,
+            field: this.props.model[name],
+            update: this.props.model["set_"+name],
+          //  type: getChildType(this.props.model, name),
+            language: /*this.props.generalStore.formLanguage.name,*/'hebrew',
             label:this.currentResources()[name],
-            validations:this.validations()[name]
+           // validations:this.validations()[name]
         }
     }
 
     render(){
-        const FirstName = getPropsInject(Input,this.props.store,'firstName');
-        const LastName = getPropsInject(Input,this.props.store,'lastName');
-        const Age = getPropsInject(Input,this.props.store,'age');
-        const FatherAge = getPropsInject(Input,this.props.store,'fatherAge');
+        const FirstName = getPropsInject(Input,this.props.model,'firstName');
+        const LastName = getPropsInject(Input,this.props.model,'lastName');
+        const Age = getPropsInject(Input,this.props.model,'age');
+        const FatherAge = getPropsInject(Input,this.props.model,'fatherAge');
 
         return(
             <div> 

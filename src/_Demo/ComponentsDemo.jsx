@@ -14,22 +14,22 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
         
     }
 
-   
-      SimpleFields = injectWrapper(SimpleFieldsTab, rootStore.simpleFieldsTab);
-      Tables = injectWrapper(TablesTab, rootStore.tablesTab);
-  
-      tabs = [
-          new TabSettings({number: '1',name: 'דוגמאות לשדות רגילים', path: '/SimpleFields' , component: this.SimpleFields}),
-          new TabSettings({number: '2',name: 'טבלאות', path: '/Tables' , component: this.Tables})
-      ]
+     
     render() {
-        console.log(rootStore)
+        const SimpleFields = injectWrapper(SimpleFieldsTab, this.store.store.simpleFieldsTab);
+        const Tables = injectWrapper(TablesTab, this.store.store.tablesTab);
+    
+        const tabs = [
+            new TabSettings({number: '1',name: 'דוגמאות לשדות רגילים', path: '/SimpleFields' , component: SimpleFields}),
+            new TabSettings({number: '2',name: 'טבלאות', path: '/Tables' , component: Tables})
+        ]
+        console.log(this.store)
         return(
            
             <form ref={c => { this.Form = c }}> 
                
                 <Toolbar />
-                <TabsRouter routeSettings={this.tabs} />
+                <TabsRouter routeSettings={tabs} />
                 <div className="row">
                     <div className="small-12 columns">
                         <button className="button" type="button" onClick={this.validateAll} >בדוק תקינות  </button>
