@@ -1,9 +1,9 @@
 
 import {inject} from 'mobx-react';
 import {getChildType} from 'mobx-state-tree';
-import {lessThan,greaterThan} from '../validations/number'
 
-const validations =(store)=>{
+
+/*const validations =(store)=>{
     return {
         age: {
             lessThan: lessThan({number:store.fatherAge})
@@ -12,7 +12,7 @@ const validations =(store)=>{
             greaterThan: greaterThan({number:store.age}),
         }
     }
-} 
+} */
 
 const getPropsInject =(wrappedObject,store,name)=>{
     return inject(stores => 
@@ -20,7 +20,7 @@ const getPropsInject =(wrappedObject,store,name)=>{
             field: store[name],
             update: store["set_"+name],
             type: getChildType(store, name),
-            validations:validations(store)[name],
+          //  validations:validations(store)[name],
             language: stores.rootStore.formlanguage.name
         })
     )(wrappedObject);

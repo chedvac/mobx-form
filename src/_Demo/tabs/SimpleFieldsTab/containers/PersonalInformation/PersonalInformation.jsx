@@ -49,10 +49,10 @@ import control from '../../../../../Fields/hocs/control'
         this.currentResources = this.currentResources.bind(this);
         this.statusOptions=[{key:'1',value:'נשוי'},{key:'2',value:'רווק'},{key:'3',value:'גרוש'}]
         this.getProps =this.getProps.bind(this);
-        this.validations =this.validations.bind(this);
+      //  this.validations =this.validations.bind(this);
     }
     currentResources = function(){
-        return this.texts[this.props.generalStore.formLanguage.name];
+        return this.texts[this.props.formLanguage.name];
     };        
 
     getProps =(name)=>{
@@ -60,7 +60,7 @@ import control from '../../../../../Fields/hocs/control'
             field: this.props.store[name],
             update: this.props.store["set_"+name],
             type: getChildType(this.props.store, name),
-            language: this.props.generalStore.formLanguage.name,
+            language: this.props.formLanguage.name,
             label:this.currentResources()[name],
             validations:this.validations()[name]
         }

@@ -11,7 +11,7 @@ import {toJS} from 'mobx'
 export default  class RootStore {
     constructor() {
         this.store={
-            simpleFieldsTab: new SimpleFieldsTab(),
+            simpleFieldsTab: new PersonalInformation(),
             tablesTab: new TablesTab(),
             formlanguage: new LanguageStore()
         }

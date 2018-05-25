@@ -12,8 +12,8 @@ export default class TabsRouter extends React.Component{
         return(
             <BrowserRouter>
                 <div>                 
-                    <TabsNavigation routeSettings={this.props.routeSettings} />
-                        <Route  path='/' component={this.props.routeSettings[0].component} />
+                  {/* <TabsNavigation routeSettings={this.props.routeSettings} />
+                        <Route  path='/' component={this.props.routeSettings[0].component} /> */}
                     {this.props.routeSettings.map((tab, index ) =>
                         <Route key={index} path={tab.path} component={tab.component} />
                     )}
