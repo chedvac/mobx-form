@@ -5,28 +5,25 @@ export default function property(settings = {}) {
         let validations = settings.validations
         let isValid = true;
         let message = '';
+        
+        const parent = target.getParent();
 
         delete descriptor.initializer;
         delete descriptor.value;
         delete descriptor.writable ;
+  
+        descriptor.set = (newValue)=> {
+            validate()
+            if(isValid) { value = map(newValue)}        
+        };
 
-        
-        const value=observable.box(target[name])
-        value.observe(function(change) {
-            console.log(change.oldValue, "->", change.newValue);
-        });
         descriptor.get = function() { 
             return value.get();
         };
 
-        //todo:isRequired
-   
-        descriptor.set = (newValue)=> {
-            value.set(newValue);
-            // validate()
-            // if(isValid) { value = newValue}
-        //todo: public value to parent
-        };
+        const map=(value)=>{
+            return typeof settings.map === 'function' ? settings.map(value) : value;
+        }
 
         const validate=()=>{
             // var failedValidation= validations.find(item =>((!item.condition || item.condition()) && item.rule.validator(this.value,item.params)=== false) )
@@ -36,16 +33,13 @@ export default function property(settings = {}) {
             // message = failedValidation.message 
             // isValid = false
         }
-        const map=(value)=>{
-            return typeof settings.map === 'function' ? settings.map() : value;
-        }
+
         const reset=()=>{
             descriptor.set(defaultValue)   
         }
-        const parent = target.getParent();
-        parent.validations[name] = validations;
-        parent.reset[name] = reset;
 
+        parent.propertiesManager[name] = {validations, reset, map, validate, isValid, message};
+        parent[name] = descriptor;
         return descriptor;
     }
 }

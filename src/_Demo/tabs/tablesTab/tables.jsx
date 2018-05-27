@@ -55,10 +55,10 @@ export default class Tables extends React.Component{
                     <Input field={this.props.store.email} update={this.props.store.updateEmail}
                         label={this.currentResources().email}/>
                 </div>
-                <div className="col-md-4">
-                    <Input  field={this.props.store.houseNumber} update={this.props.store.updateHouseNumber}
-                         label={this.currentResources().houseNumber}/>
-                </div> 
+                <div className="col-md-4">           </div> 
+                <Input  field={this.props.store.houseNumber} update={this.props.store.updateHouseNumber}
+                        label={this.currentResources().houseNumber}/>
+            
                 {/* <div className="col-md-4">
                     <Comments label='comments'  rows={3} isAutoResize={false}/>
                 </div> 

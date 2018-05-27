@@ -4,14 +4,12 @@ import property from "../../../../../core/property"
 import complexType from '../../../../../core/complexType'
 //"../../core/complexType"
 
-@complexType({validations:[]})
+@complexType()
 class PersonalInformation {
     
     constructor(){
         this.condition = function(){return true}
-        this.validations = {};
-        this.reset = {};
-         const self =this
+        const self = this;
         this.model={
             getParent: function(){return self},
             @property
@@ -75,8 +73,17 @@ class PersonalInformation {
         }
         }
         this.volatile={
-
+            @property
+            ({ 
+              validations:[{rule:HebrewName}]
+            }) @observable age: undefined,
+            @property
+            ({ 
+              validations:[{rule:HebrewName,condition:this.condition, params:{}}],
+               map: function(){}
+            }) @observable firstName: undefined
         }
+
     }
     
 }
