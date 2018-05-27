@@ -14,7 +14,10 @@ import control from '../../../Fields/hocs/control'
     render(){
         const UserDetails = injectWrapper(PersonalInformation,this.props.model.model.userDetails)
         return(
+            <div>
             <UserDetails  />
+            <UserDetails  />
+            </div>
         );
     }
 }

@@ -1,3 +1,4 @@
+                                             
 import React from 'react'
 import {observer} from 'mobx-react'
 
@@ -75,17 +76,19 @@ import control from '../../../../../Fields/hocs/control'
         return(
             <div> 
                 <div className="row">
+                <div className="col-md-4">
+                        <FirstName label={this.currentResources().firstName} update={this.props.model.actions.set_firstName} field={this.props.model.model.firstName}/>
+                    </div>
+                   
                     <div className="col-md-4">
-                        <FirstName label={this.currentResources().firstName}/>
+                        <LastName label={this.currentResources().lastName} update={this.props.model.actions.set_lastName} field={this.props.model.model.lastName}/>
                     </div>
                     <div className="col-md-4">
-                        <LastName label={this.currentResources().lastName}/>
+                        <Age label={this.currentResources().age} update={this.props.model.actions.set_age} field={this.props.model.model.age}/>
                     </div>
+                   
                     <div className="col-md-4">
-                        <Age label={this.currentResources().age}/>
-                    </div>
-                    <div className="col-md-4">
-                        <FatherAge label={this.currentResources().fatherAge}/>
+                        <FatherAge label={this.currentResources().fatherAge} update={this.props.model.actions.set_fatherAge} field={this.props.model.model.fatherAge}/>
                     </div>
                     <div className="col-md-4">
                         <Textarea {...this.getProps('comments')} rows={4} isAutoResize={false}/>
@@ -99,8 +102,10 @@ import control from '../../../../../Fields/hocs/control'
                         <Checkbox {...this.getProps('agreement')} />
                     </div>
                 </div>
+           
             </div>
         );
     }
 }
 export default PersonalInformation
+

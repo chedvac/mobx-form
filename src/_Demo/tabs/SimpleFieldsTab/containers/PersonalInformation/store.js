@@ -14,20 +14,65 @@ class PersonalInformation {
          const self =this
         this.model={
             getParent: function(){return self},
-            @observable age:"",
             @property
             ({ 
               validations:[{rule:HebrewName,condition:this.condition, params:{}}],
-               map: function(){}
-            }) firstName: undefined
+            }) 
+            firstName: 'Yossef',
+            @property
+            ({ 
+              validations:[{rule:HebrewName,condition:this.condition, params:{}}],
+            }) 
+            lastName : 'Levi',
+            @property
+            ({ 
+              validations:[{rule:HebrewName,condition:this.condition, params:{}}],
+            }) 
+            @property age:15,
+            @property
+            ({ 
+              validations:[{rule:HebrewName,condition:this.condition, params:{}}],
+            }) 
+            @property fatherAge:35,
+            @property comments:undefined,
+            @property status:undefined,
+            @property agreement:false,
         }
+        
         this.views = {//todo: rename , computed
             fullName :()=>{
                 return this.firstName + this.lastName
             }
         }
         this.actions = {
-        
+        @action
+        set_firstName:(value)=>{
+            this.model.firstName=value;
+        },
+        @action
+        set_lastName:(value)=>{
+            this.model.lastName=value;
+        },
+        @action
+        set_fatherAge:(value)=>{
+            this.model.fatherAge=value;
+        },
+        @action
+        set_age:(value)=>{
+            this.model.age=value;
+        },
+        @action
+        set_comments:(value)=>{
+            this.model.comments=value;
+        },
+        @action
+        set_status:(value)=>{
+            this.model.status=value;
+        },
+        @action
+        set_agreement:(value)=>{
+            this.model.agreement=value;
+        }
         }
         this.volatile={
 
