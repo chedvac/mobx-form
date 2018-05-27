@@ -35,12 +35,6 @@ export default class Tables extends React.Component{
 
     }
     render(){
-        const FirstName = new injectWrapper(BaseInput,{
-            field: this.props.firstName
-        });
-        const Age = injectWrapper(BaseInput,{
-            field: this.props.age
-        });
         // const Comments = injectWrapper(BaseTextarea,{
         //     field: this.props.comments
         // }); 
@@ -61,9 +55,7 @@ export default class Tables extends React.Component{
                     <Input field={this.props.store.email} update={this.props.store.updateEmail}
                         label={this.currentResources().email}/>
                 </div>
-                <div className="col-md-4">
-                    <Age label={this.currentResources().lastName}/>
-                </div> 
+                <div className="col-md-4">           </div> 
                 <Input  field={this.props.store.houseNumber} update={this.props.store.updateHouseNumber}
                         label={this.currentResources().houseNumber}/>
             
