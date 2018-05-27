@@ -39,9 +39,9 @@ export default class PersonalInformation extends React.Component{
         const FirstName = new injectWrapper(BaseInput,{
             field: this.props.firstName
         });
-        // const LastName = injectWrapper(BaseInput,{
-        //     field: this.props.lastName
-        // });
+        const Age = injectWrapper(BaseInput,{
+            field: this.props.age
+        });
         // const Comments = injectWrapper(BaseTextarea,{
         //     field: this.props.comments
         // }); 
@@ -59,10 +59,11 @@ export default class PersonalInformation extends React.Component{
                 <div className="col-md-4">
                     <FirstName event='onBlur'/>
                 </div>
-                {/* <div className="col-md-4">
-                    <LastName label={this.currentResources().lastName}/>
-                </div> 
                 <div className="col-md-4">
+                    <Age label={this.currentResources().lastName}/>
+                </div> 
+
+                {/* <div className="col-md-4">
                     <Comments label='comments'  rows={3} isAutoResize={false}/>
                 </div> 
                  

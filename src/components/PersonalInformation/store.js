@@ -3,34 +3,25 @@ import {HebrewName,require} from "../../validations/validationsEnum"
 import property from "../../core/property"
 import complexType from "../../core/complexType"
 
-@complexType({validations:[]})
+@complexType()
 class PersonalInformation {
     
     constructor(){
         this.condition = function(){return true}
-        this.validations = {};
-        this.reset = {};
-         const self =this
+        const self = this;
         this.model={
             getParent: function(){return self},
-            @observable age:"",
+            @property
+            ({ 
+              validations:[{rule:HebrewName}]
+            }) @observable age: undefined,
             @property
             ({ 
               validations:[{rule:HebrewName,condition:this.condition, params:{}}],
                map: function(){}
-            }) firstName: undefined
+            }) @observable firstName: undefined
         }
-        this.views = {//todo: rename , computed
-            fullName :()=>{
-                return this.firstName + this.lastName
-            }
-        }
-        this.actions = {
-        
-        }
-        this.volatile={
 
-        }
     }
     
 }
