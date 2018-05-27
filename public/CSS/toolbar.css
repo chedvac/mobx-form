@@ -1,0 +1,20 @@
+@font-face {
+  font-family: arimo;
+  src: url(fonts/Arimo-Regular.eot?#iefix) format("embedded-opentype");
+  src: url(fonts/Arimo-Regular.ttf) format("truetype"); }
+
+@font-face {
+  font-family: arimo-bold;
+  src: url(fonts/Arimo-Bold.ttf); }
+
+.toolbar-menue {
+  padding: 10px 0;
+  border-bottom: 1px solid #275c7e;
+  background: #fffF; }
+  .toolbar-menue li {
+    display: inline-block;
+    font-family: arimo-bold; }
+    .toolbar-menue li a {
+      color: #275c7c;
+      cursor: pointer;
+      padding: 0 20px 0 5px; }

@@ -1,0 +1,16 @@
+@import 'generalVariables.scss';
+.toolbar-menue
+{
+    padding: 10px 0;
+    border-bottom: 1px solid $basicColor;
+    background: #fffF;
+    li{
+        display: inline-block;
+        font-family: $arimoBold;
+        a{
+            color: #275c7c;
+            cursor: pointer;
+            padding: 0 20px 0 5px;
+        }
+    }
+}
