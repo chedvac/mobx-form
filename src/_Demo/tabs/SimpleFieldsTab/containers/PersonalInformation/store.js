@@ -1,7 +1,8 @@
 import {observable, autorun, action} from "mobx";
-import {HebrewName,require} from "../../validations/validationsEnum"
-import property from "../../core/property"
-import complexType from "../../core/complexType"
+import {HebrewName,require} from "../../../../../validations/validationsEnum"
+import property from "../../../../../core/property"
+import complexType from '../../../../../core/complexType'
+//"../../core/complexType"
 
 @complexType()
 class PersonalInformation {

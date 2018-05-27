@@ -1,40 +1,39 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import BaseInput from '../../Fields/BaseInput';
-import BaseTextarea from '../../Fields/BaseTextarea';
-import BaseSelect from '../../Fields/BaseSelect';
-import BaseCheckbox from '../../Fields/BaseCheckbox';
-import injectWrapper from '../../core/inject'
-
-
+import Input from '../../../Fields/Input';
+import injectWrapper from '../../../core/inject';
 @observer
-export default class PersonalInformation extends React.Component{
+export default class Tables extends React.Component{
     
     constructor(props) {
         super(props);
-               
+         this.state={
+             email : props.store.firstName,
+             houseNumber : props.store.houseNumber
+         }      
         this.texts = {
             hebrew: {
-                firstName: ' שם פרטי',
-                lastName: ' שם משפחה'
+                email: ' מייל',
+                houseNumber: ' מספר בית'
             },
             english: {
-                firstName: 'first name',
-                lastName:'last name'
+                email: 'first name',
+                houseNumber:'last name'
             },
             arabic: {
-                firstName: 'first name',
-                lastName:'last name'
+                email: 'first name',
+                houseNumber:'last name'
             }
         }
         this.currentResources = this.currentResources.bind(this);
-        this.statusOptions=[{key:'1',value:'נשוי'},{key:'2',value:'רווק'},{key:'3',value:'גרוש'}]
-
     }
     currentResources = function(){
-        return this.texts['english'/*this.props.formLanguage.name*/];
-    };
-      
+        return this.texts[this.props.generalStore.formLanguage.name];
+    };        
+   
+    validate(){
+
+    }
     render(){
         const FirstName = new injectWrapper(BaseInput,{
             field: this.props.firstName
@@ -54,15 +53,20 @@ export default class PersonalInformation extends React.Component{
         // });
        
         return(
+           
+               
             <div className="row">
             
                 <div className="col-md-4">
-                    <FirstName event='onBlur'/>
+                    <Input field={this.props.store.email} update={this.props.store.updateEmail}
+                        label={this.currentResources().email}/>
                 </div>
                 <div className="col-md-4">
                     <Age label={this.currentResources().lastName}/>
                 </div> 
-
+                <Input  field={this.props.store.houseNumber} update={this.props.store.updateHouseNumber}
+                        label={this.currentResources().houseNumber}/>
+            
                 {/* <div className="col-md-4">
                     <Comments label='comments'  rows={3} isAutoResize={false}/>
                 </div> 
@@ -74,7 +78,8 @@ export default class PersonalInformation extends React.Component{
                  <div className="col-md-4">
                     <Agreement label='I agree' />
                 </div>       */}
-            </div>
+                </div>
+          
            
         );
     }

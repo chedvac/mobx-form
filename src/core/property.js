@@ -1,6 +1,3 @@
-
-import {observable} from "mobx";
-
 export default function property(settings = {}) {
     return function (target, name, descriptor) {
         let value = descriptor.value;

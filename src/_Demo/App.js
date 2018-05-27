@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import RootStore from './rootStore';
-import ExampleForm from './exampleForm';
+import ComponentsDemo from './ComponentsDemo';
 import {observer, Provider} from 'mobx-react';
-//window.rootStore=rootStore;
 
 @observer
 
@@ -12,9 +11,9 @@ class App extends Component {
     return (
       <Provider rootStore={new RootStore()}>
         <div className="App">
-          <header className="App-header">
+          <header >
           </header>
-          <ExampleForm />
+          <ComponentsDemo />
         </div>
       </Provider>
     );
