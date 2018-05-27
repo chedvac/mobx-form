@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
-import TablesTab from './tabs/tablesTab/tables';
+// import TablesTab from './tabs/tablesTab/tables';
 import injectWrapper from '../core/inject';
 import TabSettings from '../components/navigation/TabSettings';
 // import TabsRouter from '../components/navigation/Router';
@@ -17,7 +17,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
      
     render() {
         const SimpleFields = injectWrapper(SimpleFieldsTab, this.props.rootStore.store.simpleFieldsTab);
-        const Tables = injectWrapper(TablesTab, this.props.rootStore.store.tablesTab);
+        // const Tables = injectWrapper(TablesTab, this.props.rootStore.store.tablesTab);
     
         // const tabs = [
         //     new TabSettings({number: '1',name: 'דוגמאות לשדות רגילים', path: '/SimpleFields' , component: SimpleFields}),
@@ -31,7 +31,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
                
                 <Toolbar />
                 <SimpleFields/>
-                <Tables/>
+                {/* <Tables/> */}
                 <div className="row">
                     <div className="small-12 columns">
                         <button className="button" type="button" onClick={this.validateAll} >בדוק תקינות  </button>

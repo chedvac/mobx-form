@@ -73,15 +73,7 @@ class PersonalInformation {
         }
         }
         this.volatile={
-            @property
-            ({ 
-              validations:[{rule:HebrewName}]
-            }) @observable age: undefined,
-            @property
-            ({ 
-              validations:[{rule:HebrewName,condition:this.condition, params:{}}],
-               map: function(){}
-            }) @observable firstName: undefined
+          
         }
 
     }

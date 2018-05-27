@@ -12,9 +12,9 @@ class TablesTab {
         // email: types.union(types.undefined, addressValidation.email),
         // houseNumber: types.union(types.undefined, addressValidation.houseNumber)
         
-        // @property
+        @property
         email: "",
-        //@property        
+        @property        
         houseNumber:""
     }
     this.actions ={

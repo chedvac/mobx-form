@@ -11,10 +11,16 @@ export default function property(settings = {}) {
         delete descriptor.initializer;
         delete descriptor.value;
         delete descriptor.writable ;
-  
+
+        const value=observable.box(target[name])
+        
+
         descriptor.set = (newValue)=> {
             validate()
-            if(isValid) { value = map(newValue)}        
+            if(isValid) { 
+                const mappedValue = map(newValue);
+                value.set(mappedValue);
+            }        
         };
 
         descriptor.get = function() { 
