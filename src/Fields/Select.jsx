@@ -3,7 +3,9 @@ import {observer} from 'mobx-react'
 import control from './hocs/control'
 import {renderLabel} from './utils/renderLabel'
 import {renderError} from './utils/renderError'
+import {inject} from 'mobx-react'
 
+@inject("applicationData")
 @observer
 class Select extends React.Component{
     
@@ -29,7 +31,7 @@ class Select extends React.Component{
           );
     }
     currentResources = function(){
-        return this.texts['hebrew'/*this.props.formLanguage.name*/];
+        return this.texts[this.props.applicationData.formLanguage.model.name];
     };
    
     render(){

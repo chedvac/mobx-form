@@ -17,10 +17,11 @@ const getPropsInject =(wrappedObject,store,name)=>{
     return inject(stores => 
         ({
             // field: store[name],
-            // update: store["set_"+name],
+             update: store["set_"+name],
             // type: getChildType(store, name),
             // validations:validations(store)[name],
-            language: /*stores.rootStore.formlanguage.name*/'hebrew'
+            
+            language:stores.applicationData.formLanguage.model.name
         })
     )(wrappedObject);
 }

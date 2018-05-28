@@ -45,7 +45,7 @@ export default function property(settings = {}) {
         }
 
         parent.propertiesManager[name] = {validations, reset, map, validate, isValid, message};
-        parent[name] = descriptor;
+        //parent[name] = descriptor;
         return descriptor;
     }
 }

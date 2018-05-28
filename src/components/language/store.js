@@ -1,17 +1,23 @@
+import {observable, autorun, action} from "mobx";
 import property from "../../core/property"
 import complexType from "../../core/complexType"
 
-//@complexType
+@complexType()
 class Language {
     constructor(){
+        const self = this;
         this.model={
-           // @property
+            getParent: function(){return self},
+           @property()
            name :'hebrew'
+          
         }
-        this.actions={
-            setLanguage:(newName)=>{
-                this.name = newName
+        this.actions = {
+            @action
+            set_name:(value)=>{
+                this.model.name = value;
             }
+       
         }
     }
 }

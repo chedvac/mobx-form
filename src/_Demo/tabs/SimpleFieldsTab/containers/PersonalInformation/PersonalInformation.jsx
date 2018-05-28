@@ -9,6 +9,9 @@ import Checkbox from '../../../../../Fields/Checkbox';
 import injectWrapper from '../../../../../core/inject'
 import getPropsInject from '../../../../../core/getPropsInject'
 import control from '../../../../../Fields/hocs/control'
+import {inject} from 'mobx-react'
+
+@inject("applicationData")
 @observer
  class PersonalInformation extends React.Component{
     
@@ -53,7 +56,7 @@ import control from '../../../../../Fields/hocs/control'
         //this.validations =this.validations.bind(this);
     }
     currentResources = function(){
-        return this.texts[/*this.props.generalStore.formLanguage.name*/'hebrew'];//todo: get language
+        return this.texts[this.props.applicationData.formLanguage.model.name];
     };        
 
     getProps =(name)=>{
@@ -61,7 +64,7 @@ import control from '../../../../../Fields/hocs/control'
             field: this.props.model[name],
             update: this.props.model["set_"+name],
           //  type: getChildType(this.props.model, name),
-            language: /*this.props.generalStore.formLanguage.name,*/'hebrew',
+            language: this.props.applicationData.formLanguage.model.name,
             label:this.currentResources()[name],
            // validations:this.validations()[name]
         }

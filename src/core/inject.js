@@ -5,7 +5,6 @@ const injectWrapper = function(wrappedObject, customizeStore = {}){
         stores => ( {
             general:{},
             model: customizeStore
-            //formLanguage: stores.store.rootStore.formlanguage
         }) )(wrappedObject);
 };
 export default injectWrapper;

@@ -26,15 +26,15 @@ class PersonalInformation {
             ({ 
               validations:[{rule:HebrewName,condition:this.condition, params:{}}],
             }) 
-            @property age:15,
+            age:15,
             @property
             ({ 
               validations:[{rule:HebrewName,condition:this.condition, params:{}}],
             }) 
-            @property fatherAge:35,
-            @property comments:undefined,
-            @property status:undefined,
-            @property agreement:false,
+            @property() fatherAge:35,
+            @property() comments:undefined,
+            @property() status:undefined,
+            @property() agreement:false,
         }
         
         this.views = {//todo: rename , computed
