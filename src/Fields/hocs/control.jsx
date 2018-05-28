@@ -13,9 +13,7 @@ function control (WrappedComponent) {
       constructor(props) {
           super(props);
           enableUniqueIds(this);
-          this.state={
-              value : props.field
-          }
+         
        
           this.updateStore = this.updateStore.bind(this);
       }
@@ -27,7 +25,7 @@ function control (WrappedComponent) {
       render() {
           return (
             
-              <WrappedComponent {...this.props} {...this.state} 
+              <WrappedComponent {...this.props} 
                       id={this.lastUniqueId()} 
                       onChange={(e)=>this.setState({value: getEventValue(e)})}
                       onBlur={(e)=>this.updateStore(getEventValue(e))}

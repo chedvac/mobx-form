@@ -8,7 +8,7 @@ class Language {
         const self = this;
         this.model={
             getParent: function(){return self},
-           @property()
+           @property({validations:[]})
            name :'hebrew'
           
         }

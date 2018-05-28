@@ -80,31 +80,31 @@ import {inject} from 'mobx-react'
             <div> 
                 <div className="row">
                 <div className="col-md-4">
-                        <FirstName label={this.currentResources().firstName} update={this.props.model.actions.set_firstName} field={this.props.model.model.firstName}/>
+                        <FirstName label={this.currentResources().firstName} update={this.props.model.actions.set_firstName}  field={this.props.model.model.firstName}/>
                     </div>
                    
                     <div className="col-md-4">
-                        <LastName label={this.currentResources().lastName} update={this.props.model.actions.set_lastName} field={this.props.model.model.lastName}/>
+                        <LastName label={this.currentResources().lastName} update={this.props.model.actions.set_lastName} field={this.props.model.model.lastName} message={this.props.model.propertiesManager.lastName.validationsManager.message}/>
                     </div>
                     <div className="col-md-4">
-                        <Age label={this.currentResources().age} update={this.props.model.actions.set_age} field={this.props.model.model.age}/>
+                        <Age label={this.currentResources().age} update={this.props.model.actions.set_age} field={this.props.model.model.age} message={this.props.model.propertiesManager.age.validationsManager.message} />
                     </div>
                    
                     <div className="col-md-4">
                         <FatherAge label={this.currentResources().fatherAge} update={this.props.model.actions.set_fatherAge} field={this.props.model.model.fatherAge}/>
                     </div>
-                    <div className="col-md-4">
+                    {/* <div className="col-md-4">
                         <Textarea {...this.getProps('comments')} rows={4} isAutoResize={false}/>
-                    </div>
-                    <div className="col-md-4">
+                    </div> */}
+                    {/* <div className="col-md-4">
                         <Select {...this.getProps('status')} options={this.statusOptions} />
-                    </div>
+                    </div> */}
                 </div>
-                <div className="row">
+                {/* <div className="row">
                     <div className="col-md-4">
                         <Checkbox {...this.getProps('agreement')} />
                     </div>
-                </div>
+                </div> */}
            
             </div>
         );
