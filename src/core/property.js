@@ -1,10 +1,11 @@
 import {observable} from "mobx"
+import validationsManagerFactory from "../validations/validationsManager"
 export default function property(settings = {}) {
     return function (target, name, descriptor) {
         let defaultValue= descriptor.value;
-        let validations = settings.validations
-        let isValid = true;
-        let message = '';
+         
+        const validationsManager = new validationsManagerFactory(settings.validations);
+
         
         const parent = target.getParent();
 
@@ -16,11 +17,9 @@ export default function property(settings = {}) {
         
 
         descriptor.set = (newValue)=> {
-            validate()
-            if(isValid) { 
-                const mappedValue = map(newValue);
-                value.set(mappedValue);
-            }        
+            validate(newValue)
+            const mappedValue = map(newValue);
+            value.set(mappedValue);
         };
 
         descriptor.get = function() { 
@@ -31,20 +30,22 @@ export default function property(settings = {}) {
             return typeof settings.map === 'function' ? settings.map(value) : value;
         }
 
-        const validate=()=>{
-            // var failedValidation= validations.find(item =>((!item.condition || item.condition()) && item.rule.validator(this.value,item.params)=== false) )
+        const validate=(newValue)=>{
+            validationsManager.validate(newValue)
+            //TODO validate with pure function
+            // var failedValidation= validations.find(item =>((!item.condition || item.condition()) && item.rule.validator(newValue,item.params)=== false) )
             // if(! failedValidation){
             //     return
             // }
-            // message = failedValidation.message 
-            // isValid = false
+            // parent.propertiesManager[name].message = failedValidation.rule.message
+            // parent.propertiesManager[name].isValid = false
         }
 
         const reset=()=>{
             descriptor.set(defaultValue)   
         }
 
-        parent.propertiesManager[name] = {validations, reset, map, validate, isValid, message};
+        parent.propertiesManager[name] = {validationsManager, reset, map, validate};
         parent[name] = descriptor;
         return descriptor;
     }

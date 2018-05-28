@@ -77,14 +77,14 @@ import control from '../../../../../Fields/hocs/control'
             <div> 
                 <div className="row">
                 <div className="col-md-4">
-                        <FirstName label={this.currentResources().firstName} update={this.props.model.actions.set_firstName} field={this.props.model.model.firstName}/>
+                        <FirstName label={this.currentResources().firstName} update={this.props.model.actions.set_firstName}  field={this.props.model.model.firstName}/>
                     </div>
                    
                     <div className="col-md-4">
-                        <LastName label={this.currentResources().lastName} update={this.props.model.actions.set_lastName} field={this.props.model.model.lastName}/>
+                        <LastName label={this.currentResources().lastName} update={this.props.model.actions.set_lastName} field={this.props.model.model.lastName} message={this.props.model.propertiesManager.lastName.validationsManager.message}/>
                     </div>
                     <div className="col-md-4">
-                        <Age label={this.currentResources().age} update={this.props.model.actions.set_age} field={this.props.model.model.age}/>
+                        <Age label={this.currentResources().age} update={this.props.model.actions.set_age} field={this.props.model.model.age} message={this.props.model.propertiesManager.age.validationsManager.message} />
                     </div>
                    
                     <div className="col-md-4">

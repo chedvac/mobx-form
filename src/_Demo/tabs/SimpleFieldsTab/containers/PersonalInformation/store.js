@@ -1,8 +1,10 @@
 import {observable, autorun, action} from "mobx";
-import {HebrewName,require} from "../../../../../validations/validationsEnum"
+import {HebrewName, noHebrewLetters} from "../../../../../validations/validationsEnum"
 import property from "../../../../../core/property"
 import complexType from '../../../../../core/complexType'
-//"../../core/complexType"
+import {generateGreaterThan} from '../../../../../validations/validationsFactory'
+import { greaterThan } from "../../../../../validations/number";
+import addressValidations from '../../../../../validations/address'
 
 @complexType()
 class PersonalInformation {
@@ -12,25 +14,25 @@ class PersonalInformation {
         const self = this;
         this.model={
             getParent: function(){return self},
+            
             @property
             ({ 
-              validations:[{rule:HebrewName,condition:this.condition, params:{}}],
+             validations:[],
             }) 
             firstName: 'Yossef',
+
             @property
             ({ 
-              validations:[{rule:HebrewName,condition:this.condition, params:{}}],
+              validations:[addressValidations.houseNumber({message: 'not valid'})],
             }) 
             lastName : 'Levi',
+
             @property
             ({ 
-              validations:[{rule:HebrewName,condition:this.condition, params:{}}],
+              validations: [addressValidations.houseNumber({codition:this.condition}),],
             }) 
-            @property age:15,
-            @property
-            ({ 
-              validations:[{rule:HebrewName,condition:this.condition, params:{}}],
-            }) 
+             age:15,
+            
             @property fatherAge:35,
             @property comments:undefined,
             @property status:undefined,
