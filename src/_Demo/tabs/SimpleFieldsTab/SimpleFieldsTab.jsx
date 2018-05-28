@@ -1,7 +1,7 @@
 import React from 'react'
 import {observer} from 'mobx-react'
 import PersonalInformation from './containers/PersonalInformation/PersonalInformation'
-import injectWrapper from '../../../core/inject'
+import {injectWrapper} from '../../../core/inject'
 import control from '../../../Fields/hocs/control'
 @observer
  class SimpleFieldsTab extends React.Component{
@@ -12,7 +12,7 @@ import control from '../../../Fields/hocs/control'
     }
   
     render(){
-        const UserDetails = injectWrapper(PersonalInformation,this.props.model.model.userDetails)
+        const UserDetails = injectWrapper(PersonalInformation,this.props.model.userDetails)
         return(
             <div>
             <UserDetails  />
