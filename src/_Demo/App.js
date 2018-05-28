@@ -8,12 +8,14 @@ import {observer, Provider} from 'mobx-react';
 
 class App extends Component {
   render() {
+    const rootStore=new RootStore();
+    const applicationData = rootStore.model.applicationData
     return (
-      <Provider rootStore={new RootStore()}>
+      <Provider  applicationData = {applicationData}>
         <div className="App">
           <header >
           </header>
-          <ComponentsDemo />
+          <ComponentsDemo rootStore={rootStore}/>
         </div>
       </Provider>
     );

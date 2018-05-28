@@ -8,6 +8,7 @@ import Select from '../../../../../Fields/Select';
 import Checkbox from '../../../../../Fields/Checkbox';
 import { getPropsInject } from '../../../../../core/inject'
 
+@inject("applicationData")
 @observer
  class PersonalInformation extends React.Component{
     
@@ -50,8 +51,9 @@ import { getPropsInject } from '../../../../../core/inject'
         this.statusOptions=[{key:'1',value:'נשוי'},{key:'2',value:'רווק'},{key:'3',value:'גרוש'}]
     }
     currentResources = function(){
-        return this.texts[/*this.props.generalStore.formLanguage.name*/'hebrew'];//todo: get language
+        return this.texts[this.props.applicationData.formLanguage.model.name];
     };        
+
 
     render(){
         const FirstName = getPropsInject(Input,this.props,'firstName');

@@ -1,26 +1,37 @@
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
 import LanguageStore from '../components/language/store'
-import { types } from "mobx-state-tree";
-
-
+import property from "../core/property"
+import complexType from '../core/complexType'
+//import model from '../core/model'
+//import externalized from '../core/externalized'
 import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/store'
-//./components/PersonalInformation/store';
 import {toJS} from 'mobx'
 
-export default  class RootStore {
+@complexType()
+class RootStore {
     constructor() {
-        this.store={
-            simpleFieldsTab: new SimpleFieldsTab(),
-            tablesTab: new TablesTab(),
-            formlanguage: new LanguageStore()
-        }
-        console.log(this.model)
         
-    }
+        this.model={
+           //  @model(this) model:{
+                
+                formData:{       
+                    //   @externalized()       
+                    simpleFieldsTab: new SimpleFieldsTab(),
+                    tablesTab: new TablesTab()
+                },
+                applicationData:{
+                    formLanguage: new LanguageStore()
+                }
+            
+             }
+        }
+        
+    
     getStoreAsJSon=()=>{
         return toJS(this.model.getModel())
     }
 
 }
 
+export default RootStore

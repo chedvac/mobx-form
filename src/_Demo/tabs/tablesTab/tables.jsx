@@ -2,6 +2,9 @@ import React from 'react'
 import {observer} from 'mobx-react'
 import Input from '../../../Fields/Input';
 import injectWrapper from '../../../core/inject';
+import {inject} from 'mobx-react'
+
+@inject("applicationData")
 @observer
 export default class Tables extends React.Component{
     
@@ -28,7 +31,7 @@ export default class Tables extends React.Component{
         this.currentResources = this.currentResources.bind(this);
     }
     currentResources = function(){
-        return this.texts[this.props.generalStore.formLanguage.name];
+        return this.texts[this.props.applicationData.formLanguage.model.name];
     };        
    
     validate(){

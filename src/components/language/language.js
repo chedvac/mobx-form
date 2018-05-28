@@ -1,6 +1,8 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react'
 import {observable} from 'mobx'
+
+@inject("applicationData")
 @observer
 export default class Language extends React.Component{
     
@@ -22,7 +24,7 @@ export default class Language extends React.Component{
 
     }
     currentResources = function(){
-        return this.texts[this.props.formLanguage.name];
+        return this.texts[this.props.applicationData.formLanguage.model.name];
     };
       
         render(){
@@ -30,11 +32,11 @@ export default class Language extends React.Component{
             <div className="row">
                 <div className="col-md-4">
                     <label><span>{this.currentResources().selectLanguage}</span></label>
-                    <input type="radio" onChange={e => this.props.formLanguage.setLanguage('hebrew')} className="text-field" value={'hebrew'} name="language" />
+                    <input type="radio" onChange={e => this.props.applicationData.formLanguage.set_name('hebrew')} className="text-field" value={'hebrew'} name="language" />
                     <label  className="label-radio-combined">
 						<span>עברית</span>
 					</label>
-                    <input type="radio" onChange={e => this.props.formLanguage.setLanguage('english')} className="text-field" value="english" name="language" />
+                    <input type="radio" onChange={e => this.props.applicationData.formLanguage.set_name('english')} className="text-field" value="english" name="language" />
                     <label  className="label-radio-combined">
 						<span>אנגלית</span>
 					</label>

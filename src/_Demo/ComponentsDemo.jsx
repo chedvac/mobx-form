@@ -5,10 +5,8 @@ import {injectWrapper} from '../core/inject';
 import TabSettings from '../components/navigation/TabSettings';
 // import TabsRouter from '../components/navigation/Router';
 import Toolbar from '../components/toolbar/Toolbar';
-import {inject} from 'mobx-react'
 
 
-@inject("rootStore")
 export default class ComponentsDemo extends Component { // destruct non-valid props
     constructor(props){
         super(props)
@@ -16,7 +14,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
 
      
     render() {
-        const SimpleFields = injectWrapper(SimpleFieldsTab, this.props.rootStore.store.simpleFieldsTab);
+        const SimpleFields = injectWrapper(SimpleFieldsTab, this.props.rootStore.model.formData.simpleFieldsTab);
         // const Tables = injectWrapper(TablesTab, this.props.rootStore.store.tablesTab);
     
         // const tabs = [
