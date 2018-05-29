@@ -1,16 +1,19 @@
 import {observable, autorun, action} from "mobx";
-import {HebrewName, noHebrewLetters} from "../../../../../validations/validationsEnum"
 import property from "../../../../../core/property"
 import ComplexType from '../../../../../core/complexType'
 import {generateGreaterThan} from '../../../../../validations/validationsFactory'
-import { greaterThan } from "../../../../../validations/number";
 import addressValidations from '../../../../../validations/address'
+import {hebrewName} from '../../../../../validations/languages'
+import {maxlength} from '../../../../../validations/general'
+import {greaterThan} from '../../../../../validations/number'
 
 class PersonalInformation extends ComplexType {
     constructor(){
         super();
         this.condition = function(){return true}
-        
+
+        const self = this;
+
         this.views = {//todo: rename , computed
             fullName :()=>{
                 return this.firstName + this.lastName
@@ -53,13 +56,13 @@ class PersonalInformation extends ComplexType {
     }
     @property
     ({ 
-     validations:[],
-    })
+     validations:[hebrewName(), maxlength({value: 5})],
+    }) 
     firstName: 'Yossef';
 
     @property
     ({ 
-      validations:[addressValidations.houseNumber({message: 'not valid'})],
+      validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],
     }) 
     lastName : 'Levi';
 
@@ -71,7 +74,9 @@ class PersonalInformation extends ComplexType {
      age:15;
     
     @property
-    ({validations:[]}) 
+    ({
+        validations:[greaterThan({number: 10})]
+    }) 
     fatherAge: 35;
     @property
     ({validations:[]})
@@ -83,4 +88,5 @@ class PersonalInformation extends ComplexType {
     ({validations:[]}) 
     agreement:false;
 }
+
 export default PersonalInformation;
