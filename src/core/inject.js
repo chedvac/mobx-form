@@ -13,9 +13,10 @@ export const injectWrapper = function(wrappedObject, customizeStore = {}){
 export const getPropsInject =(wrappedObject,store,name)=>{
     return inject(stores => 
         ({
-            update:store.actions["set_"+name],
-            field: store.model[name],
-            language: /*stores.rootStore.formlanguage.name*/'hebrew'
+            update:store["set_"+name],
+            field: store[name],
+            language: /*stores.rootStore.formlanguage.name*/'hebrew',
+            //message:store.propertiesManager[name].validationsManager.message,
         })
     )(wrappedObject);
 }

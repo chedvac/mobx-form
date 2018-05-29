@@ -14,7 +14,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
 
      
     render() {
-        const SimpleFields = injectWrapper(SimpleFieldsTab, this.props.rootStore.model.formData.simpleFieldsTab);
+        const SimpleFields = injectWrapper(SimpleFieldsTab, this.props.rootStore.model.simpleFieldsTab);
         // const Tables = injectWrapper(TablesTab, this.props.rootStore.store.tablesTab);
     
         // const tabs = [
@@ -22,7 +22,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
         //     new TabSettings({number: '2',name: 'טבלאות', path: '/Tables' , component: Tables})
         // ]
      
-        console.log('rootStore',this.props.rootStore.store)
+        console.log('rootStore',this.props.rootStore)
         return(
            
             <form ref={c => { this.Form = c }}> 
@@ -32,7 +32,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
                 {/* <Tables/> */}
                 <div className="row">
                     <div className="small-12 columns">
-                        <button className="button" type="button" onClick={this.validateAll} >בדוק תקינות  </button>
+                        <button className="button" type="button" onClick={this.props.rootStore.validate} >בדוק תקינות  </button>
                     </div>
                 </div> 
             

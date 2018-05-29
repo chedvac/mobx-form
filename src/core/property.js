@@ -1,18 +1,16 @@
 import {observable} from "mobx"
 export default function property(settings = {}) {
     return function (target, name, descriptor) {
-        let defaultValue= descriptor.value;
+        let defaultValue= descriptor.initializer.call(target) || descriptor.value;
         let validations = settings.validations
         let isValid = true;
         let message = '';
         
-        const parent = target.getParent();
-
         delete descriptor.initializer;
         delete descriptor.value;
         delete descriptor.writable ;
 
-        const value=observable.box(target[name])
+        const value=observable.box(defaultValue)
         
 
         descriptor.set = (newValue)=> {
@@ -43,9 +41,12 @@ export default function property(settings = {}) {
         const reset=()=>{
             descriptor.set(defaultValue)   
         }
-
-        parent.propertiesManager[name] = {validations, reset, map, validate, isValid, message};
-        //parent[name] = descriptor;
+        const setPropertiesManager=(parent)=>{
+            parent.propertiesManager[name] = {validations, reset, map, validate, isValid, message};
+            parent.model[name] = descriptor;
+        }
+//        target.propertiesManager[name] = {validations, reset, map, validate, isValid, message};
+        
         return descriptor;
     }
 }

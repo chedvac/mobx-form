@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import RootStore from './rootStore';
+import LanguageStore from '../components/language/store'
 import ComponentsDemo from './ComponentsDemo';
 import {observer, Provider} from 'mobx-react';
 
@@ -9,7 +10,9 @@ import {observer, Provider} from 'mobx-react';
 class App extends Component {
   render() {
     const rootStore=new RootStore();
-    const applicationData = rootStore.model.applicationData
+    const applicationData = {
+      formLanguage: new LanguageStore()
+    }
     return (
       <Provider  applicationData = {applicationData}>
         <div className="App">

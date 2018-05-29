@@ -29,7 +29,7 @@ function control (WrappedComponent) {
             return (
                 <WrappedComponent {...this.props} {...this.state} 
                         id={this.lastUniqueId()} 
-                        onChange={(e)=>this.setState({value: getEventValue(e)})}
+                         onChange={(e)=>this.setState({value: getEventValue(e)})}
                         onBlur={(e)=>this.updateStore(getEventValue(e))}
                 />
             )

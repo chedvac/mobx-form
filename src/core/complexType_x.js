@@ -1,64 +1,60 @@
- export default class ComplexType {
-    
-     constructor () {
-       this.isValid = true;
-       this.message = '';
-       this.propertiesManager = {}
-       var self = this
-       this.model={}
-       ///add volatile views actions
-       this.validate = this.validate.bind(this);
-       this.getDeepModel = this.getDeepModel.bind(this);
-       this.getModel = this.getModel.bind(this);
-       this.getPureModel = this.getPureModel.bind(this);
-       this.map = this.map.bind(this);
-       this.reset = this.reset.bind(this);
-     }
-    // get propertiesManager
-     getDeepModel (prop) {
-        return prop.getPureModel ? prop.getPureModel() : prop.getValue();
-        
-     }
-    
-    applyChildAction (action){//todo private
-        var propertiesManager = this.propertiesManager;
-        for (var property in propertiesManager) {
-            if (propertiesManager.hasOwnProperty(property)) {
-                propertiesManager[property][action]()
+
+import {observable} from "mobx";
+
+export default function complexType() {//todo: rename
+    return function (target) {
+        target.prototype.isValid = true;
+        target.prototype.message = '';
+        target.prototype.propertiesManager = {};
+
+        const getDeepModel = function (prop) {
+            return prop.getPureModel ? prop.getPureModel() : prop.getValue();
+        };
+        // const applyChildAction =(action)=>{
+        //     var model = target.model;
+        //     for (var prop in model) {
+        //         if (model.hasOwnProperty(prop)) {
+        //             model[prop][action]()
+        //         }
+        //     }
+        // }
+        const applyChildAction =(action)=>{
+            var propertiesManager = target.propertiesManager;
+            for (var property in propertiesManager) {
+                if (propertiesManager.hasOwnProperty(property)) {
+                    propertiesManager[property][action]()
+                }
             }
         }
-        
-    }
-    getModel(){
-        return this.model
-    };
-    getPureModel (){
-        var pureModel = {};
-        var model = this.model;
-        for (var prop in model) {
-            if (model.hasOwnProperty(prop) && !model[prop].ignore) {
-                pureModel[prop] = this.getDeepModel(model[prop]);
+        target.prototype.getModel =function(){
+            return this.model
+        };
+        target.prototype.getPureModel = function(){
+            var pureModel = {};
+            var model = target.model;
+            for (var prop in model) {
+                if (model.hasOwnProperty(prop) && !model[prop].ignore) {
+                    pureModel[prop] = getDeepModel(model[prop]);
+                }
             }
-        }
-        return pureModel;
-    };
-     // setModel : function(){
+            return pureModel;
+        };
+        // setModel : function(){
         //     type.model
         //     //map
         // },
-        validate (){
-            var self = this;
+        target.prototype.validate = function(){
             const validateChildren =()=>{
                 // const failedChildValidation = Object.values(propertiesManager).find(function(obj){
                 //     obj.validationsManager.validate()
                 // })
                 let childrenValid = true;
-                const model = self.getModel()
+                const model = target.prototype.getModel()
                 Object.keys(model).forEach(function(key){
                     if(model[key].validate){
                         model[key].validate()
-                    } else if(self.propertiesManager[key].validationsManager.validate){
-                         self.propertiesManager[key].validationsManager.validate()
+                    } else{
+                         target.propertiesManager[key].validationsManager.validate()
                     }
                 })
                 // if(failedChildValidation){
@@ -91,16 +87,17 @@
             }
             
            // validateItself()
-           validateChildren()
+            validateChildren()
             return this.isValid
             
         };
-        //TODO fromSnapshot , to Snapshot
-        map (){
+        target.prototype.map = function(){
 
         };
-        reset (){
-            this.applyChildAction('reset')
+        target.prototype.reset = function(){
+            applyChildAction('reset')
         }
+            
+    };   
     
-   }
+}

@@ -24,7 +24,7 @@ export default class Language extends React.Component{
 
     }
     currentResources = function(){
-        return this.texts[this.props.applicationData.formLanguage.model.name];
+        return this.texts[this.props.applicationData.formLanguage.name];
     };
       
         render(){
