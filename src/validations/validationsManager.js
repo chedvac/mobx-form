@@ -2,8 +2,7 @@ import {observable} from "mobx"
 
 export default class validationsManager{
     failedValidation = {};
-    @observable isValid= true; 
-    @observable message= '';
+
     flattenDeep = (arr1) =>{
         return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(this.flattenDeep(val)) : acc.concat(val), []);
      };
@@ -17,17 +16,11 @@ export default class validationsManager{
         this.failedValidation = this.validations.find(
             item =>
                 !item.validator(value)
-            
         )
-        if(this.failedValidation)
-        {
-            this.message = this.getMessage();  
-            this.isValid = false;
-            return false;
+        return  {
+            message: this.failedValidation ? this.getMessage() : '', 
+            isValid: this.failedValidation ? false : true
         }
-        this.message = '';  
-        this.isValid = true;
-        return true;
         
     }
 }

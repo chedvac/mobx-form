@@ -1,13 +1,13 @@
 import PersonalInformation from "./containers/PersonalInformation/store";
 import ComplexType from '../../../core/complexType'
-
+import property from "../../../core/property"
 class SimpleFieldsTab extends ComplexType {
     constructor(){
         super();
-        this.model={...this.model,
-            userDetails: new PersonalInformation()
-        }
+ 
     }
+    @property userDetails = new PersonalInformation()
+
 }
 
 export default SimpleFieldsTab;

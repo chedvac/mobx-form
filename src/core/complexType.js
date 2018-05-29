@@ -1,3 +1,5 @@
+import {observable} from "mobx"
+
 export default class ComplexType {
     
     constructor () {
@@ -6,9 +8,9 @@ export default class ComplexType {
       this.propertiesManager = {}
       var self = this
       this.model={
-        getParent: function(){return self}
         } 
       ///add volatile views actions
+      this.setProperty = this.setProperty.bind(this);
       this.validate = this.validate.bind(this);
       this.getDeepModel = this.getDeepModel.bind(this);
       this.getModel = this.getModel.bind(this);
@@ -19,7 +21,16 @@ export default class ComplexType {
     getDeepModel (prop) {
        return prop.getPureModel ? prop.getPureModel() : prop.getValue();
        
-    }
+    }   
+    setProperty (propertyName, value, actions) {
+        this.model[propertyName] = value;
+        this.propertiesManager[propertyName] = {
+            ...actions,
+            @observable message: '',
+            @observable isValid: ''
+        }
+        
+     }
    
    applyChildAction (action){//todo private
        var propertiesManager = this.propertiesManager;
@@ -49,22 +60,23 @@ export default class ComplexType {
        // },
        validate (){
            var self = this;
-           const validateChildren =()=>{
-               // const failedChildValidation = Object.values(propertiesManager).find(function(obj){
-               //     obj.validationsManager.validate()
-               // })
-               let childrenValid = true;
-               const model = self.getModel()
-               Object.keys(model).forEach(function(key){
-                   if(model[key].validate){
-                       model[key].validate()
-                   } else if(self.propertiesManager[key].validationsManager.validate){
-                        self.propertiesManager[key].validationsManager.validate()
-                   }
+           const validateChildren =function(){
+               const failedChildValidation = Object.values(self.propertiesManager).find(function(obj){
+                   return obj.validate(self);
                })
-               // if(failedChildValidation){
-               //     this.isValid = false
-               // }
+            //    let childrenValid = true;
+            //    const model = self.getModel()
+            //    Object.keys(model).forEach(function(key){
+            //        if(model[key].validate){
+            //            model[key].validate()
+            //        } else if(self.propertiesManager[key].validate){
+            //            let failedChildValidation = self.propertiesManager[key].validate(self);
+
+            //        }
+            //    })
+               if(failedChildValidation){
+                self.isValid = false
+               }
            }  
 
            // const validateChildren =()=>{
