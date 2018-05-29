@@ -4,7 +4,7 @@ import Input from '../../../Fields/Input';
 import injectWrapper from '../../../core/inject';
 import {inject} from 'mobx-react'
 
-@inject("applicationData")
+// @inject("applicationData")
 @observer
 export default class Tables extends React.Component{
     

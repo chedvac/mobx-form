@@ -11,7 +11,7 @@ class App extends Component {
     const rootStore=new RootStore();
     const applicationData = rootStore.model.applicationData
     return (
-      <Provider  applicationData = {applicationData}>
+      <Provider applicationData = {applicationData}>
         <div className="App">
           <header >
           </header>
