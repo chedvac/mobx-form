@@ -1,6 +1,6 @@
                                              
 import React from 'react'
-import {observer,inject} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 
 import Input from '../../../../../Fields/Input';
 import Textarea from '../../../../../Fields/Textarea';
@@ -51,7 +51,7 @@ import { getPropsInject } from '../../../../../core/inject'
         this.statusOptions=[{key:'1',value:'נשוי'},{key:'2',value:'רווק'},{key:'3',value:'גרוש'}]
     }
     currentResources = function(){
-        return this.texts[this.props.applicationData.formLanguage.name];
+        return this.texts[this.props.applicationData.formLanguage.model.name];
     };        
 
 
@@ -86,11 +86,11 @@ import { getPropsInject } from '../../../../../core/inject'
                         <Status label={this.currentResources().status} options={this.statusOptions} />
                     </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                     <div className="col-md-4">
                         <Agreement label={this.currentResources().agreement} />
                     </div>
-                </div>
+                </div> */}
            
             </div>
         );

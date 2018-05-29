@@ -29,7 +29,7 @@ class Textarea extends React.Component{
                     maxRows={isAutoResize? MAX_ROWS : rows}
                     className="textarea-field"
                  />
-                <span className='pseudoTextArea' style={minHeight} >{props.value}</span>
+                <span className='pseudoTextArea' style={minHeight} >{props.field}</span>
                 {renderError(props.message)}
             </div>
         );

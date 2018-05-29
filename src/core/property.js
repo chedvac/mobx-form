@@ -1,24 +1,25 @@
 import {observable} from "mobx"
+import validationsManagerFactory from "../validations/validationsManager"
 export default function property(settings = {}) {
     return function (target, name, descriptor) {
-        let defaultValue= descriptor.initializer.call(target) || descriptor.value;
-        let validations = settings.validations
-        let isValid = true;
-        let message = '';
+        let defaultValue= descriptor.value;
+         
+        const validationsManager = new validationsManagerFactory(settings.validations);
+
         
+        const parent = target.getParent();
+
         delete descriptor.initializer;
         delete descriptor.value;
         delete descriptor.writable ;
 
-        const value=observable.box(defaultValue)
+        const value=observable.box(target[name])
         
 
         descriptor.set = (newValue)=> {
-            validate()
-            if(isValid) { 
-                const mappedValue = map(newValue);
-                value.set(mappedValue);
-            }        
+            validate(newValue)
+            const mappedValue = map(newValue);
+            value.set(mappedValue);
         };
 
         descriptor.get = function() { 
@@ -29,24 +30,24 @@ export default function property(settings = {}) {
             return typeof settings.map === 'function' ? settings.map(value) : value;
         }
 
-        const validate=()=>{
-            // var failedValidation= validations.find(item =>((!item.condition || item.condition()) && item.rule.validator(this.value,item.params)=== false) )
+        const validate=(newValue)=>{
+            validationsManager.validate(newValue)
+            //TODO validate with pure function
+            // var failedValidation= validations.find(item =>((!item.condition || item.condition()) && item.rule.validator(newValue,item.params)=== false) )
             // if(! failedValidation){
             //     return
             // }
-            // message = failedValidation.message 
-            // isValid = false
+            // parent.propertiesManager[name].message = failedValidation.rule.message
+            // parent.propertiesManager[name].isValid = false
         }
 
         const reset=()=>{
             descriptor.set(defaultValue)   
         }
-        const setPropertiesManager=(parent)=>{
-            parent.propertiesManager[name] = {validations, reset, map, validate, isValid, message};
-            parent.model[name] = descriptor;
-        }
-//        target.propertiesManager[name] = {validations, reset, map, validate, isValid, message};
-        
+
+        parent.propertiesManager[name] = {validationsManager, reset, map};
+        parent[name] = descriptor;
+
         return descriptor;
     }
 }

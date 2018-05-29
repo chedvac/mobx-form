@@ -10,6 +10,7 @@ import {observer, Provider} from 'mobx-react';
 class App extends Component {
   render() {
     const rootStore=new RootStore();
+    window.rootStore = rootStore
     const applicationData = {
       formLanguage: new LanguageStore()
     }
