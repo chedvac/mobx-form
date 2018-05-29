@@ -1,6 +1,6 @@
 import {observable, autorun, action} from "mobx";
 import property from "../../../core/property"
-import complexType from "../../../core/complexType"
+import ComplexType from "../../../core/ComplexType"
 
 //import addressValidation from './../../../types/addressTypes';
 

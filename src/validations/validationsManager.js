@@ -29,5 +29,5 @@ export default class validationsManager{
         this.isValid = true;
         return true;
         
-    }    
+    }
 }

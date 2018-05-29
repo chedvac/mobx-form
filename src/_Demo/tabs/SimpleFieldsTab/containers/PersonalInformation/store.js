@@ -1,19 +1,18 @@
 import {observable, autorun, action} from "mobx";
 import {HebrewName, noHebrewLetters} from "../../../../../validations/validationsEnum"
 import property from "../../../../../core/property"
-import complexType from '../../../../../core/complexType'
+import ComplexType from '../../../../../core/ComplexType'
 import {generateGreaterThan} from '../../../../../validations/validationsFactory'
 import { greaterThan } from "../../../../../validations/number";
 import addressValidations from '../../../../../validations/address'
 
-@complexType()
-class PersonalInformation {
+class PersonalInformation extends ComplexType {
     
     constructor(){
+        super();
         this.condition = function(){return true}
         const self = this;
-        this.model={
-            getParent: function(){return self},
+        this.model={...this.model,
             
             @property
             ({ 
@@ -54,34 +53,34 @@ class PersonalInformation {
             }
         }
         this.actions = {
-        @action
-        set_firstName:(value)=>{
-            this.model.firstName=value;
-        },
-        @action
-        set_lastName:(value)=>{
-            this.model.lastName=value;
-        },
-        @action
-        set_fatherAge:(value)=>{
-            this.model.fatherAge=value;
-        },
-        @action
-        set_age:(value)=>{
-            this.model.age=value;
-        },
-        @action
-        set_comments:(value)=>{
-            this.model.comments=value;
-        },
-        @action
-        set_status:(value)=>{
-            this.model.status=value;
-        },
-        @action
-        set_agreement:(value)=>{
-            this.model.agreement=value;
-        }
+            @action
+            set_firstName:(value)=>{
+                this.model.firstName=value;
+            },
+            @action
+            set_lastName:(value)=>{
+                this.model.lastName=value;
+            },
+            @action
+            set_fatherAge:(value)=>{
+                this.model.fatherAge=value;
+            },
+            @action
+            set_age:(value)=>{
+                this.model.age=value;
+            },
+            @action
+            set_comments:(value)=>{
+                this.model.comments=value;
+            },
+            @action
+            set_status:(value)=>{
+                this.model.status=value;
+            },
+            @action
+            set_agreement:(value)=>{
+                this.model.agreement=value;
+            }
         }
         this.volatile={
           

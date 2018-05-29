@@ -1,10 +1,22 @@
 import {inject} from 'mobx-react';
 
-const injectWrapper = function(wrappedObject, customizeStore = {}){
+export const injectWrapper = function(wrappedObject, customizeStore = {}){
     return inject(
         stores => ( {
-            general:{},
-            model: customizeStore
+            general:{
+                //formLanguage: stores.store.rootStore.formlanguage
+            },
+            ...customizeStore
         }) )(wrappedObject);
 };
-export default injectWrapper;
+
+export const getPropsInject =(wrappedObject,store,name)=>{
+    return inject(stores => 
+        ({
+            update:store.actions["set_"+name],
+            field: store.model[name],
+            message:store.propertiesManager[name].validationsManager.message,
+            language: /*stores.rootStore.formlanguage.name*/'hebrew'
+        })
+    )(wrappedObject);
+}

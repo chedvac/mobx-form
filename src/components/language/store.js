@@ -1,13 +1,12 @@
 import {observable, autorun, action} from "mobx";
 import property from "../../core/property"
-import complexType from "../../core/complexType"
+import ComplexType from "../../core/ComplexType"
 
-@complexType()
-class Language {
+class Language extends ComplexType {
     constructor(){
+        super()
         const self = this;
-        this.model={
-            getParent: function(){return self},
+        this.model={...this.model,
            @property({validations:[]})
            name :'hebrew'
           

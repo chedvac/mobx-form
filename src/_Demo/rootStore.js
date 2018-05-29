@@ -2,17 +2,17 @@ import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
 import LanguageStore from '../components/language/store'
 import property from "../core/property"
-import complexType from '../core/complexType'
+import ComplexType from '../core/ComplexType'
 //import model from '../core/model'
 //import externalized from '../core/externalized'
 import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/store'
 import {toJS} from 'mobx'
 
-@complexType()
-class RootStore {
+
+class RootStore extends ComplexType {
     constructor() {
-        
-        this.model={
+        super()
+        this.model={...this.model,
            //  @model(this) model:{
                 
                 formData:{       

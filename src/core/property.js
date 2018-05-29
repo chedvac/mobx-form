@@ -45,7 +45,7 @@ export default function property(settings = {}) {
             descriptor.set(defaultValue)   
         }
 
-        parent.propertiesManager[name] = {validationsManager, reset, map, validate};
+        parent.propertiesManager[name] = {validationsManager, reset, map};
         parent[name] = descriptor;
 
         return descriptor;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 // import TablesTab from './tabs/tablesTab/tables';
-import injectWrapper from '../core/inject';
+import {injectWrapper} from '../core/inject';
 import TabSettings from '../components/navigation/TabSettings';
 // import TabsRouter from '../components/navigation/Router';
 import Toolbar from '../components/toolbar/Toolbar';
