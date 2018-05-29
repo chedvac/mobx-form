@@ -33,7 +33,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
                 {/* <Tables/> */}
                 <div className="row">
                     <div className="small-12 columns">
-                        <button className="button" type="button" onClick={this.props.rootStore.validateAll} >בדוק תקינות  </button>
+                        <button className="button" type="button" onClick={this.props.rootStore.validateForm} >בדוק תקינות  </button>
                     </div>
                 </div> 
             

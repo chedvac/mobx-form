@@ -19,10 +19,10 @@ class RootStore extends ComplexType {
             //tablesTab: new TablesTab()
        
        
-        this.validateAll = this.validateAll.bind(this);
+        this.validateForm = this.validateForm.bind(this);
     }
         
-    validateAll(){
+    validateForm(){
         const isStoreValid = this.validate()
         if(isStoreValid){
             alert('נתוני הטופס תקינים')
