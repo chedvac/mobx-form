@@ -1,52 +1,26 @@
 import {observable, autorun, action} from "mobx";
-import {HebrewName, noHebrewLetters} from "../../../../../validations/validationsEnum"
 import property from "../../../../../core/property"
 import ComplexType from '../../../../../core/ComplexType'
 import {generateGreaterThan} from '../../../../../validations/validationsFactory'
-import { greaterThan } from "../../../../../validations/number";
 import addressValidations from '../../../../../validations/address'
+import {hebrewName} from '../../../../../validations/languages'
+import {maxlength} from '../../../../../validations/general'
+import {greaterThan} from '../../../../../validations/number'
 
 class PersonalInformation extends ComplexType {
-    
     constructor(){
         super();
+        this.firstName = ' ';
+        this.status = '';
+        this.agreement = '';
+        this.comments = '';
+        this.fatherAge = 15;
+        this.age = 15;
+        this.lastName = ' ';
+
         this.condition = function(){return true}
-        const self = this;
-        this.model={...this.model,
-            
-            @property
-            ({ 
-             validations:[],
-            }) 
-            firstName: 'Yossef',
 
-            @property
-            ({ 
-              validations:[addressValidations.houseNumber({message: 'not valid'})],
-            }) 
-            lastName : 'Levi',
 
-            @property
-            ({ 
-
-              validations: [addressValidations.houseNumber({codition:this.condition}),],
-            }) 
-             age:15,
-            
-            @property
-            ({validations:[]}) 
-            fatherAge: 35,
-            @property
-            ({validations:[]})
-             comments:'comments',
-            @property
-            ({validations:[]}) 
-            status:2,
-            @property
-            ({validations:[]}) 
-            agreement:false,
-        }
-        
         this.views = {//todo: rename , computed
             fullName :()=>{
                 return this.firstName + this.lastName
@@ -55,31 +29,31 @@ class PersonalInformation extends ComplexType {
         this.actions = {
             @action
             set_firstName:(value)=>{
-                this.model.firstName=value;
+                this.firstName=value;
             },
             @action
             set_lastName:(value)=>{
-                this.model.lastName=value;
+                this.lastName=value;
             },
             @action
             set_fatherAge:(value)=>{
-                this.model.fatherAge=value;
+                this.fatherAge=value;
             },
             @action
             set_age:(value)=>{
-                this.model.age=value;
+                this.age=value;
             },
             @action
             set_comments:(value)=>{
-                this.model.comments=value;
+                this.comments=value;
             },
             @action
             set_status:(value)=>{
-                this.model.status=value;
+                this.status=value;
             },
             @action
             set_agreement:(value)=>{
-                this.model.agreement=value;
+                this.agreement=value;
             }
         }
         this.volatile={
@@ -87,7 +61,12 @@ class PersonalInformation extends ComplexType {
         }
 
     }
-     
-    
+    @property({  validations:[hebrewName(), maxlength({value: 5})],}) firstName;
+    @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName ;
+    @property({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age;
+    @property ({validations:[greaterThan({number: 10})]}) fatherAge;
+    @property ({validations:[]}) comments;
+    @property ({validations:[]}) status;
+    @property ({validations:[]}) agreement;
 }
 export default PersonalInformation;

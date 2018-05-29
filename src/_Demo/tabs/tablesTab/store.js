@@ -1,22 +1,19 @@
 import {observable, autorun, action} from "mobx";
 import property from "../../../core/property"
 import ComplexType from "../../../core/ComplexType"
-
+import {hebrewName} from '../../../validations/languages'
+import {maxlength} from '../../../validations/general'
 //import addressValidation from './../../../types/addressTypes';
 
-
+//@complexType({validations:[]})
 class TablesTab extends ComplexType{
     constructor(){
-        let model;
-        super(model);
-    model={
+        super()
+    this.model={
         // email: types.union(types.undefined, addressValidation.email),
         // houseNumber: types.union(types.undefined, addressValidation.houseNumber)
         
-        @property
-        email: "",
-        @property        
-        houseNumber:""
+       
     }
     this.actions ={
         updateEmail:(newValue)=> {
@@ -28,6 +25,8 @@ class TablesTab extends ComplexType{
     
       }
 }
+@property({  validations:[hebrewName(), maxlength({value: 5})],})  email;
+@property() houseNumber;
 }
   
 export default TablesTab;

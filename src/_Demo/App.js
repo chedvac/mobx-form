@@ -15,7 +15,7 @@ class App extends Component {
       formLanguage: new LanguageStore()
     }
     return (
-      <Provider  applicationData = {applicationData}>
+      <Provider applicationData = {applicationData}>
         <div className="App">
           <header >
           </header>

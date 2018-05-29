@@ -12,12 +12,13 @@ import {toJS} from 'mobx'
 class RootStore extends ComplexType {
     constructor() {
         super()
-        
-        this.model={...this.model,
-            simpleFieldsTab: new SimpleFieldsTab(),
-            tablesTab: new TablesTab()
+               
+            this.simpleFieldsTab = new SimpleFieldsTab()
+            this.setProperty('simpleFieldsTab',this.simpleFieldsTab,{validate:this.simpleFieldsTab.validate,map:this.simpleFieldsTab.map,reset:this.simpleFieldsTab.reset})
+            
+            //tablesTab: new TablesTab()
        
-        }
+       
         this.validateAll = this.validateAll.bind(this);
     }
         

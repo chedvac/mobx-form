@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
-// import TablesTab from './tabs/tablesTab/tables';
+import TablesTab from './tabs/tablesTab/tables';
 import {injectWrapper} from '../core/inject';
 import TabSettings from '../components/navigation/TabSettings';
 // import TabsRouter from '../components/navigation/Router';
@@ -14,7 +14,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
 
      
     render() {
-        const SimpleFields = injectWrapper(SimpleFieldsTab, this.props.rootStore.model.simpleFieldsTab);
+        const SimpleFields = injectWrapper(SimpleFieldsTab, this.props.rootStore.simpleFieldsTab);
         // const Tables = injectWrapper(TablesTab, this.props.rootStore.store.tablesTab);
     
         // const tabs = [
@@ -23,6 +23,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
         // ]
      
         console.log('rootStore',this.props.rootStore)
+       
         return(
            
             <form ref={c => { this.Form = c }}> 
