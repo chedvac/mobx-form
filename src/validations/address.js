@@ -2,10 +2,10 @@ import validationFactory from './validationsFactory';
 import typesEnum from './typesEnum';
 import { notZeroDigits } from './digits';
 
-    function  houseNumber(settings){
-        const houseNumberRegex = validationFactory.generateRegexValidation(typesEnum.address.houseNumber,settings);
-        // const notZeroDigits = notZeroDigits(settings)
-        return [houseNumberRegex]
+    function  houseNumber(params){
+        const houseNumberRegex = validationFactory.generateRegexValidation(typesEnum.address.houseNumber,params);
+         //const notZeroDigits = notZeroDigits(settings)
+        return [notZeroDigits(params), houseNumberRegex]
     }
         
     
