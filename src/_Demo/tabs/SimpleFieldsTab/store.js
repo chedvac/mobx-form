@@ -1,5 +1,5 @@
 import PersonalInformation from "./containers/PersonalInformation/store";
-import ComplexType from '../../../core/ComplexType'
+import ComplexType from '../../../core/complexType'
 
 class SimpleFieldsTab extends ComplexType {
     constructor(){

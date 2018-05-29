@@ -15,7 +15,7 @@ export const getPropsInject =(wrappedObject,store,name)=>{
         ({
             update:store.actions["set_"+name],
             field: store.model[name],
-            message:store.propertiesManager[name].validationsManager.message,
+            message: store.propertiesManager[name] ? store.propertiesManager[name].validationsManager.message : '',
             language: /*stores.rootStore.formlanguage.name*/'hebrew'
         })
     )(wrappedObject);

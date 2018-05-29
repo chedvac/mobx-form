@@ -2,7 +2,7 @@ import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
 import LanguageStore from '../components/language/store'
 import property from "../core/property"
-import ComplexType from '../core/ComplexType'
+import ComplexType from '../core/complexType'
 //import model from '../core/model'
 //import externalized from '../core/externalized'
 import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/store'

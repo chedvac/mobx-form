@@ -16,7 +16,6 @@ export default class ComplexType {
       this.map = this.map.bind(this);
       this.reset = this.reset.bind(this);
     }
-   // get propertiesManager
     getDeepModel (prop) {
        return prop.getPureModel ? prop.getPureModel() : prop.getValue();
        
