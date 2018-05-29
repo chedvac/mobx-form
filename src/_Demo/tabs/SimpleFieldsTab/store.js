@@ -4,9 +4,10 @@ import ComplexType from '../../../core/complexType'
 class SimpleFieldsTab extends ComplexType {
     constructor(){
         super();
-        this.model={...this.model,
-            userDetails: new PersonalInformation()
-        }
+       
+            this.userDetails = new PersonalInformation()
+            this.setProperty('userDetails',this.userDetails,{validate:this.userDetails.validate,map:this.userDetails.map,reset:this.userDetails.reset})
+
     }
 }
 
