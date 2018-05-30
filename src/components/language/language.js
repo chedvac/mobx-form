@@ -1,8 +1,7 @@
 import React from 'react'
-import {observer, inject} from 'mobx-react'
+import {observer} from 'mobx-react'
 import {observable} from 'mobx'
 
-@inject("applicationData")
 @observer
 export default class Language extends React.Component{
     

@@ -3,9 +3,7 @@ import {observer} from 'mobx-react'
 import control from './hocs/control'
 import {renderLabel} from './utils/renderLabel'
 import {renderError} from './utils/renderError'
-import {inject} from 'mobx-react'
 
-@inject("applicationData")
 @observer
 class Select extends React.Component{
     

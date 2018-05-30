@@ -1,4 +1,4 @@
-import {observable, autorun, action} from "mobx";
+import {observable, autorun, action,computed} from "mobx";
 import property from "../../../../../core/property"
 import ComplexType from '../../../../../core/ComplexType'
 import {generateGreaterThan} from '../../../../../validations/validationsFactory'
@@ -6,10 +6,12 @@ import addressValidations from '../../../../../validations/address'
 import {hebrewName} from '../../../../../validations/languages'
 import {maxlength} from '../../../../../validations/general'
 import {greaterThan} from '../../../../../validations/number'
+import {sumAges} from './validations'
 
 class PersonalInformation extends ComplexType {
+  
     constructor(){
-        super();
+        super({validations:[sumAges({number:30})]});
         this.firstName = ' ';
         this.status = '';
         this.agreement = '';
@@ -21,8 +23,6 @@ class PersonalInformation extends ComplexType {
         this.propertiesManager.fatherAge.validationsManager.validations.push(greaterThan({number1:()=>this.age}))
 
         this.condition = function(){return true}
-
-        this.getAge = this.getAge.bind(this);
 
         this.views = {//todo: rename , computed
             fullName :()=>{
@@ -62,16 +62,7 @@ class PersonalInformation extends ComplexType {
         this.volatile={
           
         }
-
     }
-
-    getAge(){
-        console.log('this.age')
-        if(this){
-            return this.age;
-        }
-    }
-   copyAge=10;
 
     @property({  validations:[hebrewName(), maxlength({value: 5})],}) firstName;
     @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName ;

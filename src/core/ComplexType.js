@@ -1,12 +1,13 @@
 import {observable} from "mobx"
+import validationsManagerFactory from "../validations/validationsManager"
 
 export default class ComplexType {
-    
-    constructor () {
-      this.isValid = true;
-      this.message = '';
+    @observable isValid = true;
+    @observable message = '';
+    constructor (settings = {}) {
+
       this.propertiesManager = {}
-      var self = this
+     
       this.model={
         } 
       ///add volatile views actions
@@ -17,7 +18,11 @@ export default class ComplexType {
       this.getPureModel = this.getPureModel.bind(this);
       this.map = this.map.bind(this);
       this.reset = this.reset.bind(this);
+      this.validationsManager = new validationsManagerFactory(settings.validations || []);
+      this.message='';
+      this.isValid=true;
     }
+   
     getDeepModel (prop) {
        return prop.getPureModel ? prop.getPureModel() : prop.getValue();
        
@@ -44,24 +49,7 @@ export default class ComplexType {
        }
        
    }
-   getModel(){
-       return this.model
-   };
-   getPureModel (){
-       var pureModel = {};
-       var model = this.model;
-       for (var prop in model) {
-           if (model.hasOwnProperty(prop) && !model[prop].ignore) {
-               pureModel[prop] = this.getDeepModel(model[prop]);
-           }
-       }
-       return pureModel;
-   };
-    // setModel : function(){
-       //     type.model
-       //     //map
-       // },
- 
+   
     validate (){
            var self = this;
            const validateChildren =()=>{
@@ -79,22 +67,43 @@ export default class ComplexType {
 
          
            const validateSelf=()=>{
-               var failedValidation= this.validations.find(item =>((!item.condition || item.condition()) && item.rule.validator(this.value)=== false) )
-               if(!failedValidation){
-                   this.message = ""
-                   this.isValid = true
+            let validationResult = self.validationsManager.validate(self);
+            if(!validationResult.isValid){
+                console.log(self,'not valid') 
+                self.message = validationResult.message 
+                self.isValid = false
+               }else{
+                self.message = ""
+                self.isValid = true
                }
-
-               this.message = failedValidation.message 
-               this.isValid = false
+            return self.isValid
 
            }
            
-          // validateSelf()
-          this.isValid = validateChildren()
+           validateSelf()
+          validateChildren()?this.isValid = this.isValid:this.isValid=false;
+
            return this.isValid
            
        };
+       getModel(){
+        return this.model
+    };
+    getPureModel (){
+        var pureModel = {};
+        var model = this.model;
+        for (var prop in model) {
+            if (model.hasOwnProperty(prop) && !model[prop].ignore) {
+                pureModel[prop] = this.getDeepModel(model[prop]);
+            }
+        }
+        return pureModel;
+    };
+     // setModel : function(){
+        //     type.model
+        //     //map
+        // },
+  
        //TODO fromSnapshot , to Snapshot
        map (){
 

@@ -4,9 +4,7 @@ import {observable} from "mobx"
 export const injectWrapper = function(wrappedObject, customizeStore = {}){
     return inject(
         stores => ( {
-            general:{
-                //formLanguage: stores.store.rootStore.formlanguage
-            },
+            ...stores,
             ...customizeStore
         }) )(wrappedObject);
 };
@@ -21,7 +19,7 @@ export const getPropsInject =(wrappedObject,store,name)=>{
             update:store.actions["set_"+name],
             field: store.model[name],
             message:  store.propertiesManager ? store.propertiesManager[name].message : '',
-            language: /*stores.rootStore.formlanguage.name*/'hebrew'
+            ...stores
         })
     })(wrappedObject);
 }
