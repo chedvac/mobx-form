@@ -16,10 +16,11 @@ export default function property(settings = {}) {
 
         descriptor.set = function(newValue) {
             if(!this.model[name] ){
-                this.setProperty(name, newValue, {validate, map, reset, validationsManager});
+                this.initialProperty(name, newValue, {validate, map, reset, validationsManager});
             }
             validate(this, newValue);
             const mappedValue = map(newValue);
+            this.model[name] = mappedValue;
             value.set(mappedValue);
         };
         descriptor.get = function() { 

@@ -14,8 +14,8 @@ class RootStore extends ComplexType {
         super()  
         this.simpleFieldsTab = new SimpleFieldsTab();
         this.tablesTab = new TablesTab();
-        this.setProperty('simpleFieldsTab',this.simpleFieldsTab);   
-        this.setProperty('tablesTab',this.tablesTab);       
+        this.initialProperty('simpleFieldsTab',this.simpleFieldsTab);   
+        this.initialProperty('tablesTab',this.tablesTab);       
         this.validateForm = this.validateForm.bind(this);
     }
         
