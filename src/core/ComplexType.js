@@ -11,7 +11,7 @@ export default class ComplexType {
       this.model={
         } 
       ///add volatile views actions
-      this.setProperty = this.setProperty.bind(this);
+      this.initialProperty = this.initialProperty.bind(this);
       this.validate = this.validate.bind(this);
       this.getDeepModel = this.getDeepModel.bind(this);
       this.getModel = this.getModel.bind(this);
@@ -26,7 +26,10 @@ export default class ComplexType {
        return prop.getPureModel ? prop.getPureModel() : prop.getValue();
        
     }   
-    setProperty (propertyName, value, actions) {
+    initialProperty (propertyName, value, actions) {
+        if(typeof value === 'object'){
+            actions = {validate: value.validate, map: value.map, reset:value.reset, validationsManager: value.validationsManager}
+        }
         this.model[propertyName] = value;
         this.propertiesManager[propertyName] = {
             ...actions,

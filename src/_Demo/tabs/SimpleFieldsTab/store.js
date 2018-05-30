@@ -6,7 +6,7 @@ class SimpleFieldsTab extends ComplexType {
         super();
        
             this.userDetails = new PersonalInformation()
-            this.setProperty('userDetails',this.userDetails,{validate:this.userDetails.validate,map:this.userDetails.map,reset:this.userDetails.reset})
+            this.initialProperty('userDetails',this.userDetails,{validate:this.userDetails.validate,map:this.userDetails.map,reset:this.userDetails.reset})
 
     }
 }
