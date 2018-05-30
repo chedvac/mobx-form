@@ -9,6 +9,7 @@ import {greaterThan} from '../../../../../validations/number'
 import {sumAges} from './validations'
 
 class PersonalInformation extends ComplexType {
+  
     constructor(){
         super({validations:[sumAges({number:30})]});
         this.firstName = ' ';
@@ -18,7 +19,7 @@ class PersonalInformation extends ComplexType {
         this.fatherAge = 15;
         this.age = 15;
         this.lastName = ' ';
-
+      
         this.condition = function(){return true}
 
         this.views = {//todo: rename , computed
@@ -60,40 +61,7 @@ class PersonalInformation extends ComplexType {
           
         }
     }
-    // //todo region
-    // @computed
-    // fullName(){
-    //     return this.firstName + this.lastName
-    // }        
     
-    // @action
-    // set_firstName(value){
-    //     this.firstName=value;
-    // }
-    // @action
-    // set_lastName(value){
-    //     this.lastName=value;
-    // }
-    // @action
-    // set_fatherAge(value){
-    //     this.fatherAge=value;
-    // }
-    // @action
-    // set_age(value){
-    //     this.age=value;
-    // }
-    // @action
-    // set_comments(value){
-    //     this.comments=value;
-    // }
-    // @action
-    // set_status(value){
-    //     this.status=value;
-    // }
-    // @action
-    // set_agreement(value){
-    //     this.agreement=value;
-    // }
      
     @property({  validations:[hebrewName(), maxlength({value: 5})],}) firstName;
     @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName ;
