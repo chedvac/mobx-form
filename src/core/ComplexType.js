@@ -4,12 +4,13 @@ import validationsManagerFactory from "../validations/validationsManager"
 export default class ComplexType {
     @observable isValid = true;
     @observable message = '';
-    constructor (settings = {}) {
+    constructor () {
 
       this.propertiesManager = {}
-     
-      this.model={
-        } 
+      this.model={} 
+      this.message='';
+      this.isValid=true;
+      
       ///add volatile views actions
       this.initialProperty = this.initialProperty.bind(this);
       this.validate = this.validate.bind(this);
@@ -18,9 +19,7 @@ export default class ComplexType {
       this.getPureModel = this.getPureModel.bind(this);
       this.map = this.map.bind(this);
       this.reset = this.reset.bind(this);
-      this.validationsManager = new validationsManagerFactory(settings.validations || []);
-      this.message='';
-      this.isValid=true;
+      
     }
    
     getDeepModel (prop) {
@@ -67,6 +66,7 @@ export default class ComplexType {
 
          
            const validateSelf=()=>{
+            self.validationsManager = self.validationsManager || new validationsManagerFactory(self.validations || []);
             let validationResult = self.validationsManager.validate(self);
             if(!validationResult.isValid){
                 console.log(self,'not valid') 
