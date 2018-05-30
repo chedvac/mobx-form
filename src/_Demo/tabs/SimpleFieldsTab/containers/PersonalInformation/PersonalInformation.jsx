@@ -19,7 +19,7 @@ import { getPropsInject } from '../../../../../core/inject'
             hebrew: {
                 firstName: ' שם פרטי',
                 lastName: ' שם משפחה',
-                age:'גיל',
+                age:'גיל הבן',
                 fatherAge:'גיל האב', 
                 comments: 'הערות',
                 status: 'מצב משפחתי',

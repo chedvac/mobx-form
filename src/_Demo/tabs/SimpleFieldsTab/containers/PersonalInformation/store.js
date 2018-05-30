@@ -14,12 +14,15 @@ class PersonalInformation extends ComplexType {
         this.status = '';
         this.agreement = '';
         this.comments = '';
-        this.fatherAge = 15;
+        this.fatherAge = 45;
         this.age = 15;
         this.lastName = ' ';
 
+        this.propertiesManager.fatherAge.validationsManager.validations.push(greaterThan({number1:()=>this.age}))
+
         this.condition = function(){return true}
 
+        this.getAge = this.getAge.bind(this);
 
         this.views = {//todo: rename , computed
             fullName :()=>{
@@ -61,10 +64,20 @@ class PersonalInformation extends ComplexType {
         }
 
     }
+
+    getAge(){
+        console.log('this.age')
+        if(this){
+            return this.age;
+        }
+    }
+   copyAge=10;
+
     @property({  validations:[hebrewName(), maxlength({value: 5})],}) firstName;
     @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName ;
     @property({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age;
-    @property ({validations:[greaterThan({number: 10})]}) fatherAge;
+    
+    @property ({validations:[]}) fatherAge;
     @property ({validations:[]}) comments;
     @property ({validations:[]}) status;
     @property ({validations:[]}) agreement;
