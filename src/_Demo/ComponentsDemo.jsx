@@ -15,7 +15,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
      
     render() {
         const SimpleFields = injectWrapper(SimpleFieldsTab, this.props.rootStore.simpleFieldsTab);
-        // const Tables = injectWrapper(TablesTab, this.props.rootStore.store.tablesTab);
+        const Tables = injectWrapper(TablesTab, this.props.rootStore.tablesTab);
     
         // const tabs = [
         //     new TabSettings({number: '1',name: 'דוגמאות לשדות רגילים', path: '/SimpleFields' , component: SimpleFields}),
@@ -30,7 +30,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
                
                 <Toolbar />
                 <SimpleFields/>
-                {/* <Tables/> */}
+                <Tables/>
                 <div className="row">
                     <div className="small-12 columns">
                         <button className="button" type="button" onClick={this.props.rootStore.validateForm} >בדוק תקינות  </button>

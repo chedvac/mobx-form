@@ -11,14 +11,11 @@ import {toJS} from 'mobx'
 
 class RootStore extends ComplexType {
     constructor() {
-        super()
-               
-            this.simpleFieldsTab = new SimpleFieldsTab()
-            this.setProperty('simpleFieldsTab',this.simpleFieldsTab,{validate:this.simpleFieldsTab.validate,map:this.simpleFieldsTab.map,reset:this.simpleFieldsTab.reset})
-            
-            //tablesTab: new TablesTab()
-       
-       
+        super()  
+        this.simpleFieldsTab = new SimpleFieldsTab();
+        this.tablesTab = new TablesTab();
+        this.setProperty('simpleFieldsTab',this.simpleFieldsTab);   
+        this.setProperty('tablesTab',this.tablesTab);       
         this.validateForm = this.validateForm.bind(this);
     }
         
