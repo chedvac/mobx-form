@@ -9,7 +9,7 @@ import {greaterThan} from '../../../../../validations/number'
 import {sumAges} from './validations'
 
 class PersonalInformation extends ComplexType {
-    validations= [sumAges({number:30})]
+    validations= [sumAges({number:60})]
     constructor(){
         super();
         this.firstName = ' ';

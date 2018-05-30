@@ -15,5 +15,5 @@ export function sumAges(params){
         return (age + fatherAge) === number;
     }
     
-    return validationFactory.generateBasicValidation({name: 'sumAges', message: 'סכום הגילאים חייב להיות 30'}, params, validator);
+    return validationFactory.generateBasicValidation({name: 'sumAges', message: `סכום הגילאים חייב להיות ${number}`}, params, validator);
 };
