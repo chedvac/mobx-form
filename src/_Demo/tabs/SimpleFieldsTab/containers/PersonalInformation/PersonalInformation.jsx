@@ -1,6 +1,6 @@
                                              
 import React from 'react'
-import {observer, inject} from 'mobx-react'
+import {observer} from 'mobx-react'
 
 import Input from '../../../../../Fields/Input';
 import Textarea from '../../../../../Fields/Textarea';
@@ -8,7 +8,7 @@ import Select from '../../../../../Fields/Select';
 import Checkbox from '../../../../../Fields/Checkbox';
 import { getPropsInject } from '../../../../../core/inject'
 
-@inject("applicationData")
+
 @observer
  class PersonalInformation extends React.Component{
     
