@@ -86,6 +86,7 @@ import { getPropsInject } from '../../../../../core/inject'
                         <Status label={this.currentResources().status} options={this.statusOptions} />
                     </div>
                 </div>
+                <span className='error-message'>{this.props.message}</span>
                 {/* <div className="row">
                     <div className="col-md-4">
                         <Agreement label={this.currentResources().agreement} />

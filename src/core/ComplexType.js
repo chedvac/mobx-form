@@ -1,8 +1,9 @@
 import {observable} from "mobx"
+import validationsManagerFactory from "../validations/validationsManager"
 
 export default class ComplexType {
     
-    constructor () {
+    constructor (settings = {}) {
       this.isValid = true;
       this.message = '';
       this.propertiesManager = {}
@@ -17,7 +18,10 @@ export default class ComplexType {
       this.getPureModel = this.getPureModel.bind(this);
       this.map = this.map.bind(this);
       this.reset = this.reset.bind(this);
+      this.validationsManager = new validationsManagerFactory(settings.validations || []);
+      
     }
+   
     getDeepModel (prop) {
        return prop.getPureModel ? prop.getPureModel() : prop.getValue();
        
@@ -76,19 +80,21 @@ export default class ComplexType {
 
          
            const validateSelf=()=>{
-               var failedValidation= this.validations.find(item =>((!item.condition || item.condition()) && item.rule.validator(this.value)=== false) )
-               if(!failedValidation){
-                   this.message = ""
-                   this.isValid = true
+            let validationResult = self.validationsManager.validate(self);
+            if(!validationResult.isValid){
+                self.message = validationResult.message 
+                self.isValid = false
+               }else{
+                self.message = ""
+                self.isValid = true
                }
-
-               this.message = failedValidation.message 
-               this.isValid = false
+            return self.isValid
 
            }
            
-          // validateSelf()
-          this.isValid = validateChildren()
+          this.isValid =  validateSelf()
+          validateChildren()?this.isValid = this.isValid:this.isValid=false;
+
            return this.isValid
            
        };
