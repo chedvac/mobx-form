@@ -33,16 +33,16 @@ export default function property(settings = {}) {
 
         const validate=(parent, newValue )=>{
             const value = newValue ? newValue : descriptor.get();
-            let feiledValidation = validationsManager.validate(value);
-            if(!feiledValidation.isValid){
+            let validationResult = validationsManager.validate(value);
+            if(!validationResult.isValid){
                 parent.propertiesManager[name].isValid = false
-                parent.propertiesManager[name].message = feiledValidation.message;
+                parent.propertiesManager[name].message = validationResult.message;
             }
             else{
                 parent.propertiesManager[name].isValid = true
                 parent.propertiesManager[name].message = '';
             }
-            return feiledValidation.isValid;
+            return validationResult.isValid;
         }
 
         const reset=()=>{

@@ -9,9 +9,9 @@ import {greaterThan} from '../../../../../validations/number'
 import {sumAges} from './validations'
 
 class PersonalInformation extends ComplexType {
-  
+    validations= [sumAges({number:30})]
     constructor(){
-        super({validations:[sumAges({number:30})]});
+        super();
         this.firstName = ' ';
         this.status = '';
         this.agreement = '';
@@ -22,53 +22,62 @@ class PersonalInformation extends ComplexType {
       
         this.condition = function(){return true}
 
-        this.views = {//todo: rename , computed
-            fullName :()=>{
-                return this.firstName + this.lastName
-            }
-        }
-        this.actions = {
-            @action
-            set_firstName:(value)=>{
-                this.firstName=value;
-            },
-            @action
-            set_lastName:(value)=>{
-                this.lastName=value;
-            },
-            @action
-            set_fatherAge:(value)=>{
-                this.fatherAge=value;
-            },
-            @action
-            set_age:(value)=>{
-                this.age=value;
-            },
-            @action
-            set_comments:(value)=>{
-                this.comments=value;
-            },
-            @action
-            set_status:(value)=>{
-                this.status=value;
-            },
-            @action
-            set_agreement:(value)=>{
-                this.agreement=value;
-            }
-        }
-        this.volatile={
-          
-        }
+        this.set_firstName = this.set_firstName.bind(this);
+        this.set_lastName = this.set_lastName.bind(this);
+        this.set_fatherAge = this.set_fatherAge.bind(this);
+        this.set_age = this.set_age.bind(this);
+        this.set_comments = this.set_comments.bind(this);
+        this.set_status = this.set_status.bind(this);
+        this.set_agreement = this.set_agreement.bind(this);
     }
-    
-  
-    @property({  validations:[hebrewName(), maxlength({value: 5})],}) firstName;
-    @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName ;
-    @property({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age;
-    @property ({validations:[greaterThan({number: 10})]}) fatherAge;
-    @property ({validations:[]}) comments;
-    @property ({validations:[]}) status;
-    @property ({validations:[]}) agreement;
+   
+     // #region properties 
+     @property({  validations:[hebrewName(), maxlength({value: 5})],}) firstName;
+     @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName ;
+     @property({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age;
+     @property ({validations:[greaterThan({number: 10})]}) fatherAge;
+     @property ({validations:[]}) comments;
+     @property ({validations:[]}) status;
+     @property ({validations:[]}) agreement;
+    //#endregion properties 
+
+    // #region actions 
+    @action
+    set_firstName(value){
+        this.firstName=value;
+    }
+    @action
+    set_lastName(value){
+        this.lastName=value;
+    }
+    @action
+    set_fatherAge(value){
+        this.fatherAge=value;
+    }
+    @action
+    set_age(value){
+        this.age=value;
+    }
+    @action
+    set_comments(value){
+        this.comments=value;
+    }
+    @action
+    set_status(value){
+        this.status=value;
+    }
+    @action
+    set_agreement(value){
+        this.agreement=value;
+    }
+    //#endregion actions
+
+    // #region computeds 
+    @computed
+    fullName(){
+        return this.firstName + this.lastName
+    }        
+    //#endregion computeds  
+   
 }
 export default PersonalInformation;
