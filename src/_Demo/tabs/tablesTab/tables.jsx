@@ -2,9 +2,7 @@ import React from 'react'
 import {observer} from 'mobx-react'
 import Input from '../../../Fields/Input';
 import {injectWrapper, getPropsInject} from '../../../core/inject';
-import {inject} from 'mobx-react'
 
-@inject("applicationData")
 @observer
 export default class Tables extends React.Component{
     

@@ -12,10 +12,12 @@ import control from '../../../Fields/hocs/control'
     }
   
     render(){
-        const UserDetails = injectWrapper(PersonalInformation,this.props.model.userDetails)
+        const UserDetails = injectWrapper(PersonalInformation,this.props.userDetails)
         return(
             <div>
-            <UserDetails  />
+            <UserDetails />
+            <UserDetails />
+
             </div>
         );
     }

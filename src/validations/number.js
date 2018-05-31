@@ -3,8 +3,10 @@ import {stringExtensionFormat} from './utils'
 import validationFactory from './validationsFactory';
 
 export function greaterThan(params){
-    let {number} = params;
-    const validator = (val)=>{
+    let {number1} = params;
+    function validator(val) {
+        let number = typeof number1 ==="function" ? number1() : number1;
+                
         if (!number ||isNaN(number.toString())) {
             return true;
         }
@@ -15,7 +17,8 @@ export function greaterThan(params){
         }
         return val > number;
     }
-    return validationFactory.generateBasicValidation({name: 'greaterThan', message: stringExtensionFormat(messages.number.greaterThan.hebrew,number)}, params, validator);
+    // return validationFactory.generateBasicValidation({name: 'greaterThan', message: stringExtensionFormat(messages.number.greaterThan.hebrew,number1)}, params, validator);
+    return validationFactory.generateBasicValidation({name: 'greaterThan', message: stringExtensionFormat(messages.number.greaterThan.hebrew,"גיל הבן")}, params, validator);
 };
 
 // export const lessThan = params => {

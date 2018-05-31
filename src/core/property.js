@@ -10,10 +10,12 @@ export default function property(settings = {}) {
         complexTypeInstance._propertiesInitialized = true;
         for (var key in properties) {
             propertyCreator({target: complexTypeInstance, name: properties[key].name , descriptor: properties[key].descriptor, validationsManager})
+
         }
     }
     return  function (target, name, descriptor) {
         target._properties = target._properties || {};
+        target._initializeInstance = target._initializeInstance || initializeInstance;
         target._properties[name] = {
             name,
             descriptor
