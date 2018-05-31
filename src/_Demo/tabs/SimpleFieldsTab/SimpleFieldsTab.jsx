@@ -16,7 +16,6 @@ import control from '../../../Fields/hocs/control'
         return(
             <div>
             <UserDetails />
-            <UserDetails />
 
             </div>
         );

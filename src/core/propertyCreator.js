@@ -1,5 +1,4 @@
 import {observable} from "mobx"
-import validationsManagerFactory from "../validations/validationsManager"
 export default function ({target, name, descriptor, validationsManager, ...params} = params) {
 
     var defaultValue = descriptor? descriptor.initializer ? descriptor.initializer.call(target) : descriptor.value : undefined;
@@ -24,7 +23,7 @@ export default function ({target, name, descriptor, validationsManager, ...param
     }
 
     const validate=(parent, newValue )=>{
-        const value = newValue ? newValue : descriptor.get();
+        const value = newValue !== undefined ? newValue : descriptor.get();
         let feiledValidation = validationsManager.validate(value);
         if(!feiledValidation.isValid){
             parent.propertiesManager[name].isValid = false

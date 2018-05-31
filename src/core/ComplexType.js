@@ -1,5 +1,6 @@
 import {observable} from "mobx"
 import validationsManagerFactory from "../validations/validationsManager"
+import initializeInstance from './initializeComplexType'
 
 export default class ComplexType {
     @observable isValid = true;
@@ -11,17 +12,15 @@ export default class ComplexType {
         //   this.message='';
         //   this.isValid=true;
       
-      ///add volatile views actions
-      this.initialProperty = this.initialProperty.bind(this);
-      this.validate = this.validate.bind(this);
-      this.getDeepModel = this.getDeepModel.bind(this);
-      this.getModel = this.getModel.bind(this);
-      this.getPureModel = this.getPureModel.bind(this);
-      this.map = this.map.bind(this);
-      this.reset = this.reset.bind(this);
-      if(this._initializeInstance){
-        this._initializeInstance(this);
-    }
+        ///add volatile views actions
+        this.initialProperty = this.initialProperty.bind(this);
+        this.validate = this.validate.bind(this);
+        this.getDeepModel = this.getDeepModel.bind(this);
+        this.getModel = this.getModel.bind(this);
+        this.getPureModel = this.getPureModel.bind(this);
+        this.map = this.map.bind(this);
+        this.reset = this.reset.bind(this);
+        initializeInstance(this);
     }
    
     getDeepModel (prop) {
