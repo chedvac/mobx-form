@@ -51,7 +51,7 @@ import { getPropsInject } from '../../../../../core/inject'
         this.statusOptions=[{key:'1',value:'נשוי'},{key:'2',value:'רווק'},{key:'3',value:'גרוש'}]
     }
     currentResources = function(){
-        return this.texts[this.props.applicationData.formLanguage.model.name];
+        return this.texts[this.props.applicationData.formLanguage.name];
     };        
 
 

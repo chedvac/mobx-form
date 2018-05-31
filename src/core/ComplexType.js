@@ -23,7 +23,7 @@ export default class ComplexType {
        
     }   
     initialProperty (propertyName, value, actions) {
-        if(typeof value === 'object'){
+        if(!actions && typeof value === 'object'){
             actions = {validate: value.validate, map: value.map, reset:value.reset, validationsManager: value.validationsManager}
         }
         this.model[propertyName] = value;

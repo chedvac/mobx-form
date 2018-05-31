@@ -10,13 +10,6 @@ import {greaterThan} from '../../../../../validations/number'
 class PersonalInformation extends ComplexType {
     constructor(){
         super();
-        this.firstName = ' ';
-        this.status = '';
-        this.agreement = '';
-        this.comments = '';
-        this.fatherAge = 15;
-        this.age = 15;
-        this.lastName = ' ';
 
         this.condition = function(){return true}
 
@@ -61,12 +54,11 @@ class PersonalInformation extends ComplexType {
         }
 
     }
-    @property({  validations:[hebrewName(), maxlength({value: 5})],}) firstName;
-    @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName ;
-    @property({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age;
-    @property ({validations:[greaterThan({number: 10})]}) fatherAge;
-    @property ({validations:[]}) comments;
-    @property ({validations:[]}) status;
-    @property ({validations:[]}) agreement;
+    @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName = '';
+    @property({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age = 15 ;
+    @property ({validations:[greaterThan({number: 10})]}) fatherAge = 0;
+    @property ({validations:[]}) comments = '';
+    @property ({validations:[]}) status = true;
+    @property ({validations:[]}) agreement = "";
 }
 export default PersonalInformation;

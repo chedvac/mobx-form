@@ -6,20 +6,17 @@ class Language extends ComplexType {
     constructor(){
         super()
         const self = this;
-        this.model={...this.model,
-           @property({validations:[]})
-           name :'hebrew'
-          
-        }
+
+        
         this.actions = {
-            @action
-            set_name:(value)=>{
+            @action set_name:(value)=>{
                 this.model.name = value;
             }
        
         }
     }
-    
-}
+    @property({validations:[]}) name ='hebrew'
 
+}
+    
 export default Language;

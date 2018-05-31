@@ -7,8 +7,7 @@ import {maxlength} from '../../../validations/general'
 class TablesTab extends ComplexType{
     constructor(){
         super()
-        this.email = ' ';
-        this.houseNumber = ' ';
+        // this.email = "yaelp@gov.il"
         this.actions ={
             @action set_email:(newValue)=> {
                 this.email = newValue
@@ -19,8 +18,10 @@ class TablesTab extends ComplexType{
         
         }
     }   
-    @property({ validations:[hebrewName(), maxlength({value: 5})]})  email;
-    @property() houseNumber;
+    @observable age = 15;
+    @property({ validations:[hebrewName(), maxlength({value: 5})]})  email = '';
+    @property() houseNumber = '';
+
 }
   
 export default TablesTab;

@@ -1,53 +1,38 @@
 import {observable} from "mobx"
 import validationsManagerFactory from "../validations/validationsManager"
+import propertyCreator from './propertyCreator'
 export default function property(settings = {}) {
-    return function (target, name, descriptor) {
-
-        let defaultValue= descriptor.value;
-         
-        const validationsManager = new validationsManagerFactory(settings.validations || []);
-  
-        delete descriptor.initializer;
-        delete descriptor.value;
-        delete descriptor.writable ;
-
-        const value=observable.box(target[name]);
-        // target.setpropertiesActions(name, validate)
-
-        descriptor.set = function(newValue) {
-            if(!this.model[name] ){
-                this.initialProperty(name, newValue, {validate, map, reset, validationsManager});
-            }
-            validate(this, newValue);
-            const mappedValue = map(newValue);
-            this.model[name] = mappedValue;
-            value.set(mappedValue);
-        };
-        descriptor.get = function() { 
-            return value.get();
-        };
-
-        const map=(value)=>{
-            return typeof settings.map === 'function' ? settings.map(value) : value;
+    const validationsManager = new validationsManagerFactory(settings.validations || []);
+    const  initializeInstance = function(complexTypeInstance){
+        if (complexTypeInstance._propertiesInitialized === true)
+            return;
+        var properties = complexTypeInstance._properties;
+        complexTypeInstance._propertiesInitialized = true;
+        for (var key in properties) {
+            propertyCreator({target: complexTypeInstance, name: properties[key].name , descriptor: properties[key].descriptor, validationsManager})
         }
-
-        const validate=(parent, newValue )=>{
-            const value = newValue ? newValue : descriptor.get();
-            let feiledValidation = validationsManager.validate(value);
-            if(!feiledValidation.isValid){
-                parent.propertiesManager[name].isValid = false
-                parent.propertiesManager[name].message = feiledValidation.message;
-            }
-            else{
-                parent.propertiesManager[name].isValid = true
-                parent.propertiesManager[name].message = '';
-            }
-            return feiledValidation.isValid;
-        }
-
-        const reset=()=>{
-            descriptor.set(defaultValue)   
-        }
-        return descriptor;
     }
+    return  function (target, name, descriptor) {
+        target._properties = target._properties || {};
+        target._properties[name] = {
+            name,
+            descriptor
+        }
+       
+        return Object.defineProperty(target, name, {
+            configurable: true,
+            enumerable: true,
+            get: function () {
+                initializeInstance(this);
+                // return ''
+                return this[name];
+            },
+            set: function (value) {
+                initializeInstance(this);
+                this[name] = value;
+            }
+        })
+        
+    }
+    
 }
