@@ -1,14 +1,9 @@
 import validationsManagerFactory from "../validations/validationsManager"
-export default function property(settings = {}) {
+import {defineComplexTypeProperty} from './initializeComplexType';
+export default function formObservable(settings = {}) {
     const validationsManager = new validationsManagerFactory(settings.validations || []);
     return  function (target, name, descriptor) {
-        target._properties = target._properties || {};
-        target._properties[name] = {
-            name,
-            descriptor,
-            validationsManager
-        }
-       
+        defineComplexTypeProperty({target, name, descriptor, validationsManager, isFormObservable: true});
         return Object.defineProperty(target, name, {
             configurable: true,
             enumerable: true,

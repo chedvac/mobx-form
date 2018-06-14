@@ -13,7 +13,7 @@ class App extends Component {
     window.rootStore = rootStore
     const applicationData = {
       formLanguage: new LanguageStore()
-    }
+        }
     return (
       <Provider applicationData = {applicationData}>
         <div className="App">

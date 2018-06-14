@@ -1,5 +1,5 @@
 import {observable, autorun, action} from "mobx";
-import property from "../../core/property"
+import formObservable from "../../core/formObservable"
 import ComplexType from "../../core/ComplexType"
 
 class Language extends ComplexType {
@@ -15,7 +15,7 @@ class Language extends ComplexType {
        
         }
     }
-    @property({validations:[]}) name ='hebrew'
+    @formObservable() name ='hebrew'
 
 }
     

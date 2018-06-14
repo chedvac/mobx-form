@@ -10,35 +10,28 @@ export default function ({target, name, descriptor, validationsManager, ...param
 
     descriptor.set = function(newValue) {
         validate(this, newValue);
-        const mappedValue = map(newValue);
-        this.model[name] = mappedValue;
-        value.set(mappedValue);
+        //const mappedValue = map(newValue);
+        this.model[name] = newValue;
+        value.set(newValue);
     };
+
     descriptor.get = function() { 
         return value.get();
     };
-
-    const map=(value1)=>{
-        return typeof params.map === 'function' ? params.map(value1) : value1;
-    }
 
     const validate=(parent, newValue )=>{
         const value = newValue !== undefined ? newValue : descriptor.get();
         let feiledValidation = validationsManager.validate(value);
         if(!feiledValidation.isValid){
-            parent.propertiesManager[name].isValid = false
-            parent.propertiesManager[name].message = feiledValidation.message;
+            parent.propertiesManager.properties[name].isValid = false
+            parent.propertiesManager.properties[name].message = feiledValidation.message;
         }
         else{
-            parent.propertiesManager[name].isValid = true
-            parent.propertiesManager[name].message = '';
+            parent.propertiesManager.properties[name].isValid = true
+            parent.propertiesManager.properties[name].message = '';
         }
         return feiledValidation.isValid;
     }
-
-    const reset=()=>{
-        descriptor.set(defaultValue)   
-    }
-    target.initialProperty(name, value, {validate, map, reset, validationsManager});
+    target.initialProperty(name, {validate, validationsManager, ref: value});
     Object.defineProperty(target, name, descriptor);
 }

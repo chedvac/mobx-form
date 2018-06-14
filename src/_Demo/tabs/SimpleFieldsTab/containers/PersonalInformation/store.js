@@ -1,5 +1,7 @@
 import {observable, autorun, action,computed} from "mobx";
-import property from "../../../../../core/property"
+import formObservable from "../../../../../core/formObservable"
+import modelProp from "../../../../../core/modelProp"
+
 import ComplexType from '../../../../../core/ComplexType'
 import {generateGreaterThan} from '../../../../../validations/validationsFactory'
 import addressValidations from '../../../../../validations/address'
@@ -13,7 +15,7 @@ class PersonalInformation extends ComplexType {
     constructor(){
         super();
 
-        this.propertiesManager.fatherAge.validationsManager.validations.push(greaterThan({number1:()=>this.age}))
+        this.propertiesManager.properties.fatherAge.validationsManager.validations.push(greaterThan({number1:()=>this.age}))
 
         this.condition = function(){return true}
 
@@ -24,19 +26,25 @@ class PersonalInformation extends ComplexType {
         this.set_comments = this.set_comments.bind(this);
         this.set_status = this.set_status.bind(this);
         this.set_agreement = this.set_agreement.bind(this);
+        this.set_city = this.set_city.bind(this);
     }
-    @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) firstName = '';
-    @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName = '';
-    @property({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age = 15 ;
-    @property ({validations:[greaterThan({number: 10})]}) fatherAge = 0;
-    @property ({validations:[]}) comments = '';
-    @property ({validations:[]}) status = 'true';
-    @property ({validations:[]}) agreement = "";
+    @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) firstName = '';
+    @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName = '';
+    @modelProp() @formObservable({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age = 15 ;
+    @modelProp() @formObservable ({validations:[greaterThan({number: 10})]}) fatherAge = 0;
+    @modelProp() @formObservable ({validations:[]}) comments = '';
+    @modelProp() @formObservable ({validations:[]}) status = 'true';
+    @modelProp() @formObservable ({validations:[]}) agreement = "";
+    @modelProp() @formObservable ({validations:[]}) city = "";
 
     // #region actions 
     @action
     set_firstName(value){
         this.firstName=value;
+    }
+    @action
+    set_city(value){
+        this.city=value;
     }
     @action
     set_lastName(value){

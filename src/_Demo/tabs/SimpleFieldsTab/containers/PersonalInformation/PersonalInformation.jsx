@@ -7,7 +7,7 @@ import Textarea from '../../../../../Fields/Textarea';
 import Select from '../../../../../Fields/Select';
 import Checkbox from '../../../../../Fields/Checkbox';
 import { getPropsInject } from '../../../../../core/inject'
-
+import City from '../../../../../components/city/city'
 
 @observer
  class PersonalInformation extends React.Component{
@@ -63,6 +63,8 @@ import { getPropsInject } from '../../../../../core/inject'
         const Comments = getPropsInject(Textarea,this.props,'comments');
         const Status = getPropsInject(Select,this.props,'status');
         const Agreement = getPropsInject(Checkbox,this.props,'agreement');
+        const CityList = getPropsInject(City,this.props,'city');
+
 
         return(
             <div> 
@@ -84,6 +86,9 @@ import { getPropsInject } from '../../../../../core/inject'
                     </div>
                     <div className="col-md-4">
                         <Status label={this.currentResources().status} options={this.statusOptions} />
+                    </div>
+                    <div className="col-md-4">
+                        <CityList />
                     </div>
                 </div>
                 <span className='error-message'>{this.props.message}</span>

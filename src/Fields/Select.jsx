@@ -29,7 +29,7 @@ class Select extends React.Component{
           );
     }
     currentResources = function(){
-        return this.texts[this.props.applicationData.formLanguage.model.name];
+        return this.texts['hebrew']//this.props.applicationData.formLanguage.model.name];
     };
    
     render(){
