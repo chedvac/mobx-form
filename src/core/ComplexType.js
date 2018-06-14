@@ -8,8 +8,8 @@ export default class ComplexType {
     constructor () {
         this.propertiesManager = new PropertiesManager();
         this.model={} 
-        //   this.message='';
-        //   this.isValid=true;
+        this.message='';
+        this.isValid=true;
       
         ///add volatile views actions
         this.initialProperty = this.initialProperty.bind(this);

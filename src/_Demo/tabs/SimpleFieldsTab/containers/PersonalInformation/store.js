@@ -3,19 +3,34 @@ import formObservable from "../../../../../core/formObservable"
 import modelProp from "../../../../../core/modelProp"
 
 import ComplexType from '../../../../../core/ComplexType'
-import {generateGreaterThan} from '../../../../../validations/validationsFactory'
 import addressValidations from '../../../../../validations/address'
 import {hebrewName} from '../../../../../validations/languages'
 import {maxlength} from '../../../../../validations/general'
-import {greaterThan} from '../../../../../validations/number'
+import {greaterThan, lessThan} from '../../../../../validations/number'
 import {sumAges} from './validations'
+import validationFactory from './../../../../../validations/validationsFactory'
+import { request } from "http";
+import axios from 'axios'
+
+const myRequest = function(value) {
+    return axios.get("http://gov.forms.local/MW/File//", {params: {ID: value}}).then((res)=>{
+        if(res && res.data.statusCode === 0){
+            return true;
+        }
+        throw({error: "async validaion failed"});
+    })
+}
 
 class PersonalInformation extends ComplexType {
     validations= [sumAges({number:60})]
+
     constructor(){
         super();
 
-        this.propertiesManager.properties.fatherAge.validationsManager.validations.push(greaterThan({number1:()=>this.age}))
+
+        this.propertiesManager.properties.fatherAge.validationsManager.validations.push(greaterThan({number1: this.propertiesManager.properties.age.ref}))
+        this.propertiesManager.properties.age.validationsManager.validations.push(lessThan({number1: this.propertiesManager.properties.fatherAge.ref}))
+
 
         this.condition = function(){return true}
 
@@ -32,10 +47,12 @@ class PersonalInformation extends ComplexType {
     @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName = '';
     @modelProp() @formObservable({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age = 15 ;
     @modelProp() @formObservable ({validations:[greaterThan({number: 10})]}) fatherAge = 0;
-    @modelProp() @formObservable ({validations:[]}) comments = '';
+    @modelProp() @formObservable ({validations:[validationFactory.generateAsyncValidation({name: 'tryAsyncValidation', message: 'my default error', request: myRequest})]}) comments = '';
     @modelProp() @formObservable ({validations:[]}) status = 'true';
     @modelProp() @formObservable ({validations:[]}) agreement = "";
     @modelProp() @formObservable ({validations:[]}) city = "";
+
+
 
     // #region actions 
     @action
@@ -77,8 +94,9 @@ class PersonalInformation extends ComplexType {
     @computed
     fullName(){
         return this.firstName + this.lastName
-    }        
+    }
+
     //#endregion computeds  
-   
+
 }
 export default PersonalInformation;
