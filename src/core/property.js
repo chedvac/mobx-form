@@ -34,15 +34,11 @@ export default function property(settings = {}) {
         const validate=(parent, newValue )=>{
             const value = newValue ? newValue : descriptor.get();
             let validationResult = validationsManager.validate(value);
-            if(!validationResult.isValid){
-                parent.propertiesManager[name].isValid = false
-                parent.propertiesManager[name].message = validationResult.message;
-            }
-            else{
-                parent.propertiesManager[name].isValid = true
-                parent.propertiesManager[name].message = '';
-            }
+            parent.propertiesManager[name].isValid = validationResult.isValid
+            parent.propertiesManager[name].message = validationResult.message;
+            
             return validationResult.isValid;
+            
         }
 
         const reset=()=>{
@@ -51,3 +47,26 @@ export default function property(settings = {}) {
         return descriptor;
     }
 }
+// var self = this;
+// const validateChildren = () => {
+
+//     let childrenValid = true;
+//     const propertiesManager = self.propertiesManager
+//     if(propertiesManager){
+//         Object.keys(propertiesManager).forEach(function (key) {
+//             if (!propertiesManager[key].validate(self)) {
+//                 console.log(key, 'not valid')
+//                 childrenValid = false
+//             }
+//         })
+//     }
+//     return childrenValid
+// }
+
+// let validationResult = validationsManager.validate(newValue);
+// parent.propertiesManager[name].message = validationResult.message
+// parent.propertiesManager[name].isValid = validationResult.isValid
+    
+// validateChildren() ? this.isValid = this.isValid : this.isValid = false;
+
+// return this.isValid

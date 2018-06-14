@@ -6,12 +6,12 @@ import addressValidations from '../../../../../validations/address'
 import {hebrewName} from '../../../../../validations/languages'
 import {maxlength} from '../../../../../validations/general'
 import {greaterThan} from '../../../../../validations/number'
-import {sumAges} from './validations'
+
 
 class PersonalInformation extends ComplexType {
-    validations= [sumAges({number:60})]
-    constructor(){
-        super();
+    
+    constructor(settings){
+        super(settings);
         this.firstName = ' ';
         this.status = '';
         this.agreement = '';
@@ -31,6 +31,7 @@ class PersonalInformation extends ComplexType {
         this.set_comments = this.set_comments.bind(this);
         this.set_status = this.set_status.bind(this);
         this.set_agreement = this.set_agreement.bind(this);
+        
     }
    
      // #region properties 

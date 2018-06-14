@@ -1,13 +1,10 @@
 import {observable} from "mobx"
 
-export default class validationsManager{
-    failedValidation = {};
-
-    flattenDeep = (arr1) =>{
-        return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(this.flattenDeep(val)) : acc.concat(val), []);
-     };
+export default class PropertyManager{
+    
     constructor(validations=[]){
-        this.validations= this.flattenDeep(validations);
+        @observable message: "",
+        @observable isValid: ""
     }
     getMessage = () => {
     return this.failedValidation ? this.failedValidation.message : '';
