@@ -24,7 +24,7 @@ export default function ({target, name, descriptor, validationsManager, ...param
 
     const validate=(parent, newValue )=>{
         const value = newValue !== undefined ? newValue : descriptor.get();
-        let feiledValidation = validationsManager.validate(value);
+        let feiledValidation = validationsManager.validate(value, parent.propertiesManager[name]);
         if(!feiledValidation.isValid){
             parent.propertiesManager[name].isValid = false
             parent.propertiesManager[name].message = feiledValidation.message;
@@ -39,6 +39,6 @@ export default function ({target, name, descriptor, validationsManager, ...param
     const reset=()=>{
         descriptor.set(defaultValue)   
     }
-    target.initialProperty(name, value, {validate, map, reset, validationsManager});
+    target.initialProperty(name, value, {value,validate, map, reset, validationsManager});
     Object.defineProperty(target, name, descriptor);
 }
