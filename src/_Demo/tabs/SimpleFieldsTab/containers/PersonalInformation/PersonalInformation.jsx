@@ -1,14 +1,16 @@
                                              
 import React from 'react'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 
 import Input from '../../../../../Fields/Input';
 import Textarea from '../../../../../Fields/Textarea';
 import Select from '../../../../../Fields/Select';
 import Checkbox from '../../../../../Fields/Checkbox';
-import { getPropsInject } from '../../../../../core/inject'
+import { getPropsField } from '../../../../../core/getProps'
 import City from '../../../../../components/city/city'
 
+
+@inject('applicationData')
 @observer
  class PersonalInformation extends React.Component{
     
@@ -56,39 +58,40 @@ import City from '../../../../../components/city/city'
 
 
     render(){
-        const FirstName = getPropsInject(Input,this.props,'firstName');
-        const LastName = getPropsInject(Input,this.props,'lastName');
-        const Age = getPropsInject(Input,this.props,'age');
-        const FatherAge = getPropsInject(Input,this.props,'fatherAge');
-        const Comments = getPropsInject(Textarea,this.props,'comments');
-        const Status = getPropsInject(Select,this.props,'status');
-        const Agreement = getPropsInject(Checkbox,this.props,'agreement');
-        const CityList = getPropsInject(City,this.props,'city');
-
+        const { userDetails } = this.props;
+        
 
         return(
             <div> 
                 <div className="row">
                     <div className="col-md-4">
-                        <FirstName label={this.currentResources().firstName} />
+                        <Input label={this.currentResources().firstName} 
+                        {...getPropsField(userDetails,'firstName')}/>
                     </div> 
                     <div className="col-md-4">
-                        <LastName label={this.currentResources().lastName} />
+                        <Input label={this.currentResources().lastName}
+                        {...getPropsField(userDetails,'lastName')} />
                     </div>
                     <div className="col-md-4">
-                        <Age label={this.currentResources().age} />
+                        <Input label={this.currentResources().age} 
+                        {...getPropsField(userDetails,'age')}/>
                     </div>
                     <div className="col-md-4">
-                        <FatherAge label={this.currentResources().fatherAge} />
+                        <Input label={this.currentResources().fatherAge} 
+                        {...getPropsField(userDetails,'fatherAge')}/>
                     </div>
                     <div className="col-md-4">
-                        <Comments label={this.currentResources().comments} rows={4} isAutoResize={false}/>
+                        <Textarea label={this.currentResources().comments} 
+                        {...getPropsField(userDetails,'comments')}
+                        rows={4} isAutoResize={false}/>
                     </div>
                     <div className="col-md-4">
-                        <Status label={this.currentResources().status} options={this.statusOptions} />
+                        <Select label={this.currentResources().status} 
+                        {...getPropsField(userDetails,'status')}
+                        options={this.statusOptions} />
                     </div>
                     <div className="col-md-4">
-                        <CityList />
+                        <City {...getPropsField(userDetails,'city')} />
                     </div>
                 </div>
                 <span className='error-message'>{this.props.message}</span>
