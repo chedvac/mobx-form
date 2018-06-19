@@ -52,9 +52,3 @@ class DatePicker extends React.Component {
 }
 export default control(DatePicker)
 
-
-/*TODO
-update
-icon
-validation
-*/
