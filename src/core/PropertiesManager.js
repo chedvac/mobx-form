@@ -14,6 +14,11 @@ class Property {
 };
 
 export default class PropertiesManager {
+    constructor(){
+        this.setProperty = this.setProperty.bind(this);
+        this.applyChildAction = this.applyChildAction.bind(this);
+        this.validate = this.validate.bind(this);
+    }
     properties = {};
     setProperty = function(propertyName, settings){
         if(this.properties[propertyName]){
@@ -32,8 +37,8 @@ export default class PropertiesManager {
         let childrenValid = true; 
         let currentChild;
         for (const property in this.properties) {
-            currentChild = this.properties[property]
-            childrenValid = typeof currentChild['validate'] === 'function' ? currentChild['validate'](parent) : true;             
+            currentChild = this.properties[property];
+            childrenValid = typeof currentChild['validate'] === 'function' ? currentChild.validate(parent) : true;             
        }
        return childrenValid;
     }

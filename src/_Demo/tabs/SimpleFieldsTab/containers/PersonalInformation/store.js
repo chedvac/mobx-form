@@ -14,11 +14,8 @@ class PersonalInformation extends ComplexType {
     validations= [sumAges({number:60})]
     constructor(){
         super();
-
         this.propertiesManager.properties.fatherAge.validationsManager.validations.push(greaterThan({number1:()=>this.age}))
-
         this.condition = function(){return true}
-
         this.set_firstName = this.set_firstName.bind(this);
         this.set_lastName = this.set_lastName.bind(this);
         this.set_fatherAge = this.set_fatherAge.bind(this);
@@ -29,6 +26,8 @@ class PersonalInformation extends ComplexType {
         this.set_city = this.set_city.bind(this);
     }
     @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) firstName = '';
+    @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) fdsfds = {a:'ghhg'};
+
     @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName = '';
     @modelProp() @formObservable({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age = 15 ;
     @modelProp() @formObservable ({validations:[greaterThan({number: 10})]}) fatherAge = 0;

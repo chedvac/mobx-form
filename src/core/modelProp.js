@@ -8,7 +8,7 @@ export  function modelPropGenerator ({target, name, descriptor, ...params} = par
     const reset=()=>{
         return typeof params.reset === 'function' ? params.reset(defaultValue) : typeof target.reset === 'function' ? target.reset(defaultValue) :  descriptor.set(defaultValue);
     };
-    target.initialProperty(name, { map, reset, ref: descriptor, validate: target.validate});
+    target.initialProperty(name, { map, reset, ref: descriptor});
 }
 export default function modelProp(settings = {}) {
     return  function (target, name, descriptor) {
