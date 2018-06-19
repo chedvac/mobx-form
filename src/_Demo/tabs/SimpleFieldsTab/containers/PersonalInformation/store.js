@@ -26,14 +26,9 @@ class PersonalInformation extends ComplexType {
 
     constructor(){
         super();
-
-
         this.propertiesManager.properties.fatherAge.validationsManager.validations.push(greaterThan({number1: this.propertiesManager.properties.age.ref}))
         this.propertiesManager.properties.age.validationsManager.validations.push(lessThan({number1: this.propertiesManager.properties.fatherAge.ref}))
-
-
         this.condition = function(){return true}
-
         this.set_firstName = this.set_firstName.bind(this);
         this.set_lastName = this.set_lastName.bind(this);
         this.set_fatherAge = this.set_fatherAge.bind(this);
@@ -44,10 +39,12 @@ class PersonalInformation extends ComplexType {
         this.set_city = this.set_city.bind(this);
     }
     @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) firstName = '';
+    @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) fdsfds = '';
+
     @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName = '';
     @modelProp() @formObservable({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age = 15 ;
     @modelProp() @formObservable ({validations:[greaterThan({number: 10})]}) fatherAge = 0;
-    @modelProp() @formObservable ({validations:[validationFactory.generateAsyncValidation({name: 'tryAsyncValidation', message: 'my default error', request: myRequest})]}) comments = '';
+    @modelProp() @formObservable ({validations:[]}) comments = '';
     @modelProp() @formObservable ({validations:[]}) status = 'true';
     @modelProp() @formObservable ({validations:[]}) agreement = "";
     @modelProp() @formObservable ({validations:[]}) city = "";

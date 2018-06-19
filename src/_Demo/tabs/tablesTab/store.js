@@ -12,12 +12,9 @@ class TablesTab extends ComplexType{
         // this.email = "yaelp@gov.il"
         this.set_email = this.set_email.bind(this);
         this.set_houseNumber = this.set_houseNumber.bind(this);
-        
     }   
     @modelProp() @formObservable({ validations:[hebrewName(), maxlength({value: 5})]})  email = '';
     @modelProp() @formObservable() houseNumber = '';
-
-
     @action
     set_email(value){
         this.email=value;
