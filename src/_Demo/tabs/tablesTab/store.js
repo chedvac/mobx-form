@@ -10,19 +10,19 @@ class TablesTab extends ComplexType{
     constructor(){
         super()
         // this.email = "yaelp@gov.il"
-        this.actions ={
-            @action set_email:(newValue)=> {
-                this.email = newValue
-            },
-            @action set_houseNumber:(newValue)=> {
-                this.houseNumber = newValue
-            }
-        
-        }
+        this.set_email = this.set_email.bind(this);
+        this.set_houseNumber = this.set_houseNumber.bind(this);
     }   
-    @observable age = 15;
     @modelProp() @formObservable({ validations:[hebrewName(), maxlength({value: 5})]})  email = '';
     @modelProp() @formObservable() houseNumber = '';
+    @action
+    set_email(value){
+        this.email=value;
+    }
+    @action
+    set_houseNumber(value){
+        this.houseNumber=value;
+    }
 
 }
   

@@ -7,6 +7,8 @@ import ComplexType from '../core/ComplexType'
 //import externalized from '../core/externalized'
 import submitAction from "../actions/submit";
 import FormInformation from "../core/formInformation";
+import {registerComplexProperties} from "../core/initializeComplexType";
+
 import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/store'
 import {toJS} from 'mobx'
 import MWRequestDefaultBehavior from '../networking/mwWrapper'
@@ -19,6 +21,7 @@ class RootStore extends ComplexType {
         this.tablesTab = new TablesTab();
         this.validateForm = this.validateForm.bind(this);
         this.submitForm = this.submitForm.bind(this);
+        registerComplexProperties(this);
     }
     @modelProp() formInformation;
     @modelProp() simpleFieldsTab;

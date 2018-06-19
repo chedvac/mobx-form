@@ -1,16 +1,3 @@
-const messageIdentifier = "###";
-
-export const extractMessage = message => {
-  const messageExpression = `${messageIdentifier}(.*?)${messageIdentifier}`;
-  const messageRegularExpression = new RegExp(messageExpression);
-
-  const result = message.match(messageRegularExpression);
-  return result ? result[1] : "";
-};
-
-export const constructMessage = message => {
-  return `${messageIdentifier} ${message} ${messageIdentifier}`;
-};
 
 export const stringExtensionFormat = function (source, params) { //eslint-disable-line complexity
   if (typeof(source) !== 'string') {
@@ -44,4 +31,8 @@ export const objectStringExtensionFormat= (object,params)=>{
   for (var source in object) {
     object[source]=stringExtensionFormat(object[source],params)
     }
+}
+
+export function concatArray(arr1 = []){
+  return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(concatArray(val)) : acc.concat(val), []);
 }

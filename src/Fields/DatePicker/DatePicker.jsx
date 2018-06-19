@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import control from '../hocs/control'
 import {renderLabel} from '../utils/renderLabel'
 import {renderError} from '../utils/renderError'
@@ -14,7 +14,7 @@ import  'moment/locale/he';
 import languageResources from '../../resources/languages'
 import './DatePicker.css'
 
-
+@inject('applicationData')
 @observer
 class DatePicker extends React.Component {
   constructor(props){

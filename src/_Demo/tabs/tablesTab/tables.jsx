@@ -1,8 +1,10 @@
 import React from 'react'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import Input from '../../../Fields/Input';
-import {injectWrapper, getPropsInject} from '../../../core/inject';
+import {getPropsField} from '../../../core/getProps';
 
+
+@inject('applicationData')
 @observer
 export default class Tables extends React.Component{
     
@@ -28,16 +30,16 @@ export default class Tables extends React.Component{
         return this.texts[this.props.applicationData.formLanguage.name];
     }; 
     render(){
-        const Email = getPropsInject(Input,this.props,'email');
-        const HouseNumber = getPropsInject(Input,this.props,'houseNumber');
-
+        const { tables } = this.props;
         return(   
             <div className="row">
                 <div className="col-md-4">
-                    <Email label={this.currentResources().email}/>
+                    <Input label={this.currentResources().email}
+                    {...getPropsField(tables,'email')}/>
                 </div>
                 <div className="col-md-4">   
-                    <HouseNumber label={this.currentResources().houseNumber}/>        
+                    <Input label={this.currentResources().houseNumber}
+                    {...getPropsField(tables,'houseNumber')}/>        
                 </div> 
             </div>
         );

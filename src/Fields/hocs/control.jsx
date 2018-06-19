@@ -19,16 +19,11 @@ function control (WrappedComponent) {
         }
    
         updateStore=(e)=>{
-            
             const newValue=getEventValue(e);
-            console.log('updateStore newValue ',newValue)
-            
             this.props.update(newValue);
         }
 
         updateState=(e)=>{
-            console.log('updateState newValue ',getEventValue(e))
-            
             this.setState({value: getEventValue(e)});
         }
 
@@ -36,7 +31,6 @@ function control (WrappedComponent) {
             if( this.props.field!==nextProps.field && this.state.value !== nextProps.field)// 
             {
                 this.setState({value:nextProps.field});
-                console.log('state', this.state.value)
                 return true;
             }
             return true;
