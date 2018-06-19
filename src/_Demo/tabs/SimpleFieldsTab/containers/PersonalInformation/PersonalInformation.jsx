@@ -6,8 +6,9 @@ import Input from '../../../../../Fields/Input';
 import Textarea from '../../../../../Fields/Textarea';
 import Select from '../../../../../Fields/Select';
 import Checkbox from '../../../../../Fields/Checkbox';
+import DatePicker from '../../../../../Fields/DatePicker/DatePicker';
 import { getPropsInject } from '../../../../../core/inject'
-
+import City from '../../../../../components/city/city'
 
 @observer
  class PersonalInformation extends React.Component{
@@ -23,7 +24,8 @@ import { getPropsInject } from '../../../../../core/inject'
                 fatherAge:'גיל האב', 
                 comments: 'הערות',
                 status: 'מצב משפחתי',
-                agreement:'אני מצהיר...'
+                agreement:'אני מצהיר...',
+                birthDate:'תאריך לידה'
 
             },
             english: {
@@ -33,7 +35,8 @@ import { getPropsInject } from '../../../../../core/inject'
                 fatherAge:'fatherAge',
                 comments: 'comments',
                 status: 'status',
-                agreement:'I Agree...'
+                agreement:'I Agree...',
+                birthDate:'birth date'
 
             },
             arabic: {
@@ -43,7 +46,8 @@ import { getPropsInject } from '../../../../../core/inject'
                 fatherAge:'fatherAge',
                 comments: 'comments',
                 status: 'status',
-                agreement:'I Agree...'
+                agreement:'I Agree...',
+                birthDate:'birth date'
 
             }
         }
@@ -51,7 +55,7 @@ import { getPropsInject } from '../../../../../core/inject'
         this.statusOptions=[{key:'1',value:'נשוי'},{key:'2',value:'רווק'},{key:'3',value:'גרוש'}]
     }
     currentResources = function(){
-        return this.texts[this.props.applicationData.formLanguage.model.name];
+        return this.texts[this.props.applicationData.formLanguage.name];
     };        
 
 
@@ -62,7 +66,10 @@ import { getPropsInject } from '../../../../../core/inject'
         const FatherAge = getPropsInject(Input,this.props,'fatherAge');
         const Comments = getPropsInject(Textarea,this.props,'comments');
         const Status = getPropsInject(Select,this.props,'status');
-        const Agreement = getPropsInject(Checkbox,this.props,'agreement');
+        const Agreement = getPropsInject(Checkbox,this.props,'agreement'); 
+        const BirthDate = getPropsInject(DatePicker,this.props,'birthDate');
+        const CityList = getPropsInject(City,this.props,'city');
+
 
         return(
             <div> 
@@ -84,6 +91,12 @@ import { getPropsInject } from '../../../../../core/inject'
                     </div>
                     <div className="col-md-4">
                         <Status label={this.currentResources().status} options={this.statusOptions} />
+                    </div>
+                    <div className="col-md-4">
+                        <CityList />
+                    </div> 
+                    <div className="col-md-4">
+                        <BirthDate label={this.currentResources().birthDate}/>
                     </div>
                 </div>
                 <span className='error-message'>{this.props.message}</span>

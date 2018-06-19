@@ -25,7 +25,7 @@ export default class Tables extends React.Component{
         this.currentResources = this.currentResources.bind(this);
     }
     currentResources = function(){
-        return this.texts[this.props.applicationData.formLanguage.model.name];
+        return this.texts[this.props.applicationData.formLanguage.name];
     }; 
     render(){
         const Email = getPropsInject(Input,this.props,'email');

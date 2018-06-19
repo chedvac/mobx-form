@@ -17,7 +17,7 @@ export const getPropsInject =(wrappedObject,store,name)=>{
         }
         return ({
             update:store["set_"+name],
-            field: store.model[name],
+            field: store[name],
             message:  store.propertiesManager ? store.propertiesManager[name].message : '',
             ...stores
         })

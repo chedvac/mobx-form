@@ -1,25 +1,22 @@
 import {observable, autorun, action} from "mobx";
-import property from "../../core/property"
+import formObservable from "../../core/formObservable"
 import ComplexType from "../../core/ComplexType"
 
 class Language extends ComplexType {
     constructor(){
         super()
         const self = this;
-        this.model={...this.model,
-           @property({validations:[]})
-           name :'hebrew'
-          
-        }
+
+        
         this.actions = {
-            @action
-            set_name:(value)=>{
+            @action set_name:(value)=>{
                 this.model.name = value;
             }
        
         }
     }
-    
-}
+    @formObservable() name ='hebrew'
 
+}
+    
 export default Language;

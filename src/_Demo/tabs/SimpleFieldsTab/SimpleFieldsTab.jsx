@@ -16,6 +16,7 @@ import control from '../../../Fields/hocs/control'
         return(
             <div>
             <UserDetails />
+
             </div>
         );
     }

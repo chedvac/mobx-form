@@ -1,94 +1,71 @@
 import {observable} from "mobx"
 import validationsManagerFactory from "../validations/validationsManager"
-
+import initializeInstance from './initializeComplexType'
+import PropertiesManager from './PropertiesManager'
 export default class ComplexType {
     @observable isValid = true;
     @observable message = '';
     constructor () {
-
-      this.propertiesManager = {}
-      this.model={} 
-      this.message='';
-      this.isValid=true;
+        this.propertiesManager = new PropertiesManager();
+        this.model={} 
+        //   this.message='';
+        //   this.isValid=true;
       
-      ///add volatile views actions
-      this.initialProperty = this.initialProperty.bind(this);
-      this.validate = this.validate.bind(this);
-      this.getDeepModel = this.getDeepModel.bind(this);
-      this.getModel = this.getModel.bind(this);
-      this.getPureModel = this.getPureModel.bind(this);
-      this.map = this.map.bind(this);
-      this.reset = this.reset.bind(this);
-      
+        ///add volatile views actions
+        this.initialProperty = this.initialProperty.bind(this);
+        this.validate = this.validate.bind(this);
+        this.getDeepModel = this.getDeepModel.bind(this);
+        this.getModel = this.getModel.bind(this);
+        this.getPureModel = this.getPureModel.bind(this);
+        // this.reset = this.reset.bind(this);
+        initializeInstance(this);
     }
    
     getDeepModel (prop) {
        return prop.getPureModel ? prop.getPureModel() : prop.getValue();
        
     }   
-    initialProperty (propertyName, value, actions) {
-        if(typeof value === 'object'){
-            actions = {validate: value.validate, map: value.map, reset:value.reset, validationsManager: value.validationsManager}
-        }
-        this.model[propertyName] = value;
-        this.propertiesManager[propertyName] = {
-            ...actions,
-            @observable message: '',
-            @observable isValid: ''
-        }
-        
-     }
-   
-   applyChildAction (action){//todo private
-       var propertiesManager = this.propertiesManager;
-       for (var property in propertiesManager) {
-           if (propertiesManager.hasOwnProperty(property)) {
-               propertiesManager[property][action]()
-           }
-       }
-       
-   }
-   
+
+    initialProperty (propertyName, settings) {
+        this.model[propertyName] = settings.ref;
+        this.propertiesManager.setProperty(propertyName, settings);   
+    }
+      
+    applyChildAction (action){//todo private
+       this.propertiesManager.applyChildAction(action);
+    };
+
     validate (){
-           var self = this;
-           const validateChildren =()=>{
-              
-               let childrenValid = true;
-               const propertiesManager = self.propertiesManager
-               Object.keys(propertiesManager).forEach(function(key){
-                    if(!propertiesManager[key].validate(self)){
-                        console.log(key,'not valid')                    
-                        childrenValid = false 
-                    }
-               })
-               return childrenValid
-           }  
+        var self = this;     
+        const validateSelf=()=>{
+            let childrenIsValid = true;
+            const propertiesManager = self.propertiesManager.properties;
+            if (propertiesManager) {
+              Object.keys(propertiesManager).forEach(function(key) {
+                if (!propertiesManager[key].validate(self, self.model[key])) {
+                  childrenIsValid = false;
+                }
+              });
+            }
+            return childrenIsValid;
 
-         
-           const validateSelf=()=>{
-            self.validationsManager = self.validationsManager || new validationsManagerFactory(self.validations || []);
-            let validationResult = self.validationsManager.validate(self);
-            if(!validationResult.isValid){
-                console.log(self,'not valid') 
-                self.message = validationResult.message 
-                self.isValid = false
-               }else{
-                self.message = ""
-                self.isValid = true
-               }
-            return self.isValid
+        }           
+        validateSelf()
+        const isChildrenValid = this.propertiesManager.validate(this);
+        this.isValid = isChildrenValid || this.isValid;
+        return this.isValid  
+        // let validationResult = this.validationsManager.validate(this);
+        // this.message = validationResult.message;
+        // const childrenIsValid = validateChildren();
+        // this.isValid = validationResult.isValid ? childrenIsValid : validationResult.isValid;
+    
+        // return this.isValid;       
+    };
 
-           }
-           
-           validateSelf()
-          validateChildren()?this.isValid = this.isValid:this.isValid=false;
-
-           return this.isValid
-           
-       };
-       getModel(){
+    getModel(){
         return this.model
     };
+
     getPureModel (){
         var pureModel = {};
         var model = this.model;
@@ -99,18 +76,10 @@ export default class ComplexType {
         }
         return pureModel;
     };
-     // setModel : function(){
-        //     type.model
-        //     //map
-        // },
-  
-       //TODO fromSnapshot , to Snapshot
-       map (){
 
-       };
-       reset (){
-           this.applyChildAction('reset')
-       }
+    // reset (){
+    //     this.applyChildAction('reset');
+    // }
    
-  }
-
+  
+}

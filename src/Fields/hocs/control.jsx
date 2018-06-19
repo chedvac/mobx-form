@@ -15,27 +15,42 @@ function control (WrappedComponent) {
                 value : props.field
             }
             this.updateStore = this.updateStore.bind(this);
+            this.updateState=this.updateState.bind(this);
         }
    
-        updateStore=(newValue)=>{
+        updateStore=(e)=>{
+            
+            const newValue=getEventValue(e);
+            console.log('updateStore newValue ',newValue)
+            
             this.props.update(newValue);
         }
 
-        UNSAFE_componentWillReceiveProps(nextProps){
-            this.setState({value:nextProps.field})
+        updateState=(e)=>{
+            console.log('updateState newValue ',getEventValue(e))
+            
+            this.setState({value: getEventValue(e)});
+        }
+
+        shouldComponentUpdate(nextProps, nextState){
+            if( this.props.field!==nextProps.field && this.state.value !== nextProps.field)// 
+            {
+                this.setState({value:nextProps.field});
+                console.log('state', this.state.value)
+                return true;
+            }
+            return true;
         }
 
         render() {
             return (
                 <WrappedComponent {...this.props} {...this.state} 
                         id={this.lastUniqueId()} 
-                         onChange={(e)=>this.setState({value: getEventValue(e)})}
-                        onBlur={(e)=>this.updateStore(getEventValue(e))}
+                        onChange={this.updateState}
+                        onBlur={this.updateStore}
                 />
             )
         }
     }
 }
 export default control
-
-  

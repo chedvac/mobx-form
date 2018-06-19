@@ -1,5 +1,7 @@
 import {observable, autorun, action,computed} from "mobx";
-import property from "../../../../../core/property"
+import formObservable from "../../../../../core/formObservable"
+import modelProp from "../../../../../core/modelProp"
+
 import ComplexType from '../../../../../core/ComplexType'
 import {generateGreaterThan} from '../../../../../validations/validationsFactory'
 import addressValidations from '../../../../../validations/address'
@@ -12,15 +14,8 @@ class PersonalInformation extends ComplexType {
     validations= [sumAges({number:60})]
     constructor(){
         super();
-        this.firstName = ' ';
-        this.status = '';
-        this.agreement = '';
-        this.comments = '';
-        this.fatherAge = 45;
-        this.age = 15;
-        this.lastName = ' ';
 
-        this.propertiesManager.fatherAge.validationsManager.validations.push(greaterThan({number1:()=>this.age}))
+        this.propertiesManager.properties.fatherAge.validationsManager.validations.push(greaterThan({number1:()=>this.age}))
 
         this.condition = function(){return true}
 
@@ -31,22 +26,31 @@ class PersonalInformation extends ComplexType {
         this.set_comments = this.set_comments.bind(this);
         this.set_status = this.set_status.bind(this);
         this.set_agreement = this.set_agreement.bind(this);
+        this.set_city = this.set_city.bind(this);
+        this.set_birthDate = this.set_birthDate.bind(this);
     }
-   
-     // #region properties 
-     @property({  validations:[hebrewName(), maxlength({value: 5})],}) firstName;
-     @property ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName ;
-     @property({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age;
-     @property ({validations:[]}) fatherAge;
-     @property ({validations:[]}) comments;
-     @property ({validations:[]}) status;
-     @property ({validations:[]}) agreement;
-    //#endregion properties 
+    @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) firstName = '';
+    @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName = '';
+    @modelProp() @formObservable({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age = 15 ;
+    @modelProp() @formObservable ({validations:[greaterThan({number: 10})]}) fatherAge = 0;
+    @modelProp() @formObservable ({validations:[]}) comments = '';
+    @modelProp() @formObservable ({validations:[]}) status = 'true';
+    @modelProp() @formObservable ({validations:[]}) agreement = "";
+    @modelProp() @formObservable ({validations:[]}) city = "";
+    @modelProp() @formObservable ({validations:[]}) birthDate = "";
 
     // #region actions 
     @action
     set_firstName(value){
         this.firstName=value;
+    }
+    @action
+    set_city(value){
+        this.city=value;
+    }  
+    @action
+    set_birthDate(value){
+        this.birthDate=value;
     }
     @action
     set_lastName(value){
@@ -56,6 +60,7 @@ class PersonalInformation extends ComplexType {
     set_fatherAge(value){
         this.fatherAge=value;
     }
+
     @action
     set_age(value){
         this.age=value;

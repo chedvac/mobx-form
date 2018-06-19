@@ -6,7 +6,7 @@ export default class validationsManager{
     flattenDeep = (arr1) =>{
         return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(this.flattenDeep(val)) : acc.concat(val), []);
      };
-    constructor(validations){
+    constructor(validations=[]){
         this.validations= this.flattenDeep(validations);
     }
     getMessage = () => {
