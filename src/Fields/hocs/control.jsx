@@ -48,5 +48,3 @@ function control (WrappedComponent) {
     }
 }
 export default control
-
-  

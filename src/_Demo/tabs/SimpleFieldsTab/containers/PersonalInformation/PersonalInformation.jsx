@@ -6,6 +6,7 @@ import Input from '../../../../../Fields/Input';
 import Textarea from '../../../../../Fields/Textarea';
 import Select from '../../../../../Fields/Select';
 import Checkbox from '../../../../../Fields/Checkbox';
+import DatePicker from '../../../../../Fields/DatePicker/DatePicker';
 import { getPropsField } from '../../../../../core/getProps'
 import City from '../../../../../components/city/city'
 
@@ -25,7 +26,8 @@ import City from '../../../../../components/city/city'
                 fatherAge:'גיל האב', 
                 comments: 'הערות',
                 status: 'מצב משפחתי',
-                agreement:'אני מצהיר...'
+                agreement:'אני מצהיר...',
+                birthDate:'תאריך לידה'
 
             },
             english: {
@@ -35,7 +37,8 @@ import City from '../../../../../components/city/city'
                 fatherAge:'fatherAge',
                 comments: 'comments',
                 status: 'status',
-                agreement:'I Agree...'
+                agreement:'I Agree...',
+                birthDate:'birth date'
 
             },
             arabic: {
@@ -45,7 +48,8 @@ import City from '../../../../../components/city/city'
                 fatherAge:'fatherAge',
                 comments: 'comments',
                 status: 'status',
-                agreement:'I Agree...'
+                agreement:'I Agree...',
+                birthDate:'birth date'
 
             }
         }
@@ -86,13 +90,21 @@ import City from '../../../../../components/city/city'
                         rows={4} isAutoResize={false}/>
                     </div>
                     <div className="col-md-4">
+                        <DatePicker label={this.currentResources().birthDate}
+                         {...getPropsField(userDetails,'birthDate')}
+                        />
+                    </div>
+                    <div className="col-md-4">
                         <Select label={this.currentResources().status} 
                         {...getPropsField(userDetails,'status')}
                         options={this.statusOptions} />
                     </div>
+                
                     <div className="col-md-4">
                         <City {...getPropsField(userDetails,'city')} />
                     </div>
+                   
+                   
                 </div>
                 <span className='error-message'>{this.props.message}</span>
                 {/* <div className="row">

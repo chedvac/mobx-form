@@ -37,6 +37,7 @@ class PersonalInformation extends ComplexType {
         this.set_status = this.set_status.bind(this);
         this.set_agreement = this.set_agreement.bind(this);
         this.set_city = this.set_city.bind(this);
+        this.set_birthDate = this.set_birthDate.bind(this);
     }
     @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) firstName = '';
     @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) fdsfds = '';
@@ -48,9 +49,8 @@ class PersonalInformation extends ComplexType {
     @modelProp() @formObservable ({validations:[]}) status = 'true';
     @modelProp() @formObservable ({validations:[]}) agreement = "";
     @modelProp() @formObservable ({validations:[]}) city = "";
-
-
-
+    @modelProp() @formObservable ({validations:[]}) birthDate = "";
+    
     // #region actions 
     @action
     set_firstName(value){
@@ -59,6 +59,10 @@ class PersonalInformation extends ComplexType {
     @action
     set_city(value){
         this.city=value;
+    }  
+    @action
+    set_birthDate(value){
+        this.birthDate=value;
     }
     @action
     set_lastName(value){

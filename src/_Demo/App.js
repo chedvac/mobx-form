@@ -13,7 +13,9 @@ class App extends Component {
     window.rootStore = rootStore
     const applicationData = {
       formLanguage: new LanguageStore()
-        }
+    }
+    window.applicationData = applicationData
+    console.log('applicationData',applicationData)
     return (
       <Provider applicationData = {applicationData}>
         <div className="App">
