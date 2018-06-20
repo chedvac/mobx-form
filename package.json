@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
     "jquery": "^3.3.1",
     "mobx-react": "^5.0.0",
     "mobx-state-tree": "^2.0.3",
@@ -23,16 +22,18 @@
     "build-js": "react-app-rewired build",
     "build": "npm-run-all build-css build-js",
     "jest": "jest --include-path ./_tests_ ",
-    "test": "jest && npm run start-js",
+    "test": "react-app-rewired test",
     "eject": "react"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-emotion": "^9.1.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-mobx": "^1.0.2",
     "enzyme": "^3.3.0",
+    "es2015": "0.0.0",
     "gulp-sass": "^4.0.1",
     "jest": "^22.4.3",
     "mobx": "^4.1.1",
