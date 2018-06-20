@@ -4,11 +4,14 @@ export default class validationsManager{
     failedValidation = {};
 
     constructor(validations){
-        this.validations= concatArray(validations);
+        this.validations = concatArray(validations);
     }
     // setDependencies = (dependencies)=>{
     //     dependencies.
     // }
+    setValidations = (validations) => {
+        this.validations = concatArray(validations);
+    }
     getMessage = () => {
         return this.failedValidation ? this.failedValidation.message : '';
     }
