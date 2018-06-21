@@ -8,6 +8,7 @@ import Select from '../../../../../Fields/Select';
 import Checkbox from '../../../../../Fields/Checkbox';
 import { getPropsField } from '../../../../../core/getProps'
 import City from '../../../../../components/city/city'
+import AutocompleteSelect from '../../../../../Fields/AutocompleteSelect';
 
 
 @inject('applicationData')
@@ -50,7 +51,10 @@ import City from '../../../../../components/city/city'
             }
         }
         this.currentResources = this.currentResources.bind(this);
-        this.statusOptions=[{key:'1',value:'נשוי'},{key:'2',value:'רווק'},{key:'3',value:'גרוש'}]
+        this.statusOptions=[{dataCode:'1',dataText:'נשוי'},
+        {dataCode:'2',dataText:'רווק'},{dataCode:'3',dataText:'גרוש'},{dataCode:'4',dataText:'אאאא'}
+        ,{dataCode:'5',dataText:'אבגדד'},{dataCode:'6',dataText:'אאבגגג'},{dataCode:'7',dataText:'אאבבב'}]
+
     }
     currentResources = function(){
         return this.texts[this.props.applicationData.formLanguage.name];
@@ -86,9 +90,15 @@ import City from '../../../../../components/city/city'
                         rows={4} isAutoResize={false}/>
                     </div>
                     <div className="col-md-4">
-                        <Select label={this.currentResources().status} 
+                    <AutocompleteSelect label={this.currentResources().status}
                         {...getPropsField(userDetails,'status')}
-                        options={this.statusOptions} />
+                        options={this.statusOptions} 
+                        createdValue={true}
+                        />
+                     
+                        {/* <Select label={this.currentResources().status} 
+                        {...getPropsField(userDetails,'status')}
+                        options={this.statusOptions} /> */}
                     </div>
                     <div className="col-md-4">
                         <City {...getPropsField(userDetails,'city')} />

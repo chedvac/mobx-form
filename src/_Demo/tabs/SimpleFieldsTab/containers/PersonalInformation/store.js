@@ -9,6 +9,7 @@ import {maxlength} from '../../../../../validations/general'
 import {greaterThan, lessThan} from '../../../../../validations/number'
 import {sumAges} from './validations'
 import validationFactory from './../../../../../validations/validationsFactory'
+import EntityBase from '../../../../../entities/entityBase'
 import { request } from "http";
 import axios from 'axios'
 
@@ -42,16 +43,18 @@ class PersonalInformation extends ComplexType {
         this.set_status = this.set_status.bind(this);
         this.set_agreement = this.set_agreement.bind(this);
         this.set_city = this.set_city.bind(this);
+        this.status = new EntityBase();
+        
     }
     @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) firstName = '';
     @modelProp() @formObservable ({validations:[hebrewName({message: 'hebrew only'}), maxlength({value: 15, message: 'too long...'})],}) lastName = '';
     @modelProp() @formObservable({ validations: [addressValidations.houseNumber({codition:this.condition}),],}) age = 15 ;
     @modelProp() @formObservable ({validations:[greaterThan({number: 10})]}) fatherAge = 0;
     @modelProp() @formObservable ({validations:[validationFactory.generateAsyncValidation({name: 'tryAsyncValidation', message: 'my default error', request: myRequest})]}) comments = '';
-    @modelProp() @formObservable ({validations:[]}) status = 'true';
+    // @modelProp() @formObservable ({validations:[]}) status = 'true';
     @modelProp() @formObservable ({validations:[]}) agreement = "";
     @modelProp() @formObservable ({validations:[]}) city = "";
-
+    @modelProp() status;
 
 
     // #region actions 
@@ -82,7 +85,7 @@ class PersonalInformation extends ComplexType {
     }
     @action
     set_status(value){
-        this.status=value;
+        this.status.set_EntityBase(value);
     }
     @action
     set_agreement(value){
