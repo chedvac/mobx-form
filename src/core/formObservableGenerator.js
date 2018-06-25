@@ -1,4 +1,4 @@
-import {observable} from "mobx"
+import {observable,reaction} from "mobx"
 export default function ({target, name, descriptor, validationsManager, ...params} = params) {
 
     var defaultValue = descriptor? descriptor.initializer ? descriptor.initializer.call(target) : descriptor.value : undefined;
@@ -6,17 +6,30 @@ export default function ({target, name, descriptor, validationsManager, ...param
     delete descriptor.value;
     delete descriptor.writable ;
 
-    const value=observable.box(defaultValue);
+    const observableBox =observable.box(defaultValue,{name});
 
+    observableBox.intercept(function(change) {
+      validate(target,change.newValue)
+      return change;
+    });
+   
+    observableBox.observe(function(){
+        const dependedObservables=target.propertiesManager.properties[name].dependedObservables;
+        if(!dependedObservables){
+            return;
+        }
+        for (const observable in dependedObservables){
+            target.propertiesManager.properties[observable].validate(target,target[observable])
+          }
+    });
+
+   
     descriptor.set = function(newValue) {
-        validate(this, newValue);
-        //const mappedValue = map(newValue);
-        this.model[name] = newValue;
-        value.set(newValue);
+        observableBox.set(newValue);
     };
 
     descriptor.get = function() { 
-        return value.get();
+        return observableBox.get();
     };
 
     const validate=(parent, newValue )=>{
@@ -32,7 +45,7 @@ export default function ({target, name, descriptor, validationsManager, ...param
         }
         return feiledValidation.isValid;
     }
-    target.initialProperty(name, {validate, validationsManager, ref: value});
+    target.initialProperty(name, {validate, validationsManager, ref: observableBox});
 
     Object.defineProperty(target, name, descriptor);
 }
