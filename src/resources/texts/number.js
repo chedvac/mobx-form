@@ -2,8 +2,8 @@ import commonTexts from'./basicValidations'
 
 export default {
 
-    lessThan: {
-        hebrew:'עליך להזין מספר קטן מ {0}',
+    lessThan:  {
+        hebrew:'עליך להזין מספר קטן מ ${val}',
         arabic: 'أدخل رقما أقل من {0}',
         english: 'Please enter a value less than {0}'
     },
