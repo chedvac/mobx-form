@@ -15,7 +15,6 @@ import control from '../../../Fields/hocs/control'
          return(
             <div>
             <PersonalInformation userDetails={this.props.simpleFields.userDetails} />
-            <PersonalInformation userDetails={this.props.simpleFields.userDetails} />
             </div>
         );
     }
