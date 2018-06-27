@@ -23,7 +23,6 @@ export default function ({target, name, descriptor, validationsManager, ...param
           }
     });
 
-   
     descriptor.set = function(newValue) {
         observableBox.set(newValue);
     };
@@ -38,7 +37,7 @@ export default function ({target, name, descriptor, validationsManager, ...param
         Object.assign(parent.propertiesManager.properties[name], feiledValidation);
         return feiledValidation.isValid;
     }
-    target.initialProperty(name, {validate, validationsManager, ref: observableBox});
+    target.propertiesManager.setFormObservableProperty(name, {validate, validationsManager, ref: observableBox});
 
     Object.defineProperty(target, name, descriptor);
 }

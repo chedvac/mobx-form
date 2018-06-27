@@ -10,10 +10,10 @@ export default class validationsManager{
     //     dependencies.
     // }
     setValidations = (validations) => {
-        this.validations = concatArray(validations);
+        this.validations = concatArray(validations, this.validations);
     }
     getMessage = () => {
-        return this.failedValidation ? this.failedValidation.message : '';
+        return this.failedValidation ? this.failedValidation.essage : '';
     }
     validate = (value, observable) => {
         this.failedValidation = this.validations.find(
