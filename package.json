@@ -39,6 +39,7 @@
     "gulp-sass": "^4.0.1",
     "jest": "^22.4.3",
     "mobx": "^4.1.1",
+    "mobx-react-devtools": "^5.0.1",
     "moment": "^2.22.2",
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewire-preact": "^1.0.1",
