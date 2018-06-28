@@ -15,7 +15,7 @@ export class Complex extends ComplexType {
 
 export default class ComplexTab extends ComplexType {
   constructor(settings, register) {
-    super();
+    super(settings);
     this.complex = new Complex();
     if (register) {
       initializeComplexProperties(this);

@@ -3,10 +3,11 @@ import PropertiesManager from "../../core/PropertiesManager";
 import * as complexPropertiesRegistration from "../../core/complexPropertiesRegistration";
 import ComplexTab from "../mocks/ComplexTab";
 import { hebrewName } from "../../validations/languages";
-
+jest.mock("../../validations/validationsManager");
 let customTab;
 const settings = { validations: [hebrewName({ message: "hebrew only" })] };
 beforeEach(() => {
+  ValidationsManager.mockClear();
   customTab = new ComplexTab();
 });
 describe("ComplexType", () => {
@@ -21,15 +22,9 @@ describe("ComplexType", () => {
         );
       });
       test("validationsManagerFactory constructor call with settings.validations that passed to ComplexType constructor", () => {
-        // jest.mock("../../validations/validationsManager", () =>
-        //   jest.fn().mockImplementation(() => {})
-        // );
-        jest.mock(("../../validations/validationsManager");
-        customTab = new ComplexTab();
-
-        expect(ValidationsManager.mock.calls[0]).toBeCalledWith(
-          settings.validations
-        );
+        ValidationsManager.mockClear();
+        customTab = new ComplexTab(settings);
+        expect(ValidationsManager.mock.calls[0][0]).toBe(settings.validations);
       });
     });
     test("propertiesManager", () => {
@@ -54,7 +49,7 @@ describe("ComplexType", () => {
       ).toBe(2);
     });
     describe("with params", () => {
-      test("complecType", () => {
+      test("complexType", () => {
         expect(
           complexPropertiesRegistration.initializeProperties.mock.calls[0][0]
         ).toBe(customTab);
