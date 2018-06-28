@@ -6,6 +6,10 @@ export function getPropsField(store, name){
     return ({
         update:store["set_"+name],
         field: store[name],
+<<<<<<< HEAD
         message:  store.propertiesManager[name] ? store.propertiesManager[name].message : ''
+=======
+        message:  store.propertiesManager ? store.propertiesManager.getPropertyValidationState(name).message : ''
+>>>>>>> 76a000babe23c5a5a34368646e9a1c269d42fc2a
     })
 };

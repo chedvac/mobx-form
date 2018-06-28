@@ -1,13 +1,13 @@
 import PersonalInformation from "./containers/PersonalInformation/store";
 import ComplexType from '../../../core/ComplexType'
 import modelProp from "../../../core/modelProp"
-import {registerComplexProperties} from "../../../core/initializeComplexType";
+import {initializeComplexProperties} from "../../../core/complexPropertiesRegistration";
 
 class SimpleFieldsTab extends ComplexType {
     constructor(){
         super();
         this.userDetails = new PersonalInformation()
-        registerComplexProperties(this);
+        initializeComplexProperties(this);
     }
     @modelProp() userDetails;
 }

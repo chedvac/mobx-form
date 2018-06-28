@@ -1,0 +1,160 @@
+{
+  "globals": {
+    "expect": true,
+    "describe": true,
+    "jest": true,
+    "beforeEach": true,
+    "test": true
+  },
+
+  "plugins": ["jest"],
+  "rules": {
+    "react/jsx-sort-prop-types": "off",
+    "react/require-extension": "off",
+    "react/wrap-multilines": "off",
+
+    "indent": [0, 2],
+    "quotes": [2, "single", { "allowTemplateLiterals": true }],
+    "semi": [2, "always"],
+    "curly": [2],
+    "consistent-return": [2],
+    "complexity": [2, 6],
+    "no-unexpected-multiline": [2],
+    "valid-jsdoc": [2],
+    "default-case": [2],
+    "eqeqeq": [2],
+    "guard-for-in": [2],
+    "no-alert": [2],
+    "no-caller": [2],
+    "no-eval": [2],
+    "no-extend-native": [2],
+    "no-floating-decimal": [2],
+    "no-implied-eval": [2],
+    "no-magic-numbers": [2, { "ignore": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+    "no-new-func": [2],
+    "no-new-wrappers": [2],
+    "no-proto": [2],
+    "no-return-assign": [2],
+    "no-script-url": [2],
+    "no-throw-literal": [2],
+    "radix": [2],
+    "camelcase": [2],
+    "no-use-before-define": [2],
+    "consistent-this": [2, "self"],
+    "max-depth": [2, 3],
+    "max-params": [2, 3],
+    "no-multiple-empty-lines": [2],
+    "no-extra-parens": [0],
+    "no-unused-vars": [
+      2,
+
+      {
+        "vars": "local"
+      }
+    ],
+    "linebreak-style": 0,
+    "arrow-body-style": [
+      "error",
+      "as-needed",
+      {
+        "requireReturnForObjectLiteral": false
+      }
+    ],
+    "arrow-parens": ["error", "as-needed"],
+    "arrow-spacing": ["error", { "before": true, "after": true }],
+    "constructor-super": "error",
+    "generator-star-spacing": ["error", { "before": false, "after": false }],
+    "no-class-assign": "error",
+    "no-confusing-arrow": [
+      "error",
+      {
+        "allowParens": true
+      }
+    ],
+    "no-const-assign": "error",
+    "no-dupe-class-members": "error",
+    "no-duplicate-imports": "off",
+    "no-new-symbol": "error",
+    "no-restricted-imports": [
+      "off",
+      {
+        "paths": [],
+        "patterns": []
+      }
+    ],
+    "no-this-before-super": "error",
+    "no-useless-computed-key": "error",
+    "no-useless-constructor": "error",
+    "no-useless-rename": [
+      "error",
+      {
+        "ignoreDestructuring": false,
+        "ignoreImport": false,
+        "ignoreExport": false
+      }
+    ],
+    "no-var": "error",
+    "object-shorthand": [
+      "error",
+      "always",
+      {
+        "ignoreConstructors": false,
+        "avoidQuotes": true
+      }
+    ],
+    "prefer-arrow-callback": [
+      "error",
+      {
+        "allowNamedFunctions": false,
+        "allowUnboundThis": true
+      }
+    ],
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "any",
+        "ignoreReadBeforeAssign": true
+      }
+    ],
+    "prefer-destructuring": [
+      "error",
+      {
+        "VariableDeclarator": {
+          "array": false,
+          "object": true
+        },
+        "AssignmentExpression": {
+          "array": true,
+          "object": true
+        }
+      },
+      {
+        "enforceForRenamedProperties": false
+      }
+    ],
+    "prefer-numeric-literals": "error",
+    "prefer-reflect": "off",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "prefer-template": "error",
+    "require-yield": "error",
+    "rest-spread-spacing": ["error", "never"],
+    "sort-imports": [
+      "off",
+      {
+        "ignoreCase": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ],
+    "symbol-description": "error",
+    "template-curly-spacing": "error",
+    "yield-star-spacing": ["error", "after"]
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended"]
+}

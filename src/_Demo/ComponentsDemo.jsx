@@ -15,7 +15,7 @@ export default class ComponentsDemo extends Component { // destruct non-valid pr
         const Tables = inject(stores => ({tables: this.props.rootStore.tablesTab}))(TablesTab);
         const SimpleFields= inject(stores => ({simpleFields: this.props.rootStore.simpleFieldsTab}))(SimpleFieldsTab);
         const tabs = [
-            new TabSettings({number: '1',name: 'דוגמאות לשדות רגילים', path: '/SimpleFields' , component: SimpleFields}),
+            new TabSettings({number: '1',name: 'לשדות רגילים', path: '/SimpleFields' , component: SimpleFields}),
             new TabSettings({number: '2',name: 'טבלאות', path: '/Tables' , component: Tables})
         ];
      

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { observable, autorun, action, computed } from 'mobx';
 import formObservable from '../../../../../core/formObservable';
 import modelProp from '../../../../../core/modelProp';
@@ -15,15 +16,30 @@ import validationFactory from './../../../../../validations/validationsFactory';
 import { request } from 'http';
 import axios from 'axios';
 import conditional from './../../../../../core/conditional';
+=======
+import { action, computed } from "mobx";
+import formObservable from "../../../../../core/formObservable";
+import modelProp from "../../../../../core/modelProp";
+>>>>>>> 76a000babe23c5a5a34368646e9a1c269d42fc2a
 
+import ComplexType from "../../../../../core/ComplexType";
+import { hebrewName } from "../../../../../validations/languages";
+import { maxlength } from "../../../../../validations/general";
+import {
+  dependedGreaterThan,
+  dependedLessThan
+} from "../../../../../validations/number";
+import { sumAges } from "./validations";
+import validationFactory from "./../../../../../validations/validationsFactory";
+import axios from "axios";
 const myRequest = function(value) {
   return axios
-    .get('http://gov.forms.local/MW/File//', { params: { ID: value } })
+    .get("http://gov.forms.local/MW/File//", { params: { ID: value } })
     .then(res => {
       if (res && res.data.statusCode === 0) {
         return true;
       }
-      throw { error: 'async validaion failed' };
+      throw { error: "async validaion failed" };
     });
 };
 
@@ -41,7 +57,6 @@ class PersonalInformation extends ComplexType {
     this.condition = function() {
       return true;
     };
-
     this.set_firstName = this.set_firstName.bind(this);
     this.set_lastName = this.set_lastName.bind(this);
     this.set_fatherAge = this.set_fatherAge.bind(this);
@@ -54,50 +69,60 @@ class PersonalInformation extends ComplexType {
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 15, message: 'too long...' })
+      hebrewName({ message: "hebrew only" }),
+      maxlength({ value: 15, message: "too long..." })
     ]
   })
-  firstName = '';
+  firstName = "";
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 15, message: 'too long...' })
+      hebrewName({ message: "hebrew only" }),
+      maxlength({ value: 15, message: "too long..." })
     ]
   })
-  lastName = '';
+  lastName = "";
   @modelProp()
-  @formObservable({ validations: [dependedLessThan({ number: 'fatherAge' })] })
+  @formObservable({ validations: [dependedLessThan({ number: "fatherAge" })] })
   age = 15;
   @modelProp()
-  @formObservable({ validations: [dependedGreaterThan({ number: 'age' })] })
+  @formObservable({ validations: [dependedGreaterThan({ number: "age" })] })
   fatherAge = 0;
+  @computed
+  get isOlder() {}
+
   @modelProp()
   @formObservable({
     validations: [
       validationFactory.generateAsyncValidation({
-        name: 'tryAsyncValidation',
-        message: 'my default error',
+        name: "tryAsyncValidation",
+        message: "my default error",
         request: myRequest
       })
     ]
   })
-  comments = '';
+  comments = "";
   @modelProp()
   @formObservable({ validations: [] })
-  status = 'true';
+  status = "true";
   @modelProp()
   @formObservable({ validations: [] })
-  agreement = '';
+  agreement = "";
   @modelProp()
   @formObservable({ validations: [] })
-  city = '';
+  city = "";
+  @modelProp()
+  @formObservable({ validations: [] })
+  birthDate = "";
 
   // #region actions
   @action
   set_firstName(value) {
     this.firstName = value;
+  }
+  @action
+  set_birthDate(value) {
+    this.birthDate = value;
   }
   @action
   set_city(value) {
