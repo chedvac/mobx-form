@@ -3,5 +3,6 @@
   "editor.formatOnSave": true,
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
-  }
+  },
+  "prettier.singleQuote": true
 }

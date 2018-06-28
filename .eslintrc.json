@@ -9,7 +9,7 @@
     "react/wrap-multilines": "off",
 
     "indent": [0, 2],
-    "quotes": [2],
+    "quotes": [2, "single", { "allowTemplateLiterals": true }],
     "semi": [2, "always"],
     "curly": [2],
     "consistent-return": [2],
@@ -55,13 +55,7 @@
         "requireReturnForObjectLiteral": false
       }
     ],
-    "arrow-parens": [
-      "error",
-      "as-needed",
-      {
-        "requireForBlockBody": true
-      }
-    ],
+    "arrow-parens": ["error", "as-needed"],
     "arrow-spacing": ["error", { "before": true, "after": true }],
     "constructor-super": "error",
     "generator-star-spacing": ["error", { "before": false, "after": false }],
