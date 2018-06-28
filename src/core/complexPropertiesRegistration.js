@@ -25,7 +25,7 @@ const generateFormObservable = function(property, complexTypeInstance) {
   });
 };
 
-export const initializeProperties = function(complexTypeInstance, properties) {
+export let initializeProperties = function(complexTypeInstance, properties) {
   if (complexTypeInstance._propertiesInitialized) {
     return;
   }
