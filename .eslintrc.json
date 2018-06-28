@@ -1,8 +1,13 @@
 {
   "globals": {
     "expect": true,
-    "describe": true
+    "describe": true,
+    "jest": true,
+    "beforeEach": true,
+    "test": true
   },
+
+  "plugins": ["jest"],
   "rules": {
     "react/jsx-sort-prop-types": "off",
     "react/require-extension": "off",
@@ -13,7 +18,7 @@
     "semi": [2, "always"],
     "curly": [2],
     "consistent-return": [2],
-    "complexity": [2, 4],
+    "complexity": [2, 6],
     "no-unexpected-multiline": [2],
     "valid-jsdoc": [2],
     "default-case": [2],

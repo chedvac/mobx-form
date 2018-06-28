@@ -13,7 +13,7 @@ export default class validationsManager{
         this.validations = concatArray(validations, this.validations);
     }
     getMessage = () => {
-        return this.failedValidation ? this.failedValidation.essage : '';
+        return this.failedValidation ? this.failedValidation.message : '';
     }
     validate = (value, observable) => {
         this.failedValidation = this.validations.find(
