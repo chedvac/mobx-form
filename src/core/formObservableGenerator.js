@@ -1,4 +1,6 @@
 import {observable,reaction} from "mobx"
+import configuration from "./mobxConfiguration"
+
 export default function ({target, name, descriptor, validationsManager, ...params} = params) {
 
     var defaultValue = descriptor? descriptor.initializer ? descriptor.initializer.call(target) : descriptor.value : undefined;
