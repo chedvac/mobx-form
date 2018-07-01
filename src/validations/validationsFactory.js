@@ -1,8 +1,9 @@
 import {constructMessage} from './../validations/utils'
 
+
 // settings = validation definitions (name, message)
 // params = (message, condition) params from developer to override default definitions like message, or validation that need params like min,max..
-function generateBasicValidation(settings, params, validator){
+function generateBasicValidation(settings,params,validator ){
     Object.assign(settings, params);
     //TODO handle schemaData
     const {name, message, condition} = settings;
@@ -13,7 +14,20 @@ function generateBasicValidation(settings, params, validator){
 
     return {name, validator: validatorWrapper, message, params};
 };
-
+function generateDependedValidation(settings, params,validator ){
+    Object.assign(settings, params);
+    //TODO handle schemaData
+    const {name, message, condition} = settings;
+    const validatorWrapper =(value, propertiesManager) =>{
+        const dependedParams={};
+        Object.entries(params).forEach(([key,value])=>{
+            dependedParams[key] = propertiesManager.dependedObservables[value].get();
+        }
+        )
+          return validator(dependedParams)(value);
+    };
+    return {name, validator: validatorWrapper, message, params};
+};
 function generateRegexValidation(settings, params){
     const validator = v => {
         return v.toString().match(settings.regex) ? true : false;
@@ -40,5 +54,6 @@ function generateAsyncValidation(settings, params){
 export default {
     generateBasicValidation,
     generateRegexValidation,
+    generateDependedValidation,
     generateAsyncValidation
 }

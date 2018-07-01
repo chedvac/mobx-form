@@ -1,30 +1,63 @@
-import {observable} from "mobx"
-export default function ({target, name, descriptor, validationsManager, ...params} = params) {
+import { observable, reaction } from "mobx";
+export default function({
+  target,
+  name,
+  descriptor,
+  validationsManager,
+  ...params
+} = params) {
+  var defaultValue = descriptor
+    ? descriptor.initializer
+      ? descriptor.initializer.call(target)
+      : descriptor.value
+    : undefined;
+  delete descriptor.initializer;
+  delete descriptor.value;
+  delete descriptor.writable;
 
-    var defaultValue = descriptor? descriptor.initializer ? descriptor.initializer.call(target) : descriptor.value : undefined;
-    delete descriptor.initializer;
-    delete descriptor.value;
-    delete descriptor.writable ;
+  const observableBox = observable.box(defaultValue, { name });
+  //TODO get
+  observableBox.intercept(function(change) {
+    validate(change.newValue);
+    return change;
+  });
 
-    const value=observable.box(defaultValue);
-
-    descriptor.set = function(newValue) {
-        validate(this, newValue);
-        //const mappedValue = map(newValue);
-        value.set(newValue);
-    };
-
-    descriptor.get = function() { 
-        return value.get();
-    };
-
-    const validate = (parent, newValue )=>{
-        const value = newValue !== undefined ? newValue : descriptor.get();
-        let feiledValidation = validationsManager.validate(value, parent.propertiesManager.properties[name]);
-        Object.assign(parent.propertiesManager.properties[name], feiledValidation);
-        return feiledValidation.isValid;
+  observableBox.observe(function() {
+    const dependedObservables = target.propertiesManager.getPropertyDependencies(
+      name
+    );
+    if (!dependedObservables) {
+      return;
     }
-    target.initialProperty(name, {validate, validationsManager, ref: value});
+    //TODO lodash map
+    for (const observable in dependedObservables) {
+      target.propertiesManager.validateProperty(observable);
+    }
+  });
 
-    Object.defineProperty(target, name, descriptor);
+  descriptor.set = function(newValue) {
+    observableBox.set(newValue);
+  };
+
+  descriptor.get = function() {
+    return observableBox.get();
+  };
+
+  const validate = newValue => {
+    //TODO move to utilities
+    const value = newValue !== undefined ? newValue : descriptor.get();
+    // const dependedObservables = target.propertiesManager.getPropertyDependencies(name);
+    let failedValidation = validationsManager.validate(value);
+    target.propertiesManager
+      .getPropertyValidationState(name)
+      .setValidationState(failedValidation);
+    return failedValidation.isValid;
+  };
+  target.propertiesManager.setFormObservableProperty(name, {
+    validate,
+    validationsManager,
+    ref: observableBox
+  });
+
+  Object.defineProperty(target, name, descriptor);
 }

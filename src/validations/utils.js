@@ -33,6 +33,6 @@ export const objectStringExtensionFormat= (object,params)=>{
     }
 }
 
-export function concatArray(arr1 = []){
-  return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(concatArray(val)) : acc.concat(val), []);
+export function concatArray(newArray = [], source = []){
+  return source.concat(newArray.reduce((acc, val) => Array.isArray(val) ? acc.concat(concatArray(val, acc)) : acc.concat(val), []));
 }

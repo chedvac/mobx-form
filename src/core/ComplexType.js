@@ -1,35 +1,34 @@
-import {observable} from "mobx"
-import validationsManagerFactory from "../validations/validationsManager"
-import initializeInstance from './initializeComplexType'
-import PropertiesManager from './PropertiesManager'
+import validationsManagerFactory from "../validations/validationsManager";
+import { initializeProperties } from "./complexPropertiesRegistration";
+import PropertiesManager from "./PropertiesManager";
+import ValidationState from "./ValidationState";
+import Exeption from "./exeptions";
 export default class ComplexType {
-    @observable isValid = true;
-    @observable message = '';
-    constructor (settings = {}) {
-        this.propertiesManager = new PropertiesManager();      
-        ///add volatile views actions
-        this.message='';
-        this.isValid=true;
-        this.validationsManager = new validationsManagerFactory(settings.validations || []);
-        this.initialProperty = this.initialProperty.bind(this);
-        this.validate = this.validate.bind(this);
-        initializeInstance(this);
-    }  
-
-    initialProperty (propertyName, settings) {
-        this.propertiesManager.setProperty(propertyName, settings);   
+  constructor(settings = {}) {
+    this.propertiesManager = new PropertiesManager();
+    this.validationsManager = new validationsManagerFactory(
+      settings.validations || []
+    );
+    this.validationState = new ValidationState();
+    initializeProperties(this, this._properties);
+    this.validate = this.validate.bind(this);
+    ///add volatile views actions
+  }
+  registerProperty({ name, descriptor, ...settings }) {
+    if (!name || !descriptor) {
+      throw new Exeption(
+        "registerProperty faile: missing require parameter: target, descriptor or name"
+      );
     }
-      
-    applyChildAction (action){//todo private
-       this.propertiesManager.applyChildAction(action);
-    };
-
-    validate (){           
-        let validationResult = this.validationsManager.validate(this);
-        Object.assign(this, validationResult);
-        this.isValid = this.propertiesManager.validate(this);
-        return this.isValid         
-    };
-   
-  
+    this._properties = this._properties || {};
+    this._properties[name] = this._properties[name] || { name, descriptor };
+    Object.assign(this._properties[name], settings);
+  }
+  validate() {
+    const validationResult = this.validationsManager.validate(this);
+    this.validationState.setValidationState(validationResult);
+    const isChildrenValid = this.propertiesManager.validate({ parent: this });
+    this.validationState.setIsValid(isChildrenValid ? this.isValid : false);
+    return this.validationState.isValid;
+  }
 }

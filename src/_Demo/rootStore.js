@@ -7,7 +7,7 @@ import ComplexType from '../core/ComplexType'
 //import externalized from '../core/externalized'
 import submitAction from "../actions/submit";
 import FormInformation from "../core/formInformation";
-import {registerComplexProperties} from "../core/initializeComplexType";
+import {initializeComplexProperties} from "../core/complexPropertiesRegistration";
 
 import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/store'
 import {toJS} from 'mobx'
@@ -21,7 +21,7 @@ class RootStore extends ComplexType {
         this.tablesTab = new TablesTab();
         this.validateForm = this.validateForm.bind(this);
         this.submitForm = this.submitForm.bind(this);
-        registerComplexProperties(this);
+        initializeComplexProperties(this);
     }
     @modelProp() formInformation;
     @modelProp() simpleFieldsTab;
