@@ -1,6 +1,6 @@
-import formObservableGenerator from "./formObservableGenerator";
-import { modelPropGenerator } from "./modelProp";
-import ComplexType from "./ComplexType";
+import formObservableGenerator from './formObservableGenerator';
+import { modelPropGenerator } from './modelProp';
+import ComplexType from './ComplexType';
 
 const generateModelProp = function(property, complexTypeInstance) {
   if (!property.isModelProp) {
@@ -25,7 +25,7 @@ const generateFormObservable = function(property, complexTypeInstance) {
   });
 };
 
-export let initializeProperties = function(complexTypeInstance, properties) {
+export const initializeProperties = function(complexTypeInstance, properties) {
   if (complexTypeInstance._propertiesInitialized) {
     return;
   }

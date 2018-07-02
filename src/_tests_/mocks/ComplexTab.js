@@ -1,10 +1,10 @@
-import ComplexType from "../../core/ComplexType";
-import formObservable from "../../core/formObservable";
-import modelProp from "../../core/modelProp";
-import { hebrewName } from "../../validations/languages";
-import { maxlength } from "../../validations/general";
+import ComplexType from '../../core/ComplexType';
+import formObservable from '../../core/formObservable';
+import modelProp from '../../core/modelProp';
+import { hebrewName } from '../../validations/languages';
+import { maxlength } from '../../validations/general';
 
-import { initializeComplexProperties } from "../../core/complexPropertiesRegistration";
+import { initializeComplexProperties } from '../../core/complexPropertiesRegistration';
 
 export class Complex extends ComplexType {
   constructor(settings) {
@@ -24,18 +24,18 @@ export default class ComplexTab extends ComplexType {
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: "hebrew only" }),
-      maxlength({ value: 5, message: "too long..." })
+      hebrewName({ message: 'hebrew only' }),
+      maxlength({ value: 5, message: 'too long...' })
     ]
   })
-  agreement = "";
+  agreement = '';
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: "hebrew only" }),
-      maxlength({ value: 5, message: "too long..." })
+      hebrewName({ message: 'hebrew only' }),
+      maxlength({ value: 5, message: 'too long...' })
     ]
   })
-  firstName = "yael";
+  firstName = 'yael';
   @modelProp() complex;
 }

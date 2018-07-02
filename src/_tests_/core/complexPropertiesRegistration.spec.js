@@ -1,62 +1,62 @@
-import {initializeProperties , initializeComplexProperties, registerProperty } from '../../core/complexPropertiesRegistration';
-import formObservableGenerator from '../../core/formObservableGenerator'
-import {modelPropGenerator} from '../../core/modelProp';
-let map, target, descriptor;
-const complexInitilize = {
-    _propertiesInitialized: false,
-    _properties: {
-        firstName: {isModelProp: true, isFormObservable: true},
-        lastName: {isModelProp: true},
-        address: {isFormObservable: true}
-    }
-};
-beforeEach(()=>{            
-    map = jest.fn(b => b);
-    modelPropGenerator = jest.fn(b => b);
-    formObservableGenerator = jest.fn(b => b);
+import formObservableGenerator from '../../core/formObservableGenerator';
+jest.mock('../../core/formObservableGenerator');
+import * as modelPropFunctions from '../../core/modelProp';
+import complexInitilize, { descriptor } from '../mocks/complexType';
 
-    target = {}; 
-    descriptor = (target, 'name', {
-        value: 42,
-        writable: false
+let complextTab;
+import { initializeProperties } from '../../core/complexPropertiesRegistration';
+
+describe('initializeProperties', () => {
+  beforeEach(() => {
+    // let map;
+    modelPropFunctions.modelPropGenerator = jest.fn();
+    complextTab = complexInitilize;
+    initializeProperties(complextTab);
+  });
+  describe('is once', () => {
+    test('initializeProperties change _propertiesInitialized to true', () => {
+      expect(complextTab._propertiesInitialized).toBeTruthy();
     });
-})
-describe('registerProperty', ()=>{
-    describe('require params: ', ()=>{
-        test('target' , ()=>{
-            expect(()=>{registerProperty({name: 'a', descriptor })}).toThrow('registerProperty faile: missing require parameter: target, descriptor or name');
-        });    
-        test('name' , ()=>{
-            expect(()=>{registerProperty({target: {}, descriptor})}).toThrow('registerProperty faile: missing require parameter: target, descriptor or name');
-        }); 
-        test('descriptor' , ()=>{
-            expect(()=>{registerProperty({target: {}})}).toThrow('registerProperty faile: missing require parameter: target, descriptor or name');
-        }); 
+    test('initializeProperties not generate properties if _propertiesInitialized is already true', () => {
+      initializeProperties(complextTab);
+      expect(formObservableGenerator.mock.calls.length).toBe(0);
+      expect(modelPropFunctions.modelPropGenerator.mock.calls.length).toBe(0);
     });
-    describe('register to _properties object- define new property: ', ()=>{
-        beforeEach(()=>{
-            registerProperty({target ,name: 'firstName',descriptor, map });
-        })
-        test('property has the name as key' , ()=>{
-            expect(target._properties.firstName).toBeDefined();
-        });      
-        test('property include descriptor' , ()=>{
-            expect(target._properties.firstName.descriptor).toBe(descriptor);
-        });    
-        test('property include all other params' , ()=>{
-            expect(target._properties.firstName.map).toBeDefined();
-        });        
+  });
+  describe('generate properties', () => {
+    beforeEach(() => {
+      complextTab._propertiesInitialized = false;
+      initializeProperties(complextTab, complextTab._properties);
     });
-});
-describe('initializeProperties - loop over all _properties object and initialize them by type:  formObservable and modelProp', ()=>{
-    beforeEach(()=>{
-        initializeProperties({complexInitilize});
-    })
-    test('initializeProperties is once' , ()=>{
-        expect(formObservableGenerator.calls.length).toBe(2);
-        expect(modelPropGenerator.calls.length).toBe(1);
-        initializeProperties({complexInitilize});
-        expect(formObservableGenerator.calls.length).toBe(2);
-        expect(modelPropGenerator.calls.length).toBe(1);
-    }); 
+    test('generate formObservable properties', () => {
+      expect(formObservableGenerator.mock.calls.length).toBe(2);
+      expect(formObservableGenerator.mock.calls[0][0]).toEqual({
+        target: complextTab,
+        name: 'firstName',
+        descriptor,
+        validationsManager: {}
+      });
+      expect(formObservableGenerator.mock.calls[1][0]).toEqual({
+        target: complextTab,
+        name: 'address',
+        descriptor,
+        validationsManager: {}
+      });
+    });
+    test('generate modelProp properties', () => {
+      expect(modelPropFunctions.modelPropGenerator.mock.calls.length).toBe(2);
+      expect(modelPropFunctions.modelPropGenerator.mock.calls[0][0]).toEqual({
+        target: complextTab,
+        name: 'lastName',
+        descriptor,
+        validationsManager: {}
+      });
+      expect(modelPropFunctions.modelPropGenerator.mock.calls[1][0]).toEqual({
+        target: complextTab,
+        name: 'address',
+        descriptor,
+        validationsManager: {}
+      });
+    });
+  });
 });

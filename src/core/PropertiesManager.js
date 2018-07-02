@@ -1,4 +1,4 @@
-import PropertyBehavior from "./PropertyBehavior";
+import PropertyBehavior from './PropertyBehavior';
 /**
  * @class PropertiesManager
  * @classdesc PropertiesManager - manage all properties of complex
@@ -14,9 +14,6 @@ export default class PropertiesManager {
     this.mapProperty = this.mapProperty.bind(this);
     this.resetProperty = this.resetProperty.bind(this);
     this.createProperty = this.createProperty.bind(this);
-    this.getPropertyDependencies = this.getPropertyDependencies.bind(this);
-    this.getPropertyDependencies = this.getPropertyDependencies.bind(this);
-    this.getPropertyDependencies = this.getPropertyDependencies.bind(this);
     this.setModelProp = this.setModelProp.bind(this);
     this.applyChildAction = this.applyChildAction.bind(this);
     this.validate = this.validate.bind(this);
@@ -61,7 +58,7 @@ export default class PropertiesManager {
     */
   validateProperty = function(name, newVal) {
     const validate = this.properties[name].validate;
-    if (typeof validate === "function") {
+    if (typeof validate === 'function') {
       return validate(newVal);
     }
     return true;
@@ -114,7 +111,7 @@ export default class PropertiesManager {
     */
   setComplexProperty = function(propertyName, settings = {}) {
     if (!(this[propertyName] instanceof PropertyBehavior)) {
-      throw "setComplexProperty should call after PropertiesManager.createProperty is call";
+      throw 'setComplexProperty should call after PropertiesManager.createProperty is call';
     }
     const { validate } = settings;
     this[propertyName].setValidate(validate);
@@ -130,7 +127,7 @@ export default class PropertiesManager {
     */
   setFormObservableProperty = function(propertyName, settings = {}) {
     if (!this[propertyName] instanceof PropertyBehavior) {
-      throw "setFormObservableProperty should call after PropertiesManager.createProperty is call";
+      throw 'setFormObservableProperty should call after PropertiesManager.createProperty is call';
     }
     const { validate, ref, validationsManager } = settings;
     this[propertyName].setRef(ref);
@@ -160,10 +157,11 @@ export default class PropertiesManager {
     * @example 
         propertiesManager1.applyChildAction('reset', {});
     */
+  //TODO check is neccessary
   applyChildAction(actionName, params = {}) {
     try {
       for (let property in this.properties) {
-        typeof this.properties[property][actionName] === "function"
+        typeof this.properties[property][actionName] === 'function'
           ? this.properties[property][actionName](params)
           : false;
       }
