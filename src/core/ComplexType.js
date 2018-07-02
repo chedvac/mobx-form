@@ -1,5 +1,5 @@
 import validationsManagerFactory from '../validations/validationsManager';
-import { initializeProperties } from './complexPropertiesRegistration';
+import { initializeProperties } from './initializeProperties';
 import PropertiesManager from './PropertiesManager';
 import ValidationState from './ValidationState';
 import Exception from './exceptions';
@@ -8,6 +8,9 @@ export default class ComplexType {
     this.propertiesManager = new PropertiesManager();
     this.validationsManager = new validationsManagerFactory(
       settings.validations || []
+    );
+    this.initializeComplexProperties = this.initializeComplexProperties.bind(
+      this
     );
     this.validationState = new ValidationState();
     initializeProperties(this, this._properties);
@@ -23,6 +26,17 @@ export default class ComplexType {
     this._properties = this._properties || {};
     this._properties[name] = this._properties[name] || { name, descriptor };
     Object.assign(this._properties[name], settings);
+  }
+
+  initializeComplexProperties() {
+    for (const key in this._properties) {
+      const property = this[key];
+      if (property instanceof ComplexType) {
+        this.propertiesManager.setComplexProperty(key, {
+          validate: property.validate
+        });
+      }
+    }
   }
   validate() {
     const validationResult = this.validationsManager.validate(this);

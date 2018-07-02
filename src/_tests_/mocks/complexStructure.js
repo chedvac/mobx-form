@@ -29,7 +29,7 @@ export default {
       isFormObservable: true,
       descriptor,
       validationsManager: {},
-      nam: 'address'
+      name: 'address'
     }
   }
 };

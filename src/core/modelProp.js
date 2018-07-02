@@ -1,12 +1,10 @@
-import { observable } from 'mobx';
-import { registerProperty } from './complexPropertiesRegistration';
 export const modelPropGenerator = function({
   target,
   name,
   descriptor,
   ...params
 } = params) {
-  var defaultValue = descriptor
+  const defaultValue = descriptor
     ? descriptor.initializer
       ? descriptor.initializer.call(target)
       : descriptor.value

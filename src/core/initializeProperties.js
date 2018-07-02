@@ -1,6 +1,5 @@
 import formObservableGenerator from './formObservableGenerator';
-import { modelPropGenerator } from './modelProp';
-import ComplexType from './ComplexType';
+import modelPropGenerator from './modelProp';
 
 const generateModelProp = function(property, complexTypeInstance) {
   if (!property.isModelProp) {
@@ -9,8 +8,7 @@ const generateModelProp = function(property, complexTypeInstance) {
   modelPropGenerator({
     target: complexTypeInstance,
     name: property.name,
-    descriptor: property.descriptor,
-    isFormObservable: property.isFormObservable
+    descriptor: property.descriptor
   });
 };
 const generateFormObservable = function(property, complexTypeInstance) {
@@ -34,16 +32,5 @@ export const initializeProperties = function(complexTypeInstance, properties) {
     complexTypeInstance.propertiesManager.createProperty(key);
     generateModelProp(properties[key], complexTypeInstance);
     generateFormObservable(properties[key], complexTypeInstance);
-  }
-};
-
-export const initializeComplexProperties = function(parent) {
-  for (const key in parent._properties) {
-    const property = parent[key];
-    if (property instanceof ComplexType) {
-      parent.propertiesManager.setComplexProperty(key, {
-        validate: property.validate
-      });
-    }
   }
 };

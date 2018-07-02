@@ -4,7 +4,7 @@ import modelProp from '../../core/modelProp';
 import { hebrewName } from '../../validations/languages';
 import { maxlength } from '../../validations/general';
 
-import { initializeComplexProperties } from '../../core/complexPropertiesRegistration';
+import initializeProperties from '../../core/initializeProperties';
 
 export class Complex extends ComplexType {
   constructor(settings) {
@@ -18,7 +18,7 @@ export default class ComplexTab extends ComplexType {
     super(settings);
     this.complex = new Complex();
     if (register) {
-      initializeComplexProperties(this);
+      initializeProperties(this);
     }
   }
   @modelProp()

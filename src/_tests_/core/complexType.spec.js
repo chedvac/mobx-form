@@ -1,6 +1,6 @@
 import ValidationsManager from '../../validations/validationsManager';
 import PropertiesManager from '../../core/PropertiesManager';
-import * as complexPropertiesRegistration from '../../core/complexPropertiesRegistration';
+import * as complexPropertiesRegistration from '../../core/initializeProperties';
 import ComplexTab from '../mocks/ComplexTab';
 import { hebrewName } from '../../validations/languages';
 import ComplexType from '../../core/ComplexType';
@@ -74,6 +74,32 @@ describe('ComplexType', () => {
         expect(
           complexPropertiesRegistration.initializeProperties.mock.calls[1][1]
         ).toBe(customTab.complex._properties);
+      });
+    });
+  });
+
+  describe('initializeComplexProperties', () => {
+    beforeEach(() => {
+      customTab = new ComplexTab();
+      customTab.propertiesManager.setComplexProperty = jest.fn();
+      customTab.initializeComplexProperties();
+    });
+
+    describe('call setComplexProperty for every complex property', () => {
+      test('only with all complex properties', () => {
+        expect(
+          customTab.propertiesManager.setComplexProperty.mock.calls.length
+        ).toBe(1);
+      });
+      test('params: propty name', () => {
+        expect(
+          customTab.propertiesManager.setComplexProperty.mock.calls[0][0]
+        ).toBe('complex');
+      });
+      test('params: object with propety validate function', () => {
+        expect(
+          customTab.propertiesManager.setComplexProperty.mock.calls[0][1]
+        ).toEqual({ validate: customTab.complex.validate });
       });
     });
   });
