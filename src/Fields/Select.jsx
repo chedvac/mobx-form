@@ -1,51 +1,48 @@
-import React from 'react'
-import {observer, inject} from 'mobx-react'
-import control from './hocs/control'
-import {renderLabel} from './utils/renderLabel'
-import {renderError} from './utils/renderError'
-@inject('applicationData')
+import React from "react";
+import { observer, inject } from "mobx-react";
+import control from "./hocs/control";
+import field from "./hocs/field";
+
+@inject("applicationData")
 @observer
-class Select extends React.Component{
-    
-    constructor(props) {
-        super(props);
-        this.texts = {
-            english: {
-                optionCaption: 'Choose'
-            },
-            hebrew: {
-                optionCaption: 'בחר'
-            },
-            arabic: {
-                optionCaption: 'اختر'
-            }
-        };
-        !props.noOptionsCaption ? this.addOptionCaption():null;
-    }
-    addOptionCaption = function(){
-        const optionCaption = this.props.optionCaption || this.currentResources().optionCaption;
-        this.props.options.unshift(
-            {key: "", value:optionCaption}
-          );
-    }
-    currentResources = function(){
-        return this.texts[this.props.applicationData.formLanguage.name];
+class BaseSelect extends React.Component {
+  constructor(props) {
+    super(props);
+    this.texts = {
+      english: {
+        optionCaption: "Choose"
+      },
+      hebrew: {
+        optionCaption: "בחר"
+      },
+      arabic: {
+        optionCaption: "اختر"
+      }
     };
-   
-    render(){
-        const { options=[] } = this.props || {};
-        return( 
-            <div>
-                {renderLabel(this.props)}
-                <select className="select-field" {...this.props}>   
-                    {options.map(option =>
-                        <option key={option.key} value={option.key}>{option.value}</option>)
-                    }
-                </select>    
-                {renderError(this.props.message)}      
-            </div>
-        );
-    }
-  
+    !props.noOptionsCaption ? this.addOptionCaption() : null;
+  }
+  addOptionCaption = function() {
+    const optionCaption =
+      this.props.optionCaption || this.currentResources().optionCaption;
+    this.props.options.unshift({ key: "", value: optionCaption });
+  };
+  currentResources = function() {
+    return this.texts[this.props.applicationData.formLanguage.name];
+  };
+
+  render() {
+    const { options = [] } = this.props || {};
+    return (
+      <div>
+        <select className="select-field" {...this.props}>
+          {options.map(option => (
+            <option key={option.key} value={option.key}>
+              {option.value}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
 }
-export default control(Select)
+export default field(control(BaseSelect));

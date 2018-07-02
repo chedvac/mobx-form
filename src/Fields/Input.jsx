@@ -1,25 +1,16 @@
-import React from 'react'
-import {observer} from 'mobx-react'
-import control from './hocs/control'
-import {renderLabel} from './utils/renderLabel'
-import {renderError} from './utils/renderError'
+import React from "react";
+import { observer } from "mobx-react";
+import control from "./hocs/control";
+import field from "./hocs/field";
 
 @observer
-class Input extends React.Component{
-    
-    constructor(props) {
-        super(props);
-    }
-   
-    render(){
-        return(
-            <div>
-                {renderLabel(this.props)}
-                <input {...this.props} className="text-field" />  
-                {renderError(this.props.message)}
-            </div> 
-        )   
-    
-    }
+class Input extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <input {...this.props} />;
+  }
 }
-export default control(Input)
+export default field(control(Input));
