@@ -11,7 +11,7 @@ import City from '../../../../../components/city/city';
 
 @inject('applicationData')
 @observer
-class PersonalInformation extends React.Component {
+export default class PersonalInformation extends React.Component {
   constructor(props) {
     super(props);
 
@@ -59,75 +59,65 @@ class PersonalInformation extends React.Component {
   };
 
   render() {
-    const { userDetails } = this.props;
+    const { userDetails, classes } = this.props;
 
     return (
       <div>
-        <div className="row">
-          <div className="col-md-4">
-            <Input
-              label={this.currentResources().firstName}
-              {...getPropsField(userDetails, 'firstName')}
-            />
-          </div>
-          <div className="col-md-4">
-            <Input
-              label={this.currentResources().lastName}
-              {...getPropsField(userDetails, 'lastName')}
-            />
-          </div>
-          <div className="col-md-4">
-            <Input
-              label={this.currentResources().age}
-              {...getPropsField(userDetails, 'age')}
-            />
-          </div>
-          <div className="col-md-4">
-            <Input
-              label={this.currentResources().fatherAge}
-              {...getPropsField(userDetails, 'fatherAge')}
-            />
-          </div>
-          <div className="col-md-4">
-            <Input
-              label="שם האב"
-              {...getPropsField(userDetails, 'fatherName')}
-            />
-          </div>
-          <div className="col-md-4">
-            <Textarea
-              label={this.currentResources().comments}
-              {...getPropsField(userDetails, 'comments')}
-              rows={4}
-              isAutoResize={false}
-            />
-          </div>
-          <div className="col-md-4">
-            <DatePicker
-              label={this.currentResources().birthDate}
-              {...getPropsField(userDetails, 'birthDate')}
-            />
-          </div>
-          <div className="col-md-4">
-            <Select
-              label={this.currentResources().status}
-              {...getPropsField(userDetails, 'status')}
-              options={this.statusOptions}
-            />
-          </div>
+        <div class="row">
+          <Input
+            className="col-md-4"
+            label={this.currentResources().firstName}
+            {...getPropsField(userDetails, 'firstName')}
+          />
+          <Input
+            className="col-md-4"
+            label={this.currentResources().lastName}
+            {...getPropsField(userDetails, 'lastName')}
+          />
+          <Input
+            className="col-md-4"
+            label={this.currentResources().age}
+            {...getPropsField(userDetails, 'age')}
+          />
+          <Input
+            className="col-md-4"
+            label={this.currentResources().fatherAge}
+            {...getPropsField(userDetails, 'fatherAge')}
+          />
 
-          <div className="col-md-4">
-            <City {...getPropsField(userDetails, 'city')} />
-          </div>
+          <Textarea
+            className="col-md-8"
+            label={this.currentResources().comments}
+            {...getPropsField(userDetails, 'comments')}
+            rows={4}
+            isAutoResize={false}
+          />
+          <DatePicker
+            className="col-md-4"
+            label={this.currentResources().birthDate}
+            {...getPropsField(userDetails, 'birthDate')}
+          />
+
+          <Select
+            className="col-md-4"
+            label={this.currentResources().status}
+            {...getPropsField(userDetails, 'status')}
+            options={this.statusOptions}
+          />
+
+          {/*
+            <Grid item xs={6} sm={3}>
+            <City {...getPropsField(userDetails, "city")} />
+            </Grid> */}
+
+          {/* <Checkbox
+            className="col-md-4"
+            label={this.currentResources().agreement}
+            {...getPropsField(userDetails, "agreement")}
+          /> */}
         </div>
         <span className="error-message">{this.props.message}</span>
-        {/* <div className="row">
-                    <div className="col-md-4">
-                        <Agreement label={this.currentResources().agreement} />
-                    </div>
-                </div> */}
       </div>
     );
   }
 }
-export default PersonalInformation;

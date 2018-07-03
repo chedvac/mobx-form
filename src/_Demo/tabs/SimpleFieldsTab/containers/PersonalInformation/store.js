@@ -51,7 +51,6 @@ class PersonalInformation extends ComplexType {
     ]
   })
   firstName = '';
-
   @modelProp()
   @formObservable({
     validations: [
@@ -102,19 +101,15 @@ class PersonalInformation extends ComplexType {
     ]
   })
   comments = '';
-
   @modelProp()
   @formObservable({ validations: [] })
   status = 'true';
-
   @modelProp()
   @formObservable({ validations: [] })
   agreement = '';
-
   @modelProp()
   @formObservable({ validations: [] })
   city = '';
-
   @modelProp()
   @formObservable({ validations: [] })
   birthDate = '';
