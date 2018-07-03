@@ -1,5 +1,5 @@
-import validationsManagerFactory from "../validations/validationsManager";
-import { registerProperty } from "./complexPropertiesRegistration";
+import validationsManagerFactory from '../validations/src/core/validationsManager';
+import { registerProperty } from './complexPropertiesRegistration';
 export default function formObservable(settings = {}) {
   const validationsManager = new validationsManagerFactory(
     settings.validations || []

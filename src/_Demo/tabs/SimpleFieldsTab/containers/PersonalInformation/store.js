@@ -3,14 +3,11 @@ import formObservable from '../../../../../core/formObservable';
 import modelProp from '../../../../../core/modelProp';
 
 import ComplexType from '../../../../../core/ComplexType';
-import { hebrewName } from '../../../../../validations/languages';
-import { maxlength } from '../../../../../validations/general';
-import {
-  dependedGreaterThan,
-  dependedLessThan
-} from '../../../../../validations/number';
+import { hebrewName } from 'validations/languages';
+import { maxlength, required, conditionRequired } from 'validations/general';
+import { dependedGreaterThan, dependedLessThan } from 'validations/number';
 import { sumAges } from './validations';
-import validationFactory from './../../../../../validations/validationsFactory';
+import { generateAsyncValidation } from 'validations/core/validationsFactory';
 import axios from 'axios';
 const myRequest = function(value) {
   return axios
@@ -54,6 +51,16 @@ class PersonalInformation extends ComplexType {
     ]
   })
   firstName = '';
+
+  @modelProp()
+  @formObservable({
+    validations: [
+      hebrewName({ message: 'hebrew only' }),
+      maxlength({ value: 15, message: 'too long...' })
+    ]
+  })
+  firstName = '';
+
   @modelProp()
   @formObservable({
     validations: [
@@ -62,19 +69,32 @@ class PersonalInformation extends ComplexType {
     ]
   })
   lastName = '';
+
   @modelProp()
   @formObservable({ validations: [dependedLessThan({ number: 'fatherAge' })] })
   age = 15;
-  @modelProp()
-  @formObservable({ validations: [dependedGreaterThan({ number: 'age' })] })
-  fatherAge = 0;
+
   @computed
-  get isOlder() {}
+  get isAdult() {
+    return this.age < 18;
+  }
+
+  @modelProp()
+  @formObservable({
+    validations: [dependedGreaterThan({ number: 'age' })]
+  })
+  fatherAge = 0;
+
+  @modelProp()
+  @formObservable({
+    validations: [conditionRequired({ condition: 'isAdult' })]
+  })
+  fatherName = 0;
 
   @modelProp()
   @formObservable({
     validations: [
-      validationFactory.generateAsyncValidation({
+      generateAsyncValidation({
         name: 'tryAsyncValidation',
         message: 'my default error',
         request: myRequest
@@ -82,15 +102,19 @@ class PersonalInformation extends ComplexType {
     ]
   })
   comments = '';
+
   @modelProp()
   @formObservable({ validations: [] })
   status = 'true';
+
   @modelProp()
   @formObservable({ validations: [] })
   agreement = '';
+
   @modelProp()
   @formObservable({ validations: [] })
   city = '';
+
   @modelProp()
   @formObservable({ validations: [] })
   birthDate = '';
@@ -120,6 +144,10 @@ class PersonalInformation extends ComplexType {
   @action
   set_age(value) {
     this.age = value;
+  }
+  @action
+  set_fatherName(value) {
+    this.fatherName = value;
   }
   @action
   set_comments(value) {
