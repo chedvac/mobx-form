@@ -45,5 +45,12 @@
     "react-app-rewire-preact": "^1.0.1",
     "react-app-rewired": "^1.5.0",
     "react-scripts": "^1.1.4"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^_Demo(.*)$": "<rootDir>/src/_Demo$1",
+      "^validations(.*)$": "<rootDir>/src/validations$1",
+      "^core(.*)$": "<rootDir>/src/core$1"
+    }
   }
 }
