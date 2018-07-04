@@ -1,10 +1,10 @@
-import ValidationsManager from '../../validations/validationsManager';
+import ValidationsManager from '../../validations/src/core/validationsManager';
 import PropertiesManager from '../../core/PropertiesManager';
 import * as complexPropertiesRegistration from '../../core/initializeProperties';
 import ComplexTab from '../mocks/ComplexTab';
 import { hebrewName } from '../../validations/languages';
 import ComplexType from '../../core/ComplexType';
-jest.mock('../../validations/validationsManager');
+jest.mock('../../validations/src/core/validationsManager');
 let customTab;
 const settings = { validations: [hebrewName({ message: 'hebrew only' })] };
 beforeEach(() => {

@@ -1,5 +1,6 @@
 import ValidationState from './ValidationState';
-import ValidationsManager from '../validations/validationsManager';
+import ValidationsManager from '../validations/src/core/validationsManager';
+
 export default class PropertyBehavior {
   constructor() {
     this.validationState = new ValidationState();

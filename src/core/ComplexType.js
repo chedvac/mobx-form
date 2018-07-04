@@ -1,4 +1,4 @@
-import validationsManagerFactory from '../validations/validationsManager';
+import validationsManagerFactory from '../validations/src/core/validationsManager';
 import { initializeProperties } from './initializeProperties';
 import PropertiesManager from './PropertiesManager';
 import ValidationState from './ValidationState';

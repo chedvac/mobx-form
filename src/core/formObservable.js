@@ -1,6 +1,5 @@
-import validationsManagerFactory from '../validations/validationsManager';
 import ComplexType from '../core/ComplexType';
-
+import validationsManagerFactory from '../validations/src/core/validationsManager';
 export default function formObservable(settings = {}) {
   const validationsManager = new validationsManagerFactory(
     settings.validations || []

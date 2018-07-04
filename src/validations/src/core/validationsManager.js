@@ -1,4 +1,4 @@
-import { concatArray } from './utils';
+import { concatArray } from 'validations/utils';
 
 export default class validationsManager {
   failedValidation = {};
@@ -6,9 +6,6 @@ export default class validationsManager {
   constructor(validations) {
     this.validations = concatArray(validations);
   }
-  // setDependencies = (dependencies)=>{
-  //     dependencies.
-  // }
   setValidations = validations => {
     this.validations = concatArray(validations, this.validations);
   };
@@ -17,7 +14,6 @@ export default class validationsManager {
   };
   validate = (value, observable) => {
     this.failedValidation = this.validations.find(item => {
-      // setDependencies(item.dependencies)
       return !item.validator(value, observable);
     });
     return {

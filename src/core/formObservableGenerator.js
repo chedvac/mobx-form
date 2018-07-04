@@ -1,7 +1,14 @@
-import { observable } from 'mobx';
-export default function formObservableGenerator(params) {
-  const { target, name, descriptor, validationsManager, ...settings } = params;
-  const defaultValue = descriptor
+import { observable, reaction } from 'mobx';
+import configuration from './mobxConfiguration';
+
+export default function({
+  target,
+  name,
+  descriptor,
+  validationsManager,
+  ...params
+} = params) {
+  var defaultValue = descriptor
     ? descriptor.initializer
       ? descriptor.initializer.call(target)
       : descriptor.value
@@ -11,17 +18,6 @@ export default function formObservableGenerator(params) {
   delete descriptor.writable;
 
   const observableBox = observable.box(defaultValue, { name });
-
-  const validate = newValue => {
-    //TODO move to utilities
-    const value = newValue !== undefined ? newValue : descriptor.get();
-    // const dependedObservables = target.propertiesManager.getPropertyDependencies(name);
-    const failedValidation = validationsManager.validate(value);
-    target.propertiesManager
-      .getPropertyValidationState(name)
-      .setValidationState(failedValidation);
-    return failedValidation.isValid;
-  };
 
   //TODO get
   observableBox.intercept(change => {
@@ -48,6 +44,22 @@ export default function formObservableGenerator(params) {
 
   descriptor.get = function() {
     return observableBox.get();
+  };
+
+  const validate = newValue => {
+    //TODO move to utilities
+    const value = newValue !== undefined ? newValue : descriptor.get();
+    const dependedObservables = target.propertiesManager.getPropertyDependencies(
+      name
+    );
+    let failedValidation = validationsManager.validate(
+      value,
+      dependedObservables
+    );
+    target.propertiesManager
+      .getPropertyValidationState(name)
+      .setValidationState(failedValidation);
+    return failedValidation.isValid;
   };
   target.propertiesManager.setFormObservableProperty(name, {
     validate,
