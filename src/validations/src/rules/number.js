@@ -1,4 +1,4 @@
-import messages from '../../resources/texts/messages';
+import messages from 'validations/messages/number';
 import { stringExtensionFormat } from 'validations/utils';
 import {
   generateBasicValidation,
@@ -39,10 +39,7 @@ export function greaterThan(params) {
   let { number } = params;
   const settings = {
     name: 'greaterThan',
-    message: stringExtensionFormat(
-      messages.number.greaterThan.hebrew,
-      'גיל הבן'
-    )
+    message: stringExtensionFormat(messages.greaterThan, 'גיל הבן')
   };
   return generateBasicValidation(
     settings,
@@ -56,7 +53,7 @@ export function lessThan(params) {
   return generateBasicValidation(
     {
       name: 'greaterThan',
-      message: stringExtensionFormat(messages.number.lessThan.hebrew, 'גיל האב')
+      message: stringExtensionFormat(messages.lessThan, 'גיל האב')
     },
     params,
     lessThanValidator(params)
@@ -66,7 +63,7 @@ export function lessThan(params) {
 export function dependedGreaterThan(params) {
   return generateDependedValidation({
     name: 'dependedGreaterThan',
-    message: messages.number.greaterThan.hebrew,
+    message: messages.greaterThan,
     params,
     validator: greaterThanValidator
   });
@@ -75,7 +72,7 @@ export function dependedGreaterThan(params) {
 export function dependedLessThan(params) {
   return generateDependedValidation({
     name: 'dependedLessThan',
-    message: messages.number.lessThan.hebrew,
+    message: messages.lessThan,
     params,
     validator: lessThanValidator
   });

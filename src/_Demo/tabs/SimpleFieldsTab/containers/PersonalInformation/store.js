@@ -3,9 +3,16 @@ import formObservable from '../../../../../core/formObservable';
 import modelProp from '../../../../../core/modelProp';
 
 import ComplexType from '../../../../../core/ComplexType';
-import { hebrewName } from 'validations/languages';
-import { maxlength, required, conditionRequired } from 'validations/general';
-import { dependedGreaterThan, dependedLessThan } from 'validations/number';
+import { hebrewName } from 'validations/rules/languages';
+import {
+  maxlength,
+  required,
+  conditionRequired
+} from 'validations/rules/general';
+import {
+  dependedGreaterThan,
+  dependedLessThan
+} from 'validations/rules/number';
 import { sumAges } from './validations';
 import { generateAsyncValidation } from 'validations/core/validationsFactory';
 import axios from 'axios';
