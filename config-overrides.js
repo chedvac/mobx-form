@@ -6,7 +6,7 @@ const path = require('path');
 module.exports = function override(config, env) {
   config = rewireMobX(config, env);
   config.resolve.alias._Demo = path.resolve('src/_Demo');
-  config.resolve.alias.validations = path.resolve('src/validations');
+  config.resolve.alias.validations = path.resolve('src/validations/src');
   config.resolve.alias.core = path.resolve('src/core');
   return config;
 };

@@ -1,4 +1,6 @@
-import { observable, reaction } from "mobx";
+import { observable, reaction } from 'mobx';
+import configuration from './mobxConfiguration';
+
 export default function({
   target,
   name,
@@ -46,8 +48,13 @@ export default function({
   const validate = newValue => {
     //TODO move to utilities
     const value = newValue !== undefined ? newValue : descriptor.get();
-    // const dependedObservables = target.propertiesManager.getPropertyDependencies(name);
-    let failedValidation = validationsManager.validate(value);
+    const dependedObservables = target.propertiesManager.getPropertyDependencies(
+      name
+    );
+    let failedValidation = validationsManager.validate(
+      value,
+      dependedObservables
+    );
     target.propertiesManager
       .getPropertyValidationState(name)
       .setValidationState(failedValidation);

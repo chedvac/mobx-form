@@ -1,13 +1,20 @@
 import { action, computed } from 'mobx';
-import formObservable from 'core/formObservable';
-import modelProp from 'core/modelProp';
+import formObservable from '../../../../../core/formObservable';
+import modelProp from '../../../../../core/modelProp';
 
-import ComplexType from 'core/ComplexType';
-import { hebrewName } from 'validations/languages';
-import { maxlength } from 'validations/general';
-import { dependedGreaterThan, dependedLessThan } from 'validations/number';
+import ComplexType from '../../../../../core/ComplexType';
+import { hebrewName } from 'validations/rules/languages';
+import {
+  maxlength,
+  required,
+  conditionRequired
+} from 'validations/rules/general';
+import {
+  dependedGreaterThan,
+  dependedLessThan
+} from 'validations/rules/number';
 import { sumAges } from './validations';
-import validationFactory from 'validations/validationsFactory';
+import { generateAsyncValidation } from 'validations/core/validationsFactory';
 import axios from 'axios';
 const myRequest = function(value) {
   return axios
@@ -58,20 +65,42 @@ class PersonalInformation extends ComplexType {
       maxlength({ value: 15, message: 'too long...' })
     ]
   })
-  lastName = '';
-  @modelProp()
-  @formObservable({ validations: [dependedLessThan({ number: 'fatherAge' })] })
-  age = 15;
-  @modelProp()
-  @formObservable({ validations: [dependedGreaterThan({ number: 'age' })] })
-  fatherAge = 0;
-  @computed
-  get isOlder() {}
+  firstName = '';
 
   @modelProp()
   @formObservable({
     validations: [
-      validationFactory.generateAsyncValidation({
+      hebrewName({ message: 'hebrew only' }),
+      maxlength({ value: 15, message: 'too long...' })
+    ]
+  })
+  lastName = '';
+
+  @modelProp()
+  @formObservable({ validations: [dependedLessThan({ number: 'fatherAge' })] })
+  age = 15;
+
+  @computed
+  get isAdult() {
+    return this.age < 18;
+  }
+
+  @modelProp()
+  @formObservable({
+    validations: [dependedGreaterThan({ number: 'age' })]
+  })
+  fatherAge = 0;
+
+  @modelProp()
+  @formObservable({
+    validations: [conditionRequired({ condition: 'isAdult' })]
+  })
+  fatherName = 0;
+
+  @modelProp()
+  @formObservable({
+    validations: [
+      generateAsyncValidation({
         name: 'tryAsyncValidation',
         message: 'my default error',
         request: myRequest
@@ -117,6 +146,10 @@ class PersonalInformation extends ComplexType {
   @action
   set_age(value) {
     this.age = value;
+  }
+  @action
+  set_fatherName(value) {
+    this.fatherName = value;
   }
   @action
   set_comments(value) {
