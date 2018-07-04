@@ -14,14 +14,20 @@ export function generateConditionValidation(settings) {
 }
 
 export function generateDependedValidation(settings) {
-  const { params, validator } = settings;
+  const { params, validator, message } = settings;
   const validatorWrapper = (value, dependedObservables) => {
     const dependedParams = fp.mapValues(value =>
       dependedObservables[value].get()
     )(params);
     return validator(dependedParams)(value);
   };
-  return { ...settings, validator: validatorWrapper };
+  const messageWrapper = (value, dependedObservables) => {
+    const dependedParams = fp.mapValues(value =>
+      dependedObservables[value].get()
+    )(params);
+    return message(dependedParams);
+  };
+  return { ...settings, validator: validatorWrapper, message: messageWrapper };
 }
 
 export function generateRegexValidation(settings) {

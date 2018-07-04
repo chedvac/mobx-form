@@ -9,15 +9,17 @@ export default class validationsManager {
   setValidations = validations => {
     this.validations = concatArray(validations, this.validations);
   };
-  getMessage = () => {
-    return this.failedValidation ? this.failedValidation.message : '';
-  };
+  // getMessage = () => {
+  //   return this.failedValidation ? this.failedValidation.message : '';
+  // };
   validate = (value, observable) => {
     this.failedValidation = this.validations.find(item => {
       return !item.validator(value, observable);
     });
     return {
-      message: this.failedValidation ? this.getMessage() : '',
+      message: this.failedValidation
+        ? this.failedValidation.message(value, observable).hebrew
+        : '',
       isValid: this.failedValidation ? false : true
     };
   };
