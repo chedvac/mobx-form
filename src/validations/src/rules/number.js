@@ -4,36 +4,10 @@ import {
   generateBasicValidation,
   generateDependedValidation
 } from 'validations/core/validationsFactory';
-
-function greaterThanValidator(params) {
-  let { number } = params;
-  return val => {
-    if (!number || isNaN(number.toString())) {
-      return true;
-    }
-    number = parseFloat(number);
-    val = parseFloat(val);
-    if (isNaN(val)) {
-      return true;
-    }
-    return val > number;
-  };
-}
-
-function lessThanValidator(params) {
-  let { number } = params;
-  return val => {
-    if (!number || isNaN(number.toString())) {
-      return true;
-    }
-    number = parseFloat(number);
-    val = parseFloat(val);
-    if (isNaN(val)) {
-      return true;
-    }
-    return val < number;
-  };
-}
+import {
+  greaterThanChecker,
+  lessThanChecker
+} from 'validations/checkers/number';
 
 export function greaterThan(params) {
   let { number } = params;
@@ -41,11 +15,7 @@ export function greaterThan(params) {
     name: 'greaterThan',
     message: stringExtensionFormat(messages.greaterThan, 'גיל הבן')
   };
-  return generateBasicValidation(
-    settings,
-    params,
-    greaterThanValidator(params)
-  );
+  return generateBasicValidation(settings, params, greaterThanChecker(params));
 }
 
 export function lessThan(params) {
@@ -56,7 +26,7 @@ export function lessThan(params) {
       message: stringExtensionFormat(messages.lessThan, 'גיל האב')
     },
     params,
-    lessThanValidator(params)
+    lessThanChecker(params)
   );
 }
 
@@ -65,7 +35,7 @@ export function dependedGreaterThan(params) {
     name: 'dependedGreaterThan',
     message: messages.greaterThan,
     params,
-    validator: greaterThanValidator
+    validator: greaterThanChecker
   });
 }
 
@@ -74,6 +44,6 @@ export function dependedLessThan(params) {
     name: 'dependedLessThan',
     message: messages.lessThan,
     params,
-    validator: lessThanValidator
+    validator: lessThanChecker
   });
 }
