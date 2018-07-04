@@ -5,7 +5,7 @@ jest.mock('../../core/formObservableGenerator');
 
 import complexStructure, { descriptor } from '../mocks/complexStructure';
 let customTab;
-import { initializeProperties } from '../../core/complexPropertiesRegistration';
+import { initializeProperties } from '../../core/initializeProperties';
 
 describe('initializeProperties', () => {
   beforeEach(() => {
@@ -16,13 +16,13 @@ describe('initializeProperties', () => {
   });
   describe('is once', () => {
     test('initializeProperties change _propertiesInitialized to true', () => {
-      expect(complexTab._propertiesInitialized).toBeTruthy();
+      expect(customTab._propertiesInitialized).toBeTruthy();
     });
     test('initializeProperties not generate properties if _propertiesInitialized is already true', () => {
       formObservableGenerator.mockClear();
       modelPropGenerator.mockClear();
-      complexTab.propertiesManager.createProperty.mockClear();
-      initializeProperties(complexTab, complexTab._properties);
+      customTab.propertiesManager.createProperty.mockClear();
+      initializeProperties(customTab, customTab._properties);
       expect(formObservableGenerator.mock.calls.length).toBe(0);
       expect(modelPropGenerator.mock.calls.length).toBe(0);
     });

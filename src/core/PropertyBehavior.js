@@ -1,5 +1,5 @@
-import ValidationState from "./ValidationState";
-
+import ValidationState from './ValidationState';
+import ValidationsManager from '../validations/validationsManager';
 export default class PropertyBehavior {
   constructor() {
     this.validationState = new ValidationState();
@@ -14,8 +14,11 @@ export default class PropertyBehavior {
   setValidate = function(validate) {
     this.validate = validate;
   };
-  setValidationsManager = function(validationsManager) {
-    this.validationsManager = validationsManager;
+  setValidationsManager = function(validationsManagerIns) {
+    if (!(validationsManagerIns instanceof ValidationsManager)) {
+      throw 'setValidationsManager expect to get object that extends  ValidationsManager';
+    }
+    this.validationsManager = validationsManagerIns;
   };
   setMap = function(map) {
     this.map = map;

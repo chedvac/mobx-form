@@ -77,7 +77,6 @@ describe('ComplexType', () => {
       });
     });
   });
-
   describe('initializeComplexProperties', () => {
     beforeEach(() => {
       customTab = new ComplexTab();
@@ -103,7 +102,6 @@ describe('ComplexType', () => {
       });
     });
   });
-
   describe('registerProperty', () => {
     beforeEach(() => {
       ComplexType.prototype._properties = undefined;
@@ -165,9 +163,7 @@ describe('ComplexType', () => {
           isValid: false
         };
         beforeEach(() => {
-          customTab.validationsManager.validate = jest.fn(() => {
-            return result;
-          });
+          customTab.validationsManager.validate = jest.fn(() => result);
         });
         test('call validationState.setValidationState with result', () => {
           customTab.validate();

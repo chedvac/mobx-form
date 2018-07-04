@@ -23,14 +23,17 @@ const generateFormObservable = function(property, complexTypeInstance) {
   });
 };
 
-export const initializeProperties = function(complexTypeInstance, properties) {
+export const initializeProperties = function(
+  complexTypeInstance,
+  properties = {}
+) {
   if (complexTypeInstance._propertiesInitialized) {
     return;
   }
   complexTypeInstance._propertiesInitialized = true;
-  for (const key in properties) {
+  Object.keys(properties).forEach(key => {
     complexTypeInstance.propertiesManager.createProperty(key);
     generateModelProp(properties[key], complexTypeInstance);
     generateFormObservable(properties[key], complexTypeInstance);
-  }
+  });
 };

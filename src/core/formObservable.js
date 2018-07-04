@@ -1,9 +1,14 @@
 import validationsManagerFactory from '../validations/validationsManager';
+import ComplexType from '../core/ComplexType';
+
 export default function formObservable(settings = {}) {
   const validationsManager = new validationsManagerFactory(
     settings.validations || []
   );
   return function(target, name, descriptor) {
+    if (!(target instanceof ComplexType)) {
+      throw 'formObservable parent must be instanceof ComplexType';
+    }
     target.registerProperty({
       name,
       descriptor,

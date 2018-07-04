@@ -3,6 +3,7 @@ import { initializeProperties } from './initializeProperties';
 import PropertiesManager from './PropertiesManager';
 import ValidationState from './ValidationState';
 import Exception from './exceptions';
+
 export default class ComplexType {
   constructor(settings = {}) {
     this.propertiesManager = new PropertiesManager();
@@ -29,14 +30,14 @@ export default class ComplexType {
   }
 
   initializeComplexProperties() {
-    for (const key in this._properties) {
+    Object.keys(this._properties).forEach(key => {
       const property = this[key];
       if (property instanceof ComplexType) {
         this.propertiesManager.setComplexProperty(key, {
           validate: property.validate
         });
       }
-    }
+    });
   }
   validate() {
     const validationResult = this.validationsManager.validate(this);

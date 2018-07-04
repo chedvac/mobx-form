@@ -1,11 +1,6 @@
 import { observable } from 'mobx';
-export default function formObservableGenerator({
-  target,
-  name,
-  descriptor,
-  validationsManager,
-  ...params
-} = params) {
+export default function formObservableGenerator(params) {
+  const { target, name, descriptor, validationsManager, ...settings } = params;
   const defaultValue = descriptor
     ? descriptor.initializer
       ? descriptor.initializer.call(target)
