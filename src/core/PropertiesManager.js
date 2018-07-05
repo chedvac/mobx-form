@@ -1,4 +1,9 @@
-import PropertyBehavior from "./PropertyBehavior";
+import PropTypes from 'prop-types';
+
+import PropertyBehavior from './PropertyBehavior';
+import assertParametersType from './typeVerifications';
+import fail from './exeptions';
+import validationsManagerFactory from '../validations/validationsManager';
 /**
  * @class PropertiesManager
  * @classdesc PropertiesManager - manage all properties of complex
@@ -13,21 +18,37 @@ export default class PropertiesManager {
     this.validateProperty = this.validateProperty.bind(this);
     this.mapProperty = this.mapProperty.bind(this);
     this.resetProperty = this.resetProperty.bind(this);
-    this.createProperty = this.createProperty.bind(this);
-    this.getPropertyDependencies = this.getPropertyDependencies.bind(this);
-    this.getPropertyDependencies = this.getPropertyDependencies.bind(this);
-    this.getPropertyDependencies = this.getPropertyDependencies.bind(this);
     this.setModelProp = this.setModelProp.bind(this);
     this.applyChildAction = this.applyChildAction.bind(this);
     this.validate = this.validate.bind(this);
     this.reset = this.reset.bind(this);
-    this.createProperty = this.createProperty.bind(this);
+    this.map = this.map.bind(this);
     this.setComplexProperty = this.setComplexProperty.bind(this);
+    this.createProperty = this.createProperty.bind(this);
+    this.getProperty = this.getProperty.bind(this);
   }
   properties = {};
-  getPropertyValidationState = function(name) {
-    return this.properties[name].validationState;
-  };
+  getProperty(propertyName) {
+    const property = this.properties[propertyName];
+    const propertyNotExist = `Property ${propertyName} doesn't exist in properties, call to PropertiesManager.createProperty before`;
+
+    // assertType(
+    //   property,
+    //   PropTypes.instanceOf(PropertyBehavior).isRequired,
+    //   propertyNotExist
+    // );
+    return property;
+  }
+
+  getPropertyValidationState(propertyName) {
+    assertParametersType(
+      { propertyName },
+      { propertyName: PropTypes.string.isRequired },
+      'getPropertyValidationState'
+    );
+    const property = this.getProperty(propertyName);
+    return property.validationState;
+  }
   /**     
     * @memberof PropertiesManager         
     * @function "getPropertyDependencies"
@@ -36,9 +57,16 @@ export default class PropertiesManager {
     * @example 
         propertiesManager1.getPropertyDependencies('lastName');
     */
-  getPropertyDependencies = function(name) {
-    return this.properties[name].dependedObservables;
-  };
+  getPropertyDependencies(propertyName) {
+    assertParametersType(
+      { propertyName },
+      { propertyName: PropTypes.string.isRequired },
+      'getPropertyDependencies'
+    );
+
+    const property = this.getProperty(propertyName);
+    return property.dependedObservables;
+  }
   /**     
     * @memberof PropertiesManager         
     * @function "getValidationManagerProperty"
@@ -47,25 +75,42 @@ export default class PropertiesManager {
     * @example 
         propertiesManager1.getValidationManagerProperty('lastName');
     */
-  getValidationManagerProperty = function(name) {
-    return this.properties[name].validationsManager;
-  };
+  getValidationManagerProperty(propertyName) {
+    assertParametersType(
+      { propertyName },
+      { propertyName: PropTypes.string.isRequired },
+      'getValidationManagerProperty'
+    );
+
+    const property = this.getProperty(propertyName);
+    return property.validationsManager;
+  }
   /**     
     * @memberof PropertiesManager         
     * @function "validateProperty"
     * @description call validate function of speciphic property by name 
     * @param {string}  propertyName
-    * @param {any} newVal
+    * @param {string} newVal
     * @example 
         propertiesManager1.validateProperty('lastName', 'family');
     */
-  validateProperty = function(name, newVal) {
-    const validate = this.properties[name].validate;
-    if (typeof validate === "function") {
-      return validate(newVal);
-    }
+  validateProperty(propertyName, newVal) {
+    const propTypes = {
+      propertyName: PropTypes.string.isRequired,
+      newVal: PropTypes.string
+    };
+    assertParametersType(
+      { propertyName, newVal },
+      propTypes,
+      'validateProperty'
+    );
+    const property = this.getProperty(propertyName);
+    const validate = property.validate;
+    // if (checkType(validate, PropTypes.func.isRequired)) {
+    //   return validate(newVal);
+    // }
     return true;
-  };
+  }
   /**     
     * @memberof PropertiesManager         
     * @function "mapProperty"
@@ -75,9 +120,15 @@ export default class PropertiesManager {
     * @example 
         propertiesManager1.mapProperty('lastName', 'family');
     */
-  mapProperty = function(name, ...params) {
-    return this.properties[name].map(params);
-  };
+  mapProperty(propertyName, params) {
+    const propTypes = {
+      propertyName: PropTypes.string.isRequired,
+      params: PropTypes.object
+    };
+    assertParametersType({ propertyName, params }, propTypes, 'mapProperty');
+    const property = this.getProperty(propertyName);
+    return property.map(params);
+  }
   /**     
     * @memberof PropertiesManager         
     * @function "resetProperty"
@@ -87,9 +138,15 @@ export default class PropertiesManager {
     * @example 
         propertiesManager1.resetProperty('lastName', {});
     */
-  resetProperty = function(name, ...params) {
-    return this.properties[name].reset(params);
-  };
+  resetProperty(propertyName, params) {
+    const propTypes = {
+      propertyName: PropTypes.string.isRequired,
+      params: PropTypes.object
+    };
+    assertParametersType({ propertyName, params }, propTypes, 'resetProperty');
+    const property = this.getProperty(propertyName);
+    return property.reset(params);
+  }
   /**     
    * @memberof PropertiesManager         
    * @function "createProperty"
@@ -99,10 +156,20 @@ export default class PropertiesManager {
    * @example 
    propertiesManager1.createProperty('lastName');
    */
-  createProperty = function(propertyName) {
+  createProperty(propertyName) {
+    assertParametersType(
+      { propertyName },
+      { propertyName: PropTypes.string.isRequired },
+      'createProperty'
+    );
+
+    if (this.hasOwnProperty(propertyName)) {
+      fail(`property ${propertyName} already exist `);
+    }
     this.properties[propertyName] = new PropertyBehavior();
     this[propertyName] = this.properties[propertyName];
-  };
+  }
+
   /**     
     * @memberof PropertiesManager         
     * @function "setComplexProperty"
@@ -112,13 +179,23 @@ export default class PropertiesManager {
     * @example 
     propertiesManager1.createProperty('lastName', {validate});
     */
-  setComplexProperty = function(propertyName, settings = {}) {
-    if (!(this[propertyName] instanceof PropertyBehavior)) {
-      throw "setComplexProperty should call after PropertiesManager.createProperty is call";
-    }
+  setComplexProperty(propertyName, settings = {}) {
+    const propTypes = {
+      propertyName: PropTypes.string.isRequired,
+      settings: PropTypes.shape({
+        validate: PropTypes.func
+      })
+    };
+    assertParametersType(
+      { propertyName, settings },
+      propTypes,
+      'setComplexProperty'
+    );
+
+    const property = this.getProperty(propertyName);
     const { validate } = settings;
-    this[propertyName].setValidate(validate);
-  };
+    property.setValidate(validate);
+  }
   /**     
     * @memberof PropertiesManager         
     * @function "setFormObservableProperty"
@@ -128,15 +205,28 @@ export default class PropertiesManager {
     * @example 
      propertiesManager1.setFormObservableProperty('lastName', {validate, ref, validationsManager});
     */
-  setFormObservableProperty = function(propertyName, settings = {}) {
-    if (!this[propertyName] instanceof PropertyBehavior) {
-      throw "setFormObservableProperty should call after PropertiesManager.createProperty is call";
-    }
+
+  setFormObservableProperty(propertyName, settings = {}) {
+    const propTypes = {
+      propertyName: PropTypes.string.isRequired,
+      settings: PropTypes.shape({
+        validate: PropTypes.func,
+        ref: PropTypes.object,
+        validationsManager: PropTypes.instanceOf(validationsManagerFactory)
+      })
+    };
+    assertParametersType(
+      { propertyName, settings },
+      propTypes,
+      'setFormObservableProperty'
+    );
+
     const { validate, ref, validationsManager } = settings;
-    this[propertyName].setRef(ref);
-    this[propertyName].setValidationsManager(validationsManager);
-    this[propertyName].setValidate(validate);
-  };
+    const property = this.getProperty(propertyName);
+    property.setRef(ref);
+    property.setValidationsManager(validationsManager);
+    property.setValidate(validate);
+  }
   /**     
    * @memberof PropertiesManager         
    * @function "setModelProp"
@@ -146,11 +236,21 @@ export default class PropertiesManager {
    * @example 
        propertiesManager1.setModelProp('lastName', {map, reset});
    */
-  setModelProp = function(propertyName, settings = {}) {
+  setModelProp(propertyName, settings = {}) {
+    const propTypes = {
+      propertyName: PropTypes.string.isRequired,
+      settings: PropTypes.shape({
+        reset: PropTypes.func,
+        map: PropTypes.func
+      })
+    };
+    assertParametersType({ propertyName, settings }, propTypes, 'setModelProp');
+
     const { reset, map } = settings;
-    this[propertyName].setReset(reset);
-    this[propertyName].setMap(map);
-  };
+    const property = this.getProperty(propertyName);
+    property.setReset(reset);
+    property.setMap(map);
+  }
   /**     
     * @memberof PropertiesManager         
     * @function "applyChildAction"
@@ -161,11 +261,20 @@ export default class PropertiesManager {
         propertiesManager1.applyChildAction('reset', {});
     */
   applyChildAction(actionName, params = {}) {
+    const propTypes = {
+      actionName: PropTypes.string.isRequired,
+      params: PropTypes.object
+    };
+    assertParametersType({ actionName, params }, propTypes, 'applyChildAction');
+
     try {
       for (let property in this.properties) {
-        typeof this.properties[property][actionName] === "function"
-          ? this.properties[property][actionName](params)
-          : false;
+        // checkType(
+        //   this.properties[property][actionName],
+        //   PropTypes.func.isRequired
+        // )
+        // ? this.properties[property][actionName](params)
+        // : false;
       }
     } catch (ex) {
       console.log(ex);
@@ -196,8 +305,24 @@ export default class PropertiesManager {
         propertiesManager1.reset(tab);
     */
   reset(params) {
+    assertParametersType({ params }, { params: PropTypes.object }, 'reset');
     for (const property in this.propertiesManager) {
       this.resetProperty(property, params);
+    }
+  }
+
+  /**     
+    * @memberof PropertiesManager         
+    * @function "map"
+    * @description map all properties array
+    * @param {object} params
+    * @example 
+        propertiesManager1.map(tab);
+    */
+  map(params) {
+    assertParametersType({ params }, { params: PropTypes.object }, 'map');
+    for (const property in this.propertiesManager) {
+      this.mapProperty(property, params);
     }
   }
 }
