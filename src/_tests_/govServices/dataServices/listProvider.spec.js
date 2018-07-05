@@ -1,6 +1,6 @@
-import listProvider from '../../../services/dataServices/listProvider';
-import services from '../../../services/services';
-jest.mock('../../../services/services');
+import listProvider from 'services/dataServices/listProvider';
+import services from 'services/services';
+jest.mock('services/services');
 
 describe('listProvider - ', () => {
   let requestSettings = {};

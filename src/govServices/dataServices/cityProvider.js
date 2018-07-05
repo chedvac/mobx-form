@@ -1,6 +1,5 @@
 import { observable, flow } from 'mobx';
 import listProvider from './listProvider';
-import qs from 'qs';
 
 let cityList = observable([]);
 

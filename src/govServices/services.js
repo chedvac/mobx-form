@@ -1,6 +1,6 @@
 import request from '../utils/axiosWrapper';
 import Exception from 'core/exeptions';
-import getDomain from '../external/getDomain';
+import locallMockUrl from '../external/locallMockUrl';
 import _ from 'lodash';
 
 const messages = {
@@ -10,28 +10,27 @@ const messages = {
 };
 
 const govServiceListSettings = {
-  method: 'GET',
   dataType: 'json',
   cache: true,
   crossDomain: true
 };
 
-const checkRequiredParams = settings =>
-  typeof settings === 'object' && 'route' in settings;
+function checkRequiredParams(settings) {
+  return typeof settings === 'object' && 'route' in settings;
+}
 
-const getRequest = (settings, serviceType, defaultSettings) => {
+function getRequest(settings, serviceType, defaultSettings) {
   if (!checkRequiredParams(settings)) {
     throw new Exception(messages.missinggRequiredParams);
   }
-  const domain = getDomain(serviceType, settings.serverName);
   settings = _.assign({}, defaultSettings, settings);
-  settings.url = domain + settings.route;
+  settings.url = serviceType + '/' + settings.route;
+  if (process.env.NODE_ENV === 'development') {
+    settings.url = locallMockUrl + settings.url;
+  }
   return request(settings);
-};
+}
 
-const govServiceListRequest = settings =>
-  getRequest(settings, 'govServiceListDomains', govServiceListSettings);
-
-export default {
-  govServiceListRequest
-};
+export default function govServiceListRequest(settings) {
+  return getRequest(settings, 'govservicelist', govServiceListSettings);
+}

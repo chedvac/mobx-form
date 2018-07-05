@@ -1,5 +1,5 @@
-import services from '../services';
-import Exception from '../../core/exeptions';
+import govServiceListRequest from '../services';
+import Exception from 'core/exeptions';
 
 const defaultSettings = {
   method: 'POST',
@@ -16,14 +16,14 @@ const methodsNames = {
 };
 
 const validator = (function() {
-  const validateListName = function(data, methodname) {
+  const validateListName = (data, methodname) => {
     if (!data.listName) {
       throw new Exception(
         `missing required param listName in ${methodname} function (listProvider module)`
       );
     }
   };
-  const validateEntityBase = function(data, methodname) {
+  const validateEntityBase = (data, methodname) => {
     if (!data.dataCodeColumn) {
       throw new Exception(
         `missing required param dataCodeColumn, listName: ${
@@ -40,7 +40,7 @@ const validator = (function() {
     }
     validateListName(data, methodname);
   };
-  const validateFilters = function(data, methodname) {
+  const validateFilters = (data, methodname) => {
     if (!data.filters) {
       throw new Exception(
         `missing required param filters, listName: ${
@@ -50,7 +50,7 @@ const validator = (function() {
     }
     validateListName(data, methodname);
   };
-  const validateEntityBaseLists = function(data, methodname) {
+  const validateEntityBaseLists = (data, methodname) => {
     if (!data.paramsList) {
       throw new Exception(
         `missing required param paramsList in ${methodname} function (listProvider module)`
@@ -60,7 +60,7 @@ const validator = (function() {
       validateEntityBase(params, methodname);
     });
   };
-  const validateLists = function(data, methodname) {
+  const validateLists = (data, methodname) => {
     if (!data.paramsList) {
       throw new Exception(
         `missing required param paramsList in ${methodname} function (listProvider module)`
@@ -83,7 +83,7 @@ const createRequest = function(data, methodName, settings) {
   const requestSettings = Object.assign({}, defaultSettings, settings);
   requestSettings.route = `ListProvider/${methodName}`;
   requestSettings.data = data;
-  return services.govServiceListRequest(requestSettings);
+  return govServiceListRequest(requestSettings);
 };
 
 const getList = function(data, settings = {}) {

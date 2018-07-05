@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import Select from '../../Fields/Select';
-import cityList from '../../services/dataServices/cityProvider';
+import cityList from '../../govServices/dataServices/cityProvider';
 
 @observer
 export default class City extends React.Component {

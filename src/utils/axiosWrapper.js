@@ -8,29 +8,29 @@ const messages = {
   syncRequestNotAllowed: 'only async requests are supported'
 };
 
-const validMethod = function(method) {
+function validMethod(method) {
   return ['GET', 'POST'].includes(method);
-};
+}
 
-const checkRequiredParams = function(settings) {
+function checkRequiredParams(settings) {
   return (
     typeof settings === 'object' &&
     'url' in settings &&
     validMethod(settings['method'])
   );
-};
+}
 
-const checkForCallbacks = function(settings) {
+function checkForCallbacks(settings) {
   return settings.hasOwnProperty('success') || settings.hasOwnProperty('error');
-};
+}
 
-const checkForAsyncRequest = function(settings) {
+function checkForAsyncRequest(settings) {
   if (settings.hasOwnProperty('async') ? settings.async === false : false) {
     throw new Error(messages.syncRequestNotAllowed);
   }
-};
+}
 
-const request = function(settings) {
+export default function request(settings) {
   if (!checkRequiredParams(settings)) {
     throw new Error(messages.missinggRequiredParams);
   }
@@ -48,11 +48,4 @@ const request = function(settings) {
     error.method = settings.method;
     throw error;
   });
-};
-
-export default request;
-// const response = yield
-// request({url: 'http://formsdev.vcloud.gov.il/govservicelist/ListProvider/GetList',
-// method: 'POST',
-// data: qs.stringify({listName: 'City'})})
-//            this.cityList = response.data.Data.List.map(item => ({key: item.city_code, value: item.city_name_he}));        }
+}
