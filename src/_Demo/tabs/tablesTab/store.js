@@ -3,8 +3,8 @@ import formObservable from '../../../core/formObservable';
 import modelProp from '../../../core/modelProp';
 
 import ComplexType from '../../../core/ComplexType';
-import { hebrewName } from 'validations/rules/languages';
-import { maxlength } from 'validations/rules/general';
+import { hebrewName } from 'validations/rules/text';
+import { maxlength } from 'validations/rules/basic';
 
 class TablesTab extends ComplexType {
   constructor() {
