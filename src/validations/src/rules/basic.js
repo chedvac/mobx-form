@@ -1,6 +1,6 @@
 import {
-  generateBasicValidation,
-  generateConditionValidation
+  generateBasicValidation
+  // generateConditionValidation
 } from 'validations/core/validationsFactory';
 
 export function required(params) {
@@ -8,16 +8,16 @@ export function required(params) {
   const settings = { name: 'required', message: 'חובה להזין ערך בשדה' };
   return generateBasicValidation(settings, params, validation);
 }
-export function conditionRequired(settings) {
-  const validator = value => value.length > 0;
-  const defaultSettings = {
-    name: 'required',
-    message: 'חובה להזין ערך בשדה',
-    validator
-  };
-  Object.assign(settings, defaultSettings);
-  return generateConditionValidation(settings);
-}
+// export function conditionRequired(settings) {
+//   const validator = value => value.length > 0;
+//   const defaultSettings = {
+//     name: 'required',
+//     message: 'חובה להזין ערך בשדה',
+//     validator
+//   };
+//   Object.assign(settings, defaultSettings);
+//   return generateConditionValidation(settings);
+// }
 export function maxlength(params) {
   const maxlengthValidation = value => value.length <= params.value;
   const settings = {
