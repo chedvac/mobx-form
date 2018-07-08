@@ -8,11 +8,17 @@ export default function formObservable(settings = {}) {
     if (!(target instanceof ComplexType)) {
       throw 'formObservable parent must be instanceof ComplexType';
     }
-    target.registerProperty({
+    const defaultValue = descriptor.value
+      ? descriptor.value
+      : descriptor.initializer
+        ? descriptor.initializer.call(target)
+        : undefined;
+    target.setPropertySettings({
       name,
-      descriptor,
+      defaultValue,
       validationsManager,
-      isFormObservable: true
+      isFormObservable: true,
+      descriptor
     });
     return Object.defineProperty(target, name, {
       configurable: true,

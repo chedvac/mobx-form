@@ -27,7 +27,7 @@ export const modelPropGenerator = function({
 };
 export default function modelProp(settings = {}) {
   return function(target, name, descriptor) {
-    target.registerProperty({
+    target.setPropertySettings({
       name,
       descriptor,
       isModelProp: true,

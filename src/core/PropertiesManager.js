@@ -129,10 +129,11 @@ export default class PropertiesManager {
     if (!this[propertyName] instanceof PropertyBehavior) {
       throw 'setFormObservableProperty should call after PropertiesManager.createProperty is call';
     }
-    const { validate, ref, validationsManager } = settings;
+    const { validate, ref, validationsManager, descriptor } = settings;
     this[propertyName].setRef(ref);
     this[propertyName].setValidationsManager(validationsManager);
     this[propertyName].setValidate(validate);
+    this[propertyName].descriptor = descriptor;
   };
   /**     
    * @memberof PropertiesManager         
@@ -197,5 +198,21 @@ export default class PropertiesManager {
     for (const property in this.propertiesManager) {
       this.resetProperty(property, params);
     }
+  }
+  /**     
+    * @memberof PropertiesManager         
+    * @function "getPropertiesDescriptors"
+    * @description get all properties references to Observables as object
+    * @example 
+        propertiesManager1.getPropertiesDescriptors();
+    */
+  getPropertiesDescriptors() {
+    const propertiesDescriptors = {};
+    Object.entries(this.properties).forEach(([key, value]) => {
+      if (value.descriptor) {
+        propertiesDescriptors[key] = value.descriptor;
+      }
+    });
+    return propertiesDescriptors;
   }
 }
