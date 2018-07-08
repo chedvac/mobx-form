@@ -1,5 +1,5 @@
 import checkPropTypes, { assertPropTypes } from 'check-prop-types';
-
+import fail from './exeptions';
 /**
  * @function "assertParametersType"
  * @description Call to assertPropTypes to assert that the values match with the type specs.
@@ -21,6 +21,11 @@ export default function assertParametersType(
   callerName,
   term = 'parameter'
 ) {
+  if (!parameters || !types || !callerName) {
+    fail(
+      'One or more of the parameters sent to assertParametersType function are missing'
+    );
+  }
   assertPropTypes(types, parameters, term, callerName);
 }
 //TODO: implement by other library, adjust to production

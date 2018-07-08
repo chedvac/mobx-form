@@ -2,7 +2,7 @@ import validationsManagerFactory from '../validations/src/core/validationsManage
 import { initializeProperties } from './complexPropertiesRegistration';
 import PropertiesManager from './PropertiesManager';
 import ValidationState from './ValidationState';
-import Exeption from './exeptions';
+import fail from './exeptions';
 export default class ComplexType {
   constructor(settings = {}) {
     this.propertiesManager = new PropertiesManager();
@@ -16,7 +16,7 @@ export default class ComplexType {
   }
   registerProperty({ name, descriptor, ...settings }) {
     if (!name || !descriptor) {
-      throw new Exeption(
+      fail(
         'registerProperty faile: missing require parameter: target, descriptor or name'
       );
     }
