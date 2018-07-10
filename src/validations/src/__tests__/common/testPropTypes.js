@@ -1,42 +1,42 @@
-export function testPropTypes(func, paramName, type) {
+export function testPropTypes(func, paramName, type, params = {}) {
   switch (type) {
     case 'number':
       return () => {
         expect(() => {
-          func({ paramName: null });
+          func({ [paramName]: '', ...params });
         }).toThrow();
         expect(() => {
-          func({ paramName: undefined });
+          func({ [paramName]: '1', ...params });
         }).toThrow();
         expect(() => {
-          func({ paramName: '' });
+          func({ [paramName]: 'string', ...params });
         }).toThrow();
         expect(() => {
-          func({ paramName: '1' });
-        }).toThrow();
-        expect(() => {
-          func({ paramName: 'string' });
-        }).toThrow();
-        expect(() => {
-          func({ paramName: () => 1 });
+          func({ [paramName]: () => 1, ...params });
         }).toThrow();
       };
     case 'string':
       return () => {
         expect(() => {
-          func({ paramName: null });
+          func({ [paramName]: 1, ...params });
         }).toThrow();
         expect(() => {
-          func({ paramName: undefined });
+          func({ [paramName]: 1.5, ...params });
         }).toThrow();
         expect(() => {
-          func({ paramName: 1 });
+          func({ [paramName]: () => 'string', ...params });
+        }).toThrow();
+      };
+    case 'func':
+      return () => {
+        expect(() => {
+          func({ [paramName]: 1, ...params });
         }).toThrow();
         expect(() => {
-          func({ paramName: 1.5 });
+          func({ [paramName]: 'string', ...params });
         }).toThrow();
         expect(() => {
-          func({ paramName: () => 'string' });
+          func({ [paramName]: 1, ...params });
         }).toThrow();
       };
   }
