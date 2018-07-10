@@ -1,11 +1,12 @@
 import { action, computed } from 'mobx';
-import formObservable from '../../../../../core/formObservable';
-import modelProp from '../../../../../core/modelProp';
+import formObservable from 'core/formObservable';
+import modelProp from 'core/modelProp';
 
-import ComplexType from '../../../../../core/ComplexType';
-import { hebrewName } from 'validations/rules/text';
+import ComplexType from 'core/ComplexType';
+import { hebrew } from 'validations/rules/text';
 import {
   maxlength,
+  minlength,
   required
   //   conditionRequired
 } from 'validations/rules/basic';
@@ -30,7 +31,7 @@ const myRequest = function(value) {
 };
 
 class PersonalInformation extends ComplexType {
-  validations = [sumAges({ number: 60 })];
+  // validations = [sumAges({ number: 60 })];
 
   constructor() {
     super();
@@ -55,25 +56,23 @@ class PersonalInformation extends ComplexType {
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 15, message: 'too long...' })
+      maxlength({
+        value: 15
+      }),
+      minlength({ value: 2 }),
+      required(),
+      hebrew()
     ]
   })
-  firstName = '';
-  @modelProp()
-  @formObservable({
-    validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 15, message: 'too long...' })
-    ]
-  })
-  firstName = '';
+  firstName ='';
 
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 15, message: 'too long...' })
+      maxlength({
+        value: 15,
+        message: () => ({ hebrew: 'too long...' })
+      })
     ]
   })
   lastName = '';
@@ -82,8 +81,8 @@ class PersonalInformation extends ComplexType {
   @formObservable({
     validations: [
       lessThan({
-        number: 7,
-        message: { hebrew: 'fasdghfasghf' }
+        value: 7,
+        message: () => ({ hebrew: 'fasdghfasghf' })
       })
     ]
   })
@@ -104,7 +103,7 @@ class PersonalInformation extends ComplexType {
   @formObservable({
     validations: [
       greaterThan({
-        number: 20
+        value: 20
         // compareToName: 'compareToName',
         // message: { hebrew: 'my message' }
       })
