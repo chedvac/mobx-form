@@ -84,7 +84,7 @@ export default class ComplexType {
 * @description this function call from formObservables and modelProp decorators, in classes that extends ComplexType. call in defenition,  not in instance
 * @param {object}  settings
 * @example 
-  PersonalInfo.registerPropertyToPrototype({});
+  PersonalInfo.setPropertySettings({});
 */
 ComplexType.prototype.setPropertySettings = function(settings) {
   if (!settings.name) {
@@ -92,10 +92,13 @@ ComplexType.prototype.setPropertySettings = function(settings) {
       'registerProperty faile: missing require parameter name'
     );
   }
-  //this - the class that extends from ComplexType
-  this._propertiesSettings = this._propertiesSettings || {};
-  const currntSettings = this._propertiesSettings[settings.name] || {};
-  this._propertiesSettings[settings.name] = Object.assign(
+  //every class that extends from ComplexType
+  const ComlpextTypeInheritor = this;
+  ComlpextTypeInheritor._propertiesSettings =
+    ComlpextTypeInheritor._propertiesSettings || {};
+  const currntSettings =
+    ComlpextTypeInheritor._propertiesSettings[settings.name] || {};
+  ComlpextTypeInheritor._propertiesSettings[settings.name] = Object.assign(
     currntSettings,
     settings
   );
