@@ -30,7 +30,7 @@ export function generateBasicValidation(settings) {
 }
 
 export function generateRegexValidation(settings) {
-  assertParametersType({ settings }, regexPropTypes, 'generateBasicValidation');
+  assertParametersType({ settings }, regexPropTypes, 'generateRegexValidation');
   const validator = value => {
     return value.toString().match(settings.regex) ? true : false;
   };
@@ -64,18 +64,18 @@ export function generateRegexValidation(settings) {
 //   });
 // }
 
-// export function generateAsyncValidation(settings) {
-//   const { name, message } = settings;
-//   async function validator(value, result) {
-//     try {
-//       await settings.request(value);
-//       result.isValid = true;
-//       result.message = '';
-//     } catch (err) {
-//       const error = err || '';
-//       result.isValid = false;
-//       result.message = error.error ? error.error : settings.message;
-//     }
-//   }
-//   return { ...settings, validator };
-// }
+export function generateAsyncValidation(settings) {
+  const { name, message } = settings;
+  async function validator(value, result) {
+    try {
+      await settings.request(value);
+      result.isValid = true;
+      result.message = '';
+    } catch (err) {
+      const error = err || '';
+      result.isValid = false;
+      result.message = error.error ? error.error : settings.message;
+    }
+  }
+  return { ...settings, validator };
+}
