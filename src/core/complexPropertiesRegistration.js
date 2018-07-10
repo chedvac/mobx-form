@@ -1,11 +1,16 @@
-import formObservableGenerator from "./formObservableGenerator";
-import { modelPropGenerator } from "./modelProp";
-import ComplexType from "./ComplexType";
+import formObservableGenerator from './formObservableGenerator';
+import { modelPropGenerator } from './modelProp';
+import ComplexType from './ComplexType';
 
 const generateModelProp = function(property, complexTypeInstance) {
   if (!property.isModelProp) {
     return;
   }
+  //todo add check if it complex or isformobservable
+  complexTypeInstance.modelPropsManager.createProperty(
+    property.name
+  );
+
   modelPropGenerator({
     target: complexTypeInstance,
     name: property.name,
@@ -17,6 +22,10 @@ const generateFormObservable = function(property, complexTypeInstance) {
   if (!property.isFormObservable) {
     return;
   }
+  complexTypeInstance.formObservablesManager.createProperty(
+    property.name
+  );
+
   formObservableGenerator({
     target: complexTypeInstance,
     name: property.name,
@@ -31,7 +40,6 @@ export let initializeProperties = function(complexTypeInstance, properties) {
   }
   complexTypeInstance._propertiesInitialized = true;
   for (const key in properties) {
-    complexTypeInstance.propertiesManager.createProperty(key);
     generateModelProp(properties[key], complexTypeInstance);
     generateFormObservable(properties[key], complexTypeInstance);
   }
@@ -41,8 +49,8 @@ export const initializeComplexProperties = function(parent) {
   for (const key in parent._properties) {
     const property = parent[key];
     if (property instanceof ComplexType) {
-      parent.propertiesManager.setComplexProperty(key, {
-        validate: property.validate
+      parent.modelPropsManager.setComplexProperty(key, {
+        ref: parent[key]
       });
     }
   }

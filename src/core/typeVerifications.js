@@ -28,11 +28,3 @@ export default function assertParametersType(
   }
   assertPropTypes(types, parameters, term, callerName);
 }
-//TODO: implement by other library, adjust to production
-// export function checkTypes(args, types, callerName = '') {
-//   return checkPropTypes(types, args, term, callerName);
-// }
-
-// export function checkType(arg, type) {
-//   return checkTypes({ arg: arg }, { arg: type }) ? false : true;
-// }

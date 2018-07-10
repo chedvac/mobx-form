@@ -25,7 +25,7 @@ export default function({
   });
 
   observableBox.observe(function() {
-    const dependedObservables = target.propertiesManager.getPropertyDependencies(
+    const dependedObservables = target.formObservablesManager.getPropertyDependencies(
       name
     );
     if (!dependedObservables) {
@@ -33,7 +33,7 @@ export default function({
     }
     //TODO lodash map
     for (const observable in dependedObservables) {
-      target.propertiesManager.validateProperty(observable);
+      target.formObservablesManager.validateProperty(observable);
     }
   });
 
@@ -48,23 +48,26 @@ export default function({
   const validate = newValue => {
     //TODO move to utilities
     const value = newValue !== undefined ? newValue : descriptor.get();
-    const dependedObservables = target.propertiesManager.getPropertyDependencies(
+    const dependedObservables = target.formObservablesManager.getPropertyDependencies(
       name
     );
     let failedValidation = validationsManager.validate(
       value,
       dependedObservables
     );
-    target.propertiesManager
+    target.formObservablesManager
       .getPropertyValidationState(name)
       .setValidationState(failedValidation);
     return failedValidation.isValid;
   };
-  target.propertiesManager.setFormObservableProperty(name, {
-    validate,
-    validationsManager,
-    ref: observableBox
-  });
+  target.formObservablesManager.setFormObservableProperty(
+    name,
+    {
+      validate,
+      validationsManager,
+      ref: observableBox
+    }
+  );
 
   Object.defineProperty(target, name, descriptor);
 }
