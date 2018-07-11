@@ -7,12 +7,16 @@ import {
 describe('generateBasicValidation', () => {
   let settings, successValidator, failedValidator;
   beforeEach(() => {
-    settings = { name: 'myValidation', message: () => 'custom error' };
+    settings = {
+      name: 'myValidation',
+      message: () => 'custom error',
+      validator: () => true
+    };
     successValidator = () => {
       return true;
     };
     failedValidator = () => {
-      return true;
+      return false;
     };
   });
 
@@ -20,212 +24,153 @@ describe('generateBasicValidation', () => {
     expect(generateBasicValidation).toBeDefined();
   });
 
-  describe('params', () => {
-    describe('settings', () => {
-      test('throw if not object with name and message properties', () => {
-        expect(() => {
-          generateBasicValidation(undefined);
-        }).toThrow();
-        expect(() => {
-          generateBasicValidation({});
-        }).toThrow();
-        expect(() => {
-          generateBasicValidation({
-            name: 'validation name'
-          });
-        }).toThrow();
-        expect(() => {
-          generateBasicValidation({
-            message: 'custom message'
-          });
-        }).toThrow();
-      });
-
-      test('throw if message is not function', () => {
-        expect(() => {
-          generateBasicValidation({
-            name: 'validation name',
-            message: 'custom message'
-          });
-        }).toThrow();
-      });
+  describe('settings', () => {
+    test('throw if settings.name is not string', () => {
+      expect(() => {
+        generateBasicValidation({
+          message: () => 'message',
+          validator: () => true
+        });
+      }).toThrow();
+      expect(() => {
+        generateBasicValidation({
+          name: () => 'string',
+          message: () => 'message',
+          validator: () => true
+        });
+      }).toThrow();
     });
-    describe('validator', () => {
-      test('throw if not function', () => {
-        expect(() => {
-          generateBasicValidation(settings);
-        }).toThrow();
-        expect(() => {
-          generateBasicValidation(settings, 'string');
-        }).toThrow();
+
+    test('throw if settings.message is not function', () => {
+      expect(() => {
+        generateBasicValidation({
+          name: 'validation name',
+          validator: () => true
+        });
+      }).toThrow();
+      expect(() => {
+        generateBasicValidation({
+          name: 'validation name',
+          message: 'custom message',
+          validator: () => true
+        });
+      }).toThrow();
+    });
+
+    test('throw if settings.validator is not function', () => {
+      expect(() => {
+        generateBasicValidation({
+          name: 'validation name',
+          message: () => 'custom message'
+        });
+      }).toThrow();
+      expect(() => {
+        generateBasicValidation({
+          name: 'validation name',
+          message: () => 'custom message',
+          validator: true
+        });
+      }).toThrow();
+    });
+  });
+  test("should return object contain 'message, validator, name' properties", () => {
+    expect(generateBasicValidation(settings)).toHaveProperty('message');
+    expect(generateBasicValidation(settings)).toHaveProperty('validator');
+    expect(generateBasicValidation(settings)).toHaveProperty('name');
+  });
+
+  describe('name', () => {
+    test('should equal to settings.name', () => {
+      expect(generateBasicValidation(settings)).toHaveProperty(
+        'name',
+        settings.name
+      );
+    });
+  });
+
+  describe('message', () => {
+    test('params.message not sent should equal to settings.message', () => {
+      const validation = generateBasicValidation(settings);
+      expect(validation.message()).toEqual(settings.message());
+    });
+    test('should equal to params.message if sent', () => {
+      const optionalMessage = () => 'my message';
+      const validation = generateBasicValidation({
+        ...settings,
+        params: { message: optionalMessage }
       });
+      expect(validation.message()).toEqual('my message');
     });
-  });
-
-  test("should return object contain 'message, validator, name, optionalParams' properties", () => {
-    expect(generateBasicValidation(settings, successValidator)).toHaveProperty(
-      'message'
-    );
-    expect(generateBasicValidation(settings, successValidator)).toHaveProperty(
-      'validator'
-    );
-    expect(generateBasicValidation(settings, successValidator)).toHaveProperty(
-      'name'
-    );
-    expect(generateBasicValidation(settings, successValidator)).toHaveProperty(
-      'optionalParams'
-    );
-  });
-
-  test('name equal to settings.name', () => {
-    expect(generateBasicValidation(settings, successValidator)).toHaveProperty(
-      'name',
-      settings.name
-    );
-  });
-
-  test('message equal to settings.message', () => {
-    const validation = generateBasicValidation(settings, successValidator);
-    expect(validation.message()).toEqual(settings.message());
-  });
-
-  test('optionalParams sent', () => {
-    const optionalMessage = () => 'my message';
-    const validation = generateBasicValidation(settings, successValidator, {
-      message: optionalMessage
+    test('should throw if params.message is not function', () => {
+      expect(() => {
+        generateBasicValidation({
+          ...settings,
+          params: { message: 'my message' }
+        });
+      }).toThrow();
     });
-    expect(validation.message()).toEqual('my message');
   });
 
   describe('validator', () => {
-    test('should return true if condition not set', () => {
-      const regexValidation = generateBasicValidation(
-        settings,
-        successValidator
-      );
-      expect(regexValidation.validator('abc').isValid).toBeTruthy();
-    });
-    test('should return false if condition is false', () => {
-      const regexValidation = generateBasicValidation(
-        settings,
-        successValidator,
-        {
-          condition: () => {
-            return false;
-          }
-        }
-      );
-      expect(regexValidation.validator('abc').isValid).toBeFalsy();
-    });
-    test('should return true if condition is true', () => {
-      const regexValidation = generateBasicValidation(
-        settings,
-        successValidator,
-        {
-          condition: () => {
-            return true;
-          }
-        }
-      );
-      expect(regexValidation.validator('abc').isValid).toBeTruthy();
+    test('should return validator result', () => {
+      expect(
+        generateBasicValidation({
+          ...settings,
+          validator: successValidator
+        }).validator()
+      ).toBeTruthy();
+      expect(
+        generateBasicValidation({
+          ...settings,
+          validator: failedValidator
+        }).validator()
+      ).toBeFalsy();
     });
   });
 });
 
 describe('generateRegexValidation', () => {
-  const settings = { name: 'myValidation', message: 'custom error' };
-  const validator = () => {
-    return true;
-  };
+  let regexSettings;
+  beforeEach(() => {
+    regexSettings = {
+      name: 'regex validation',
+      message: () => 'no match to regex',
+      regex: /^[0-9].*$/
+    };
+  });
+
   test('should be defined', () => {
     expect(generateRegexValidation).toBeDefined();
   });
 
-  describe('params', () => {
-    describe('settings', () => {
-      test('throw if not object with regex property', () => {
-        expect(() => {
-          generateRegexValidation(undefined);
-        }).toThrow();
-        expect(() => {
-          generateRegexValidation({});
-        }).toThrow();
-      });
+  describe('settings', () => {
+    test('throw if not settings.regex', () => {
+      expect(() => {
+        generateRegexValidation({
+          name: 'myValidation',
+          message: () => 'custom error'
+        });
+      }).toThrow();
     });
+  });
+  test("should return object contain 'message, validator, name, regex' properties", () => {
+    expect(generateRegexValidation(regexSettings)).toHaveProperty('message');
+    expect(generateRegexValidation(regexSettings)).toHaveProperty('validator');
+    expect(generateRegexValidation(regexSettings)).toHaveProperty('name');
+    expect(generateRegexValidation(regexSettings)).toHaveProperty('regex');
   });
 
   describe('validator', () => {
-    test('should return false if not match to regex', () => {
-      const regexValidation = generateRegexValidation({
-        regex: /^[0-9].*$/,
-        name: 'my regex validation',
-        message: () => 'not match to regex'
-      });
-      expect(regexValidation.validator('abc').isValid).toBeFalsy();
-    });
     test('should return true if match to regex', () => {
-      const regexValidation = generateRegexValidation({
-        regex: /^[0-9].*$/,
-        name: 'my regex validation',
-        message: () => 'not match to regex'
-      });
-      expect(regexValidation.validator('123').isValid).toBeTruthy();
+      expect(
+        generateRegexValidation(regexSettings).validator('123')
+      ).toBeTruthy();
+    });
+
+    test('should return false if not match to regex', () => {
+      expect(
+        generateRegexValidation(regexSettings).validator('abc')
+      ).toBeFalsy();
     });
   });
-});
-
-describe('generateAsyncValidation', () => {
-  const settings = { name: 'myValidation', message: 'custom error' };
-  const validator = () => {
-    return true;
-  };
-  test('should be defined', () => {
-    expect(generateAsyncValidation).toBeDefined();
-  });
-
-  describe('params', () => {
-    describe('settings', () => {
-      test('throw if not object with regex property', () => {
-        expect(() => {
-          generateAsyncValidation(undefined);
-        }).toThrow();
-        expect(() => {
-          generateAsyncValidation({ request: 'function' });
-        }).toThrow();
-      });
-    });
-  });
-
-  // describe("validator", () => {
-  //   let mockRequest, settings, asyncValidation, observale;
-  //   beforeEach(() => {
-  //     mockRequest = async v => {
-  //       try {
-  //         const result = v === "valid";
-  //         return result;
-  //       } catch (ex) {
-  //         throw { error: "failed" };
-  //       }
-  //     };
-  //     settings = {
-  //       name: "myValidation",
-  //       message: () => "custom error",
-  //       request: mockRequest
-  //     };
-  //     asyncValidation = generateAsyncValidation(settings);
-  //     observale = {};
-  //   });
-  //   test("should return true if condition not set", () => {
-  //     expect.assertions(1);
-  //     return asyncValidation.validator("valid", observale).then(data => {
-  //       expect(observale.isValid).toBeTruthy();
-  //     });
-  //   });
-  //   test("should return false if condition not set", () => {
-  //     expect.assertions(1);
-  //     return asyncValidation.validator("not valid", observale).then(data => {
-  //       expect(observale.isValid).toBeFalsy();
-  //     });
-  //   });
-  // });
 });

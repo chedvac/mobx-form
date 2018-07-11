@@ -1,17 +1,40 @@
-import { constructMessage } from 'validations/utils';
+import assertParametersType from 'core/typeVerifications';
+import PropTypes from 'prop-types';
 import fp from 'lodash/fp';
+import _ from 'lodash';
+
+const basicPropTypes = {
+  settings: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    message: PropTypes.func.isRequired,
+    validator: PropTypes.func.isRequired,
+    params: PropTypes.shape({
+      message: PropTypes.func
+    })
+  })
+};
+
+const regexPropTypes = {
+  settings: PropTypes.shape({
+    regex: PropTypes.any.isRequired
+  })
+};
 
 export function generateBasicValidation(settings) {
-  // name, message, validator
-  // optional: params (message)
-  //TODO: check params
+  assertParametersType({ settings }, basicPropTypes, 'generateBasicValidation');
   const messageWrapper = value => {
-    const message = settings.params
-      ? settings.params.message || settings.message
-      : settings.message;
+    const message = _.get(settings, 'params.message', settings.message);
     return message(value);
   };
   return { ...settings, message: messageWrapper };
+}
+
+export function generateRegexValidation(settings) {
+  assertParametersType({ settings }, regexPropTypes, 'generateRegexValidation');
+  const validator = value => {
+    return value.toString().match(settings.regex) ? true : false;
+  };
+  return generateBasicValidation({ ...settings, validator });
 }
 
 // export function generateConditionValidation(settings) {
@@ -40,15 +63,6 @@ export function generateBasicValidation(settings) {
 //     message: messageWrapper
 //   });
 // }
-
-export function generateRegexValidation(settings) {
-  // name, message, validator
-  // optional: params (message)
-  const validator = value => {
-    return value.toString().match(settings.regex) ? true : false;
-  };
-  return generateBasicValidation({ ...settings, validator });
-}
 
 export function generateAsyncValidation(settings) {
   const { name, message } = settings;

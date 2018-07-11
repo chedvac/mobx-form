@@ -2,36 +2,72 @@ import {
   generateBasicValidation
   // generateConditionValidation
 } from 'validations/core/validationsFactory';
+import messages from 'validations/messages/basic';
+import {
+  maxlengthChecker,
+  minlengthChecker,
+  requiredChecker,
+  lengthChecker
+} from 'validations/checkers/basic';
+import PropTypes from 'prop-types';
+import assertParametersType from 'core/typeVerifications';
 
-export function required(params) {
-  const validation = value => value.length > 0;
-  const settings = { name: 'required', message: 'חובה להזין ערך בשדה' };
-  return generateBasicValidation(settings, params, validation);
-}
-// export function conditionRequired(settings) {
-//   const validator = value => value.length > 0;
-//   const defaultSettings = {
-//     name: 'required',
-//     message: 'חובה להזין ערך בשדה',
-//     validator
-//   };
-//   Object.assign(settings, defaultSettings);
-//   return generateConditionValidation(settings);
-// }
-export function maxlength(params) {
-  const maxlengthValidation = value => value.length <= params.value;
-  const settings = {
-    name: 'maxlength',
-    message: 'יש להזין עד ' + params.value + ' תווים'
+const paramsPropTypesRequiredValue = {
+  params: PropTypes.shape({
+    value: PropTypes.number.isRequired,
+    message: PropTypes.func
+  })
+};
+
+export function required(params = {}) {
+  const paramsPropTypes = {
+    params: PropTypes.shape({
+      message: PropTypes.func
+    })
   };
-  return generateBasicValidation(settings, params, maxlengthValidation);
+  assertParametersType({ params }, paramsPropTypes, 'required');
+  let { message } = params;
+  return generateBasicValidation({
+    name: 'required',
+    message: () => messages.required(),
+    params,
+    validator: requiredChecker(params)
+  });
+}
+
+export function maxlength(params) {
+  assertParametersType({ params }, paramsPropTypesRequiredValue, 'maxlength');
+  let { value, message } = params;
+  return generateBasicValidation({
+    name: 'maxlength',
+    message: () => messages.maxlength(value),
+    params,
+    validator: maxlengthChecker(params)
+  });
 }
 
 export function minlength(params) {
-  const minlengthValidation = value => value.length >= params.value;
-  const settings = {
-    name: 'maxlength',
-    message: 'יש להזין לפחות ' + params.value + ' תווים'
-  };
-  return generateBasicValidation(settings, params, minlengthValidation);
+  assertParametersType({ params }, paramsPropTypesRequiredValue, 'minlength');
+  let { value, message } = params;
+  return generateBasicValidation({
+    name: 'minlength',
+    message: () => messages.minlength(value),
+    params,
+    validator: minlengthChecker(params)
+  });
 }
+
+export function length(params) {
+  assertParametersType({ params }, paramsPropTypesRequiredValue, 'length');
+  let { value, message } = params;
+  return generateBasicValidation({
+    name: 'length',
+    message: () => messages.length(value),
+    params,
+    validator: lengthChecker(params)
+  });
+}
+
+// equal //==
+// equal //===
+// notEqual
