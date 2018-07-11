@@ -1,8 +1,8 @@
-export const modelPropGenerator = function({
-  propertiesManager,
+export let modelPropGenerator = function({
   name,
   descriptor,
   defaultValue,
+  propertiesManager,
   ...params
 } = params) {
   const map = value1 => {
@@ -15,8 +15,7 @@ export const modelPropGenerator = function({
   };
   propertiesManager.setModelProp(name, {
     setMap: map,
-    reset,
-    ref: descriptor
+    reset
   });
 };
 export default function modelProp(settings = {}) {

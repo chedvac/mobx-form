@@ -1,16 +1,13 @@
 import ValidationState from './ValidationState';
 import ValidationsManager from '../validations/src/core/validationsManager';
 
-export default class PropertyBehavior {
+export default class FormObservableBehavior {
   constructor() {
     this.validationState = new ValidationState();
   }
   dependedObservables = {};
   setDependedObservables = function(dependedObservables) {
     this.dependedObservables = dependedObservables;
-  };
-  setReset = function(reset) {
-    this.reset = reset;
   };
   setValidate = function(validate) {
     this.validate = validate;
@@ -21,8 +18,8 @@ export default class PropertyBehavior {
     }
     this.validationsManager = validationsManagerIns;
   };
-  setMap = function(map) {
-    this.map = map;
+  setDescriptor = function(descriptor) {
+    this.descriptor = descriptor;
   };
   setRef = function(ref) {
     this.ref = ref;

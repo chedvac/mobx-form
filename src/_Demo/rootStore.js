@@ -8,9 +8,7 @@ import ComplexType from '../core/ComplexType';
 import submitAction from '../actions/submit';
 import FormInformation from '../core/formInformation';
 
-import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/store';
 import { toJS } from 'mobx';
-import MWRequestDefaultBehavior from '../networking/mwWrapper';
 
 class RootStore extends ComplexType {
   constructor() {
@@ -30,7 +28,7 @@ class RootStore extends ComplexType {
   }
 
   validateForm() {
-    const isStoreValid = this.validate();
+    const isStoreValid = this.validateModel();
     if (isStoreValid) {
       alert('נתוני הטופס תקינים');
     }

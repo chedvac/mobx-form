@@ -1,17 +1,20 @@
 import { action, computed } from 'mobx';
-import formObservable from '../../../../../core/formObservable';
-import modelProp from '../../../../../core/modelProp';
+import formObservable from 'core/formObservable';
+import modelProp from 'core/modelProp';
 
-import ComplexType from '../../../../../core/ComplexType';
-import { hebrewName } from 'validations/rules/languages';
+import ComplexType from 'core/ComplexType';
+import { hebrew } from 'validations/rules/text';
 import {
   maxlength,
-  required,
-  conditionRequired
-} from 'validations/rules/general';
+  minlength,
+  required
+  //   conditionRequired
+} from 'validations/rules/basic';
 import {
-  dependedGreaterThan,
-  dependedLessThan
+  //   dependedGreaterThan,
+  //   dependedLessThan,
+  greaterThan,
+  lessThan
 } from 'validations/rules/number';
 import { sumAges } from './validations';
 import { generateAsyncValidation } from 'validations/core/validationsFactory';
@@ -28,16 +31,16 @@ const myRequest = function(value) {
 };
 
 class PersonalInformation extends ComplexType {
-  validations = [sumAges({ number: 60 })];
+  // validations = [sumAges({ number: 60 })];
 
   constructor() {
     super();
-    this.propertiesManager.properties.fatherAge.dependedObservables = {
-      age: this.propertiesManager.properties.age.ref
-    };
-    this.propertiesManager.properties.age.dependedObservables = {
-      fatherAge: this.propertiesManager.properties.fatherAge.ref
-    };
+    // this.propertiesManager.properties.fatherAge.dependedObservables = {
+    //   age: this.propertiesManager.properties.age.ref
+    // };
+    // this.propertiesManager.properties.age.dependedObservables = {
+    //   fatherAge: this.propertiesManager.properties.fatherAge.ref
+    // };
     this.condition = function() {
       return true;
     };
@@ -53,31 +56,36 @@ class PersonalInformation extends ComplexType {
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 15, message: 'too long...' })
+      maxlength({
+        value: 15
+      }),
+      minlength({ value: 2 }),
+      required(),
+      hebrew()
     ]
   })
-  firstName = '';
-  @modelProp()
-  @formObservable({
-    validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 15, message: 'too long...' })
-    ]
-  })
-  firstName = '';
+  firstName ='';
 
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 15, message: 'too long...' })
+      maxlength({
+        value: 15,
+        message: () => ({ hebrew: 'too long...' })
+      })
     ]
   })
   lastName = '';
 
   @modelProp()
-  @formObservable({ validations: [dependedLessThan({ number: 'fatherAge' })] })
+  @formObservable({
+    validations: [
+      lessThan({
+        value: 7,
+        message: () => ({ hebrew: 'fasdghfasghf' })
+      })
+    ]
+  })
   age = 15;
 
   @computed
@@ -85,15 +93,27 @@ class PersonalInformation extends ComplexType {
     return this.age < 18;
   }
 
+  //   @modelProp()
+  //   @formObservable({
+  //     validations: [dependedGreaterThan({ number: 'age' })]
+  //   })
+  //   fatherAge = 0;
+
   @modelProp()
   @formObservable({
-    validations: [dependedGreaterThan({ number: 'age' })]
+    validations: [
+      greaterThan({
+        value: 20
+        // compareToName: 'compareToName',
+        // message: { hebrew: 'my message' }
+      })
+    ]
   })
   fatherAge = 0;
 
   @modelProp()
   @formObservable({
-    validations: [conditionRequired({ condition: 'isAdult' })]
+    validations: [] //conditionRequired({ condition: 'isAdult' })
   })
   fatherName = 0;
 

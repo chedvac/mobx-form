@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export const Label = props => {
   const { label, id, isRequired, customLabel } = props;
@@ -6,7 +7,7 @@ export const Label = props => {
     return (
       <label
         htmlFor={id}
-        className={"label-field " + (isRequired ? "required" : "")}
+        className={'label-field ' + (isRequired ? 'required' : '')}
       >
         {label}
       </label>
@@ -16,4 +17,7 @@ export const Label = props => {
     return <props.customLabel />;
   }
   return null;
+};
+Label.propTypes = {
+  props: PropTypes.object.isRequired
 };

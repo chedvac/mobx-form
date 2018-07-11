@@ -3,8 +3,8 @@ import formObservable from '../../../core/formObservable';
 import modelProp from '../../../core/modelProp';
 
 import ComplexType from '../../../core/ComplexType';
-import { hebrewName } from 'validations/rules/languages';
-import { maxlength } from 'validations/rules/general';
+import { hebrew } from 'validations/rules/text';
+import { maxlength } from 'validations/rules/basic';
 
 class TablesTab extends ComplexType {
   constructor() {
@@ -14,7 +14,7 @@ class TablesTab extends ComplexType {
     this.set_houseNumber = this.set_houseNumber.bind(this);
   }
   @modelProp()
-  @formObservable({ validations: [hebrewName(), maxlength({ value: 5 })] })
+  @formObservable({ validations: [hebrew(), maxlength({ value: 5 })] })
   email = '';
   @modelProp()
   @formObservable()

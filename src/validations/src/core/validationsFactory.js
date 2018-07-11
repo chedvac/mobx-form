@@ -1,41 +1,68 @@
-import { constructMessage } from 'validations/utils';
+import assertParametersType from 'core/typeVerifications';
+import PropTypes from 'prop-types';
 import fp from 'lodash/fp';
+import _ from 'lodash';
+
+const basicPropTypes = {
+  settings: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    message: PropTypes.func.isRequired,
+    validator: PropTypes.func.isRequired,
+    params: PropTypes.shape({
+      message: PropTypes.func
+    })
+  })
+};
+
+const regexPropTypes = {
+  settings: PropTypes.shape({
+    regex: PropTypes.any.isRequired
+  })
+};
 
 export function generateBasicValidation(settings) {
-  return { ...settings };
-}
-
-export function generateConditionValidation(settings) {
-  const { condition, validator } = settings;
-  const validatorWrapper = (value, dependedObservables) => {
-    return dependedObservables[condition] ? validator(value) : true;
+  assertParametersType({ settings }, basicPropTypes, 'generateBasicValidation');
+  const messageWrapper = value => {
+    const message = _.get(settings, 'params.message', settings.message);
+    return message(value);
   };
-  return { ...settings, validator: validatorWrapper };
-}
-
-export function generateDependedValidation(settings) {
-  const { params, validator, message } = settings;
-  const validatorWrapper = (value, dependedObservables) => {
-    const dependedParams = fp.mapValues(value =>
-      dependedObservables[value].get()
-    )(params);
-    return validator(dependedParams)(value);
-  };
-  const messageWrapper = (value, dependedObservables) => {
-    const dependedParams = fp.mapValues(value =>
-      dependedObservables[value].get()
-    )(params);
-    return message(dependedParams);
-  };
-  return { ...settings, validator: validatorWrapper, message: messageWrapper };
+  return { ...settings, message: messageWrapper };
 }
 
 export function generateRegexValidation(settings) {
+  assertParametersType({ settings }, regexPropTypes, 'generateRegexValidation');
   const validator = value => {
     return value.toString().match(settings.regex) ? true : false;
   };
-  return { ...settings, validator };
+  return generateBasicValidation({ ...settings, validator });
 }
+
+// export function generateConditionValidation(settings) {
+//   const { condition, validator } = settings;
+//   const validatorWrapper = (value, dependedObservables) => {
+//     return dependedObservables[condition] ? validator(value) : true;
+//   };
+//   return { ...settings, validator: validatorWrapper };
+// }
+
+// export function generateDependedValidation(settings) {
+//   const { params, validator, message } = settings;
+//   const dependedParams = (value, dependedObservables) =>
+//     fp.mapValues(value => dependedObservables[value].get())(params);
+
+//   const validatorWrapper = (value, dependedObservables) => {
+//     return validator(dependedParams(value, dependedObservables))(value);
+//   };
+
+//   const messageWrapper = (value, dependedObservables) => {
+//     return message(dependedParams(value, dependedObservables));
+//   };
+//   return generateBasicValidation({
+//     ...settings,
+//     validator: validatorWrapper,
+//     message: messageWrapper
+//   });
+// }
 
 export function generateAsyncValidation(settings) {
   const { name, message } = settings;

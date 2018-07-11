@@ -2,7 +2,7 @@ import { observable, reaction } from 'mobx';
 import configuration from './mobxConfiguration';
 
 export default function({
-  propertiesManager,
+  formObservablesManager,
   name,
   descriptor,
   validationsManager,
@@ -20,14 +20,16 @@ export default function({
     return change;
   });
 
-  observableBox.observe(() => {
-    const dependedObservables = propertiesManager.getPropertyDependencies(name);
+  observableBox.observe(function() {
+    const dependedObservables = formObservablesManager.getPropertyDependencies(
+      name
+    );
     if (!dependedObservables) {
       return;
     }
     //TODO lodash map
     for (const observable in dependedObservables) {
-      propertiesManager.validateProperty(observable);
+      formObservablesManager.validateProperty(observable);
     }
   });
 
@@ -41,21 +43,22 @@ export default function({
 
   const validate = newValue => {
     //TODO move to utilities
-    const value = newValue !== undefined ? newValue : observableBox.get();
-    const dependedObservables = propertiesManager.getPropertyDependencies(name);
+    const value = newValue !== undefined ? newValue : descriptor.get();
+    const dependedObservables = formObservablesManager.getPropertyDependencies(
+      name
+    );
     let failedValidation = validationsManager.validate(
       value,
       dependedObservables
     );
-    propertiesManager
+    formObservablesManager
       .getPropertyValidationState(name)
       .setValidationState(failedValidation);
     return failedValidation.isValid;
   };
-  propertiesManager.setFormObservableProperty(name, {
+  formObservablesManager.setFormObservableProperty(name, {
     validate,
     validationsManager,
-    ref: observableBox,
-    descriptor
+    ref: observableBox
   });
 }
