@@ -31,7 +31,7 @@ export function required(params = {}) {
     name: 'required',
     message: () => messages.required(),
     params,
-    validator: requiredChecker(params)
+    validator: requiredChecker()
   });
 }
 
