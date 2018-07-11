@@ -1,5 +1,17 @@
 export function testPropTypes(func, paramName, type, params = {}) {
   switch (type) {
+    case 'isRequired':
+      return () => {
+        expect(() => {
+          func({ ...params });
+        }).toThrow();
+        expect(() => {
+          func({ [paramName]: undefined, ...params });
+        }).toThrow();
+        expect(() => {
+          func({ [paramName]: null, ...params });
+        }).toThrow();
+      };
     case 'number':
       return () => {
         expect(() => {
