@@ -51,17 +51,10 @@ describe('basic rules', () => {
 
     describe('params', () => {
       describe('value', () => {
-        test('should throw if not exist or undefined or null', () => {
-          expect(() => {
-            maxlength({});
-          }).toThrow();
-          expect(() => {
-            maxlength({ value: undefined });
-          }).toThrow();
-          expect(() => {
-            maxlength({ value: null });
-          }).toThrow();
-        });
+        test(
+          'should throw if not exist or undefined or null',
+          testPropTypes(maxlength, 'value', 'isRequired')
+        );
         test(
           'should throw if not number',
           testPropTypes(maxlength, 'value', 'number')
@@ -118,17 +111,10 @@ describe('basic rules', () => {
 
     describe('params', () => {
       describe('value', () => {
-        test('should throw if not exist or undefined or null', () => {
-          expect(() => {
-            minlength({});
-          }).toThrow();
-          expect(() => {
-            minlength({ value: undefined });
-          }).toThrow();
-          expect(() => {
-            minlength({ value: null });
-          }).toThrow();
-        });
+        test(
+          'should throw if not exist or undefined or null',
+          testPropTypes(minlength, 'value', 'isRequired')
+        );
         test(
           'should throw if not number',
           testPropTypes(minlength, 'value', 'number')
@@ -185,17 +171,10 @@ describe('basic rules', () => {
 
     describe('params', () => {
       describe('value', () => {
-        test('should throw if not exist or undefined or null', () => {
-          expect(() => {
-            length({});
-          }).toThrow();
-          expect(() => {
-            length({ value: undefined });
-          }).toThrow();
-          expect(() => {
-            length({ value: null });
-          }).toThrow();
-        });
+        test(
+          'should throw if not exist or undefined or null',
+          testPropTypes(length, 'value', 'isRequired')
+        );
         test(
           'should throw if not number',
           testPropTypes(length, 'value', 'number')
