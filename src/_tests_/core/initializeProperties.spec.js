@@ -5,7 +5,7 @@ jest.mock('../../core/formObservableGenerator');
 
 import complexStructure, { descriptor } from '../mocks/complexStructure';
 let customTab;
-import { initializeProperties } from '../../core/initializeProperties';
+import { initializeProperties } from '../../core/initializePropertiesManager';
 
 describe('initializeProperties', () => {
   beforeEach(() => {

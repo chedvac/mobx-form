@@ -2,15 +2,15 @@ import validationsManagerFactory from 'validations/core/validationsManager';
 import PropertiesManager from 'core/PropertiesManager';
 import ValidationState from 'core/ValidationState';
 import Exception from './exceptions';
-import formObservableGenerator from 'core/formObservableGenerator';
-import modelPropGenerator from 'core/modelProp';
+import formObservableGenerator from './formObservableGenerator';
+import { modelPropGenerator } from './modelProp';
 import fp from 'lodash/fp';
 export default class ComplexType {
   constructor(settings = {}) {
     this.initializeComplexProperties = this.initializeComplexProperties.bind(
       this
     );
-    this.setPropertiesDescriptors = this.setPropertiesDescriptors.bind(this);
+    this.setPropertiesReferences = this.setPropertiesReferences.bind(this);
     this.validate = this.validate.bind(this);
     this.validationsManager = new validationsManagerFactory(
       settings.validations || []
@@ -22,7 +22,7 @@ export default class ComplexType {
       this.generateModelProp(value);
       this.generateFormObservable(value);
     })(this._propertiesSettings);
-    this.setPropertiesDescriptors();
+    this.setPropertiesReferences();
     ///add volatile views actions
   }
   generateModelProp(property) {
@@ -47,12 +47,12 @@ export default class ComplexType {
       propertiesManager: this.propertiesManager
     });
   }
-  setPropertiesDescriptors() {
-    const propertiesObservables = this.propertiesManager.getPropertiesDescriptors();
+  setPropertiesReferences() {
+    const propertiesReferences = this.propertiesManager.getPropertiesDescriptors();
     const self = this;
-    Object.entries(propertiesObservables).forEach(
-      ([propertyName, descriptor]) => {
-        Object.defineProperty(self, propertyName, descriptor);
+    Object.entries(propertiesReferences).forEach(
+      ([propertyName, propertiesReference]) => {
+        Object.defineProperty(self, propertyName, propertiesReference);
       }
     );
   }

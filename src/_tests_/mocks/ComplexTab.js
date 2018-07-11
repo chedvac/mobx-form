@@ -1,11 +1,10 @@
-import ComplexType from '../../core/ComplexType';
-import formObservable from '../../core/formObservable';
-import modelProp from '../../core/modelProp';
-import { hebrewName } from '../../validations/languages';
-import { maxlength } from '../../validations/general';
-
-import initializeProperties from '../../core/initializeProperties';
-
+import ComplexType from 'core/ComplexType';
+import formObservable from 'core/formObservable';
+import modelProp1 from 'core/modelProp';
+import { hebrewName } from 'validations/rules/languages';
+import { maxlength } from 'validations/rules/general';
+// console.log(modelProp1.default);
+const modelProp = modelProp1.default;
 export class Complex extends ComplexType {
   constructor(settings) {
     super(settings);
@@ -17,9 +16,6 @@ export default class ComplexTab extends ComplexType {
   constructor(settings, register) {
     super(settings);
     this.complex = new Complex();
-    if (register) {
-      initializeProperties(this);
-    }
   }
   @modelProp()
   @formObservable({
