@@ -1,33 +1,77 @@
-import validationsManagerFactory from '../validations/src/core/validationsManager';
-import { initializeProperties } from './complexPropertiesRegistration';
+import validationsManagerFactory from 'validations/core/validationsManager';
 import FormObservablesManager from './propertiesManager/FormObservablesManager';
 import ModelPropsManager from './propertiesManager/ModelPropsManager';
-import ValidationState from './ValidationState';
-import fail from './exeptions';
+import ValidationState from 'core/ValidationState';
+import fail from 'core/exceptions';
+import formObservableGenerator from './formObservableGenerator';
+import { modelPropGenerator } from './modelProp';
+import fp from 'lodash/fp';
 export default class ComplexType {
   constructor(settings = {}) {
-    this.formObservablesManager = new FormObservablesManager();
-    this.modelPropsManager = new ModelPropsManager();
-
+    this.initializeComplexProperties = this.initializeComplexProperties.bind(
+      this
+    );
+    this.setPropertiesReferences = this.setPropertiesReferences.bind(this);
+    this.validate = this.validate.bind(this);
+    this.validateModel = this.validateModel.bind(this);
     this.validationsManager = new validationsManagerFactory(
       settings.validations || []
     );
     this.validationState = new ValidationState();
-    initializeProperties(this, this._properties);
-    this.validate = this.validate.bind(this);
-    this.validateModel = this.validateModel.bind(this);
+    this.formObservablesManager = new FormObservablesManager();
+    this.modelPropsManager = new ModelPropsManager();
+    fp.forOwn(value => {
+      this.generateModelProp(value);
+      this.generateFormObservable(value);
+    })(this._propertiesSettings);
+    this.setPropertiesReferences();
     ///add volatile views actions
   }
-  registerProperty({ name, descriptor, ...settings }) {
-    if (!name || !descriptor) {
-      fail(
-        'registerProperty faile: missing require parameter: target, descriptor or name'
-      );
+  generateModelProp(property) {
+    if (!property.isModelProp) {
+      return;
     }
-    this._properties = this._properties || {};
-    this._properties[name] = this._properties[name] || { name, descriptor };
-    Object.assign(this._properties[name], settings);
+    this.modelPropsManager.createProperty(property.name);
+    modelPropGenerator({
+      name: property.name,
+      descriptor: property.descriptor,
+      modelPropsManager: this.modelPropsManager
+    });
   }
+  generateFormObservable(property) {
+    if (!property.isFormObservable) {
+      return;
+    }
+    this.formObservablesManager.createProperty(property.name);
+    formObservableGenerator({
+      name: property.name,
+      descriptor: property.descriptor,
+      defaultValue: property.defaultValue,
+      validationsManager: property.validationsManager,
+      formObservablesManager: this.formObservablesManager
+    });
+  }
+  setPropertiesReferences() {
+    const self = this;
+    Object.keys(self.formObservablesManager.properties).forEach(
+      propertyName => {
+        const property = self.formObservablesManager.properties[propertyName];
+        Object.defineProperty(self, propertyName, property.descriptor);
+      }
+    );
+  }
+
+  initializeComplexProperties() {
+    Object.keys(this._propertiesSettings).forEach(key => {
+      const property = this[key];
+      if (property instanceof ComplexType) {
+        this.modelPropsManager.setComplexProperty(key, {
+          validate: property.validate
+        });
+      }
+    });
+  }
+
   validate() {
     const validationResult = this.validationsManager.validate(this);
     this.validationState.setValidationState(validationResult);
@@ -48,3 +92,26 @@ export default class ComplexType {
     return res;
   }
 }
+/**     
+* @memberof ComplexType         
+* @function "setPropertySettings"
+* @description this function call from formObservables and modelProp decorators, in classes that extends ComplexType. call in defenition,  not in instance
+* @param {object}  settings
+* @example 
+  PersonalInfo.setPropertySettings({});
+*/
+ComplexType.prototype.setPropertySettings = function(settings) {
+  if (!settings.name) {
+    fail('registerProperty faile: missing require parameter name');
+  }
+  //every class that extends from ComplexType
+  const ComlpextTypeInheritor = this;
+  ComlpextTypeInheritor._propertiesSettings =
+    ComlpextTypeInheritor._propertiesSettings || {};
+  const currntSettings =
+    ComlpextTypeInheritor._propertiesSettings[settings.name] || {};
+  ComlpextTypeInheritor._propertiesSettings[settings.name] = Object.assign(
+    currntSettings,
+    settings
+  );
+};

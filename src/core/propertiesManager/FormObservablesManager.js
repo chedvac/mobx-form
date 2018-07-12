@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import FormObservableBehavior from './FormObservableBehavior';
 import assertParametersType from '../typeVerifications';
-import fail from '../exeptions';
+import fail from 'core/exceptions';
 import validationsManagerFactory from '../../validations/src/core/validationsManager';
 /**
  * @class FormObservablesManager
@@ -10,15 +10,18 @@ import validationsManagerFactory from '../../validations/src/core/validationsMan
  */
 export default class FormObservablesManager {
   constructor() {
-    this.createProperty = this.createProperty.bind(this);//both
-    this.getProperty = this.getProperty.bind(this);//both
+    this.createProperty = this.createProperty.bind(this); //both
+    this.getProperty = this.getProperty.bind(this); //both
     this.setFormObservableProperty = this.setFormObservableProperty.bind(this);
-    this.getValidationManagerProperty = this.getValidationManagerProperty.bind(this);
-    this.getPropertyValidationState = this.getPropertyValidationState.bind(this);
+    this.getValidationManagerProperty = this.getValidationManagerProperty.bind(
+      this
+    );
+    this.getPropertyValidationState = this.getPropertyValidationState.bind(
+      this
+    );
     this.getPropertyDependencies = this.getPropertyDependencies.bind(this);
     this.validateProperty = this.validateProperty.bind(this);
     this.validate = this.validate.bind(this);
-   
   }
   properties = {};
   /**     
@@ -37,14 +40,16 @@ export default class FormObservablesManager {
       'createProperty'
     );
     if (this.hasOwnProperty(propertyName)) {
-      fail(`property ${propertyName} already exist in formObservablesManager.properties`);
+      fail(
+        `property ${propertyName} already exist in formObservablesManager.properties`
+      );
     }
     const newProperty = new FormObservableBehavior();
     this.properties[propertyName] = newProperty;
     this[propertyName] = newProperty;
   }
 
-   /**     
+  /**     
    * @memberof ModelPropsManager        
    * @function "getProperty"
    * @description return a property from properties
@@ -53,9 +58,9 @@ export default class FormObservablesManager {
    formObservablesManager1.getProperty('lastName');
    */
   getProperty(propertyName) {
-    return this.properties[propertyName];    
+    return this.properties[propertyName];
   }
-   
+
   /**     
     * @memberof FormObservablesManager        
     * @function "setFormObservableProperty"
@@ -66,12 +71,13 @@ export default class FormObservablesManager {
      formObservablesManager1.setFormObservableProperty('lastName', {validate, ref, validationsManager});
     */
 
-   setFormObservableProperty(propertyName, settings = {}) {
+  setFormObservableProperty(propertyName, settings = {}) {
     const propTypes = {
       propertyName: PropTypes.string.isRequired,
       settings: PropTypes.shape({
         validate: PropTypes.func,
         ref: PropTypes.object,
+        descriptor: PropTypes.object,
         validationsManager: PropTypes.instanceOf(validationsManagerFactory)
       })
     };
@@ -81,13 +87,14 @@ export default class FormObservablesManager {
       'setFormObservableProperty'
     );
 
-    const { validate, ref, validationsManager } = settings;
+    const { validate, ref, validationsManager, descriptor } = settings;
     const property = this.getProperty(propertyName);
     property.setRef(ref);
     property.setValidationsManager(validationsManager);
     property.setValidate(validate);
+    property.setDescriptor(descriptor);
   }
-   /**     
+  /**     
     * @memberof FormObservablesManager        
     * @function "getPropertyValidationState"
     * @description return validationState object of speciphic property by name
@@ -162,7 +169,7 @@ export default class FormObservablesManager {
     const property = this.getProperty(propertyName);
     return property.validate(newVal);
   }
- 
+
   /**     
     * @memberof FormObservablesManager        
     * @function "validate"
