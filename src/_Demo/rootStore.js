@@ -13,14 +13,12 @@ import { toJS } from 'mobx';
 class RootStore extends ComplexType {
   constructor() {
     super();
-    this.formInformation = new FormInformation();
     this.simpleFieldsTab = new SimpleFieldsTab();
     this.tablesTab = new TablesTab();
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.initializeComplexProperties();
   }
-  @modelProp() formInformation;
   @modelProp() simpleFieldsTab;
   @modelProp() tablesTab;
   submitForm() {

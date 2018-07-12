@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import FormObservableBehavior from './FormObservableBehavior';
 import assertParametersType from '../typeVerifications';
-import fail from '../exeptions';
+import fail from 'core/exceptions';
 import validationsManagerFactory from '../../validations/src/core/validationsManager';
 /**
  * @class FormObservablesManager

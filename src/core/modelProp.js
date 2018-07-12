@@ -2,7 +2,7 @@ export let modelPropGenerator = function({
   name,
   descriptor,
   defaultValue,
-  propertiesManager,
+  modelPropsManager,
   ...params
 } = params) {
   const map = value1 => {
@@ -13,7 +13,7 @@ export let modelPropGenerator = function({
       ? params.reset(defaultValue)
       : descriptor.set(defaultValue);
   };
-  propertiesManager.setModelProp(name, {
+  modelPropsManager.setModelProp(name, {
     setMap: map,
     reset
   });
@@ -26,8 +26,15 @@ export default function modelProp(settings = {}) {
       isModelProp: true,
       ...settings
     });
-    if (descriptor.value === undefined) {
+
+    if (
+      descriptor.value === undefined &&
+      !descriptor.get &&
+      !descriptor.set &&
+      !descriptor.initializer
+    ) {
       descriptor.value = {};
+      descriptor.configurable = true;
       descriptor.writable = true;
     }
     return descriptor;

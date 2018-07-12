@@ -59,6 +59,7 @@ export default function({
   formObservablesManager.setFormObservableProperty(name, {
     validate,
     validationsManager,
-    ref: observableBox
+    ref: observableBox,
+    descriptor
   });
 }

@@ -8,6 +8,8 @@ export default function formObservable(settings = {}) {
     if (!(target instanceof ComplexType)) {
       throw 'formObservable parent must be instanceof ComplexType';
     }
+    descriptor.configurable = true;
+    descriptor.writable = true;
     const defaultValue = descriptor.value
       ? descriptor.value
       : descriptor.initializer
@@ -20,15 +22,16 @@ export default function formObservable(settings = {}) {
       isFormObservable: true,
       descriptor
     });
-    return Object.defineProperty(target, name, {
+    Object.defineProperty(target, name, {
       configurable: true,
       enumerable: true,
       get: function() {
-        return this[name];
+        return defaultValue;
       },
       set: function(value) {
         this[name] = value;
       }
     });
+    return Object.getOwnPropertyDescriptor(target, name);
   };
 }

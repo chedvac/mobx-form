@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import ModelPropBehavior from './ModelPropBehavior';
 import assertParametersType from '../typeVerifications';
-import fail from '../exeptions';
+import fail from 'core/exceptions';
 import ComplexType from '../ComplexType';
 /**
  * @class ModelPropsManager
@@ -69,7 +69,7 @@ export default class ModelPropsManager {
     const propTypes = {
       propertyName: PropTypes.string.isRequired,
       settings: PropTypes.shape({
-        ref:  PropTypes.instanceOf(ComplexType)
+        ref: PropTypes.instanceOf(ComplexType)
       })
     };
     assertParametersType(
@@ -138,7 +138,7 @@ export default class ModelPropsManager {
     };
     assertParametersType({ propertyName, settings }, propTypes, 'setModelProp');
 
-    const { reset, map} = settings;
+    const { reset, map } = settings;
     const property = this.getProperty(propertyName);
     property.setReset(reset);
     property.setMap(map);
@@ -173,5 +173,4 @@ export default class ModelPropsManager {
       this.mapProperty(property, params);
     }
   }
-  
 }

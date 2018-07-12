@@ -2,7 +2,7 @@ import validationsManagerFactory from 'validations/core/validationsManager';
 import FormObservablesManager from './propertiesManager/FormObservablesManager';
 import ModelPropsManager from './propertiesManager/ModelPropsManager';
 import ValidationState from 'core/ValidationState';
-import fail from './exeptions';
+import fail from 'core/exceptions';
 import formObservableGenerator from './formObservableGenerator';
 import { modelPropGenerator } from './modelProp';
 import fp from 'lodash/fp';
@@ -21,7 +21,6 @@ export default class ComplexType {
     this.formObservablesManager = new FormObservablesManager();
     this.modelPropsManager = new ModelPropsManager();
     fp.forOwn(value => {
-      this.propertiesManager.createProperty(value.name);
       this.generateModelProp(value);
       this.generateFormObservable(value);
     })(this._propertiesSettings);
@@ -43,6 +42,7 @@ export default class ComplexType {
     if (!property.isFormObservable) {
       return;
     }
+    this.formObservablesManager.createProperty(property.name);
     formObservableGenerator({
       name: property.name,
       descriptor: property.descriptor,
@@ -53,8 +53,9 @@ export default class ComplexType {
   }
   setPropertiesReferences() {
     const self = this;
-    this.formObservablesManager.properties.forEach(
-      ([propertyName, property]) => {
+    Object.keys(self.formObservablesManager.properties).forEach(
+      propertyName => {
+        const property = self.formObservablesManager.properties[propertyName];
         Object.defineProperty(self, propertyName, property.descriptor);
       }
     );
@@ -64,7 +65,7 @@ export default class ComplexType {
     Object.keys(this._propertiesSettings).forEach(key => {
       const property = this[key];
       if (property instanceof ComplexType) {
-        this.propertiesManager.setComplexProperty(key, {
+        this.modelPropsManager.setComplexProperty(key, {
           validate: property.validate
         });
       }
