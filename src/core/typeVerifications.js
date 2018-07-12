@@ -1,5 +1,5 @@
 import checkPropTypes, { assertPropTypes } from 'check-prop-types';
-import fail from './exeptions';
+import fail from 'core/exceptions';
 /**
  * @function "assertParametersType"
  * @description Call to assertPropTypes to assert that the values match with the type specs.

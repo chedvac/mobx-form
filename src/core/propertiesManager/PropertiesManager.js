@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import assertParametersType from '../typeVerifications';
-import fail from '../exeptions';
+import fail from '../exceptions';
 import ModelPropBehavior from './ModelPropBehavior';
 import FormObservableBehavior from './FormObservableBehavior';
 
@@ -56,7 +56,11 @@ export default class PropertiesManager {
    propertiesManager1.getProperty('lastName');
    */
   getProperty(propertyName) {
-    assertParametersType({ propertyName }, {propertyName:PropTypes.string.isRequired}, 'getProperty');
+    assertParametersType(
+      { propertyName },
+      { propertyName: PropTypes.string.isRequired },
+      'getProperty'
+    );
     return this.getProperties()[propertyName];
   }
 }

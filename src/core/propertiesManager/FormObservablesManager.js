@@ -40,6 +40,7 @@ export default class FormObservablesManager extends PropertiesManager{
       settings: PropTypes.shape({
         validate: PropTypes.func,
         ref: PropTypes.object,
+        descriptor: PropTypes.object,
         validationsManager: PropTypes.instanceOf(validationsManagerFactory)
       })
     };
@@ -49,11 +50,11 @@ export default class FormObservablesManager extends PropertiesManager{
       'setFormObservableProperty'
     );
 
-    const { validate, ref, validationsManager } = settings;
+    const { validate, ref, validationsManager, descriptor } = settings;
     const property = this.getProperty(propertyName);
     property.setRef(ref);
     property.setValidationsManager(validationsManager);
     property.setValidate(validate);
+    property.setDescriptor(descriptor);
   }
-
 }

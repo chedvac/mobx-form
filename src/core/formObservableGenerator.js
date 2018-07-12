@@ -1,39 +1,46 @@
-import { observable, reaction } from 'mobx';
+import { observable } from 'mobx';
 import configuration from './mobxConfiguration';
 
 export default function({
-  target,
+  formObservablesManager,
   name,
   descriptor,
   validationsManager,
+  defaultValue,
   ...params
 } = params) {
-  var defaultValue = descriptor
-    ? descriptor.initializer
-      ? descriptor.initializer.call(target)
-      : descriptor.value
-    : undefined;
   delete descriptor.initializer;
   delete descriptor.value;
   delete descriptor.writable;
-
   const observableBox = observable.box(defaultValue, { name });
+
+  const validate = newValue => {
+    //TODO move to utilities
+    const value = newValue !== undefined ? newValue : descriptor.get();
+    const dependedObservables = formObservablesManager.getProperty(name).dependedObservables;
+    const failedValidation = validationsManager.validate(
+      value,
+      dependedObservables
+    );
+    formObservablesManager
+      .getProperty(name).validationState
+      .setValidationState(failedValidation);
+    return failedValidation.isValid;
+  };
   //TODO get
-  observableBox.intercept(function(change) {
+  observableBox.intercept(change => {
     validate(change.newValue);
     return change;
   });
 
   observableBox.observe(function() {
-    const dependedObservables = target.formObservablesManager.getPropertyDependencies(
-      name
-    );
+    const dependedObservables = formObservablesManager.getProperty(name).dependedObservables;
     if (!dependedObservables) {
       return;
     }
     //TODO lodash map
     for (const observable in dependedObservables) {
-      target.formObservablesManager.validateProperty(observable);
+      formObservablesManager.validateProperty(observable);
     }
   });
 
@@ -45,29 +52,10 @@ export default function({
     return observableBox.get();
   };
 
-  const validate = newValue => {
-    //TODO move to utilities
-    const value = newValue !== undefined ? newValue : descriptor.get();
-    const dependedObservables = target.formObservablesManager.getPropertyDependencies(
-      name
-    );
-    let failedValidation = validationsManager.validate(
-      value,
-      dependedObservables
-    );
-    target.formObservablesManager
-      .getPropertyValidationState(name)
-      .setValidationState(failedValidation);
-    return failedValidation.isValid;
-  };
-  target.formObservablesManager.setFormObservableProperty(
-    name,
-    {
-      validate,
-      validationsManager,
-      ref: observableBox
-    }
-  );
-
-  Object.defineProperty(target, name, descriptor);
+  formObservablesManager.setFormObservableProperty(name, {
+    validate,
+    validationsManager,
+    ref: observableBox,
+    descriptor
+  });
 }

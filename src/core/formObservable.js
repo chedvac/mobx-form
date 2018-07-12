@@ -1,25 +1,35 @@
+import ComplexType from '../core/ComplexType';
 import validationsManagerFactory from '../validations/src/core/validationsManager';
-import { registerProperty } from './complexPropertiesRegistration';
 export default function formObservable(settings = {}) {
   const validationsManager = new validationsManagerFactory(
     settings.validations || []
   );
   return function(target, name, descriptor) {
-    target.registerProperty({
+    if (!(target instanceof ComplexType)) {
+      throw 'formObservable parent must be instanceof ComplexType';
+    }
+    descriptor.configurable = true;
+    descriptor.writable = true;
+    const defaultValue = descriptor.value
+      ? descriptor.value
+      : descriptor.initializer
+        ? descriptor.initializer.call(target)
+        : undefined;
+    target.setPropertySettings({
       name,
-      descriptor,
+      defaultValue,
       validationsManager,
-      isFormObservable: true
+      isFormObservable: true,
+      descriptor
     });
-    return Object.defineProperty(target, name, {
+    Object.defineProperty(target, name, {
       configurable: true,
       enumerable: true,
-      get: function() {
-        return this[name];
-      },
-      set: function(value) {
+      get: () => defaultValue,
+      set: value => {
         this[name] = value;
       }
     });
+    return Object.getOwnPropertyDescriptor(target, name);
   };
 }
