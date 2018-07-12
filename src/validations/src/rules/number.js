@@ -39,6 +39,14 @@ export function greaterThan(params) {
 }
 
 export function lessThan(params) {
+  const paramsPropTypes = {
+    params: PropTypes.shape({
+      value: PropTypes.number.isRequired,
+      compareToName: PropTypes.string,
+      message: PropTypes.func
+    })
+  };
+  assertParametersType({ params }, paramsPropTypes, 'lessThan');
   let { number, compareToName } = params;
   return generateBasicValidation({
     name: 'lessThan',

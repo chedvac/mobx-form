@@ -1,4 +1,40 @@
 import { greaterThan, lessThan } from '../../rules/number';
+import { testPropTypes } from '../common/testPropTypes';
+
+function testParams(functionName) {
+  describe('value', () => {
+    test('should throw if not exist', () => {
+      expect(() => {
+        functionName({});
+      }).toThrow();
+    });
+    test('should throw if not number', () => {
+      testPropTypes(functionName, 'value', 'number');
+    });
+  });
+
+  describe('compareToName', () => {
+    test('should not throw if not exist (optional)', () => {
+      expect(() => {
+        functionName({ value: 1 });
+      }).not.toThrow();
+    });
+    test('should throw if not string', () => {
+      testPropTypes(functionName, 'compareToName', 'string');
+    });
+  });
+
+  describe('message', () => {
+    test('should not throw if not exist (optional)', () => {
+      expect(() => {
+        functionName({ value: 1 });
+      }).not.toThrow();
+    });
+    test('should throw if not function', () => {
+      testPropTypes(functionName, 'message', 'function');
+    });
+  });
+}
 
 describe('greaterThan', () => {
   test('shuold be defined', () => {
@@ -6,73 +42,16 @@ describe('greaterThan', () => {
   });
 
   describe('params', () => {
-    describe('value', () => {
-      test('should throw if not exist', () => {
-        expect(() => {
-          greaterThan({});
-        }).toThrow();
-      });
-      test('should throw if not number', () => {
-        expect(() => {
-          greaterThan({ value: null });
-        }).toThrow();
-        expect(() => {
-          greaterThan({ value: undefined });
-        }).toThrow();
-        expect(() => {
-          greaterThan({ value: '' });
-        }).toThrow();
-        expect(() => {
-          greaterThan({ value: '1' });
-        }).toThrow();
-        expect(() => {
-          greaterThan({ value: 'string' });
-        }).toThrow();
-      });
-    });
+    testParams(greaterThan);
+  });
+});
 
-    describe('compareToName', () => {
-      test('should not throw if not exist (optional)', () => {
-        expect(() => {
-          greaterThan({ value: 1 });
-        }).not.toThrow();
-      });
-      test('should throw if not string', () => {
-        // expect(() => {
-        //   greaterThan({ value: 1, compareToName: undefined });
-        // }).toThrow();
-        expect(() => {
-          greaterThan({ value: 1, compareToName: 1 });
-        }).toThrow();
-        expect(() => {
-          greaterThan({ value: 1, compareToName: () => 'string' });
-        }).toThrow();
-        expect(() => {
-          greaterThan({ value: 1, compareToName: 'string' });
-        }).not.toThrow();
-      });
-    });
+describe('lessThan', () => {
+  test('shuold be defined', () => {
+    expect(lessThan).toBeDefined();
+  });
 
-    describe('message', () => {
-      test('should not throw if not exist (optional)', () => {
-        expect(() => {
-          greaterThan({ value: 1 });
-        }).not.toThrow();
-      });
-      test('should throw if not function', () => {
-        // expect(() => {
-        //   greaterThan({ value: 1, message: undefined });
-        // }).toThrow();
-        expect(() => {
-          greaterThan({ value: 1, message: 1 });
-        }).toThrow();
-        expect(() => {
-          greaterThan({ value: 1, message: 'string' });
-        }).toThrow();
-        expect(() => {
-          greaterThan({ value: 1, message: () => 'string' });
-        }).not.toThrow();
-      });
-    });
+  describe('params', () => {
+    testParams(lessThan);
   });
 });
