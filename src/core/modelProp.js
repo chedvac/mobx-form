@@ -1,6 +1,4 @@
-import { observable } from 'mobx';
-import { registerProperty } from './complexPropertiesRegistration';
-export const modelPropGenerator = function({
+export let modelPropGenerator = function({
   target,
   name,
   descriptor,
@@ -21,10 +19,10 @@ export const modelPropGenerator = function({
         ? target.reset(defaultValue)
         : descriptor.set(defaultValue);
   };
-  target.propertiesManager.setModelProp(name, {
+
+  target.modelPropsManager.setModelProp(name, {
     setMap: map,
-    reset,
-    ref: descriptor
+    reset
   });
 };
 export default function modelProp(settings = {}) {

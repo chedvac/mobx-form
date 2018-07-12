@@ -1,11 +1,13 @@
-export function getPropsField(store, name){
-    // if(store.propertiesManager){
-    //             store.propertiesManager.properties[name] = store.propertiesManager.properties[name] ?store.propertiesManager.properties[name] : {@observable message: '', @observable isValid: ''};
+export function getPropsField(store, name) {
+  // if(store.propertiesManager){
+  //             store.propertiesManager.properties[name] = store.propertiesManager.properties[name] ?store.propertiesManager.properties[name] : {@observable message: '', @observable isValid: ''};
 
-    // }
-    return ({
-        update:store["set_"+name],
-        field: store[name],
-        message:  store.propertiesManager ? store.propertiesManager.getPropertyValidationState(name).message : ''
-    })
-};
+  // }
+  return {
+    update: store['set_' + name],
+    field: store[name],
+    message: store.formObservablesManager
+      ? store.formObservablesManager.getPropertyValidationState(name).message
+      : ''
+  };
+}

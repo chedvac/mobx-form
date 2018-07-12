@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import { observable } from 'mobx';
 export default function formObservableGenerator({
+=======
+import { observable, reaction } from 'mobx';
+import configuration from './mobxConfiguration';
+
+export default function({
+>>>>>>> f62be2aa641121e3667d9dacf8b57e70b45aecac
   target,
   name,
   descriptor,
@@ -34,8 +41,13 @@ export default function formObservableGenerator({
     return change;
   });
 
+<<<<<<< HEAD
   observableBox.observe(() => {
     const dependedObservables = target.propertiesManager.getPropertyDependencies(
+=======
+  observableBox.observe(function() {
+    const dependedObservables = target.formObservablesManager.getPropertyDependencies(
+>>>>>>> f62be2aa641121e3667d9dacf8b57e70b45aecac
       name
     );
     if (!dependedObservables) {
@@ -43,7 +55,7 @@ export default function formObservableGenerator({
     }
     //TODO lodash map
     for (const observable in dependedObservables) {
-      target.propertiesManager.validateProperty(observable);
+      target.formObservablesManager.validateProperty(observable);
     }
   });
 
@@ -54,11 +66,38 @@ export default function formObservableGenerator({
   descriptor.get = function() {
     return observableBox.get();
   };
+<<<<<<< HEAD
   target.propertiesManager.setFormObservableProperty(name, {
     validate,
     validationsManager,
     ref: observableBox
   });
+=======
+
+  const validate = newValue => {
+    //TODO move to utilities
+    const value = newValue !== undefined ? newValue : descriptor.get();
+    const dependedObservables = target.formObservablesManager.getPropertyDependencies(
+      name
+    );
+    let failedValidation = validationsManager.validate(
+      value,
+      dependedObservables
+    );
+    target.formObservablesManager
+      .getPropertyValidationState(name)
+      .setValidationState(failedValidation);
+    return failedValidation.isValid;
+  };
+  target.formObservablesManager.setFormObservableProperty(
+    name,
+    {
+      validate,
+      validationsManager,
+      ref: observableBox
+    }
+  );
+>>>>>>> f62be2aa641121e3667d9dacf8b57e70b45aecac
 
   Object.defineProperty(target, name, descriptor);
 }
