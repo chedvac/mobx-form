@@ -112,18 +112,38 @@ describe('generateBasicValidation', () => {
   });
 
   describe('validator', () => {
+    test('sholuld return true if value undefined, null or empty', () => {
+      expect(
+        generateBasicValidation({
+          ...settings,
+          validator: successValidator
+        }).validator('')
+      ).toBeTruthy();
+      expect(
+        generateBasicValidation({
+          ...settings,
+          validator: successValidator
+        }).validator(null)
+      ).toBeTruthy();
+      expect(
+        generateBasicValidation({
+          ...settings,
+          validator: successValidator
+        }).validator(undefined)
+      ).toBeTruthy();
+    });
     test('should return validator result', () => {
       expect(
         generateBasicValidation({
           ...settings,
           validator: successValidator
-        }).validator()
+        }).validator('valid')
       ).toBeTruthy();
       expect(
         generateBasicValidation({
           ...settings,
           validator: failedValidator
-        }).validator()
+        }).validator('not valid')
       ).toBeFalsy();
     });
   });

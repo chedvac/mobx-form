@@ -26,7 +26,14 @@ export function generateBasicValidation(settings) {
     const message = _.get(settings, 'params.message', settings.message);
     return message(value);
   };
-  return { ...settings, message: messageWrapper };
+
+  const validatorWrapper = value => {
+    if (!value) {
+      return true;
+    }
+    return settings.validator(value);
+  };
+  return { ...settings, validator: validatorWrapper, message: messageWrapper };
 }
 
 export function generateRegexValidation(settings) {
@@ -37,33 +44,6 @@ export function generateRegexValidation(settings) {
   return generateBasicValidation({ ...settings, validator });
 }
 
-// export function generateConditionValidation(settings) {
-//   const { condition, validator } = settings;
-//   const validatorWrapper = (value, dependedObservables) => {
-//     return dependedObservables[condition] ? validator(value) : true;
-//   };
-//   return { ...settings, validator: validatorWrapper };
-// }
-
-// export function generateDependedValidation(settings) {
-//   const { params, validator, message } = settings;
-//   const dependedParams = (value, dependedObservables) =>
-//     fp.mapValues(value => dependedObservables[value].get())(params);
-
-//   const validatorWrapper = (value, dependedObservables) => {
-//     return validator(dependedParams(value, dependedObservables))(value);
-//   };
-
-//   const messageWrapper = (value, dependedObservables) => {
-//     return message(dependedParams(value, dependedObservables));
-//   };
-//   return generateBasicValidation({
-//     ...settings,
-//     validator: validatorWrapper,
-//     message: messageWrapper
-//   });
-// }
-
 export function generateAsyncValidation(settings) {
   const { name, message } = settings;
   async function validator(value, result) {
@@ -72,9 +52,8 @@ export function generateAsyncValidation(settings) {
       result.isValid = true;
       result.message = '';
     } catch (err) {
-      const error = err || '';
       result.isValid = false;
-      result.message = error.error ? error.error : settings.message;
+      result.message = err.error || settings.message;
     }
   }
   return { ...settings, validator };
