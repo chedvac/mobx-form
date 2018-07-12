@@ -1,24 +1,14 @@
 import PropTypes from 'prop-types';
 import ModelPropBehavior from './ModelPropBehavior';
+import PropertiesManager from './PropertiesManager';
 import assertParametersType from '../typeVerifications';
-import fail from '../exeptions';
 import ComplexType from '../ComplexType';
 /**
  * @class ModelPropsManager
  * @classdesc ModelPropsManager - manage all modelProps properties of complex
  */
-export default class ModelPropsManager {
-  constructor() {
-    this.createProperty = this.createProperty.bind(this);
-    this.getProperty = this.getProperty.bind(this);
-    this.mapProperty = this.mapProperty.bind(this);
-    this.resetProperty = this.resetProperty.bind(this);
-    this.setModelProp = this.setModelProp.bind(this);
-    this.reset = this.reset.bind(this);
-    this.map = this.map.bind(this);
-    this.setComplexProperty = this.setComplexProperty.bind(this);
-  }
-  properties = {};
+
+export default class ModelPropsManager extends PropertiesManager {
 
   /**     
    * @memberof ModelPropsManager        
@@ -30,32 +20,10 @@ export default class ModelPropsManager {
    modelPropsManager1.createProperty('lastName');
    */
   createProperty(propertyName) {
-    assertParametersType(
-      { propertyName },
-      { propertyName: PropTypes.string.isRequired },
-      'createProperty'
-    );
-    if (this.hasOwnProperty(propertyName)) {
-      fail(
-        `property ${propertyName} already exist in modelPropsManager.properties`
-      );
-    }
     const newProperty = new ModelPropBehavior();
-    this.properties[propertyName] = newProperty;
-    this[propertyName] = newProperty;
+    super.createProperty(propertyName , newProperty);
   }
 
-  /**     
-   * @memberof ModelPropsManager        
-   * @function "getProperty"
-   * @description return a property from properties
-   * @param {string}  propertyName
-   * @example 
-   modelPropsManager1.getProperty('lastName');
-   */
-  getProperty(propertyName) {
-    return this.properties[propertyName];
-  }
   /**
     * @memberof ModelPropsManager
     * @function "setComplexProperty"
@@ -69,7 +37,7 @@ export default class ModelPropsManager {
     const propTypes = {
       propertyName: PropTypes.string.isRequired,
       settings: PropTypes.shape({
-        ref:  PropTypes.instanceOf(ComplexType)
+        ref: PropTypes.instanceOf(ComplexType)
       })
     };
     assertParametersType(
@@ -82,43 +50,7 @@ export default class ModelPropsManager {
     const { ref } = settings;
     property.setRef(ref);
   }
-  /**     
-    * @memberof ModelPropsManager        
-    * @function "mapProperty"
-    * @description call map function of speciphic property by name 
-    * @param {string}  propertyName
-    * @param {object} params
-    * @example 
-        modelPropsManager1.mapProperty('lastName', 'family');
-    */
-  mapProperty(propertyName, params) {
-    const propTypes = {
-      propertyName: PropTypes.string.isRequired,
-      params: PropTypes.object
-    };
-    assertParametersType({ propertyName, params }, propTypes, 'mapProperty');
-    const property = this.getProperty(propertyName);
-    return property.map(params);
-  }
-  /**     
-    * @memberof ModelPropsManager        
-    * @function "resetProperty"
-    * @description call reset function of speciphic property by name 
-    * @param {string}  propertyName
-    * @param {object} params
-    * @example 
-        modelPropsManager1.resetProperty('lastName', {});
-    */
-  resetProperty(propertyName, params) {
-    const propTypes = {
-      propertyName: PropTypes.string.isRequired,
-      params: PropTypes.object
-    };
-    assertParametersType({ propertyName, params }, propTypes, 'resetProperty');
-    const property = this.getProperty(propertyName);
-    return property.reset(params);
-  }
-
+ 
   /**     
    * @memberof ModelPropsManager        
    * @function "setModelProp"
@@ -138,7 +70,7 @@ export default class ModelPropsManager {
     };
     assertParametersType({ propertyName, settings }, propTypes, 'setModelProp');
 
-    const { reset, map} = settings;
+    const { reset, map } = settings;
     const property = this.getProperty(propertyName);
     property.setReset(reset);
     property.setMap(map);
@@ -154,9 +86,10 @@ export default class ModelPropsManager {
     */
   reset(params) {
     assertParametersType({ params }, { params: PropTypes.object }, 'reset');
-    for (const property in this.properties) {
-      this.resetProperty(property, params);
-    }
+    Object.values(this.getProperties()).forEach(property => {
+      property.reset(params);
+    });
+    
   }
 
   /**     
@@ -169,9 +102,8 @@ export default class ModelPropsManager {
     */
   map(params) {
     assertParametersType({ params }, { params: PropTypes.object }, 'map');
-    for (const property in this.properties) {
-      this.mapProperty(property, params);
-    }
+    Object.values(this.getProperties()).forEach(property => {
+      property.map(params);
+    });
   }
-  
 }

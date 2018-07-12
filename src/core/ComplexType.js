@@ -7,7 +7,7 @@ import fail from './exeptions';
 export default class ComplexType {
   constructor(settings = {}) {
     this.formObservablesManager = new FormObservablesManager();
-    this.modelPropsManager = new ModelPropsManager();  
+    this.modelPropsManager = new ModelPropsManager();
 
     this.validationsManager = new validationsManagerFactory(
       settings.validations || []
@@ -28,23 +28,30 @@ export default class ComplexType {
     this._properties[name] = this._properties[name] || { name, descriptor };
     Object.assign(this._properties[name], settings);
   }
+
   validate() {
     const validationResult = this.validationsManager.validate(this);
     this.validationState.setValidationState(validationResult);
     const isChildrenValid = this.validateModel();
-    this.validationState.setIsValid(isChildrenValid ? this.isValid : false);
+    this.validationState.setIsValid(
+      isChildrenValid && validationResult.isValid
+    );
     return this.validationState.isValid;
   }
 
   validateModel() {
-    const modelProperties = this.modelPropsManager.properties;
-    let res = true;
-    for (const property in modelProperties) {
-      const instance = modelProperties.getProperty(property).ref;
-     instance instanceof ComplexType?
-        res = instance.validate():
-        res =  this.formObservablesManager.getProperty(property).validate();
-    }
-    return res;
+    let childrenResult = true;
+    Object.entries(this.modelPropsManager.getProperties()).forEach(([name,property]) => {
+      let childResult = true;
+      const instance = property.ref;
+      instance instanceof ComplexType
+        ? (childResult = instance.validate())
+        : (childResult = this.formObservablesManager
+            .getProperty(name)
+            .validate());
+
+      childrenResult = childrenResult && childResult;
+    });
+    return childrenResult;
   }
 }

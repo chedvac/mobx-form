@@ -81,7 +81,7 @@ export default {
         viewSectionTitle: 'خيارات العرض',
         saveTitle: 'שמור - לכפתור זה קיים קיצור דרך [s]',
         fileAttachmentText: ''
-    }  english: {
+    },  english: {
         actionsTitle: '',
         actionsText: '',
         submitTitle: 'Submit - This button has shortcut [m]',
