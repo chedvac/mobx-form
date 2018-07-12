@@ -1,12 +1,23 @@
 import { concatArray } from 'validations/utils';
 
+const dataschemaAssign = validationArray =>
+  validationArray.reduce(
+    (dataSchema, val) =>
+      val.dataSchema
+        ? Object.assign({}, dataSchema, val.dataSchema)
+        : dataSchema,
+    {}
+  );
+
 export default class validationsManager {
   failedValidation = {};
 
   constructor(validations) {
     this.validations = concatArray(validations);
+    this.dataSchema = dataschemaAssign(this.validations);
   }
   setValidations = validations => {
+    //add dataSchema??
     this.validations = concatArray(validations, this.validations);
   };
   // getMessage = () => {

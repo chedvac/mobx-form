@@ -8,6 +8,10 @@ export function getPropsField(store, name) {
     field: store[name],
     message: store.formObservablesManager
       ? store.formObservablesManager.getPropertyValidationState(name).message
-      : ''
+      : '',
+    ...(store.formObservablesManager
+      ? store.formObservablesManager.getValidationManagerProperty(name)
+          .dataSchema
+      : {})
   };
 }

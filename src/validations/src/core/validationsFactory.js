@@ -34,7 +34,8 @@ export function generateRegexValidation(settings) {
   const validator = value => {
     return value.toString().match(settings.regex) ? true : false;
   };
-  return generateBasicValidation({ ...settings, validator });
+  const dataSchema = { pattern: settings.regex };
+  return generateBasicValidation({ ...settings, validator, dataSchema });
 }
 
 // export function generateConditionValidation(settings) {
