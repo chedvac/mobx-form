@@ -12,7 +12,7 @@ jest.mock('../src/modelProp', () => ({
 jest.mock('../../../validations/src/core/validationsManager');
 jest.mock('../src/formObservableGenerator');
 import ComplexTab from './mocksExamples/ComplexTab';
-
+import ComplexType from 'core/ComplexType';
 let customTab;
 const settings = { validations: [() => true] };
 beforeEach(() => {
@@ -156,7 +156,7 @@ describe('initializeComplexProperties', () => {
     test('params: object with propety validate function', () => {
       expect(
         customTab.modelPropsManager.setComplexProperty.mock.calls[0][1]
-      ).toEqual({ validate: customTab.complex.validate });
+      ).toEqual({ ref: customTab.complex });
     });
   });
 });
@@ -173,7 +173,13 @@ describe('validate - validate itself and all childs', () => {
       };
       beforeEach(() => {
         customTab.validationsManager.validate = jest.fn(() => result);
-        customTab.formObservablesManager.validate = jest.fn(() => result);
+        Object.entries(customTab.modelPropsManager.getProperties()).forEach(
+          ([name, property]) => {
+            if (!(property instanceof ComplexType)) {
+              customTab.property.setValidate(jest.fn(() => result));
+            }
+          }
+        );
       });
       test('call validationState.setValidationState with result', () => {
         customTab.validate();
@@ -191,7 +197,9 @@ describe('validate - validate itself and all childs', () => {
         customTab.validationsManager.validate = jest.fn(() => {
           return result;
         });
-        customTab.propertiesManager.validate = jest.fn(() => result);
+        customTab.formObservablesManager.getProperties().values(property => {
+          property.validate = jest.fn(() => result);
+        });
       });
       test('call validationState.setValidationState with result', () => {
         customTab.validate();
@@ -205,11 +213,13 @@ describe('validate - validate itself and all childs', () => {
     describe('failed', () => {
       beforeEach(() => {
         customTab = new ComplexTab();
-        customTab.propertiesManager.validate = jest.fn(() => {
-          return {
-            message: '',
-            isValid: true
-          };
+        customTab.formObservablesManager.getProperties().values(property => {
+          property.validate = jest.fn(() => {
+            return {
+              message: '',
+              isValid: true
+            };
+          });
         });
         customTab.validationsManager.validate = jest.fn(() => {
           return {
@@ -220,7 +230,7 @@ describe('validate - validate itself and all childs', () => {
       });
       test('validations fail - ', () => {
         customTab.validate();
-        expect(customTab.propertiesManager.validate).toBeCalledWith({
+        expect(customTab.formObservablesManager.validate).toBeCalledWith({
           parent: customTab
         });
         expect(customTab.validationState.setIsValid).toBeCalledWith(false);
@@ -229,11 +239,15 @@ describe('validate - validate itself and all childs', () => {
     describe('sucsses ', () => {
       beforeEach(() => {
         customTab = new ComplexTab();
-        customTab.propertiesManager.validate = jest.fn(() => {
-          return {
-            message: '',
-            isValid: true
-          };
+        customTab.formObservablesManager.getProperties().values(property => {
+          property.validate = jest.fn(() => {
+            {
+              return {
+                message: '',
+                isValid: true
+              };
+            }
+          });
         });
         customTab.validationsManager.validate = jest.fn(() => {
           return {
@@ -244,7 +258,7 @@ describe('validate - validate itself and all childs', () => {
       });
       test('sucsses', () => {
         customTab.validate();
-        expect(customTab.propertiesManager.validate).toBeCalledWith({
+        expect(customTab.formObservablesManager.validate).toBeCalledWith({
           parent: customTab
         });
         expect(customTab.validationState.setIsValid).toBeCalledWith(true);
