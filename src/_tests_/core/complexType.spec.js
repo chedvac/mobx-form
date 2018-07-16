@@ -18,12 +18,12 @@ beforeEach(() => {
   formObservableGenerator.mockClear();
   modelPropGenerator.mockClear();
   customTab = new ComplexTab();
-  customTab.propertiesManager.validate = jest.fn(() => 
-     {
+  customTab.propertiesManager.validate = jest.fn(() => {
+     return{
       isValid: true,
       message: ''
     }
-  );
+  });
   customTab.validationsManager.validate = jest.fn(() => {
     return {
       isValid: true,
