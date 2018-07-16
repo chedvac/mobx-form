@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 
-import FormObservableBehavior from './FormObservableBehavior';
-import assertParametersType from '../typeVerifications';
+import FormObservableBehavior from 'core/propertiesManager/FormObservableBehavior';
+import assertParametersType from 'core/typeVerifications';
 import validationsManagerFactory from 'validations/core/validationsManager';
-import PropertiesManager from './PropertiesManager';
+import PropertiesManager from 'core/propertiesManager/PropertiesManager';
 /**
  * @class FormObservablesManager
  * @classdesc FormObservablesManager - manage all formObservables properties of complex
  */
-export default class FormObservablesManager extends PropertiesManager{
-  
+export default class FormObservablesManager extends PropertiesManager {
   /**     
    * @memberof FormObservablesManager        
    * @function "createProperty"
@@ -21,7 +20,7 @@ export default class FormObservablesManager extends PropertiesManager{
    */
   createProperty(propertyName) {
     const newProperty = new FormObservableBehavior();
-    super.createProperty(propertyName , newProperty);
+    super.createProperty(propertyName, newProperty);
   }
 
   /**     

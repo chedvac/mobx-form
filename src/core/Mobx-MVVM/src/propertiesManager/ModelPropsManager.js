@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
-import ModelPropBehavior from './ModelPropBehavior';
-import PropertiesManager from './PropertiesManager';
-import assertParametersType from '../typeVerifications';
-import ComplexType from '../ComplexType';
+import ModelPropBehavior from 'core/propertiesManager/ModelPropBehavior';
+import PropertiesManager from 'core/propertiesManager/PropertiesManager';
+import assertParametersType from 'core/typeVerifications';
+import ComplexType from 'core/ComplexType';
 /**
  * @class ModelPropsManager
  * @classdesc ModelPropsManager - manage all modelProps properties of complex
  */
 
 export default class ModelPropsManager extends PropertiesManager {
-
   /**     
    * @memberof ModelPropsManager        
    * @function "createProperty"
@@ -21,7 +20,7 @@ export default class ModelPropsManager extends PropertiesManager {
    */
   createProperty(propertyName) {
     const newProperty = new ModelPropBehavior();
-    super.createProperty(propertyName , newProperty);
+    super.createProperty(propertyName, newProperty);
   }
 
   /**
@@ -50,7 +49,7 @@ export default class ModelPropsManager extends PropertiesManager {
     const { ref } = settings;
     property.setRef(ref);
   }
- 
+
   /**     
    * @memberof ModelPropsManager        
    * @function "setModelProp"
@@ -89,7 +88,6 @@ export default class ModelPropsManager extends PropertiesManager {
     Object.values(this.getProperties()).forEach(property => {
       property.reset(params);
     });
-    
   }
 
   /**     

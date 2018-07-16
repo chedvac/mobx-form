@@ -1,8 +1,8 @@
 import ComplexType from 'core/ComplexType';
 import formObservable from 'core/formObservable';
 import modelProp1 from 'core/modelProp';
-import { hebrewName } from 'validations/rules/languages';
-import { maxlength } from 'validations/rules/general';
+import { hebrew } from 'validations/rules/text';
+import { maxlength } from 'validations/rules/basic';
 // console.log(modelProp1.default);
 const modelProp = modelProp1.default;
 export class Complex extends ComplexType {
@@ -20,16 +20,24 @@ export default class ComplexTab extends ComplexType {
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 5, message: 'too long...' })
+      hebrew({
+        message: () => {
+          'hebrew only';
+        }
+      }),
+      maxlength({ value: 5, message: () => 'too long...' })
     ]
   })
   agreement = '';
   @modelProp()
   @formObservable({
     validations: [
-      hebrewName({ message: 'hebrew only' }),
-      maxlength({ value: 5, message: 'too long...' })
+      hebrew({
+        message: () => {
+          'hebrew only';
+        }
+      }),
+      maxlength({ value: 5, message: () => 'too long...' })
     ]
   })
   firstName = 'yael';

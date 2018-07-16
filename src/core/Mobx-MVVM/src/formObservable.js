@@ -1,13 +1,17 @@
-import ComplexType from '../core/ComplexType';
-import validationsManagerFactory from '../validations/src/core/validationsManager';
+import ComplexType from 'core/ComplexType';
+import validationsManagerFactory from 'validations/core/validationsManager';
+import assertParametersType from 'core/typeVerifications';
+import PropTypes from 'prop-types';
 export default function formObservable(settings = {}) {
   const validationsManager = new validationsManagerFactory(
     settings.validations || []
   );
   return function(target, name, descriptor) {
-    if (!(target instanceof ComplexType)) {
-      throw 'formObservable parent must be instanceof ComplexType';
-    }
+    assertParametersType(
+      { target },
+      { target: PropTypes.instanceOf(ComplexType) },
+      '@formObservable'
+    );
     descriptor.configurable = true;
     descriptor.writable = true;
     const defaultValue = descriptor.value
