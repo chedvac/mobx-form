@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import FormObservableBehavior from './FormObservableBehavior';
 import assertParametersType from '../typeVerifications';
 import fail from 'core/exceptions';
-import validationsManagerFactory from '../../validations/src/core/validationsManager';
+import validationsManagerFactory from 'validations/core/validationsManager';
 /**
  * @class FormObservablesManager
  * @classdesc FormObservablesManager - manage all formObservables properties of complex
@@ -180,7 +180,7 @@ export default class FormObservablesManager {
     */
   validate() {
     let isValid = true;
-    for (let property in this.properties) {
+    for (const property in this.properties) {
       const isPropertyValid = this.validateProperty(property);
       isValid = isPropertyValid ? isValid : false;
     }

@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
-
+import assertParametersType from 'core/typeVerifications';
+import PropTypes from 'prop-types';
 export default class ValidationState {
   @observable message = '';
   @observable isValid = true;
@@ -9,26 +10,20 @@ export default class ValidationState {
     this.setValidationState = this.setValidationState.bind(this);
   }
   @action
-  setMessage = function(message) {
-    if (typeof message !== 'string') {
-      throw 'should get string param ';
-    }
+  setMessage(message) {
+    assertParametersType({ message }, { message: PropTypes.string }, 'message');
     this.message = message;
-  };
+  }
   @action
-  setIsValid = function(isValid) {
-    if (typeof isValid !== 'boolean') {
-      throw 'should get boolean param ';
-    }
+  setIsValid(isValid) {
+    assertParametersType({ isValid }, { isValid: PropTypes.string }, 'isValid');
     this.isValid = isValid;
-  };
+  }
   @action
-  setValidationState = function(validationState) {
+  setValidationState(validationState) {
     const { isValid, message } = validationState;
-    if (isValid === undefined) {
-      throw 'missing require parameter: isValid';
-    }
+    assertParametersType({ isValid }, { isValid: PropTypes.string }, 'isValid');
     this.isValid = isValid;
     this.message = message;
-  };
+  }
 }

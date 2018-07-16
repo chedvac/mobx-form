@@ -29,7 +29,6 @@ export default function modelProp(settings = {}) {
 
     if (
       descriptor.value === undefined &&
-      !descriptor.get &&
       !descriptor.set &&
       !descriptor.initializer
     ) {

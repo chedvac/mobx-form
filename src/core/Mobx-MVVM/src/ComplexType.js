@@ -53,9 +53,8 @@ export default class ComplexType {
   }
   setPropertiesReferences() {
     const self = this;
-    Object.keys(self.formObservablesManager.properties).forEach(
-      propertyName => {
-        const property = self.formObservablesManager.properties[propertyName];
+    Object.entries(self.formObservablesManager.properties).forEach(
+      ([propertyName, property]) => {
         Object.defineProperty(self, propertyName, property.descriptor);
       }
     );

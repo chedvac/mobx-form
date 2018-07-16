@@ -1,5 +1,5 @@
-import formObservable from '../../core/formObservable';
-import ValidationsManager from '../../validations/src/core/validationsManager';
+import formObservable from 'core/formObservable';
+import ValidationsManager from 'validations/core/validationsManager';
 
 jest.mock('../../validations/src/core/validationsManager');
 const validations = [() => true];
