@@ -11,18 +11,18 @@ export default class ValidationState {
   }
   @action
   setMessage(message) {
-    assertParametersType({ message }, { message: PropTypes.string }, 'message');
+    assertParametersType({ message }, { message: PropTypes.bool }, 'message');
     this.message = message;
   }
   @action
   setIsValid(isValid) {
-    assertParametersType({ isValid }, { isValid: PropTypes.string }, 'isValid');
+    assertParametersType({ isValid }, { isValid: PropTypes.bool }, 'isValid');
     this.isValid = isValid;
   }
   @action
   setValidationState(validationState) {
     const { isValid, message } = validationState;
-    assertParametersType({ isValid }, { isValid: PropTypes.string }, 'isValid');
+    assertParametersType({ isValid }, { isValid: PropTypes.bool }, 'isValid');
     this.isValid = isValid;
     this.message = message;
   }

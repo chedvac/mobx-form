@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-import FormObservableBehavior from 'core/FormObservableBehavior';
+import FormObservableBehavior from 'core/propertiesManager/FormObservableBehavior';
 import assertParametersType from 'core/typeVerifications';
 import validationsManagerFactory from 'validations/core/validationsManager';
-import PropertiesManager from 'core/PropertiesManager';
+import PropertiesManager from 'core/propertiesManager/PropertiesManager';
 /**
  * @class FormObservablesManager
  * @classdesc FormObservablesManager - manage all formObservables properties of complex

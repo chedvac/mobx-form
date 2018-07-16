@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import ModelPropBehavior from 'core/ModelPropBehavior';
-import PropertiesManager from 'core/PropertiesManager';
+import ModelPropBehavior from 'core/propertiesManager/ModelPropBehavior';
+import PropertiesManager from 'core/propertiesManager/PropertiesManager';
 import assertParametersType from 'core/typeVerifications';
 import ComplexType from 'core/ComplexType';
 /**
