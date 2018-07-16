@@ -2,18 +2,16 @@ import validationsManagerFactory from 'validations/core/validationsManager';
 import FormObservablesManager from './propertiesManager/FormObservablesManager';
 import ModelPropsManager from './propertiesManager/ModelPropsManager';
 import ValidationState from 'core/ValidationState';
-import fail from 'core/exceptions';
 import formObservableGenerator from './formObservableGenerator';
 import { modelPropGenerator } from './modelProp';
+import PropTypes from 'prop-types';
+import assertParametersType from 'core/typeVerifications';
 import fp from 'lodash/fp';
 export default class ComplexType {
   constructor(settings = {}) {
-    this.initializeComplexProperties = this.initializeComplexProperties.bind(
-      this
-    );
-    this.setPropertiesReferences = this.setPropertiesReferences.bind(this);
-    this.validate = this.validate.bind(this);
-    this.validateModel = this.validateModel.bind(this);
+    this.formObservablesManager = new FormObservablesManager();
+    this.modelPropsManager = new ModelPropsManager();
+
     this.validationsManager = new validationsManagerFactory(
       settings.validations || []
     );
@@ -53,8 +51,9 @@ export default class ComplexType {
   }
   setPropertiesReferences() {
     const self = this;
-    Object.entries(self.formObservablesManager.properties).forEach(
-      ([propertyName, property]) => {
+    Object.keys(self.formObservablesManager.getProperties()).forEach(
+      propertyName => {
+        const property = self.formObservablesManager.getProperty(propertyName);
         Object.defineProperty(self, propertyName, property.descriptor);
       }
     );
@@ -65,7 +64,7 @@ export default class ComplexType {
       const property = this[key];
       if (property instanceof ComplexType) {
         this.modelPropsManager.setComplexProperty(key, {
-          validate: property.validate
+          ref: property
         });
       }
     });
@@ -75,20 +74,28 @@ export default class ComplexType {
     const validationResult = this.validationsManager.validate(this);
     this.validationState.setValidationState(validationResult);
     const isChildrenValid = this.validateModel();
-    this.validationState.setIsValid(isChildrenValid ? this.isValid : false);
+    this.validationState.setIsValid(
+      isChildrenValid && validationResult.isValid
+    );
     return this.validationState.isValid;
   }
 
   validateModel() {
-    const modelProperties = this.modelPropsManager.properties;
-    let res = true;
-    for (const property in modelProperties) {
-      const instance = modelProperties.getProperty(property).ref;
-      instance instanceof ComplexType
-        ? (res = instance.validate())
-        : (res = this.formObservablesManager.getProperty(property).validate());
-    }
-    return res;
+    let childrenResult = true;
+    Object.entries(this.modelPropsManager.getProperties()).forEach(
+      ([name, property]) => {
+        let childResult = true;
+        const instance = property.ref;
+        instance instanceof ComplexType
+          ? (childResult = instance.validate())
+          : (childResult = this.formObservablesManager
+              .getProperty(name)
+              .validate());
+
+        childrenResult = childrenResult && childResult;
+      }
+    );
+    return childrenResult;
   }
 }
 /**     
@@ -100,9 +107,13 @@ export default class ComplexType {
   PersonalInfo.setPropertySettings({});
 */
 ComplexType.prototype.setPropertySettings = function(settings) {
-  if (!settings.name) {
-    fail('registerProperty faile: missing require parameter name');
-  }
+  const propTypes = {
+    settings: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    })
+  };
+  assertParametersType({ settings }, propTypes, 'setPropertySettings');
+
   //every class that extends from ComplexType
   const ComlpextTypeInheritor = this;
   ComlpextTypeInheritor._propertiesSettings =

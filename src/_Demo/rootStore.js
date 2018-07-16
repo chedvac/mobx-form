@@ -27,11 +27,15 @@ class RootStore extends ComplexType {
   }
 
   validateForm() {
-    const isStoreValid = this.validateModel();
+    const isStoreValid = this.validate();
     if (isStoreValid) {
       alert('נתוני הטופס תקינים');
     }
   }
+  getStoreAsJSon = () => {
+    return toJS(this.model.getModel());
+  };
+
   getStoreAsJSon = () => {
     return toJS(this.model.getModel());
   };
