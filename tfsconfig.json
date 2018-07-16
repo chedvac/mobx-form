@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "allowJs": true
-    },
-    "editor.formatOnSave": true,
-    "emmet.includeLanguages": {
-        "javascript": "javascriptreact"
-        }
-        
+  "compilerOptions": {
+    "baseUrl": "./",
+    "experimentalDecorators": true,
+    "allowJs": true
+  },
+  "editor.formatOnSave": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  }
 }

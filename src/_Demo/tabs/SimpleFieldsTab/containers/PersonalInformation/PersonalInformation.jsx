@@ -6,7 +6,7 @@ import Textarea from '../../../../../Fields/Textarea';
 import Select from '../../../../../Fields/Select';
 import Checkbox from '../../../../../Fields/Checkbox';
 import DatePicker from '../../../../../Fields/DatePicker/DatePicker';
-import { getPropsField } from '../../../../../core/getProps';
+import { getPropsField } from 'core/getProps';
 import City from '../../../../../components/city/city';
 
 @inject('applicationData')
