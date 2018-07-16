@@ -31,19 +31,14 @@ export default class PropertiesManager {
    * @example 
    propertiesManager1.createProperty('lastName');
    */
+  @assertParametersType({
+    propertyName: PropTypes.string.isRequired,
+    newProperty: PropTypes.oneOfType([
+      PropTypes.instanceOf(FormObservableBehavior),
+      PropTypes.instanceOf(ModelPropBehavior)
+    ])
+  })
   createProperty(propertyName, newProperty) {
-    const propTypes = {
-      propertyName: PropTypes.string.isRequired,
-      newProperty: PropTypes.oneOfType([
-        PropTypes.instanceOf(FormObservableBehavior),
-        PropTypes.instanceOf(ModelPropBehavior)
-      ])
-    };
-    assertParametersType(
-      { propertyName, newProperty },
-      propTypes,
-      'createProperty'
-    );
     if (this.hasOwnProperty(propertyName)) {
       fail(`property ${propertyName} already exist in properties`);
     }
@@ -59,12 +54,9 @@ export default class PropertiesManager {
    * @example 
    propertiesManager1.getProperty('lastName');
    */
+  @assertParametersType( { propertyName: PropTypes.string.isRequired })
   getProperty(propertyName) {
-    assertParametersType(
-      { propertyName },
-      { propertyName: PropTypes.string.isRequired },
-      'getProperty'
-    );
+   
     const property = this.getProperties()[propertyName];
     if (!property) {
       fail(`property ${propertyName} doesn't exist in properties`);
