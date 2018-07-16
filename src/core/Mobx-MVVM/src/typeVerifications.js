@@ -1,30 +1,42 @@
-import checkPropTypes, { assertPropTypes } from 'check-prop-types';
+import { assertPropTypes } from 'check-prop-types';
 import fail from 'core/exceptions';
 /**
  * @function "assertParametersType"
- * @description Call to assertPropTypes to assert that the values match with the type specs.
- * @param {object} parameters Runtime values that need to be type-checked
- * @param {object} types Map of PropType
- * @param {string} callerName Name of the function caller for error messages.
- * @param {?string} [term="parameter"] e.g. "prop", "arg" for error messages
+ * @description Decorator that calls assertPropTypes to assert the function parameters match with the type specs.
+ * @param {object} types object of PropType witch keys match function parameters names
  * @example 
- *    const propTypes = {
-      propertyName: PropTypes.string.isRequired,
-      newVal: PropTypes.string
-    };
-    assertParametersType({ propertyName, newVal }, propTypes, 'validateProperty');
+ *   @assertParametersType({
+    propertyName: PropTypes.string.isRequired,
+    newProperty: PropTypes.oneOfType([
+      PropTypes.instanceOf(FormObservableBehavior),
+      PropTypes.instanceOf(ModelPropBehavior)
+    ])
+  })
+  createProperty(propertyName, newProperty) {
+    ...
+  }
  *
  */
-export default function assertParametersType(
-  parameters,
-  types,
-  callerName,
-  term = 'parameter'
-) {
-  if (!parameters || !types || !callerName) {
-    fail(
-      'One or more of the parameters sent to assertParametersType function are missing'
-    );
-  }
-  assertPropTypes(types, parameters, term, callerName);
+export default function assertParametersType(types) {
+  return function(target, key, descriptor) {
+    const term = 'parameter';
+    const original = descriptor.value;
+    if (!types) {
+      fail(
+        'The parameter types is mandatory in assertParametersType'
+      );
+    }
+    descriptor.value = function(...args) {    
+      const parameters = mergeArgumentsWithTypes(types,args);  
+      assertPropTypes(types, parameters, term, key);
+      original.apply(this, args);
+    }
+  };
+}
+const mergeArgumentsWithTypes=(types,args)=> {
+  const parameters={};
+  Object.keys(types).forEach((key,index)=>{
+  parameters[key] = args[index]
+  });
+  return parameters;
 }
