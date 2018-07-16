@@ -39,7 +39,11 @@ export default class PropertiesManager {
         PropTypes.instanceOf(ModelPropBehavior)
       ])
     };
-    assertParametersType({ propertyName }, propTypes, 'createProperty');
+    assertParametersType(
+      { propertyName, newProperty },
+      propTypes,
+      'createProperty'
+    );
     if (this.hasOwnProperty(propertyName)) {
       fail(`property ${propertyName} already exist in properties`);
     }
@@ -61,6 +65,10 @@ export default class PropertiesManager {
       { propertyName: PropTypes.string.isRequired },
       'getProperty'
     );
-    return this.getProperties()[propertyName];
+    const property = this.getProperties()[propertyName];
+    if (!property) {
+      fail(`property ${propertyName} doesn't exist in properties`);
+    }
+    return property;
   }
 }

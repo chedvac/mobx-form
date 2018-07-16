@@ -40,7 +40,7 @@ export default class FormObservablesManager extends PropertiesManager {
         validate: PropTypes.func,
         ref: PropTypes.object,
         descriptor: PropTypes.object,
-        validationsManager: PropTypes.instanceOf(validationsManagerFactory)
+        validationsManager: PropTypes.instanceOf(validationsManagerFactory).isRequired
       })
     };
     assertParametersType(
