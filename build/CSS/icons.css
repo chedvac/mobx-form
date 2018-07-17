@@ -1,0 +1,10 @@
+[class*=" ic-"]:before, [class^=ic-]:before {
+  font-family: forms2;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  vertical-align: middle; }

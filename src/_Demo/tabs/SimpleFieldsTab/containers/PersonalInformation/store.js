@@ -133,10 +133,10 @@ class PersonalInformation extends ComplexType {
   //#endregion actions
 
   // #region computeds
-  @computed
-  fullName() {
-    return this.firstName + this.lastName;
-  }
+  // @computed
+  // fullName() {
+  //   return this.firstName + this.lastName;
+  // }
 
   //#endregion computeds
 }
