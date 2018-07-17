@@ -5,7 +5,7 @@ import ValidationState from 'core/ValidationState';
 import formObservableGenerator from './formObservableGenerator';
 import { modelPropGenerator } from './modelProp';
 import PropTypes from 'prop-types';
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
 export default class ComplexType {
   constructor(settings = {}) {
@@ -23,7 +23,6 @@ export default class ComplexType {
       this.generateFormObservable(value);
     })(this._propertiesSettings);
     this.setPropertiesReferences();
-    ///add volatile views actions
   }
   generateModelProp(property) {
     if (!property.isModelProp) {
@@ -113,14 +112,10 @@ ComplexType.prototype.setPropertySettings = function(settings) {
     })
   };
   assertParametersType({ settings }, propTypes, 'setPropertySettings');
-
-  //every class that extends from ComplexType
-  const ComlpextTypeInheritor = this;
-  ComlpextTypeInheritor._propertiesSettings =
-    ComlpextTypeInheritor._propertiesSettings || {};
-  const currntSettings =
-    ComlpextTypeInheritor._propertiesSettings[settings.name] || {};
-  ComlpextTypeInheritor._propertiesSettings[settings.name] = Object.assign(
+  //every class that extends ComplexType
+  this._propertiesSettings = this._propertiesSettings || {};
+  const currntSettings = this._propertiesSettings[settings.name] || {};
+  this._propertiesSettings[settings.name] = Object.assign(
     currntSettings,
     settings
   );

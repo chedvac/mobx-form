@@ -1,4 +1,4 @@
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
 
 import messages from 'validations/messages/number';

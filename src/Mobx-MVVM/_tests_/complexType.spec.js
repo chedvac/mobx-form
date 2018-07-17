@@ -59,14 +59,6 @@ describe('ComplexType constructor', () => {
       expect(customTab.modelPropsManager).toBeInstanceOf(ModelPropsManager);
     });
   });
-
-  // describe('setPropertiesReferences ', () => {
-  //   test('set the value from getPropertiesDescriptors in the complex by key', () => {
-  //     customTab.firstName = 1;
-  //     customTab.setPropertiesReferences();
-  //     expect(customTab.firstName).toBe('yael');
-  //   });
-  // });
   describe('loop over _propertiesSettings', () => {
     describe('call formObservableGenerator for formObservables properties', () => {
       test('agreement', () => {
@@ -153,7 +145,7 @@ describe('initializeComplexProperties', () => {
         customTab.modelPropsManager.setComplexProperty.mock.calls[0][0]
       ).toBe('complex');
     });
-    test('params: object with propety validate function', () => {
+    test('params: object with ref -', () => {
       expect(
         customTab.modelPropsManager.setComplexProperty.mock.calls[0][1]
       ).toEqual({ ref: customTab.complex });
@@ -270,7 +262,7 @@ describe('setPropertySettings', () => {
   beforeEach(() => {
     ComplexTab.prototype._propertiesSettings = undefined;
   });
-  test('setPropertySettings is defined at class potoytpe', () => {
+  test('is defined at class potoytpe', () => {
     expect(ComplexTab.prototype.setPropertySettings).toBeDefined();
   });
   test('params - should get object with name', () => {

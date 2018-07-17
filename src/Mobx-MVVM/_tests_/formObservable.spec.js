@@ -1,7 +1,7 @@
 import formObservable from 'core/formObservable';
 import ValidationsManager from 'validations/core/validationsManager';
 
-jest.mock('../../validations/src/core/validationsManager');
+jest.mock('../../../validations/src/core/validationsManager');
 const validations = [() => true];
 class ComplexType {
   registerPropertyToPrototype() {}

@@ -1,6 +1,6 @@
 import ComplexType from 'core/ComplexType';
 import validationsManagerFactory from 'validations/core/validationsManager';
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
 export default function formObservable(settings = {}) {
   const validationsManager = new validationsManagerFactory(

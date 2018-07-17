@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
 export default class ValidationState {
   @observable message = '';

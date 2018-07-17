@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import FormObservableBehavior from 'core/propertiesManager/FormObservableBehavior';
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 import validationsManagerFactory from 'validations/core/validationsManager';
 import PropertiesManager from 'core/propertiesManager/PropertiesManager';
 /**
@@ -38,7 +38,8 @@ export default class FormObservablesManager extends PropertiesManager {
       validate: PropTypes.func,
       ref: PropTypes.object,
       descriptor: PropTypes.object,
-      validationsManager: PropTypes.instanceOf(validationsManagerFactory).isRequired
+      validationsManager: PropTypes.instanceOf(validationsManagerFactory)
+        .isRequired
     })
   })
   setFormObservableProperty(propertyName, settings = {}) {

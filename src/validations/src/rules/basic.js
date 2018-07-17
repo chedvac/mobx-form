@@ -10,7 +10,7 @@ import {
   lengthChecker
 } from 'validations/checkers/basic';
 import PropTypes from 'prop-types';
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 
 const paramsPropTypesRequiredValue = {
   params: PropTypes.shape({
