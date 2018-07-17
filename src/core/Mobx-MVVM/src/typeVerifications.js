@@ -1,10 +1,13 @@
 import { assertPropTypes } from 'check-prop-types';
 import fail from 'core/exceptions';
+import { type } from 'os';
 /**
  * @function "assertParametersType"
- * @description Decorator that calls assertPropTypes to assert the function parameters match with the type specs.
- * @param {object} types object of PropType witch keys match function parameters names
- * @example 
+ * @description return function that calls assertPropTypes to assert the function parameters match the recieved types.
+ *  and call the orginal function
+ * @param {object} types object of PropType witch keys must be match the function parameters names
+ * @param {function} wrappedFunction use for highOrderFunction.
+ * @example for decorator
  *   @assertParametersType({
     propertyName: PropTypes.string.isRequired,
     newProperty: PropTypes.oneOfType([
@@ -16,27 +19,45 @@ import fail from 'core/exceptions';
     ...
   }
  *
+ * @example for HighOrderFunction
+ *  export default assertParametersType({message:PropTypes.string.isRequired},
+      function fail(message){
+      ...
+    })
+ *
  */
-export default function assertParametersType(types) {
-  return function(target, key, descriptor) {
-    const term = 'parameter';
-    const original = descriptor.value;
-    if (!types) {
-      fail(
-        'The parameter types is mandatory in assertParametersType'
-      );
-    }
-    descriptor.value = function(...args) {    
-      const parameters = mergeArgumentsWithTypes(types,args);  
-      assertPropTypes(types, parameters, term, key);
-      original.apply(this, args);
-    }
+
+export default function assertParametersType(types, wrappedFunction) {
+  if (!types) {
+    fail('The parameter types is mandatory in assertParametersType');
+  }
+  if (typeof wrappedFunction === 'function') {
+    return assertByHighOrderFunction(types,wrappedFunction)
+  } else {
+    return assertByDecorator(types);
+  }
+}
+function assertByHighOrderFunction(types,wrappedFunction){
+  return wrapperFunction(types, wrappedFunction, wrappedFunction.name);
+}
+function assertByDecorator(types){
+  return function(t, key, descriptor) {
+    descriptor.value = wrapperFunction(types, descriptor.value, key);
   };
 }
-const mergeArgumentsWithTypes=(types,args)=> {
-  const parameters={};
-  Object.keys(types).forEach((key,index)=>{
-  parameters[key] = args[index]
+const mergeArgumentsWithTypes = (types, args) => {
+  const parameters = {};
+  Object.keys(types).forEach((key, index) => {
+    parameters[key] = args[index];
   });
   return parameters;
-}
+};
+
+function wrapperFunction (types, orginalFunction, functionName) {
+  return function(...args) {
+    const term = 'parameter';
+    const parameters = mergeArgumentsWithTypes(types, args);
+    assertPropTypes(types, parameters, term, functionName);
+    return orginalFunction.apply(this, args);
+  };
+};

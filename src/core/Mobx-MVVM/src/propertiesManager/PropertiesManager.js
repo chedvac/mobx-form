@@ -54,13 +54,13 @@ export default class PropertiesManager {
    * @example 
    propertiesManager1.getProperty('lastName');
    */
-  @assertParametersType( { propertyName: PropTypes.string.isRequired })
+  @assertParametersType({ propertyName: PropTypes.string.isRequired })
   getProperty(propertyName) {
-   
     const property = this.getProperties()[propertyName];
     if (!property) {
       fail(`property ${propertyName} doesn't exist in properties`);
     }
     return property;
   }
+
 }

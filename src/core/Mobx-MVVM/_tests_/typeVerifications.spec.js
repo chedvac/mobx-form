@@ -1,52 +1,69 @@
 import assertParametersType from 'core/typeVerifications';
-import { assertPropTypes } from 'check-prop-types';
-import PropTypes from 'prop-types';
-jest.mock('check-prop-types');
+import PropTypes from 'prop-types'; 
+const checkPropTypes = require('check-prop-types');
+jest.spyOn(checkPropTypes, 'assertPropTypes');
 
 describe('assertParametersType', () => {
+  
   test('assertParametersType is defined', () => {
     expect(assertParametersType).toBeDefined();
   });
-  test('parameters are mandatory', () => {
+  test('types object is mandatory ', () => {
+   
     expect(() => {
       assertParametersType();
     }).toThrow();
+    
   });
-  test('call to assertPropTypes', () => {
-    assertParametersType(
-      { propertyName: 'ddd' },
-      { propertyName: PropTypes.string.isRequired },
-      'test'
-    );
-    expect(assertPropTypes).toHaveBeenCalled();
+  test('call to assertPropTypes ', () => {
+    const mockFn = jest.fn()
+    const functionToCheck = assertParametersType({message:PropTypes.string.isRequired},
+      mockFn );
+    functionToCheck('error message');
+    expect(checkPropTypes.assertPropTypes).toHaveBeenCalled();
   });
-  test('assert one parameter example', () => {
-    const parameterToCheck = 'ddd';
-    expect(() => {
-      assertParametersType(
-        { parameterToCheck },
-        { parameterToCheck: PropTypes.string.isRequired },
-        'test one parameter'
-      );
-    }).not.toThrow();
+  describe('Decorators', () => {
+    console.log=jest.fn();
+    class A{
+      @assertParametersType({message: PropTypes.string.isRequired})
+      functionToCheck(message){console.log(message)}
+    }
+    beforeEach(()=>{
+      console.log.mockClear();
+    });
+    test('if parameter match the types the orginal function is called', () => {
+      var a = new A();
+      a.functionToCheck('error message');
+      expect(console.log).toHaveBeenCalled();
+    });
+    test('if parameter not match the types the orginal function isn\'t called', () => {
+      var a = new A();
+        try{
+          a.functionToCheck(true);
+        }catch(e){}
+      expect(console.log).not.toHaveBeenCalled();
+    });
+
   });
-  test('assert several parameters example', () => {
-    const parameterOneToCheck = true;
-    const parameterTwoToCheck = { validate: () => {} };
-    const propTypes = {
-      parameterOneToCheck: PropTypes.bool,
-      parameterTwoToCheck: PropTypes.shape({
-        validate: PropTypes.func
-      })
-    };
-    expect(() => {
-      assertParametersType(
-        { parameterOneToCheck, parameterTwoToCheck },
-        propTypes,
-        'test several parameters'
-      );
-    }).not.toThrow();
-  });
+  describe('HighOrderFunction', () => {
+    
+    test('if parameter match the types the orginal function is called', () => {
+      const mockFn = jest.fn().mockImplementation((message)=>{})
+       const functionToCheck = assertParametersType({message:PropTypes.string.isRequired},
+        mockFn );
+        functionToCheck('error message');
+      expect(mockFn).toHaveBeenCalled();
+    });
+    test('if parameter not match the types the orginal function isn\'t called', () => {
+      const mockFn = jest.fn().mockImplementation((message)=>{})
+       const functionToCheck = assertParametersType({message:PropTypes.string.isRequired},
+        mockFn );
+        try{
+          functionToCheck(true);
+        }catch(e){}
+      expect(mockFn).not.toHaveBeenCalled();
+    });
+
   test('assert by custom type example', () => {
     const parameterShouldBeUpperCase = 'ABC';
     const propTypes = {
@@ -58,12 +75,13 @@ describe('assertParametersType', () => {
         }
       }
     };
-    expect(() => {
-      assertParametersType(
-        { parameterShouldBeUpperCase },
-        propTypes,
-        'test by custom type'
-      );
-    }).not.toThrow();
+    const mockFn = jest.fn().mockImplementation((parameterShouldBeUpperCase)=>{})
+    const functionToCheck = assertParametersType(propTypes,
+     mockFn );
+     functionToCheck(parameterShouldBeUpperCase);
+   expect(mockFn).toHaveBeenCalled();
   });
+
+  });
+  
 });
