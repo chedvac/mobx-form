@@ -1,3 +1,6 @@
+import assertParametersType from 'core/typeVerifications';
+import PropTypes from 'prop-types';
+
 /**
     * @function "fail"
     * @description throw exception with the received messge
@@ -5,6 +8,8 @@
     * @example
     fail('property already exist');
     */
-export default function fail(message) {
+export default assertParametersType({message:PropTypes.string.isRequired},
+  function fail(message){
   throw message;
-}
+})
+
