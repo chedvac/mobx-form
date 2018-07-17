@@ -32,19 +32,13 @@ export default class ModelPropsManager extends PropertiesManager {
     * @example
     modelPropsManager1.createProperty('lastName', {validate});
     */
+  @assertParametersType({
+    propertyName: PropTypes.string.isRequired,
+    settings: PropTypes.shape({
+      ref: PropTypes.instanceOf(ComplexType)
+    })
+  })
   setComplexProperty(propertyName, settings = {}) {
-    const propTypes = {
-      propertyName: PropTypes.string.isRequired,
-      settings: PropTypes.shape({
-        ref: PropTypes.instanceOf(ComplexType)
-      })
-    };
-    assertParametersType(
-      { propertyName, settings },
-      propTypes,
-      'setComplexProperty'
-    );
-
     const property = this.getProperty(propertyName);
     const { ref } = settings;
     property.setRef(ref);
@@ -59,16 +53,14 @@ export default class ModelPropsManager extends PropertiesManager {
    * @example 
        modelPropsManager1.setModelProp('lastName', {map, reset});
    */
+  @assertParametersType({
+    propertyName: PropTypes.string.isRequired,
+    settings: PropTypes.shape({
+      reset: PropTypes.func,
+      map: PropTypes.func
+    })
+  })
   setModelProp(propertyName, settings = {}) {
-    const propTypes = {
-      propertyName: PropTypes.string.isRequired,
-      settings: PropTypes.shape({
-        reset: PropTypes.func,
-        map: PropTypes.func
-      })
-    };
-    assertParametersType({ propertyName, settings }, propTypes, 'setModelProp');
-
     const { reset, map } = settings;
     const property = this.getProperty(propertyName);
     property.setReset(reset);
@@ -83,8 +75,8 @@ export default class ModelPropsManager extends PropertiesManager {
     * @example 
         modelPropsManager1.reset(tab);
     */
-  reset(params) {
-    assertParametersType({ params }, { params: PropTypes.object }, 'reset');
+   @assertParametersType({ params: PropTypes.object })
+    reset(params) {
     Object.values(this.getProperties()).forEach(property => {
       property.reset(params);
     });
@@ -98,8 +90,8 @@ export default class ModelPropsManager extends PropertiesManager {
     * @example 
         modelPropsManager1.map(tab);
     */
+  @assertParametersType({ params: PropTypes.object })
   map(params) {
-    assertParametersType({ params }, { params: PropTypes.object }, 'map');
     Object.values(this.getProperties()).forEach(property => {
       property.map(params);
     });

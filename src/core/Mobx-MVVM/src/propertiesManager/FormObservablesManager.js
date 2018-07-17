@@ -32,23 +32,16 @@ export default class FormObservablesManager extends PropertiesManager {
     * @example 
      formObservablesManager1.setFormObservableProperty('lastName', {validate, ref, validationsManager});
     */
-
+  @assertParametersType({
+    propertyName: PropTypes.string.isRequired,
+    settings: PropTypes.shape({
+      validate: PropTypes.func,
+      ref: PropTypes.object,
+      descriptor: PropTypes.object,
+      validationsManager: PropTypes.instanceOf(validationsManagerFactory).isRequired
+    })
+  })
   setFormObservableProperty(propertyName, settings = {}) {
-    const propTypes = {
-      propertyName: PropTypes.string.isRequired,
-      settings: PropTypes.shape({
-        validate: PropTypes.func,
-        ref: PropTypes.object,
-        descriptor: PropTypes.object,
-        validationsManager: PropTypes.instanceOf(validationsManagerFactory).isRequired
-      })
-    };
-    assertParametersType(
-      { propertyName, settings },
-      propTypes,
-      'setFormObservableProperty'
-    );
-
     const { validate, ref, validationsManager, descriptor } = settings;
     const property = this.getProperty(propertyName);
     property.setRef(ref);
