@@ -1,4 +1,11 @@
 export default {
+  number: () => {
+    return {
+      hebrew: `עליך להזין ערך מספרי בלבד`,
+      english: `يجب اضافه رقم فقط`,
+      arabic: `Please enter a valid numeric value`
+    };
+  },
   greaterThan: value => {
     value = value.number || value;
     return {

@@ -1,29 +1,36 @@
-export function greaterThanChecker(params = {}) {
-  let { number } = params;
+import PropTypes from 'prop-types';
+import assertParametersType from 'core/typeVerifications';
+
+const paramsPropTypes = {
+  params: PropTypes.shape({
+    value: PropTypes.number.isRequired
+  })
+};
+
+export function greaterThanChecker(params) {
+  assertParametersType({ params }, paramsPropTypes, 'greaterThanChecker');
+  let { value } = params;
   return val => {
-    if (!number || isNaN(number.toString())) {
+    if (!value || isNaN(value) || isNaN(val)) {
       return true;
     }
-    number = parseFloat(number);
-    val = parseFloat(val);
-    if (isNaN(val)) {
-      return true;
-    }
-    return val > number;
+
+    return parseFloat(val) > parseFloat(value);
   };
 }
 
-export function lessThanChecker(params = {}) {
-  let { number } = params;
+export function lessThanChecker(params) {
+  assertParametersType({ params }, paramsPropTypes, 'lessThanChecker');
+  let { value } = params;
   return val => {
-    if (!number || isNaN(number.toString())) {
+    if (!value || isNaN(value.toString())) {
       return true;
     }
-    number = parseFloat(number);
+    value = parseFloat(value);
     val = parseFloat(val);
     if (isNaN(val)) {
       return true;
     }
-    return val < number;
+    return val < value;
   };
 }
