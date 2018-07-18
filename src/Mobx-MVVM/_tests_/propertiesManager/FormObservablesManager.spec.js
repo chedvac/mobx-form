@@ -18,9 +18,15 @@ describe('FormObservablesManager', () => {
   });
   describe('createProperty -', () => {
     test('call to super createProperty with new FormObservableBehavior instance', () => {
-      const superCreateProperty = jest.spyOn(formObservablesManager1.__proto__.__proto__, 'createProperty');
+      const superCreateProperty = jest.spyOn(
+        formObservablesManager1.__proto__.__proto__,
+        'createProperty'
+      );
       formObservablesManager1.createProperty('firstName');
-      expect(superCreateProperty).toHaveBeenCalledWith('firstName', expect.any(FormObservableBehavior));
+      expect(superCreateProperty).toHaveBeenCalledWith(
+        'firstName',
+        expect.any(FormObservableBehavior)
+      );
       superCreateProperty.mockRestore();
     });
   });
