@@ -35,7 +35,7 @@ export default class ModelPropsManager extends PropertiesManager {
   @assertParametersType({
     propertyName: PropTypes.string.isRequired,
     settings: PropTypes.shape({
-      ref: PropTypes.instanceOf(ComplexType)
+     // ref: PropTypes.instanceOf(ComplexType)
     })
   })
   setComplexProperty(propertyName, settings = {}) {
