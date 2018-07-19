@@ -27,6 +27,22 @@ import { type } from 'os';
  *
  */
 
+export default function assertParametersType(types, wrappedFunction) {
+  if (!types) {
+    fail('The parameter types is mandatory in assertParametersType');
+  }
+  return typeof wrappedFunction === 'function'
+    ? assertByHighOrderFunction(types, wrappedFunction)
+    : assertByDecorator(types);
+}
+function assertByHighOrderFunction(types, wrappedFunction) {
+  return wrapperFunction(types, wrappedFunction, wrappedFunction.name);
+}
+function assertByDecorator(types) {
+  return function(t, key, descriptor) {
+    descriptor.value = wrapperFunction(types, descriptor.value, key);
+  };
+}
 const mergeArgumentsWithTypes = (types, args) => {
   const parameters = {};
   Object.keys(types).forEach((key, index) => {
@@ -49,14 +65,4 @@ function assertByDecorator(types) {
 }
 function assertByHighOrderFunction(types, wrappedFunction) {
   return wrapperFunction(types, wrappedFunction, wrappedFunction.name);
-}
-export default function assertParametersType(types, wrappedFunction) {
-  if (!types) {
-    fail('The parameter types is mandatory in assertParametersType');
-  }
-  if (typeof wrappedFunction === 'function') {
-    return assertByHighOrderFunction(types, wrappedFunction);
-  } else {
-    return assertByDecorator(types);
-  }
 }

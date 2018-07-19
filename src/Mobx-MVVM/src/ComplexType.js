@@ -16,8 +16,7 @@ export default class ComplexType {
       settings.validations || []
     );
     this.validationState = new ValidationState();
-    this.formObservablesManager = new FormObservablesManager();
-    this.modelPropsManager = new ModelPropsManager();
+
     fp.forOwn(value => {
       this.generateModelProp(value);
       this.generateFormObservable(value);
@@ -59,42 +58,48 @@ export default class ComplexType {
   }
 
   initializeComplexProperties() {
+    const self = this;
     Object.keys(this._propertiesSettings).forEach(key => {
-      const property = this[key];
+      const property = self[key];
       if (property instanceof ComplexType) {
-        this.modelPropsManager.setComplexProperty(key, {
+        self.modelPropsManager.setComplexProperty(key, {
           ref: property
         });
       }
     });
   }
-
+ /**     
+* @memberof ComplexType         
+* @function "validate"
+* @description validate complexType and its properties
+* @return {bool} manipulation result
+* @example 
+  PersonalInfo.validate();
+*/
   validate() {
     const validationResult = this.validationsManager.validate(this);
     this.validationState.setValidationState(validationResult);
-    const isChildrenValid = this.validateModel();
+    const propertiesValidationResult = this.validateModel();
     this.validationState.setIsValid(
-      isChildrenValid && validationResult.isValid
+      propertiesValidationResult && validationResult.isValid
     );
     return this.validationState.isValid;
   }
-
   validateModel() {
-    let childrenResult = true;
+    let propertiesState = true;
     Object.entries(this.modelPropsManager.getProperties()).forEach(
       ([name, property]) => {
-        let childResult = true;
-        const instance = property.ref;
-        instance instanceof ComplexType
-          ? (childResult = instance.validate())
-          : (childResult = this.formObservablesManager
-              .getProperty(name)
-              .validate());
-
-        childrenResult = childrenResult && childResult;
+        propertiesState =propertiesState && this._validateByType(name, property);
       }
     );
-    return childrenResult;
+    return propertiesState;
+  }
+  _validateByType(name, property) {
+    const instance = property.ref;
+    return instance instanceof ComplexType?
+      instance.validate()
+      : this.formObservablesManager.getProperty(name).validate();
+
   }
 }
 /**     
