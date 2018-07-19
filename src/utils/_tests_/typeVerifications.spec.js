@@ -70,12 +70,13 @@ describe('assertParametersType', () => {
     test('assert by custom type example', () => {
       const parameterShouldBeUpperCase = 'ABC';
       const propTypes = {
-        parameterShouldBeUpperCase: function(props, parameterName, callerName) {
+        parameterShouldBeUpperCase(props, parameterName, callerName) {
           if (!/[A-Z]/.test(props[parameterName])) {
             return new Error(
               `Invalid parameter ${parameterName} supplied to function ${callerName} . Validation failed.`
             );
           }
+          return null;
         }
       };
       const mockFn = jest

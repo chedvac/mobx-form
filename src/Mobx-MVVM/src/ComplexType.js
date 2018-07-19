@@ -85,6 +85,14 @@ export default class ComplexType {
     );
     return this.validationState.isValid;
   }
+   /**     
+* @memberof ComplexType         
+* @function "validateModel"
+* @description validate all model properties
+* @return {bool} properties validation state result
+* @example 
+  PersonalInfo.validateModel();
+*/
   validateModel() {
     let propertiesState = true;
     Object.entries(this.modelPropsManager.getProperties()).forEach(

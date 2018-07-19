@@ -9,10 +9,10 @@ jest.mock('../src/modelProp', () => ({
   default: require.requireActual('../src/modelProp').default,
   modelPropGenerator: jest.fn()
 }));
-jest.mock('../../validations/src/core/validationsManager');
-jest.mock('../src/formObservableGenerator');
-import ComplexTab from './mocksExamples/ComplexTab';
+jest.mock('../../validations/src/core/validationsManager',);
+ jest.mock('../src/formObservableGenerator');
 import ComplexType from 'core/ComplexType';
+import ComplexTab from './mocksExamples/ComplexTab';
 let customTab;
 const settings = { validations: [() => true] };
 beforeEach(() => {
@@ -34,6 +34,7 @@ beforeEach(() => {
     };
   });
 });
+
 describe('ComplexType constructor', () => {
   describe('define properties:', () => {
     test('validationState', () => {
@@ -43,7 +44,7 @@ describe('ComplexType constructor', () => {
       test('is instanceof validationsManagerFactory', () => {
         expect(customTab.validationsManager).toBeInstanceOf(ValidationsManager);
       });
-      xtest('constructor call with settings.validations that passed to ComplexType constructor', () => {
+      test('constructor call with settings.validations that passed to ComplexType constructor', () => {
         customTab = new ComplexTab(settings);
         expect(ValidationsManager.mock.instances[0][0]).toBe(
           settings.validations
@@ -153,111 +154,8 @@ describe('initializeComplexProperties', () => {
   });
 });
 
-describe('validate', () => {
-    beforeEach(() => {
-      customTab = new ComplexTab();
-      customTab.validationState.setValidationState = jest.fn();
-    });
-    describe('call validations fail ', () => {
-      const result = {
-        message: 'not valid',
-        isValid: false
-      };
-      beforeEach(() => {
-        customTab.validationsManager.validate = jest.fn(() => result);
-        Object.entries(customTab.modelPropsManager.getProperties()).forEach(
-          ([name, property]) => {
-            if (!(property instanceof ComplexType)) {
-              customTab.property.setValidate(jest.fn(() => result));
-            }
-          }
-        );
-      });
-      test('call validationState.setValidationState with result', () => {
-        customTab.validate();
-        expect(
-          customTab.validationState.setValidationState.mock.calls[0][0]
-        ).toEqual(result);
-      });
-    });
-    describe('call validations sucsses ', () => {
-      const result = {
-        message: '',
-        isValid: true
-      };
-      beforeEach(() => {
-        customTab.validationsManager.validate = jest.fn(() => {
-          return result;
-        });
-        customTab.formObservablesManager.getProperties().values(property => {
-          property.validate = jest.fn(() => result);
-        });
-      });
-      test('call validationState.setValidationState with result', () => {
-        customTab.validate();
-        expect(
-          customTab.validationState.setValidationState.mock.calls[0][0]
-        ).toEqual(result);
-      });
-    });
-  });
-  describe('validateModel ', () => {
-    describe('failed', () => {
-      beforeEach(() => {
-        customTab = new ComplexTab();
-        customTab.formObservablesManager.getProperties().values(property => {
-          property.validate = jest.fn(() => {
-            return {
-              message: '',
-              isValid: true
-            };
-          });
-        });
-        customTab.validationsManager.validate = jest.fn(() => {
-          return {
-            isValid: false
-          };
-        });
-        customTab.validationState.setIsValid = jest.fn();
-      });
-      test('validations fail - ', () => {
-        customTab.validate();
-        expect(customTab.formObservablesManager.validate).toBeCalledWith({
-          parent: customTab
-        });
-        expect(customTab.validationState.setIsValid).toBeCalledWith(false);
-      });
-    });
-    describe('sucsses ', () => {
-      beforeEach(() => {
-        customTab = new ComplexTab();
-        customTab.formObservablesManager.getProperties().values(property => {
-          property.validate = jest.fn(() => {
-            {
-              return {
-                message: '',
-                isValid: true
-              };
-            }
-          });
-        });
-        customTab.validationsManager.validate = jest.fn(() => {
-          return {
-            isValid: true
-          };
-        });
-        customTab.validationState.setIsValid = jest.fn();
-      });
-      test('sucsses', () => {
-        customTab.validate();
-        expect(customTab.formObservablesManager.validate).toBeCalledWith({
-          parent: customTab
-        });
-        expect(customTab.validationState.setIsValid).toBeCalledWith(true);
-      });
-    });
-  });
-xdescribe('setPropertySettings', () => {
+
+describe('setPropertySettings', () => {
   beforeEach(() => {
     ComplexTab.prototype._propertiesSettings = undefined;
   });
@@ -296,5 +194,45 @@ xdescribe('setPropertySettings', () => {
     expect(
       ComplexTab.prototype._propertiesSettings.firstName.validationsManager
     ).toEqual({});
+  });
+  describe('validate', () => {
+    const notValidResult = {
+      message: 'not valid',
+      isValid: false
+    };
+    const propertiesResult = true;
+    beforeEach(() => {
+      customTab = new ComplexTab();
+      jest.spyOn(customTab.validationState,'setValidationState');
+      customTab.validationsManager.validate = jest.fn(() => notValidResult);
+      jest.spyOn(customTab.validationState,'setIsValid');
+      customTab.validateModel = jest.fn(() => propertiesResult);
+    });
+  
+    test('call validationState.setValidationState with result', () => {
+      customTab.validate();
+      expect(customTab.validationState.setValidationState).toBeCalledWith(notValidResult);
+    });
+    test('call validationState.setIsValid with manipulation of result and properties result', () => {
+      customTab.validate();
+      expect(customTab.validationState.setIsValid).toBeCalledWith(false);
+    });
+    test('return validationState.isValid', () => {
+      expect(customTab.validate()).toEqual(false);
+    });
+  });
+  describe('validateModel', () => {
+  
+    test('all properties valid - return true', () => {
+      customTab = new ComplexTab();
+      expect(customTab.validateModel()).toEqual(true);
+    });
+    test('one properties not valid - return false', () => {
+      const notValidResult =  false;
+      customTab = new ComplexTab();
+      customTab.formObservablesManager.firstName.validate = jest.fn(() => notValidResult);
+      expect(customTab.validateModel()).toEqual(false);
+    });
+  
   });
 });

@@ -9,37 +9,30 @@ export class Complex extends ComplexType {
   constructor(settings) {
     super(settings);
   }
-  @formObservable() inComplex = false;
+  @formObservable() inSubComplex = false;
 }
 
 export default class ComplexTab extends ComplexType {
   constructor(settings, register) {
     super(settings);
-    this.complex = new Complex();
+    this.subComplex = new Complex();
+    this.initializeComplexProperties();
   }
   @modelProp()
   @formObservable({
     validations: [
-      hebrew({
-        message: () => {
-          'hebrew only';
-        }
-      }),
-      maxlength({ value: 5, message: () => 'too long...' })
+      hebrew(),
+      maxlength({ value: 5})
     ]
   })
   agreement = '';
   @modelProp()
   @formObservable({
     validations: [
-      hebrew({
-        message: () => {
-          'hebrew only';
-        }
-      }),
-      maxlength({ value: 5, message: () => 'too long...' })
+      hebrew(),
+      maxlength({ value: 5})
     ]
   })
-  firstName = 'yael';
-  @modelProp() complex;
+  firstName = 'יעל';
+  @modelProp() subComplex;
 }
