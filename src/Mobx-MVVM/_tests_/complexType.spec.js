@@ -1,4 +1,4 @@
-import ValidationsManager from '../../../validations/src/core/validationsManager';
+import ValidationsManager from '../../validations/src/core/validationsManager';
 import FormObservablesManager from '../src/propertiesManager/FormObservablesManager';
 import ModelPropsManager from '../src/propertiesManager/ModelPropsManager';
 
@@ -9,7 +9,7 @@ jest.mock('../src/modelProp', () => ({
   default: require.requireActual('../src/modelProp').default,
   modelPropGenerator: jest.fn()
 }));
-jest.mock('../../../validations/src/core/validationsManager');
+jest.mock('../../validations/src/core/validationsManager');
 jest.mock('../src/formObservableGenerator');
 import ComplexTab from './mocksExamples/ComplexTab';
 import ComplexType from 'core/ComplexType';

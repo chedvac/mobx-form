@@ -112,7 +112,7 @@ ComplexType.prototype.setPropertySettings = function(settings) {
     })
   };
   assertParametersType({ settings }, propTypes, 'setPropertySettings');
-  //every class that extends ComplexType
+  //'this'- every class that extends ComplexType
   this._propertiesSettings = this._propertiesSettings || {};
   const currntSettings = this._propertiesSettings[settings.name] || {};
   this._propertiesSettings[settings.name] = Object.assign(
