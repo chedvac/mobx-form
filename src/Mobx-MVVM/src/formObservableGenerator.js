@@ -17,14 +17,15 @@ export default function({
   const validate = newValue => {
     //TODO move to utilities
     const value = newValue !== undefined ? newValue : descriptor.get();
-    const dependedObservables = formObservablesManager.getProperty(name).dependedObservables;
+    const dependedObservables = formObservablesManager.getProperty(name)
+      .dependedObservables;
     const failedValidation = validationsManager.validate(
       value,
       dependedObservables
     );
     formObservablesManager
-      .getProperty(name).validationState
-      .setValidationState(failedValidation);
+      .getProperty(name)
+      .validationState.setValidationState(failedValidation);
     return failedValidation.isValid;
   };
   //TODO get
@@ -34,7 +35,8 @@ export default function({
   });
 
   observableBox.observe(function() {
-    const dependedObservables = formObservablesManager.getProperty(name).dependedObservables;
+    const dependedObservables = formObservablesManager.getProperty(name)
+      .dependedObservables;
     if (!dependedObservables) {
       return;
     }

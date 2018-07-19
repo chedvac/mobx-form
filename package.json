@@ -53,7 +53,8 @@
     "moduleNameMapper": {
       "^_Demo(.*)$": "<rootDir>/src/_Demo$1",
       "^validations(.*)$": "<rootDir>/src/validations/src$1",
-      "^core(.*)$": "<rootDir>/src//core/Mobx-MVVM/src$1"
+      "^core(.*)$": "<rootDir>/src/Mobx-MVVM/src$1",
+      "^utils(.*)$": "<rootDir>/src/utils/src$1"
     }
   }
 }

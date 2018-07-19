@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import ModelPropBehavior from 'core/propertiesManager/ModelPropBehavior';
 import PropertiesManager from 'core/propertiesManager/PropertiesManager';
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 import ComplexType from 'core/ComplexType';
 /**
  * @class ModelPropsManager
@@ -35,7 +35,7 @@ export default class ModelPropsManager extends PropertiesManager {
   @assertParametersType({
     propertyName: PropTypes.string.isRequired,
     settings: PropTypes.shape({
-      ref: PropTypes.instanceOf(ComplexType)
+     // ref: PropTypes.instanceOf(ComplexType)
     })
   })
   setComplexProperty(propertyName, settings = {}) {
@@ -75,8 +75,8 @@ export default class ModelPropsManager extends PropertiesManager {
     * @example 
         modelPropsManager1.reset(tab);
     */
-   @assertParametersType({ params: PropTypes.object })
-    reset(params) {
+  @assertParametersType({ params: PropTypes.object })
+  reset(params) {
     Object.values(this.getProperties()).forEach(property => {
       property.reset(params);
     });

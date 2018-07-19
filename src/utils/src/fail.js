@@ -1,4 +1,4 @@
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
 
 /**
@@ -8,8 +8,9 @@ import PropTypes from 'prop-types';
     * @example
     fail('property already exist');
     */
-export default assertParametersType({message:PropTypes.string.isRequired},
-  function fail(message){
-  throw message;
-})
-
+export default assertParametersType(
+  { message: PropTypes.string.isRequired },
+  function fail(message) {
+    throw message;
+  }
+);

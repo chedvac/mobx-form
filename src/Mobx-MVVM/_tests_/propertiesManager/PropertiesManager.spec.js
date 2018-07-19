@@ -1,5 +1,5 @@
-import PropertiesManager from 'core/PropertiesManager/PropertiesManager';
-import ModelPropBehavior from 'core/PropertiesManager/ModelPropBehavior';
+import PropertiesManager from 'core/propertiesManager/PropertiesManager';
+import ModelPropBehavior from 'core/propertiesManager/ModelPropBehavior';
 
 let propertiesManager1;
 let newProperty;
@@ -26,11 +26,10 @@ describe('PropertiesManager', () => {
 
   describe('getProperties -', () => {
     beforeEach(() => {
-      propertiesManager1.createProperty('firstName',newProperty);
+      propertiesManager1.createProperty('firstName', newProperty);
     });
     test('return property by name', () => {
-      expect(
-        propertiesManager1.getProperty('firstName')).toBeDefined();
+      expect(propertiesManager1.getProperty('firstName')).toBeDefined();
     });
     test('throw if property not exist', () => {
       expect(() => {

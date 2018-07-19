@@ -1,5 +1,5 @@
 import { assertPropTypes } from 'check-prop-types';
-import fail from 'core/exceptions';
+import fail from 'utils/fail';
 import { type } from 'os';
 /**
  * @function "assertParametersType"
@@ -31,16 +31,14 @@ export default function assertParametersType(types, wrappedFunction) {
   if (!types) {
     fail('The parameter types is mandatory in assertParametersType');
   }
-  if (typeof wrappedFunction === 'function') {
-    return assertByHighOrderFunction(types,wrappedFunction)
-  } else {
-    return assertByDecorator(types);
-  }
+  return typeof wrappedFunction === 'function'
+    ? assertByHighOrderFunction(types, wrappedFunction)
+    : assertByDecorator(types);
 }
-function assertByHighOrderFunction(types,wrappedFunction){
+function assertByHighOrderFunction(types, wrappedFunction) {
   return wrapperFunction(types, wrappedFunction, wrappedFunction.name);
 }
-function assertByDecorator(types){
+function assertByDecorator(types) {
   return function(t, key, descriptor) {
     descriptor.value = wrapperFunction(types, descriptor.value, key);
   };
@@ -52,12 +50,19 @@ const mergeArgumentsWithTypes = (types, args) => {
   });
   return parameters;
 };
-
-function wrapperFunction (types, orginalFunction, functionName) {
+function wrapperFunction(types, orginalFunction, functionName) {
   return function(...args) {
     const term = 'parameter';
     const parameters = mergeArgumentsWithTypes(types, args);
     assertPropTypes(types, parameters, term, functionName);
     return orginalFunction.apply(this, args);
   };
-};
+}
+function assertByDecorator(types) {
+  return function(t, key, descriptor) {
+    descriptor.value = wrapperFunction(types, descriptor.value, key);
+  };
+}
+function assertByHighOrderFunction(types, wrappedFunction) {
+  return wrapperFunction(types, wrappedFunction, wrappedFunction.name);
+}

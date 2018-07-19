@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import assertParametersType from '../typeVerifications';
-import fail from '../exceptions';
+import assertParametersType from 'utils/typeVerifications';
+import fail from 'utils/fail';
 import ModelPropBehavior from './ModelPropBehavior';
 import FormObservableBehavior from './FormObservableBehavior';
 
@@ -62,5 +62,4 @@ export default class PropertiesManager {
     }
     return property;
   }
-
 }
