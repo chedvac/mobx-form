@@ -1,4 +1,4 @@
-import fail from '../../core/exeptions';
+import fail from 'utils/fail';
 
 describe('fail method', () => {
   test('is defined', () => {

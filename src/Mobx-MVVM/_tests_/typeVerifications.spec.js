@@ -1,4 +1,4 @@
-import assertParametersType from '../../core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 import { assertPropTypes } from 'check-prop-types';
 import PropTypes from 'prop-types';
 jest.mock('check-prop-types');

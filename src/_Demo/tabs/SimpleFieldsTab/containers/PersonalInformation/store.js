@@ -35,6 +35,7 @@ class PersonalInformation extends ComplexType {
 
   constructor() {
     super();
+    // this.setPropertiesReferences();
     // this.propertiesManager.properties.fatherAge.dependedObservables = {
     //   age: this.propertiesManager.properties.age.ref
     // };
