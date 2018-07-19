@@ -31,11 +31,10 @@ export default function assertParametersType(types, wrappedFunction) {
   if (!types) {
     fail('The parameter types is mandatory in assertParametersType');
   }
-  if (typeof wrappedFunction === 'function') {
-    return assertByHighOrderFunction(types,wrappedFunction)
-  } else {
-    return assertByDecorator(types);
-  }
+  return (typeof wrappedFunction === 'function')?
+    assertByHighOrderFunction(types,wrappedFunction):  
+    assertByDecorator(types);
+  
 }
 function assertByHighOrderFunction(types,wrappedFunction){
   return wrapperFunction(types, wrappedFunction, wrappedFunction.name);
