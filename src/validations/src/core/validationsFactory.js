@@ -19,6 +19,14 @@ const regexPropTypes = {
     regex: PropTypes.any.isRequired
   })
 };
+export function generateRequiredValidation(settings) {
+  assertParametersType({ settings }, basicPropTypes, 'generateBasicValidation');
+  const messageWrapper = value => {
+    const message = _.get(settings, 'params.message', settings.message);
+    return message(value);
+  };
+  return { ...settings, message: messageWrapper };
+}
 
 export function generateBasicValidation(settings) {
   assertParametersType({ settings }, basicPropTypes, 'generateBasicValidation');
@@ -42,7 +50,16 @@ export function generateRegexValidation(settings) {
     return value.toString().match(settings.regex) ? true : false;
   };
   const dataSchema = { pattern: settings.regex };
-  return generateBasicValidation({ ...settings, validator, dataSchema });
+  const immediateRule = settings.immediateRule || {
+    pattern: settings.regex,
+    message: settings.message
+  };
+  return generateBasicValidation({
+    ...settings,
+    validator,
+    dataSchema,
+    immediateRule
+  });
 }
 
 export function generateAsyncValidation(settings) {

@@ -12,6 +12,10 @@ export function getPropsField(store, name) {
     ...(store.formObservablesManager
       ? store.formObservablesManager.getValidationManagerProperty(name)
           .dataSchema
-      : {})
+      : {}),
+    immediateRule: store.formObservablesManager
+      ? store.formObservablesManager.getValidationManagerProperty(name)
+          .immediateRule
+      : {}
   };
 }

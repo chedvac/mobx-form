@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-
+import InputBorder from '../../../../../Fields/InputBorder';
 import Input from '../../../../../Fields/Input';
 import Textarea from '../../../../../Fields/Textarea';
 import Select from '../../../../../Fields/Select';
@@ -63,13 +63,13 @@ export default class PersonalInformation extends React.Component {
 
     return (
       <div>
-        <div class="row">
+        <div className="row">
           <Input
             className="col-md-4"
             label={this.currentResources().firstName}
             {...getPropsField(userDetails, 'firstName')}
           />
-          <Input
+          <InputBorder
             className="col-md-4"
             label={this.currentResources().lastName}
             {...getPropsField(userDetails, 'lastName')}
@@ -92,6 +92,7 @@ export default class PersonalInformation extends React.Component {
             rows={4}
             isAutoResize={false}
           />
+          <br />
           <DatePicker
             className="col-md-4"
             label={this.currentResources().birthDate}

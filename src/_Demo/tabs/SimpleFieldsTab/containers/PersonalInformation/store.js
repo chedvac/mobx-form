@@ -64,7 +64,7 @@ class PersonalInformation extends ComplexType {
       hebrew()
     ]
   })
-  firstName ='';
+  firstName = '';
 
   @modelProp()
   @formObservable({
@@ -72,7 +72,9 @@ class PersonalInformation extends ComplexType {
       maxlength({
         value: 15,
         message: () => ({ hebrew: 'too long...' })
-      })
+      }),
+      minlength({ value: 2 }),
+      hebrew()
     ]
   })
   lastName = '';
