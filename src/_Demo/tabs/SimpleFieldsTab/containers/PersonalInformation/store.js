@@ -80,12 +80,7 @@ class PersonalInformation extends ComplexType {
 
   @modelProp()
   @formObservable({
-    validations: [
-      lessThan({
-        value: 7,
-        message: () => ({ hebrew: 'fasdghfasghf' })
-      })
-    ]
+    validations: [lessThan({ value: 7 })]
   })
   age = 15;
 
@@ -123,7 +118,7 @@ class PersonalInformation extends ComplexType {
     validations: [
       generateAsyncValidation({
         name: 'tryAsyncValidation',
-        message: 'my default error',
+        message: () => 'my default error',
         request: myRequest
       })
     ]

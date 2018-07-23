@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 
 const paramsPropTypes = {
   params: PropTypes.shape({
@@ -9,7 +9,7 @@ const paramsPropTypes = {
 
 export function greaterThanChecker(params) {
   assertParametersType({ params }, paramsPropTypes, 'greaterThanChecker');
-  let { value } = params;
+  const { value } = params;
   return val => {
     if (!value || isNaN(value) || isNaN(val)) {
       return true;
