@@ -1,5 +1,4 @@
 import FormObservablesManager from 'core/propertiesManager/FormObservablesManager';
-import PropertiesManager from 'core/propertiesManager/PropertiesManager';
 import validationsManagerFactory from 'validations/core/validationsManager';
 import FormObservableBehavior from 'core/propertiesManager/FormObservableBehavior';
 
@@ -19,7 +18,7 @@ describe('FormObservablesManager', () => {
   describe('createProperty -', () => {
     test('call to super createProperty with new FormObservableBehavior instance', () => {
       const superCreateProperty = jest.spyOn(
-        formObservablesManager1.__proto__.__proto__,
+        Object.getPrototypeOf(Object.getPrototypeOf(formObservablesManager1)),
         'createProperty'
       );
       formObservablesManager1.createProperty('firstName');
@@ -51,7 +50,7 @@ describe('FormObservablesManager', () => {
     test('settings.validationsManager is required', () => {
       expect(() => {
         formObservablesManager1.setFormObservableProperty('firstName', {
-          validationsManager: validationsManager
+          validationsManager
         });
       }).not.toThrow();
     });
@@ -66,7 +65,7 @@ describe('FormObservablesManager', () => {
           validate: {},
           ref: {},
           descriptor: {},
-          validationsManager: validationsManager
+          validationsManager
         });
       }).toThrow();
     });
@@ -76,7 +75,7 @@ describe('FormObservablesManager', () => {
           validate: mockFn,
           ref: 'str',
           descriptor: {},
-          validationsManager: validationsManager
+          validationsManager
         });
       }).toThrow();
     });
@@ -86,7 +85,7 @@ describe('FormObservablesManager', () => {
           validate: mockFn,
           ref: {},
           descriptor: 'str',
-          validationsManager: validationsManager
+          validationsManager
         });
       }).toThrow();
     });
@@ -110,7 +109,7 @@ describe('FormObservablesManager', () => {
         'firstName'
       ).setDescriptor = jest.fn();
       formObservablesManager1.setFormObservableProperty('firstName', {
-        validationsManager: validationsManager
+        validationsManager
       });
       expect(
         formObservablesManager1.getProperty('firstName').setRef
@@ -140,7 +139,7 @@ describe('FormObservablesManager', () => {
         validate: mockFn,
         ref: {},
         descriptor: {},
-        validationsManager: validationsManager
+        validationsManager
       });
       expect(
         formObservablesManager1.getProperty('firstName').setDescriptor

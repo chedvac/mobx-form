@@ -22,32 +22,35 @@ describe('assertParametersType', () => {
     expect(checkPropTypes.assertPropTypes).toHaveBeenCalled();
   });
   describe('Decorators', () => {
-    console.log = jest.fn();
+    const functionContent = jest.fn();
     class A {
       @assertParametersType({ message: PropTypes.string.isRequired })
       functionToCheck(message) {
-        console.log(message);
+        functionContent(message);
       }
     }
     beforeEach(() => {
-      console.log.mockClear();
+      functionContent.mockClear();
     });
     test('if parameter match the types the orginal function is called', () => {
-      var a = new A();
+      const a = new A();
       a.functionToCheck('error message');
-      expect(console.log).toHaveBeenCalled();
+      expect(functionContent).toHaveBeenCalled();
     });
-    test("if parameter not match the types the orginal function isn't called", () => {
-      var a = new A();
+    test('if parameter not match the types the orginal function isn\'t called', () => {
+      const a = new A();
       try {
         a.functionToCheck(true);
-      } catch (e) {}
-      expect(console.log).not.toHaveBeenCalled();
+      } catch (e) { 
+        // catch the error
+      }
+      expect(functionContent).not.toHaveBeenCalled();
     });
   });
   describe('HighOrderFunction', () => {
+    const functionContent = jest.fn();
     test('if parameter match the types the orginal function is called', () => {
-      const mockFn = jest.fn().mockImplementation(message => {});
+      const mockFn = jest.fn().mockImplementation(message => {functionContent(message);});
       const functionToCheck = assertParametersType(
         { message: PropTypes.string.isRequired },
         mockFn
@@ -55,15 +58,17 @@ describe('assertParametersType', () => {
       functionToCheck('error message');
       expect(mockFn).toHaveBeenCalled();
     });
-    test("if parameter not match the types the orginal function isn't called", () => {
-      const mockFn = jest.fn().mockImplementation(message => {});
+    test('if parameter not match the types the orginal function isn\'t called', () => {
+      const mockFn = jest.fn().mockImplementation(message => {functionContent(message);});
       const functionToCheck = assertParametersType(
         { message: PropTypes.string.isRequired },
         mockFn
       );
       try {
         functionToCheck(true);
-      } catch (e) {}
+      } catch (e) {
+        // catch the error
+      }
       expect(mockFn).not.toHaveBeenCalled();
     });
 
@@ -81,7 +86,7 @@ describe('assertParametersType', () => {
       };
       const mockFn = jest
         .fn()
-        .mockImplementation(parameterShouldBeUpperCase => {});
+        .mockImplementation(parameterShouldBeUpperCase => {functionContent(parameterShouldBeUpperCase);});
       const functionToCheck = assertParametersType(propTypes, mockFn);
       functionToCheck(parameterShouldBeUpperCase);
       expect(mockFn).toHaveBeenCalled();

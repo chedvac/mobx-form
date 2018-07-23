@@ -8,7 +8,7 @@ import FormObservableBehavior from './FormObservableBehavior';
  * @class PropertiesManager
  * @classdesc PropertiesManager - properties manager base class
  */
-const properties = Symbol();
+const properties = Symbol('properties');
 export default class PropertiesManager {
   [properties] = {};
   /**     

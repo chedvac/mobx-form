@@ -1,6 +1,6 @@
 import ValidationState from 'core/ValidationState';
 import ValidationsManager from 'validations/core/validationsManager';
-
+import fail from 'utils/fail';
 export default class FormObservableBehavior {
   constructor() {
     this.validationState = new ValidationState();
@@ -14,7 +14,7 @@ export default class FormObservableBehavior {
   };
   setValidationsManager = function(validationsManagerIns) {
     if (!(validationsManagerIns instanceof ValidationsManager)) {
-      throw 'setValidationsManager expect to get object that extends  ValidationsManager';
+      fail('setValidationsManager expect to get object that extends  ValidationsManager');
     }
     this.validationsManager = validationsManagerIns;
   };

@@ -1,6 +1,5 @@
 import ModelPropsManager from 'core/propertiesManager/ModelPropsManager';
 import ModelPropBehavior from 'core/propertiesManager/ModelPropBehavior';
-import PropertiesManager from 'core/propertiesManager/PropertiesManager';
 
 import ComplexType from 'core/ComplexType';
 
@@ -32,7 +31,7 @@ describe('ModelPropsManager', () => {
   describe('createProperty -', () => {
     test('call to super createProperty with new ModelPropBehavior instance', () => {
       const superCreateProperty = jest.spyOn(
-        modelPropsManager1.__proto__.__proto__,
+        Object.getPrototypeOf(Object.getPrototypeOf(modelPropsManager1)),
         'createProperty'
       );
       modelPropsManager1.createProperty('firstName');

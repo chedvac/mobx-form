@@ -2,9 +2,13 @@
   "globals": {
     "expect": true,
     "describe": true,
+    "xdescribe": true,
+    "xtest": true,
     "jest": true,
     "beforeEach": true,
-    "test": true
+    "test": true,
+    "require": true,
+    "beforeAll":true
   },
 
   "plugins": ["jest"],
