@@ -34,8 +34,6 @@ export default class ComponentsDemo extends Component {
       })
     ];
 
-    console.log('rootStore', this.props.rootStore);
-
     return (
       <form
         ref={c => {

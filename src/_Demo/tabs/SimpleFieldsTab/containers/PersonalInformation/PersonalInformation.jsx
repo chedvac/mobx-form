@@ -24,7 +24,8 @@ export default class PersonalInformation extends React.Component {
         comments: 'הערות',
         status: 'מצב משפחתי',
         agreement: 'אני מצהיר...',
-        birthDate: 'תאריך לידה'
+        birthDate: 'תאריך לידה',
+        fullName: 'שם מלא'
       },
       english: {
         firstName: 'first name',
@@ -34,7 +35,8 @@ export default class PersonalInformation extends React.Component {
         comments: 'comments',
         status: 'status',
         agreement: 'I Agree...',
-        birthDate: 'birth date'
+        birthDate: 'birth date',
+        fullName: 'full name'
       },
       arabic: {
         firstName: 'first name',
@@ -44,7 +46,8 @@ export default class PersonalInformation extends React.Component {
         comments: 'comments',
         status: 'status',
         agreement: 'I Agree...',
-        birthDate: 'birth date'
+        birthDate: 'birth date',
+        fullName: 'full name'
       }
     };
     this.currentResources = this.currentResources.bind(this);
@@ -105,10 +108,14 @@ export default class PersonalInformation extends React.Component {
             options={this.statusOptions}
           />
 
-          {/*
-            <Grid item xs={6} sm={3}>
-            <City {...getPropsField(userDetails, "city")} />
-            </Grid> */}
+          {/* <Grid item xs={6} sm={3}> */}
+          <City {...getPropsField(userDetails, 'city')} />
+          {/* </Grid> */}
+
+          <div>
+            <label>{this.currentResources().fullName}</label>
+            <span>{userDetails.fullName}</span>
+          </div>
 
           {/* <Checkbox
             className="col-md-4"

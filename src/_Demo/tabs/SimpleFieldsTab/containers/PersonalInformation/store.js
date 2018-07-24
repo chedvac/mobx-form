@@ -188,7 +188,7 @@ class PersonalInformation extends ComplexType {
 
   // #region computeds
   @computed
-  fullName() {
+  get fullName() {
     return this.firstName + this.lastName;
   }
 
