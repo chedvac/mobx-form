@@ -54,7 +54,7 @@ class PersonalInformation extends ComplexType {
     this.set_agreement = this.set_agreement.bind(this);
     this.set_city = this.set_city.bind(this);
   }
-  @modelProp()
+  @modelProp({ reset: () => console.log('not reset FirstName') })
   @formObservable({
     validations: [
       maxlength({
@@ -67,7 +67,7 @@ class PersonalInformation extends ComplexType {
   })
   firstName = '';
 
-  @modelProp()
+  @modelProp({reset:() => false})
   @formObservable({
     validations: [
       maxlength({

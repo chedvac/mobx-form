@@ -3,7 +3,7 @@ import FormObservablesManager from './propertiesManager/FormObservablesManager';
 import ModelPropsManager from './propertiesManager/ModelPropsManager';
 import ValidationState from 'core/ValidationState';
 import formObservableGenerator from './formObservableGenerator';
-import { modelPropGenerator } from './modelProp';
+import modelPropGenerator from './modelPropGenerator';
 import PropTypes from 'prop-types';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
@@ -23,14 +23,24 @@ export default class ComplexType {
     })(this._propertiesSettings);
     this.setPropertiesReferences();
   }
+  getAction(name){
+     return newValue => {this[`set_${name}`](newValue);};
+  }
+  _getResetAction(property){
+     return property.reset===undefined?  () => {
+      this.getAction(property.name)(property.defaultValue);
+   }: property.reset;
+  }
   generateModelProp(property) {
     if (!property.isModelProp) {
       return;
     }
     this.modelPropsManager.createProperty(property.name);
+
     modelPropGenerator({
       name: property.name,
-      descriptor: property.descriptor,
+      //defaultValue: property.defaultValue,
+      reset:this._getResetAction(property) ,
       modelPropsManager: this.modelPropsManager
     });
   }
@@ -64,11 +74,12 @@ export default class ComplexType {
       if (property instanceof ComplexType) {
         self.modelPropsManager.setComplexProperty(key, {
           ref: property
+
         });
       }
     });
   }
- /**     
+  /**     
 * @memberof ComplexType         
 * @function "validate"
 * @description validate complexType and its properties
@@ -85,29 +96,50 @@ export default class ComplexType {
     );
     return this.validationState.isValid;
   }
-   /**     
-* @memberof ComplexType         
-* @function "validateModel"
-* @description validate all model properties
-* @return {bool} properties validation state result
-* @example 
-  PersonalInfo.validateModel();
-*/
+  /**     
+  * @memberof ComplexType         
+  * @function "validateModel"
+  * @description validate all model properties
+  * @return {bool} properties validation state result
+  * @example 
+    PersonalInfo.validateModel();
+  */
   validateModel() {
     let propertiesState = true;
     Object.entries(this.modelPropsManager.getProperties()).forEach(
       ([name, property]) => {
-        propertiesState =propertiesState && this._validateByType(name, property);
+        propertiesState =
+          propertiesState && this._validateByType(name, property);
       }
     );
     return propertiesState;
   }
   _validateByType(name, property) {
     const instance = property.ref;
-    return instance instanceof ComplexType?
-      instance.validate()
+    return instance instanceof ComplexType
+      ? instance.validate()
       : this.formObservablesManager.getProperty(name).validate();
-
+  }
+  /**     
+  * @memberof ComplexType         
+  * @function "reset"
+  * @description validate all model properties
+  * @return {bool} properties validation state result
+  * @example 
+    PersonalInfo.reset();
+  */
+  reset() {
+    Object.values(this.modelPropsManager.getProperties()).forEach(property => {
+      // //if(property.reset){
+      // const instance = property.ref;
+      // instance instanceof ComplexType
+      //   ? instance.reset()
+      //   : property.reset();
+      // //}
+      if(property.reset){
+        property.reset();
+      }
+    });
   }
 }
 /**     

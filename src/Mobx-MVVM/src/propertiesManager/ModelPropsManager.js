@@ -41,6 +41,9 @@ export default class ModelPropsManager extends PropertiesManager {
     const property = this.getProperty(propertyName);
     const { ref } = settings;
     property.setRef(ref);
+    if(property.reset){
+      property.setReset(ref.reset());
+    }
   }
 
   /**     
@@ -64,21 +67,6 @@ export default class ModelPropsManager extends PropertiesManager {
     const property = this.getProperty(propertyName);
     property.setReset(reset);
     property.setMap(map);
-  }
-
-  /**     
-    * @memberof ModelPropsManager        
-    * @function "reset"
-    * @description reset all properties array
-    * @param {object} params
-    * @example 
-        modelPropsManager1.reset(tab);
-    */
-  @assertParametersType({ params: PropTypes.object })
-  reset(params) {
-    Object.values(this.getProperties()).forEach(property => {
-      property.reset(params);
-    });
   }
 
   /**     
