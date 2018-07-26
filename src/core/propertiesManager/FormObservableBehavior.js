@@ -24,4 +24,5 @@ export default class FormObservableBehavior {
   setRef = function(ref) {
     this.ref = ref;
   };
+  getChange;
 }

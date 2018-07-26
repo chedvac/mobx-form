@@ -46,7 +46,8 @@ export default class ComplexType {
       descriptor: property.descriptor,
       defaultValue: property.defaultValue,
       validationsManager: property.validationsManager,
-      formObservablesManager: this.formObservablesManager
+      formObservablesManager: this.formObservablesManager,
+      change: property.onChange
     });
   }
   setPropertiesReferences() {

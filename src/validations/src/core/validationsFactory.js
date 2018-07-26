@@ -45,24 +45,24 @@ export function generateRegexValidation(settings) {
 //   return { ...settings, validator: validatorWrapper };
 // }
 
-// export function generateDependedValidation(settings) {
-//   const { params, validator, message } = settings;
-//   const dependedParams = (value, dependedObservables) =>
-//     fp.mapValues(value => dependedObservables[value].get())(params);
+export function generateDependedValidation(settings) {
+  const { params, validator, message } = settings;
+  // const dependedParams = fp.mapValues(value => value())(params);
 
-//   const validatorWrapper = (value, dependedObservables) => {
-//     return validator(dependedParams(value, dependedObservables))(value);
-//   };
+  const validatorWrapper = value => {
+    let depended = params.depended();
+    return validator(depended)(value);
+  };
 
-//   const messageWrapper = (value, dependedObservables) => {
-//     return message(dependedParams(value, dependedObservables));
-//   };
-//   return generateBasicValidation({
-//     ...settings,
-//     validator: validatorWrapper,
-//     message: messageWrapper
-//   });
-// }
+  const messageWrapper = depended => {
+    return message(depended);
+  };
+  return generateBasicValidation({
+    ...settings,
+    validator: validatorWrapper,
+    message: messageWrapper
+  });
+}
 
 export function generateAsyncValidation(settings) {
   const { name, message } = settings;

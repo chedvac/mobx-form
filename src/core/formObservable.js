@@ -20,14 +20,16 @@ export default function formObservable(settings = {}) {
       defaultValue,
       validationsManager,
       isFormObservable: true,
-      descriptor
+      descriptor,
+      change: settings.change
     });
     Object.defineProperty(target, name, {
       configurable: true,
       enumerable: true,
-      get: () => defaultValue,
+      get: () => target[name],
+
       set: value => {
-        this[name] = value;
+        target[name] = value;
       }
     });
     return Object.getOwnPropertyDescriptor(target, name);

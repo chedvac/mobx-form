@@ -1,5 +1,9 @@
 export function greaterThanChecker(params = {}) {
+  // return (params)=> {
   let { number } = params;
+  // if (typeof(number)==="function"){
+  //   number =number();
+  // }
   return val => {
     if (!number || isNaN(number.toString())) {
       return true;

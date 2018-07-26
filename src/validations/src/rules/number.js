@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import messages from 'validations/messages/number';
 import {
-  generateBasicValidation
-  // generateDependedValidation
+  generateBasicValidation,
+  generateDependedValidation
 } from 'validations/core/validationsFactory';
 import {
   greaterThanChecker,
@@ -47,11 +47,19 @@ export function lessThan(params) {
     validator: lessThanChecker(params)
   });
 }
-
 // export function dependedGreaterThan(params) {
+//   const paramsPropTypes = {
+//     params: PropTypes.shape({
+//       value: PropTypes.func.isRequired,
+//       compareToName: PropTypes.string,
+//       message: PropTypes.func
+//     })
+//   };
+//   assertParametersType({ params }, paramsPropTypes, 'dependedGreaterThan');
+//   let { compareToName } = params;
 //   return generateDependedValidation({
 //     name: 'dependedGreaterThan',
-//     message: messages.greaterThan,
+//     message: () => messages.greaterThan('sss'),
 //     params,
 //     validator: greaterThanChecker
 //   });
