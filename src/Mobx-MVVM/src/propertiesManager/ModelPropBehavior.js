@@ -1,6 +1,6 @@
-export default class ModelPropBehavior {//todo: remove sets functions and move all assignments to constroctor
+export default class ModelPropBehavior {
   constructor(property){
-this.property = property;
+    this.property = property;
   }
   map (value){
     return typeof this.property.map === 'function' ? this.property.map(value) : value;
