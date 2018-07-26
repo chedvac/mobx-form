@@ -35,8 +35,7 @@ class PersonalInformation extends ComplexType {
     //   key: param
     // });
   }
-
-  @modelProp()
+  @modelProp({ reset: () => console.log('not reset FirstName') })
   @formObservable({
     validations: [
       maxlength({
@@ -49,7 +48,7 @@ class PersonalInformation extends ComplexType {
   })
   firstName = '';
 
-  @modelProp()
+  @modelProp({ reset: () => false })
   @formObservable({
     validations: [
       maxlength({

@@ -1,8 +1,8 @@
-import { observable, autorun, action } from 'mobx';
-import formObservable from '../../../core/formObservable';
-import modelProp from '../../../core/modelProp';
+import { action } from 'mobx';
+import formObservable from 'core/formObservable';
+import modelProp from 'core/modelProp';
 
-import ComplexType from '../../../core/ComplexType';
+import ComplexType from 'core/ComplexType';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 
