@@ -2,9 +2,9 @@ import { generateRegexValidation } from 'validations/core/validationsFactory';
 import messages from 'validations/messages/text';
 import regex from '../regularExpressions/text';
 import PropTypes from 'prop-types';
-import assertParametersType from 'core/typeVerifications';
+import assertParametersType from 'utils/typeVerifications';
 
-export function hebrew(params={}) {
+export function hebrew(params = {}) {
   const paramsPropTypes = {
     params: PropTypes.shape({
       message: PropTypes.func
@@ -20,7 +20,7 @@ export function hebrew(params={}) {
   });
 }
 
-export function english(params={}) {
+export function english(params = {}) {
   const paramsPropTypes = {
     params: PropTypes.shape({
       message: PropTypes.func

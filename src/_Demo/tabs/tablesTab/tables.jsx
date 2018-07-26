@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Input from '../../../Fields/Input';
-import { getPropsField } from 'core/getProps';
+import { getPropsField } from '../../../Fields/utils/getProps';
 
 @inject('applicationData')
 @observer

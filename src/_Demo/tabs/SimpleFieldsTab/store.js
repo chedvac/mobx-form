@@ -8,7 +8,7 @@ class SimpleFieldsTab extends ComplexType {
     this.userDetails = new PersonalInformation();
     this.initializeComplexProperties();
   }
-  @modelProp() userDetails;
+  @modelProp({reset:{}}) userDetails;
 }
 
 export default SimpleFieldsTab;

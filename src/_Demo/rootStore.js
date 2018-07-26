@@ -6,14 +6,12 @@ import ComplexType from 'core/ComplexType';
 //import model from '../core/model'
 //import externalized from '../core/externalized'
 import submitAction from '../actions/submit';
-import FormInformation from 'core/formInformation';
 
 import { toJS } from 'mobx';
 
 class RootStore extends ComplexType {
   constructor() {
     super();
-    this.formInformation = new FormInformation();
     this.simpleFieldsTab = new SimpleFieldsTab();
     this.tablesTab = new TablesTab();
     this.validateForm = this.validateForm.bind(this);
