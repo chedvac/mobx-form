@@ -23,13 +23,13 @@ export default class PropertiesManager {
   }
   /**     
    * @memberof PropertiesManager        
-   * @function "createProperty"
+   * @function "registerProperty"
    * @description define new property . add it to properties object 
    * and put reference to it at itself to easier use
    * @param {string}  propertyName
    * @param {}  newProperty
    * @example 
-   propertiesManager1.createProperty('lastName');
+   propertiesManager1.registerProperty('lastName');
    */
   @assertParametersType({
     propertyName: PropTypes.string.isRequired,
@@ -38,7 +38,7 @@ export default class PropertiesManager {
       PropTypes.instanceOf(ModelPropBehavior)
     ])
   })
-  createProperty(propertyName, newProperty) {
+  registerProperty(propertyName, newProperty) {
     if (this.hasOwnProperty(propertyName)) {
       fail(`property ${propertyName} already exist in properties`);
     }
