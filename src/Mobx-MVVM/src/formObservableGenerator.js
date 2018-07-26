@@ -1,11 +1,13 @@
 import { observable } from 'mobx';
 import configuration from './mobxConfiguration';
+import validationsManagerFactory from 'validations/core/validationsManager';
 
-export default function({
+
+export default function({//todo:move into formObservablesManager.createProperty
   formObservablesManager,
   name,
   descriptor,
-  validationsManager,
+  validations,
   defaultValue,
   ...params
 } = params) {
@@ -13,7 +15,9 @@ export default function({
   delete descriptor.value;
   delete descriptor.writable;
   const observableBox = observable.box(defaultValue, { name });
-
+  const validationsManager = new validationsManagerFactory(
+    validations || []
+  );
   const validate = newValue => {
     //TODO move to utilities
     const value = newValue !== undefined ? newValue : descriptor.get();

@@ -16,7 +16,7 @@ export const getPropsInject =(wrappedObject,store,name)=>{
 
         }*/
         return ({
-            update:store["set_"+name],
+            update:store.getAction(name),
             field:  store[name],
             message:  store.formObservablesManager.getProperty(name) ? store.formObservablesManager[name].message : '',
             ...stores

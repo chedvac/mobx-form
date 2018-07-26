@@ -4,23 +4,25 @@ import FormObservableBehavior from 'core/propertiesManager/FormObservableBehavio
 import assertParametersType from 'utils/typeVerifications';
 import validationsManagerFactory from 'validations/core/validationsManager';
 import PropertiesManager from 'core/propertiesManager/PropertiesManager';
+
 /**
  * @class FormObservablesManager
  * @classdesc FormObservablesManager - manage all formObservables properties of complex
  */
 export default class FormObservablesManager extends PropertiesManager {
+
   /**     
    * @memberof FormObservablesManager        
    * @function "createProperty"
    * @description define new property at FormObservablesManager. add it to FormObservablesManager._properties array 
    * and put reference to it at FormObservablesManager itself to easier use
-   * @param {string}  propertyName
+   * @param {object}  propertyName
    * @example 
    formObservablesManager1.createProperty('lastName');
    */
-  createProperty(propertyName) {
+  createProperty(property) {
     const newProperty = new FormObservableBehavior();
-    super.createProperty(propertyName, newProperty);
+    this.registerProperty(property.name, newProperty);
   }
 
   /**     

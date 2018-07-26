@@ -1,11 +1,8 @@
 import ComplexType from 'core/ComplexType';
-import validationsManagerFactory from 'validations/core/validationsManager';
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
 export default function formObservable(settings = {}) {
-  const validationsManager = new validationsManagerFactory(
-    settings.validations || []
-  );
+
   return function(target, name, descriptor) {
     assertParametersType(
       { target },
@@ -22,9 +19,9 @@ export default function formObservable(settings = {}) {
     target.setPropertySettings({
       name,
       defaultValue,
-      validationsManager,
       isFormObservable: true,
-      descriptor
+      descriptor,
+      ...settings
     });
     Object.defineProperty(target, name, {
       configurable: true,

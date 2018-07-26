@@ -7,19 +7,21 @@ import assertParametersType from 'utils/typeVerifications';
  * @classdesc ModelPropsManager - manage all modelProps properties of complex
  */
 
+  
 export default class ModelPropsManager extends PropertiesManager {
+  
   /**     
    * @memberof ModelPropsManager        
    * @function "createProperty"
    * @description define new property at ModelPropsManager. add it to ModelPropsManager.properties array 
    * and put reference to it at ModelPropsManager itself to easier use
-   * @param {string}  propertyName
+   * @param {object}  property
    * @example 
    modelPropsManager1.createProperty('lastName');
    */
-  createProperty(propertyName) {
-    const newProperty = new ModelPropBehavior();
-    super.createProperty(propertyName, newProperty);
+  createProperty(property) {
+    const newProperty = new ModelPropBehavior(property);
+    this.registerProperty(property.name, newProperty);
   }
 
   /**
@@ -43,56 +45,6 @@ export default class ModelPropsManager extends PropertiesManager {
     property.setRef(ref);
   }
 
-  /**     
-   * @memberof ModelPropsManager        
-   * @function "setModelProp"
-   * @description add behavior of modelProp to exist property. extract reset and map  from settings, and call PropertyBehavior set functions
-   * @param {string}  propertyName
-   * @param {object}  settings
-   * @example 
-       modelPropsManager1.setModelProp('lastName', {map, reset});
-   */
-  @assertParametersType({
-    propertyName: PropTypes.string.isRequired,
-    settings: PropTypes.shape({
-      reset: PropTypes.func,
-      map: PropTypes.func
-    })
-  })
-  setModelProp(propertyName, settings = {}) {
-    const { reset, map } = settings;
-    const property = this.getProperty(propertyName);
-    property.setReset(reset);
-    property.setMap(map);
-  }
 
-  /**     
-    * @memberof ModelPropsManager        
-    * @function "reset"
-    * @description reset all properties array
-    * @param {object} params
-    * @example 
-        modelPropsManager1.reset(tab);
-    */
-  @assertParametersType({ params: PropTypes.object })
-  reset(params) {
-    Object.values(this.getProperties()).forEach(property => {
-      property.reset(params);
-    });
-  }
-
-  /**     
-    * @memberof ModelPropsManager        
-    * @function "map"
-    * @description map all properties array
-    * @param {object} params
-    * @example 
-        modelPropsManager1.map(tab);
-    */
-  @assertParametersType({ params: PropTypes.object })
-  map(params) {
-    Object.values(this.getProperties()).forEach(property => {
-      property.map(params);
-    });
-  }
+  
 }

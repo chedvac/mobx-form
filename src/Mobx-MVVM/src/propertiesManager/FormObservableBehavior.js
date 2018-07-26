@@ -1,9 +1,15 @@
 import ValidationState from 'core/ValidationState';
 import ValidationsManager from 'validations/core/validationsManager';
 import fail from 'utils/fail';
-export default class FormObservableBehavior {
+
+export default class FormObservableBehavior {//todo: remove sets functions and move all assignments to constroctor
   constructor() {
     this.validationState = new ValidationState();
+    // this.validate = settings.validate;
+    // this.validationsManager = settings.validationsManagerIns;
+    // this.descriptor = settings.descriptor;
+    // this.ref = settings.ref;
+
   }
   dependedObservables = {};
   setDependedObservables = function(dependedObservables) {
@@ -24,4 +30,5 @@ export default class FormObservableBehavior {
   setRef = function(ref) {
     this.ref = ref;
   };
+ 
 }

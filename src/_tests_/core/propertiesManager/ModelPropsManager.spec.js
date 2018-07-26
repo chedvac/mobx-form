@@ -1,10 +1,11 @@
 import ModelPropsManager from 'core/propertiesManager/ModelPropsManager';
 import ModelPropBehavior from 'core/propertiesManager/ModelPropBehavior';
+import PropertiesManager from 'core/propertiesManager/PropertiesManager';
 
 import ComplexType from 'core/ComplexType';
 
-// require.requireActual('core/PropertiesManager/ModelPropBehavior');
-// require.requireActual('core/PropertiesManager/PropertiesManager');
+require.requireActual('core/PropertiesManager/ModelPropBehavior');
+require.requireActual('core/PropertiesManager/PropertiesManager');
 
 let modelPropsManager1;
 beforeEach(() => {
@@ -31,7 +32,7 @@ describe('ModelPropsManager', () => {
   describe('createProperty -', () => {
     test('call to super createProperty with new ModelPropBehavior instance', () => {
       const superCreateProperty = jest.spyOn(
-        Object.getPrototypeOf(Object.getPrototypeOf(modelPropsManager1)),
+        modelPropsManager1.__proto__.__proto__,
         'createProperty'
       );
       modelPropsManager1.createProperty('firstName');

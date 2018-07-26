@@ -4,7 +4,8 @@ export function getPropsField(store, name) {
 
   // }
   return {
-    update: store['set_' + name],
+    // update: store['set_' + name],
+    update: store.getAction(name),
     field: store[name],
     message: store.formObservablesManager
       ? store.formObservablesManager.getProperty(name).validationState.message
