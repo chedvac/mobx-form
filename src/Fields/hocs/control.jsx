@@ -1,50 +1,58 @@
 import React from 'react';
-import validationProps from '../utils/validationProps'
-import {enableUniqueIds} from 'react-html-id'
-import { getEventValue } from "../utils";
+import { enableUniqueIds } from 'react-html-id';
+import { getEventValue } from '../utils';
+import '../CSS/control.css';
+import { autorun } from 'mobx';
 
-import '../CSS/control.css'
-
- 
-function control (WrappedComponent) {
-    return class extends React.Component {
-        constructor(props) {
-            super(props);
-            enableUniqueIds(this);
-            this.state={
-                value : props.field
-            }
-            this.updateStore = this.updateStore.bind(this);
-            this.updateState=this.updateState.bind(this);
-        }
-   
-        updateStore=(e)=>{
-            const newValue=getEventValue(e);
-            this.props.update(newValue);
-        }
-
-        updateState=(e)=>{
-            this.setState({value: getEventValue(e)});
-        }
-
-        shouldComponentUpdate(nextProps, nextState){
-            if( this.props.field!==nextProps.field && this.state.value !== nextProps.field)// 
-            {
-                this.setState({value:nextProps.field});
-                return true;
-            }
-            return true;
-        }
-
-        render() {
-            return (
-                <WrappedComponent {...this.props} {...this.state} 
-                        id={this.lastUniqueId()} 
-                        onChange={this.updateState}
-                        onBlur={this.updateStore}
-                />
-            )
-        }
+function control(WrappedComponent) {
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+      enableUniqueIds(this);
+      this.state = {
+        value: props.value.value,
+        message: props.validationState.message
+      };
+      this.handleBlur = this.handleBlur.bind(this);
+      this.handleChange = this.handleChange.bind(this);
     }
+
+    reactionValue = autorun(() => {
+      this.setState({ value: this.props.value.value });
+    });
+
+    reactionMessage = autorun(() => {
+      this.setState({ message: this.props.validationState.message });
+    });
+
+    handleBlur = e => {
+      const newValue = getEventValue(e);
+      this.props.update(newValue);
+      this.setState({ message: this.props.validationState.message });
+    };
+
+    handleChange = e => {
+      const newValue = getEventValue(e);
+      const validatePattern = this.props.validateCharsPattern(newValue);
+      if (validatePattern.isValid) {
+        this.setState({ value: newValue, message: '' });
+      } else {
+        this.setState({ message: validatePattern.message });
+      }
+    };
+
+    render() {
+      return (
+        <WrappedComponent
+          {...this.props}
+          value={this.state.value}
+          message={this.state.message}
+          id={this.lastUniqueId()}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
+        />
+      );
+    }
+  };
 }
-export default control
+export default control;

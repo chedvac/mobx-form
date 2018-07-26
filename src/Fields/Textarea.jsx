@@ -1,10 +1,26 @@
-import React from "react";
-import { observer } from "mobx-react";
-import control from "./hocs/control";
-import field from "./hocs/field";
-import TextareaAutosize from "react-textarea-autosize";
+import React from 'react';
+import { observer } from 'mobx-react';
+import control from './hocs/control';
+import TextareaAutosize from 'react-textarea-autosize';
 
-import "./CSS/Textarea.css";
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+import './CSS/Textarea.css';
+const styles = theme => ({
+  textField: {
+    float: 'right',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 300
+  },
+  label: {
+    left: 'unset'
+  },
+  helperText: {
+    'text-align': 'right'
+  }
+});
 
 @observer
 class Textarea extends React.Component {
@@ -12,13 +28,22 @@ class Textarea extends React.Component {
     super(props);
   }
   render() {
+    const { classes } = this.props;
     const { rows = 3, isAutoResize = false, ...props } = this.props || {};
     const ROW_VS_PX = 20.666666666666667;
     const MAX_ROWS = 1000;
-    const minHeight = { minHeight: ROW_VS_PX * rows + "px" };
+    const minHeight = { minHeight: ROW_VS_PX * rows + 'px' };
     return (
       <div>
-        <TextareaAutosize
+        <TextField
+          {...props}
+          multiline
+          rows={rows}
+          defaultValue="Default Value"
+          className={classes.textField}
+          margin="normal"
+        />
+        {/* <TextareaAutosize
           {...props}
           useCacheForDOMMeasurements
           rows={rows}
@@ -28,9 +53,9 @@ class Textarea extends React.Component {
         />
         <span className="pseudoTextArea" style={minHeight}>
           {props.field}
-        </span>
+        </span> */}
       </div>
     );
   }
 }
-export default field(control(Textarea));
+export default control(withStyles(styles)(Textarea));

@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, autorun } from 'mobx';
 import configuration from './mobxConfiguration';
 
 export default function({
@@ -12,7 +12,7 @@ export default function({
   delete descriptor.initializer;
   delete descriptor.value;
   delete descriptor.writable;
-  const observableBox = observable.box(defaultValue, { name });
+  const observableBox = observable({ value: defaultValue });
 
   const validate = newValue => {
     //TODO move to utilities
@@ -29,29 +29,31 @@ export default function({
     return failedValidation.isValid;
   };
   //TODO get
-  observableBox.intercept(change => {
-    validate(change.newValue);
-    return change;
+  // observableBox.intercept(change => {
+  //   validate(change.newValue);
+  //   return change;
+  // });
+  autorun(() => {
+    validate(observableBox.value);
   });
-
-  observableBox.observe(function() {
-    const dependedObservables = formObservablesManager.getProperty(name)
-      .dependedObservables;
-    if (!dependedObservables) {
-      return;
-    }
-    //TODO lodash map
-    for (const observable in dependedObservables) {
-      formObservablesManager.validateProperty(observable);
-    }
-  });
+  // observableBox.observe(function() {
+  //   const dependedObservables = formObservablesManager.getProperty(name)
+  //     .dependedObservables;
+  //   if (!dependedObservables) {
+  //     return;
+  //   }
+  //   //TODO lodash map
+  //   for (const observable in dependedObservables) {
+  //     formObservablesManager.validateProperty(observable);
+  //   }
+  // });
 
   descriptor.set = function(newValue) {
-    observableBox.set(newValue);
+    observableBox.value = newValue;
   };
 
   descriptor.get = function() {
-    return observableBox.get();
+    return observableBox.value;
   };
 
   formObservablesManager.setFormObservableProperty(name, {

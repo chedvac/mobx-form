@@ -173,11 +173,12 @@ describe('generateRegexValidation', () => {
       }).toThrow();
     });
   });
-  test("should return object contain 'message, validator, name, regex' properties", () => {
+  test("should return object contain 'message, validator, name, regex, dataSchema' properties", () => {
     expect(generateRegexValidation(regexSettings)).toHaveProperty('message');
     expect(generateRegexValidation(regexSettings)).toHaveProperty('validator');
     expect(generateRegexValidation(regexSettings)).toHaveProperty('name');
     expect(generateRegexValidation(regexSettings)).toHaveProperty('regex');
+    expect(generateRegexValidation(regexSettings)).toHaveProperty('dataSchema');
   });
 
   describe('validator', () => {

@@ -1,15 +1,15 @@
 export function greaterThanChecker(params = {}) {
-  let { number } = params;
+  let { value } = params;
   return val => {
-    if (!number || isNaN(number.toString())) {
+    if (!value || isNaN(value.toString())) {
       return true;
     }
-    number = parseFloat(number);
+    value = parseFloat(value);
     val = parseFloat(val);
     if (isNaN(val)) {
       return true;
     }
-    return val > number;
+    return val > value;
   };
 }
 

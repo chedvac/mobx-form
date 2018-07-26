@@ -19,7 +19,11 @@ describe('basic rules', () => {
           'should throw if not func',
           testPropTypes(required, 'message', 'func', { value: 2 })
         );
-        //test('success message params')
+        test('should not throw if  func', () => {
+          expect(() => {
+            required({ message: () => 'required...' });
+          }).not.toThrow();
+        });
       });
     });
 
@@ -101,6 +105,13 @@ describe('basic rules', () => {
         expect(typeof maxlengthRule.message).toBe('function');
         expect(typeof maxlengthRule.validator).toBe('function');
       });
+      test('validator maxlength rule', () => {
+        expect(maxlengthRule.validator('abcdef')).toBeFalsy();
+        expect(maxlengthRule.validator('123456')).toBeFalsy();
+        expect(maxlengthRule.validator(123456)).toBeFalsy();
+        expect(maxlengthRule.validator('tcd')).toBeTruthy();
+        expect(maxlengthRule.validator(123)).toBeTruthy();
+      });
     });
   });
 
@@ -161,6 +172,13 @@ describe('basic rules', () => {
         expect(typeof minlengthRule.message).toBe('function');
         expect(typeof minlengthRule.validator).toBe('function');
       });
+      test('validator minlength rule', () => {
+        expect(minlengthRule.validator('abc')).toBeFalsy();
+        expect(minlengthRule.validator('123')).toBeFalsy();
+        expect(minlengthRule.validator(123)).toBeFalsy();
+        expect(minlengthRule.validator('tcdsdsd')).toBeTruthy();
+        expect(minlengthRule.validator(12456463)).toBeTruthy();
+      });
     });
   });
 
@@ -220,6 +238,13 @@ describe('basic rules', () => {
       test('message and validator should be function', () => {
         expect(typeof lengthRule.message).toBe('function');
         expect(typeof lengthRule.validator).toBe('function');
+      });
+      test('validator length rule', () => {
+        expect(lengthRule.validator('abc')).toBeFalsy();
+        expect(lengthRule.validator('123456')).toBeFalsy();
+        expect(lengthRule.validator(123)).toBeFalsy();
+        expect(lengthRule.validator('tcddd')).toBeTruthy();
+        expect(lengthRule.validator(12345)).toBeTruthy();
       });
     });
   });

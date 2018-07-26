@@ -1,20 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { observer, inject } from "mobx-react";
-import control from "../hocs/control";
-import field from "../hocs/field";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { observer, inject } from 'mobx-react';
+import control from '../hocs/control';
 
-import { default as DayPickerInput } from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css";
-import { formatDate, parseDate } from "./utils";
+import { default as DayPickerInput } from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
+import { formatDate, parseDate } from './utils';
 
-import MomentLocaleUtils from "react-day-picker/moment";
-import "moment/locale/ar";
-import "moment/locale/he";
-import languageResources from "../../resources/languages";
-import "./DatePicker.css";
+import MomentLocaleUtils from 'react-day-picker/moment';
+import 'moment/locale/ar';
+import 'moment/locale/he';
+import languageResources from '../../resources/languages';
+import './DatePicker.css';
 
-@inject("applicationData")
+@inject('applicationData')
 @observer
 class DatePicker extends React.Component {
   constructor(props) {
@@ -22,8 +21,8 @@ class DatePicker extends React.Component {
     this.currentResources = this.currentResources.bind(this);
 
     const defaultSettings = {
-      format: "L",
-      placeholder: "dd/mm/yyyy",
+      format: 'L',
+      placeholder: 'dd/mm/yyyy',
       formatDate: formatDate,
       parseDate: parseDate
     };
@@ -51,4 +50,4 @@ class DatePicker extends React.Component {
     );
   }
 }
-export default field(control(DatePicker));
+export default control(DatePicker);

@@ -49,16 +49,12 @@ export function generateRegexValidation(settings) {
   const validator = value => {
     return value.toString().match(settings.regex) ? true : false;
   };
-  const dataSchema = { pattern: settings.regex };
-  const immediateRule = settings.immediateRule || {
-    pattern: settings.regex,
-    message: settings.message
-  };
+  const charsPattern = settings.charsPattern || settings.regex;
+
   return generateBasicValidation({
     ...settings,
     validator,
-    dataSchema,
-    immediateRule
+    charsPattern
   });
 }
 

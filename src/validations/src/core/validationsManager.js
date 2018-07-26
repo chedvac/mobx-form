@@ -9,26 +9,41 @@ function concatValidationArray(array = [], type) {
   });
   return newArray;
 }
+function getPatternArray(array) {
+  let patternArray = [];
+  array.forEach(element => {
+    if (element.regex) {
+      patternArray.push(element.regex);
+    }
+  });
+  return patternArray;
+}
 
-const dataschemaAssign = validationArray =>
-  validationArray.reduce(
-    (dataSchema, val) =>
-      val.dataSchema
-        ? Object.assign({}, dataSchema, val.dataSchema)
-        : dataSchema,
-    {}
-  );
-
+function getPropertyFromArray(array, property) {
+  const foundProperty = array.find(element => {
+    return element[property];
+  });
+  return foundProperty ? foundProperty[property] : undefined;
+}
 export default class validationsManager {
   failedValidation = {};
 
   constructor(validations) {
     this.validations = concatValidationArray(validations, validationsManager);
-    this.dataSchema = dataschemaAssign(this.validations);
+    this.pattern = getPatternArray(this.validations);
+    this.maxlength = getPropertyFromArray(this.validations, 'maxLength');
+    this.minlength = getPropertyFromArray(this.validations, 'minLength');
+    this.required = getPropertyFromArray(this.validations, 'required');
   }
 
-  setValidations = validations => {
-    this.validations = concatValidationArray(validations, this.validations);
+  validateCharsPattern = value => {
+    const faildCharsPatern = this.validations.find(element => {
+      return element.charsPattern ? !element.charsPattern.test(value) : false;
+    });
+    return {
+      message: faildCharsPatern ? faildCharsPatern.message().hebrew : '',
+      isValid: faildCharsPatern ? false : true
+    };
   };
 
   validate = (value, observable) => {
