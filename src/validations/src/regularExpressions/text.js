@@ -15,5 +15,5 @@ export default {
   finalLetters: /^([^םןךףץ]*[םןךףץ][^א-ת])*[^םןךףץ]*[םןךףץ]?$/,
   startWithDigit: /^[0-9].*$/,
   fileName: /^[^\/\\:*?"<>\|]*$/,
-  freeText: /^[^<>&]+$/
+  freeText: /^(?![\x00-\x7Fא-ת]*[&<>])[\x00-\x7Fא-ת]*$/
 };
