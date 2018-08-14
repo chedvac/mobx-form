@@ -47,29 +47,29 @@ export function lessThan(params) {
     validator: lessThanChecker(params)
   });
 }
-// export function dependedGreaterThan(params) {
-//   const paramsPropTypes = {
-//     params: PropTypes.shape({
-//       value: PropTypes.func.isRequired,
-//       compareToName: PropTypes.string,
-//       message: PropTypes.func
-//     })
-//   };
-//   assertParametersType({ params }, paramsPropTypes, 'dependedGreaterThan');
-//   let { compareToName } = params;
-//   return generateDependedValidation({
-//     name: 'dependedGreaterThan',
-//     message: () => messages.greaterThan('sss'),
-//     params,
-//     validator: greaterThanChecker
-//   });
-// }
+export function dependedGreaterThan(params) {
+  const paramsPropTypes = {
+    params: PropTypes.shape({
+      value: PropTypes.func.isRequired,
+      compareToName: PropTypes.string,
+      message: PropTypes.func
+    })
+  };
+  assertParametersType({ params }, paramsPropTypes, 'dependedGreaterThan');
+  let { compareToName } = params;
+  return generateDependedValidation({
+    name: 'dependedGreaterThan',
+    message: () => messages.greaterThan('sss'),
+    params,
+    validator: greaterThanChecker
+  });
+}
 
-// export function dependedLessThan(params) {
-//   return generateDependedValidation({
-//     name: 'dependedLessThan',
-//     message: messages.lessThan,
-//     params,
-//     validator: lessThanChecker
-//   });
-// }
+export function dependedLessThan(params) {
+  return generateDependedValidation({
+    name: 'dependedLessThan',
+    message: messages.lessThan,
+    params,
+    validator: lessThanChecker
+  });
+}

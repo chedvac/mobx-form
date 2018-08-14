@@ -6,15 +6,16 @@ import formObservableGenerator from './formObservableGenerator';
 import PropTypes from 'prop-types';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
+
 export default class ComplexType {
   constructor(settings = {}) {
     this.formObservablesManager = new FormObservablesManager();
     this.modelPropsManager = new ModelPropsManager();
 
-    this.validationsManager = new validationsManagerFactory(//todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
+    this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
       settings.validations || []
     );
-    this.validationState = new ValidationState();//todo: should be {messages<list>, isvalid}
+    this.validationState = new ValidationState(); //todo: should be {messages<list>, isvalid}
 
     fp.forOwn(value => {
       this.generateModelProp(value);
@@ -22,10 +23,12 @@ export default class ComplexType {
     })(this._propertiesSettings);
     this.setPropertiesReferences();
   }
-  getAction(name){
-     return newValue => {this[`set_${name}`](newValue);};
+  getAction(name) {
+    return newValue => {
+      this[`set_${name}`](newValue);
+    };
   }
- 
+
   generateModelProp(property) {
     if (!property.isModelProp) {
       return;
@@ -37,16 +40,17 @@ export default class ComplexType {
       return;
     }
     this.formObservablesManager.createProperty(property);
-    formObservableGenerator({//todo: move
+    formObservableGenerator({
+      //todo: move
       name: property.name,
       descriptor: property.descriptor,
       defaultValue: property.defaultValue,
       validations: property.validations,
       formObservablesManager: this.formObservablesManager
     });
-   
   }
-  setPropertiesReferences() {//todo:move to formObservablrGenerator
+  setPropertiesReferences() {
+    //todo:move to formObservablrGenerator
     const self = this;
     Object.keys(self.formObservablesManager.getProperties()).forEach(
       propertyName => {
@@ -63,7 +67,6 @@ export default class ComplexType {
       if (property instanceof ComplexType) {
         self.modelPropsManager.setComplexProperty(key, {
           ref: property
-
         });
       }
     });
@@ -125,13 +128,13 @@ export default class ComplexType {
       //   ? instance.reset()
       //   : property.reset();
       // //}
-      if(property.reset){
+      if (property.reset) {
         property.reset();
       }
     });
   }
 
-/**     
+  /**     
     * @memberof ModelPropsManager        
     * @function "map"
     * @description map all properties array
@@ -139,13 +142,13 @@ export default class ComplexType {
     * @example 
         modelPropsManager1.map(tab);
     */
-   @assertParametersType({ params: PropTypes.object })
-   map(params) {
-     Object.values(this.getProperties()).forEach(property => {
-       property.map(params);
-     });
-   }
+  @assertParametersType({ params: PropTypes.object })
+  map(params) {
+    Object.values(this.getProperties()).forEach(property => {
+      property.map(params);
+    });
   }
+}
 /**     
 * @memberof ComplexType         
 * @function "setPropertySettings"

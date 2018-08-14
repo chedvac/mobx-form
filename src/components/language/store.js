@@ -1,5 +1,5 @@
 import { action } from 'mobx';
-import formObservable from 'core/formObservable';
+import validateableObservable from 'core/validateableObservable';
 import ComplexType from 'core/ComplexType';
 
 class Language extends ComplexType {
@@ -14,7 +14,7 @@ class Language extends ComplexType {
       }
     };
   }
-  @formObservable() name = 'hebrew';
+  @validateableObservable() name = 'hebrew';
 }
 
 export default Language;

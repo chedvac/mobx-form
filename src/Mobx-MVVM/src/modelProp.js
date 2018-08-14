@@ -1,9 +1,9 @@
 export default function modelProp(settings = {}) {
   return function(target, name, descriptor) {
-    target.setPropertySettings({
+    target.setModelPropSettings({
       name,
       descriptor,
-      isModelProp: true,
+      //    isModelProp: true,
       ...settings
     });
 

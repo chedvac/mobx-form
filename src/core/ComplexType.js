@@ -98,6 +98,24 @@ export default class ComplexType {
     );
     return childrenResult;
   }
+  setValidateableObservableSettings(settings) {
+    // const propTypes = {
+    //   settings: PropTypes.shape({
+    //     name: PropTypes.string.isRequired
+    //   })
+    // };
+    // assertParametersType({ settings }, propTypes, 'setPropertySettings');
+
+    //every class that extends from ComplexType
+    const ComlpextTypeInheritor = this;
+    ComlpextTypeInheritor.validateableObservableSettings =
+      ComlpextTypeInheritor.validateableObservableSettings || {};
+    const currntSettings =
+      ComlpextTypeInheritor.validateableObservableSettings[settings.name] || {};
+    ComlpextTypeInheritor.validateableObservableSettings[
+      settings.name
+    ] = Object.assign(currntSettings, settings);
+  }
 }
 /**     
 * @memberof ComplexType         
@@ -107,21 +125,48 @@ export default class ComplexType {
 * @example 
   PersonalInfo.setPropertySettings({});
 */
-ComplexType.prototype.setPropertySettings = function(settings) {
-  const propTypes = {
-    settings: PropTypes.shape({
-      name: PropTypes.string.isRequired
-    })
-  };
-  assertParametersType({ settings }, propTypes, 'setPropertySettings');
+
+// @assertParametersType( {
+//   settings: PropTypes.shape({
+//     name: PropTypes.string.isRequired
+//   })})
+// ComplexType.prototype.setValidateableObservableSettings = function(settings) {
+//   // const propTypes = {
+//   //   settings: PropTypes.shape({
+//   //     name: PropTypes.string.isRequired
+//   //   })
+//   // };
+//   // assertParametersType({ settings }, propTypes, 'setPropertySettings');
+
+//   //every class that extends from ComplexType
+//   const ComlpextTypeInheritor = this;
+//   ComlpextTypeInheritor.validateableObservableSettings =
+//     ComlpextTypeInheritor.validateableObservableSettings || {};
+//   const currntSettings =
+//     ComlpextTypeInheritor.validateableObservableSettings[settings.name] || {};
+//   ComlpextTypeInheritor.validateableObservableSettings[
+//     settings.name
+//   ] = Object.assign(currntSettings, settings);
+// };
+
+// @assertParametersType({
+//   settings: PropTypes.shape({
+//     name: PropTypes.string.isRequired
+//   })})
+ComplexType.prototype.setModelPropSettings = function(settings) {
+  // const propTypes = {
+  //   settings: PropTypes.shape({
+  //     name: PropTypes.string.isRequired
+  //   })
+  // };
 
   //every class that extends from ComplexType
   const ComlpextTypeInheritor = this;
-  ComlpextTypeInheritor._propertiesSettings =
-    ComlpextTypeInheritor._propertiesSettings || {};
+  ComlpextTypeInheritor.modelPropsSettings =
+    ComlpextTypeInheritor.modelPropsSettings || {};
   const currntSettings =
-    ComlpextTypeInheritor._propertiesSettings[settings.name] || {};
-  ComlpextTypeInheritor._propertiesSettings[settings.name] = Object.assign(
+    ComlpextTypeInheritor.modelPropsSettings[settings.name] || {};
+  ComlpextTypeInheritor.modelPropsSettings[settings.name] = Object.assign(
     currntSettings,
     settings
   );

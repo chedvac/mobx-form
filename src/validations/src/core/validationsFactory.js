@@ -49,9 +49,11 @@ export function generateDependedValidation(settings) {
   const { params, validator, message } = settings;
   // const dependedParams = fp.mapValues(value => value())(params);
 
-  const validatorWrapper = value => {
-    let depended = params.depended();
-    return validator(depended)(value);
+  const validatorWrapper = (value, dependedObservables) => {
+    const dependedParams = fp.mapValues(param => dependedObservables[param])(
+      params
+    );
+    return validator(dependedParams)(value);
   };
 
   const messageWrapper = depended => {

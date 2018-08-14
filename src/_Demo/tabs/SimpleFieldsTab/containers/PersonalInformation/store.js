@@ -1,5 +1,5 @@
 import { action, computed } from 'mobx';
-import formObservable from 'core/formObservable';
+import validateableObservable from 'core/validateableObservable';
 import modelProp from 'core/modelProp';
 
 import ComplexType from 'core/ComplexType';
@@ -30,13 +30,13 @@ class PersonalInformation extends ComplexType {
 
   constructor() {
     super();
-    // this.ruleedObservables.fatherAge.setDependencies('age');
-    // this.ruleedObservables.fatherAge.setDependencies({
+    // this.validateableObservables.fatherAge.setDependencies('age');
+    // this.validateableObservables.fatherAge.setDependencies({
     //   key: param
     // });
   }
   @modelProp({ reset: () => console.log('not reset FirstName') })
-  @formObservable({
+  @validateableObservable({
     validations: [
       maxlength({
         value: 15
@@ -49,7 +49,7 @@ class PersonalInformation extends ComplexType {
   firstName = '';
 
   @modelProp({ reset: () => false })
-  @formObservable({
+  @validateableObservable({
     validations: [
       maxlength({
         value: 15,
@@ -60,7 +60,7 @@ class PersonalInformation extends ComplexType {
   lastName = '';
 
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [
       lessThan({
         value: 7,
@@ -71,25 +71,25 @@ class PersonalInformation extends ComplexType {
   age = 15;
 
   //   @modelProp()
-  //   @formObservable({
+  //   @validateableObservable({
   //     validations: [dependedGreaterThan({ number: 'age' })]
   //   })
   //   fatherAge = 0;
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [dependedGreaterThan({ number: 'age' })]
   })
-  // @formObservable({ change: PersonalInformation.prototype.ageLogger })
+  // @validateableObservable({ change: PersonalInformation.prototype.ageLogger })
   fatherAge = 0;
 
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [] //conditionRequired({ condition: 'isAdult' })
   })
   fatherName = 0;
 
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [
       generateAsyncValidation({
         name: 'tryAsyncValidation',
@@ -100,16 +100,16 @@ class PersonalInformation extends ComplexType {
   })
   comments = '';
   @modelProp()
-  @formObservable({ validations: [] })
+  @validateableObservable({ validations: [] })
   status = 'true';
   @modelProp()
-  @formObservable({ validations: [] })
+  @validateableObservable({ validations: [] })
   agreement = '';
   @modelProp()
-  @formObservable({ validations: [] })
+  @validateableObservable({ validations: [] })
   city = '';
   @modelProp()
-  @formObservable({ validations: [] })
+  @validateableObservable({ validations: [] })
   birthDate = '';
 
   // #region actions
