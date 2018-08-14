@@ -14,19 +14,15 @@ export default {
   _properties: {
     firstName: {
       name: 'firstName',
-      isModelProp: true,
-      isFormObservable: true,
       descriptor,
       validationsManager: {}
     },
     lastName: {
-      isModelProp: true,
       descriptor,
       validationsManager: {},
       name: 'lastName'
     },
     address: {
-      isFormObservable: true,
       descriptor,
       validationsManager: {},
       name: 'address'

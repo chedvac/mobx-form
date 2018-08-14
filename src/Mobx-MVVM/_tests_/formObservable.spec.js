@@ -40,7 +40,6 @@ describe('formObservable export function that return decorator', () => {
         name: 'firstName',
         descriptor: complex.firstName,
         // validationsManager,
-        isFormObservable: true
       });
     });
   });

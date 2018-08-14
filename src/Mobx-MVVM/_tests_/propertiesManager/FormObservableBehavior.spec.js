@@ -1,5 +1,5 @@
 import ValidationState from 'core/ValidationState';
-import FormObservableBehavior from 'core/propertiesManager/FormObservableBehavior';
+import FormObservableBehavior from 'core/FormObservableBehavior';
 import validationsManager from 'validations/core/validationsManager';
 
 let formObservable;

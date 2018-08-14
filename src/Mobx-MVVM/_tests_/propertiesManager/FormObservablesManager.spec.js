@@ -1,6 +1,6 @@
-import FormObservablesManager from 'core/propertiesManager/FormObservablesManager';
+import FormObservablesManager from 'core/FormObservablesManager';
 import validationsManagerFactory from 'validations/core/validationsManager';
-import FormObservableBehavior from 'core/propertiesManager/FormObservableBehavior';
+import FormObservableBehavior from 'core/FormObservableBehavior';
 
 let formObservablesManager1;
 beforeEach(() => {

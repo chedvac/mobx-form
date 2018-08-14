@@ -1,5 +1,5 @@
-import ModelPropsManager from 'core/propertiesManager/ModelPropsManager';
-import ModelPropBehavior from 'core/propertiesManager/ModelPropBehavior';
+import ModelPropsManager from 'core/ModelPropsManager';
+import ModelPropBehavior from 'core/ModelPropBehavior';
 
 import ComplexType from 'core/ComplexType';
 

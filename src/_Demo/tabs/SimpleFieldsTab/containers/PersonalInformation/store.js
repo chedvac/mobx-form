@@ -53,6 +53,7 @@ class PersonalInformation extends ComplexType {
     this.set_status = this.set_status.bind(this);
     this.set_agreement = this.set_agreement.bind(this);
     this.set_city = this.set_city.bind(this);
+    //this.initializeComplexProperties();
   }
   @modelProp({ reset: () => console.log('not reset FirstName') })
   @formObservable({

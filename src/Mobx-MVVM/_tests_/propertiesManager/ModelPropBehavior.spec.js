@@ -1,4 +1,4 @@
-import ModelPropBehavior from 'core/propertiesManager/ModelPropBehavior';
+import ModelPropBehavior from 'core/ModelPropBehavior';
 
 let modelProp;
 beforeAll(() => {

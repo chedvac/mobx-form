@@ -1,8 +1,8 @@
-import React from "react";
-import { observer } from "mobx-react";
-import control from "./hocs/control";
-import { Label } from "./utils/Label";
-import { ErrorMessage } from "./utils/ErrorMessage";
+import React from 'react';
+import { observer } from 'mobx-react';
+import control from './hocs/control';
+import { Label } from './utils/Label';
+import { ErrorMessage } from './utils/ErrorMessage';
 
 @observer
 class Checkbox extends React.Component {

@@ -1,72 +1,57 @@
 import validationsManagerFactory from 'validations/core/validationsManager';
-import FormObservablesManager from './propertiesManager/FormObservablesManager';
-import ModelPropsManager from './propertiesManager/ModelPropsManager';
 import ValidationState from 'core/ValidationState';
-import formObservableGenerator from './formObservableGenerator';
 import PropTypes from 'prop-types';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
+import FormObservableBehavior from 'core/FormObservableBehavior';
+import ModelPropBehavior from 'core/ModelPropBehavior';
+import PropertiesManager from 'core/PropertiesManager';
+
 export default class ComplexType {
   constructor(settings = {}) {
-    this.formObservablesManager = new FormObservablesManager();
-    this.modelPropsManager = new ModelPropsManager();
+    this.formObservables = new PropertiesManager();
+    this.modelProps = new PropertiesManager();
 
-    this.validationsManager = new validationsManagerFactory(//todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
+    this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
       settings.validations || []
     );
-    this.validationState = new ValidationState();//todo: should be {messages<list>, isvalid}
+    this.validationState = new ValidationState(); //todo: should be {messages<list>, isvalid}
 
     fp.forOwn(value => {
       this.generateModelProp(value);
+    })(this._modelPropsSettings);
+
+    fp.forOwn(value => {
       this.generateFormObservable(value);
-    })(this._propertiesSettings);
-    this.setPropertiesReferences();
-  }
-  getAction(name){
-     return newValue => {this[`set_${name}`](newValue);};
-  }
- 
-  generateModelProp(property) {
-    if (!property.isModelProp) {
-      return;
-    }
-    this.modelPropsManager.createProperty(property);
-  }
-  generateFormObservable(property) {
-    if (!property.isFormObservable) {
-      return;
-    }
-    this.formObservablesManager.createProperty(property);
-    formObservableGenerator({//todo: move
-      name: property.name,
-      descriptor: property.descriptor,
-      defaultValue: property.defaultValue,
-      validations: property.validations,
-      formObservablesManager: this.formObservablesManager
-    });
-   
-  }
-  setPropertiesReferences() {//todo:move to formObservablrGenerator
-    const self = this;
-    Object.keys(self.formObservablesManager.getProperties()).forEach(
-      propertyName => {
-        const property = self.formObservablesManager.getProperty(propertyName);
-        Object.defineProperty(self, propertyName, property.descriptor);
-      }
-    );
+    })(this._formObservablesSettings);
   }
 
+  generateModelProp(propertySettings) {
+    const newModelProp = new ModelPropBehavior(propertySettings);
+    this.modelProps.registerProperty(newModelProp);
+  }
+  generateFormObservable(propertySettings) {
+    const newFormObservable = new FormObservableBehavior(propertySettings);
+    this.formObservables.registerProperty(newFormObservable);
+    Object.defineProperty(
+      this,
+      newFormObservable.name,
+      newFormObservable.descriptor
+    ); //todo:?
+  }
   initializeComplexProperties() {
     const self = this;
-    Object.keys(this._propertiesSettings).forEach(key => {
-      const property = self[key];
+    Object.values(this.modelProps.getProperties()).forEach(modelProperty => {
+      const property = self[modelProperty.name];
       if (property instanceof ComplexType) {
-        self.modelPropsManager.setComplexProperty(key, {
-          ref: property
-
-        });
+        modelProperty.setRef(property);
       }
     });
+  }
+  getAction(name) {
+    return newValue => {
+      this[`set_${name}`](newValue);
+    };
   }
   /**     
 * @memberof ComplexType         
@@ -95,19 +80,17 @@ export default class ComplexType {
   */
   validateModel() {
     let propertiesState = true;
-    Object.entries(this.modelPropsManager.getProperties()).forEach(
-      ([name, property]) => {
-        propertiesState =
-          propertiesState && this._validateByType(name, property);
-      }
-    );
+    Object.values(this.modelProps.getProperties()).forEach(property => {
+      propertiesState =
+        propertiesState && this._validateByType(property.name, property);
+    });
     return propertiesState;
   }
   _validateByType(name, property) {
     const instance = property.ref;
     return instance instanceof ComplexType
       ? instance.validate()
-      : this.formObservablesManager.getProperty(name).validate();
+      : this.formObservables.getProperty(name).validate();
   }
   /**     
   * @memberof ComplexType         
@@ -118,20 +101,20 @@ export default class ComplexType {
     PersonalInfo.reset();
   */
   reset() {
-    Object.values(this.modelPropsManager.getProperties()).forEach(property => {
+    Object.values(this.modelProps.getProperties()).forEach(property => {
       // //if(property.reset){
       // const instance = property.ref;
       // instance instanceof ComplexType
       //   ? instance.reset()
       //   : property.reset();
       // //}
-      if(property.reset){
+      if (property.reset) {
         property.reset();
       }
     });
   }
 
-/**     
+  /**     
     * @memberof ModelPropsManager        
     * @function "map"
     * @description map all properties array
@@ -139,33 +122,42 @@ export default class ComplexType {
     * @example 
         modelPropsManager1.map(tab);
     */
-   @assertParametersType({ params: PropTypes.object })
-   map(params) {
-     Object.values(this.getProperties()).forEach(property => {
-       property.map(params);
-     });
-   }
+  @assertParametersType({ params: PropTypes.object })
+  map(params) {
+    Object.values(this.getProperties()).forEach(property => {
+      property.map(params);
+    });
   }
+}
 /**     
 * @memberof ComplexType         
-* @function "setPropertySettings"
-* @description this function call from formObservables and modelProp decorators, in classes that extends ComplexType. call in defenition,  not in instance
+* @function "setFormObservableSettings"
+* @description this function call from formObservabless, in classes that extends ComplexType. call in defenition,  not in instance
 * @param {object}  settings
 * @example 
-  PersonalInfo.setPropertySettings({});
+  PersonalInfo.setFormObservableSettings({});
 */
-ComplexType.prototype.setPropertySettings = function(settings) {
-  const propTypes = {
-    settings: PropTypes.shape({
-      name: PropTypes.string.isRequired
-    })
-  };
-  assertParametersType({ settings }, propTypes, 'setPropertySettings');
-  //'this'- every class that extends ComplexType
-  this._propertiesSettings = this._propertiesSettings || {};
-  const currntSettings = this._propertiesSettings[settings.name] || {};
-  this._propertiesSettings[settings.name] = Object.assign(
-    currntSettings,
-    settings
-  );
-};
+ComplexType.prototype.setFormObservableSettings = assertParametersType(
+  { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
+  function setFormObservableSettings(settings) {
+    //'this'- every class that extends ComplexType
+    this._formObservablesSettings = this._formObservablesSettings || {};
+    this._formObservablesSettings[settings.name] = settings;
+  }
+);
+/**     
+* @memberof ComplexType         
+* @function "setModelPropSettings"
+* @description this function call from modelProp decorators, in classes that extends ComplexType. call in defenition,  not in instance
+* @param {object}  settings
+* @example 
+  PersonalInfo.setModelPropSettings({});
+*/
+ComplexType.prototype.setModelPropSettings = assertParametersType(
+  { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
+  function setModelPropSettings(settings) {
+    //'this'- every class that extends ComplexType
+    this._modelPropsSettings = this._modelPropsSettings || {};
+    this._modelPropsSettings[settings.name] = settings;
+  }
+);

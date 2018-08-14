@@ -1,22 +1,22 @@
-import React from "react";
-import { observer, inject } from "mobx-react";
-import control from "./hocs/control";
-import field from "./hocs/field";
+import React from 'react';
+import { observer, inject } from 'mobx-react';
+import control from './hocs/control';
+import field from './hocs/field';
 
-@inject("applicationData")
+@inject('applicationData')
 @observer
 class BaseSelect extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
       english: {
-        optionCaption: "Choose"
+        optionCaption: 'Choose'
       },
       hebrew: {
-        optionCaption: "בחר"
+        optionCaption: 'בחר'
       },
       arabic: {
-        optionCaption: "اختر"
+        optionCaption: 'اختر'
       }
     };
     !props.noOptionsCaption ? this.addOptionCaption() : null;
@@ -24,7 +24,7 @@ class BaseSelect extends React.Component {
   addOptionCaption = function() {
     const optionCaption =
       this.props.optionCaption || this.currentResources().optionCaption;
-    this.props.options.unshift({ key: "", value: optionCaption });
+    this.props.options.unshift({ key: '', value: optionCaption });
   };
   currentResources = function() {
     return this.texts[this.props.applicationData.formLanguage.name];

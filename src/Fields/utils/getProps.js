@@ -7,8 +7,8 @@ export function getPropsField(store, name) {
     // update: store['set_' + name],
     update: store.getAction(name),
     field: store[name],
-    message: store.formObservablesManager
-      ? store.formObservablesManager.getProperty(name).validationState.message
+    message: store.formObservables
+      ? store.formObservables.getProperty(name).validationState.message
       : ''
   };
 }

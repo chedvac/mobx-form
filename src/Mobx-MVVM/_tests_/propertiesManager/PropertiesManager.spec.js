@@ -1,5 +1,5 @@
-import PropertiesManager from 'core/propertiesManager/PropertiesManager';
-import ModelPropBehavior from 'core/propertiesManager/ModelPropBehavior';
+import PropertiesManager from 'core/PropertiesManager';
+import ModelPropBehavior from 'core/ModelPropBehavior';
 
 let propertiesManager1;
 let newProperty;

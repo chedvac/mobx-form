@@ -1,17 +1,16 @@
 export default function modelProp(settings = {}) {
   return function(target, name, descriptor) {
-    target.setPropertySettings({
+    target.setModelPropSettings({
       name,
       descriptor,
-      isModelProp: true,
       ...settings
     });
+    const descriptorInitialized = descriptor =>
+      descriptor.value !== undefined ||
+      descriptor.set ||
+      descriptor.initializer;
 
-    if (
-      descriptor.value === undefined &&
-      !descriptor.set &&
-      !descriptor.initializer
-    ) {
+    if (!descriptorInitialized(descriptor)) {
       descriptor.configurable = true;
       descriptor.writable = true;
     }

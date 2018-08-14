@@ -1,10 +1,10 @@
-import React from "react";
-import { observer } from "mobx-react";
-import control from "./hocs/control";
-import field from "./hocs/field";
-import TextareaAutosize from "react-textarea-autosize";
+import React from 'react';
+import { observer } from 'mobx-react';
+import control from './hocs/control';
+import field from './hocs/field';
+import TextareaAutosize from 'react-textarea-autosize';
 
-import "./CSS/Textarea.css";
+import './CSS/Textarea.css';
 
 @observer
 class Textarea extends React.Component {
@@ -15,7 +15,7 @@ class Textarea extends React.Component {
     const { rows = 3, isAutoResize = false, ...props } = this.props || {};
     const ROW_VS_PX = 20.666666666666667;
     const MAX_ROWS = 1000;
-    const minHeight = { minHeight: ROW_VS_PX * rows + "px" };
+    const minHeight = { minHeight: ROW_VS_PX * rows + 'px' };
     return (
       <div>
         <TextareaAutosize

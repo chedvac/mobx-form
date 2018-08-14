@@ -32,18 +32,17 @@ export default class PropertiesManager {
    propertiesManager1.registerProperty('lastName');
    */
   @assertParametersType({
-    propertyName: PropTypes.string.isRequired,
     newProperty: PropTypes.oneOfType([
       PropTypes.instanceOf(FormObservableBehavior),
       PropTypes.instanceOf(ModelPropBehavior)
     ])
   })
-  registerProperty(propertyName, newProperty) {
+  registerProperty(newProperty) {
+    const propertyName = newProperty.name;
     if (this.hasOwnProperty(propertyName)) {
       fail(`property ${propertyName} already exist in properties`);
     }
     this.getProperties()[propertyName] = newProperty;
-    this[propertyName] = newProperty;
   }
 
   /**     
