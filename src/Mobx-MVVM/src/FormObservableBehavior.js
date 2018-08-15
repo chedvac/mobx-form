@@ -1,9 +1,9 @@
 import { observable } from 'mobx';
+import configuration from './mobxConfiguration';
 import ValidationState from 'core/ValidationState';
 import validationsManagerFactory from 'validations/core/validationsManager';
 
 export default class FormObservableBehavior {
-  //todo: remove sets functions and move all assignments to constroctor
   constructor(property) {
     this.name = property.name;
     this.validationState = new ValidationState();
@@ -12,8 +12,6 @@ export default class FormObservableBehavior {
     );
     this.dependedObservables = property.dependedObservables || {};
     this.ref = this.createObservableBox(property);
-    this.descriptor = this.handleDescriptor(property);//todo:rename
-
   }
   createObservableBox(property) {
     const observableBox = observable.box(property.defaultValue, {
@@ -38,25 +36,10 @@ export default class FormObservableBehavior {
     });
     return observableBox;
   }
-  handleDescriptor(property) {
-    const self = this;
-    delete property.descriptor.initializer;
-    delete property.descriptor.value;
-    delete property.descriptor.writable;
-    
-    property.descriptor.set = function(newValue) {
-      self.ref.set(newValue);
-    };
-    
-    property.descriptor.get = function() {
-      return self.ref.get();
-    };
-    return property.descriptor;
-  }
-
+  
   validate(newValue) {
     //TODO move to utilities
-    const value = newValue !== undefined ? newValue : this.descriptor.get();
+    const value = newValue !== undefined ? newValue : this.ref.get();
     const failedValidation = this.validationsManager.validate(
       value,
       this.dependedObservables

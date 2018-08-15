@@ -9,7 +9,7 @@ export const injectWrapper = function(wrappedObject, customizeStore = {}){
         }) )(wrappedObject);
 };
 
-export const getPropsInject =(wrappedObject,store,name)=>{
+export const getPropsInject =(wrappedObject,store,name) => {
     return inject(stores => {
        /* if(store.propertiesManager){
                     store.propertiesManager[name] = store.propertiesManager[name] ?store.propertiesManager[name] : {@observable message: '', @observable isValid: ''};
@@ -18,8 +18,8 @@ export const getPropsInject =(wrappedObject,store,name)=>{
         return ({
             update:store.getAction(name),
             field:  store[name],
-            message:  store.formObservables.getProperty(name) ? store.formObservables[name].message : '',
+            message:  store.formObservablesProperties[name] ? store.formObservablesProperties[name].message : '',
             ...stores
-        })
+        });
     })(wrappedObject);
-}
+};

@@ -3,8 +3,6 @@ import ModelPropBehavior from 'core/ModelPropBehavior';
 
 import ComplexType from 'core/ComplexType';
 
-// require.requireActual('core/PropertiesManager/ModelPropBehavior');
-// require.requireActual('core/PropertiesManager/PropertiesManager');
 
 let modelPropsManager1;
 beforeEach(() => {

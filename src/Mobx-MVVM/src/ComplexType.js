@@ -5,12 +5,11 @@ import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
 import FormObservableBehavior from 'core/FormObservableBehavior';
 import ModelPropBehavior from 'core/ModelPropBehavior';
-import PropertiesManager from 'core/PropertiesManager';
 
 export default class ComplexType {
   constructor(settings = {}) {
-    this.formObservables = new PropertiesManager();
-    this.modelProps = new PropertiesManager();
+    this.formObservablesProperties = {};
+    this.modelPropsProperties = {};
 
     this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
       settings.validations || []
@@ -28,20 +27,35 @@ export default class ComplexType {
 
   generateModelProp(propertySettings) {
     const newModelProp = new ModelPropBehavior(propertySettings);
-    this.modelProps.registerProperty(newModelProp);
+    this.modelPropsProperties[newModelProp.name] = newModelProp;
   }
   generateFormObservable(propertySettings) {
     const newFormObservable = new FormObservableBehavior(propertySettings);
-    this.formObservables.registerProperty(newFormObservable);
-    Object.defineProperty(
-      this,
-      newFormObservable.name,
-      newFormObservable.descriptor
-    ); //todo:?
+    this.formObservablesProperties[newFormObservable.name] = newFormObservable;
+    this._overrideTempDescriptor(newFormObservable);
+  }
+
+  _overrideTempDescriptor(property) {
+    const descriptor = Object.getOwnPropertyDescriptor(
+      Object.getPrototypeOf(this),
+      property.name
+    );
+    delete descriptor.initializer;
+    delete descriptor.value;
+    delete descriptor.writable;
+
+    descriptor.set = function(newValue) {
+      property.ref.set(newValue);
+    };
+
+    descriptor.get = function() {
+      return property.ref.get();
+    };
+    Object.defineProperty(this, property.name, descriptor);
   }
   initializeComplexProperties() {
     const self = this;
-    Object.values(this.modelProps.getProperties()).forEach(modelProperty => {
+    Object.values(this.modelPropsProperties).forEach(modelProperty => {
       const property = self[modelProperty.name];
       if (property instanceof ComplexType) {
         modelProperty.setRef(property);
@@ -49,6 +63,7 @@ export default class ComplexType {
     });
   }
   getAction(name) {
+    //todo: check
     return newValue => {
       this[`set_${name}`](newValue);
     };
@@ -80,7 +95,7 @@ export default class ComplexType {
   */
   validateModel() {
     let propertiesState = true;
-    Object.values(this.modelProps.getProperties()).forEach(property => {
+    Object.values(this.modelPropsProperties).forEach(property => {
       propertiesState =
         propertiesState && this._validateByType(property.name, property);
     });
@@ -90,7 +105,7 @@ export default class ComplexType {
     const instance = property.ref;
     return instance instanceof ComplexType
       ? instance.validate()
-      : this.formObservables.getProperty(name).validate();
+      : this.formObservablesProperties[name].validate();
   }
   /**     
   * @memberof ComplexType         
@@ -101,7 +116,7 @@ export default class ComplexType {
     PersonalInfo.reset();
   */
   reset() {
-    Object.values(this.modelProps.getProperties()).forEach(property => {
+    Object.values(this.modelPropsProperties).forEach(property => {
       // //if(property.reset){
       // const instance = property.ref;
       // instance instanceof ComplexType

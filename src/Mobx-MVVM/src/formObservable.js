@@ -17,7 +17,6 @@ export default function formObservable(settings = {}) {
       target.setFormObservableSettings({
         name,
         defaultValue,
-        descriptor,
         ...settings
       });
       Object.defineProperty(target, name, {
