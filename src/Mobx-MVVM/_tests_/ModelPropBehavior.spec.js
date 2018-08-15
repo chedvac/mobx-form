@@ -1,4 +1,4 @@
-import ModelPropBehavior from 'core/ModelPropBehavior';
+import ModelPropBehavior from 'core/modelPropBehavior';
 
 let modelProp;
 beforeAll(() => {
@@ -13,9 +13,7 @@ describe('ModelPropBehavior', () => {
     test('setMap', () => {
       expect(modelProp.setMap).toBeDefined();
     });
-    test('setRef', () => {
-      expect(modelProp.setRef).toBeDefined();
-    });
+    
   });
   describe('logic:', () => {
     test('setReset', () => {
@@ -28,10 +26,6 @@ describe('ModelPropBehavior', () => {
       modelProp.setMap(map);
       expect(modelProp.map).toBe(map);
     });
-    test('setRef', () => {
-      const ref = {};
-      modelProp.setRef(ref);
-      expect(modelProp.ref).toBe(ref);
-    });
+   
   });
 });

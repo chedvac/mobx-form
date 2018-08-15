@@ -2,7 +2,6 @@ export default function modelProp(settings = {}) {
   return function(target, name, descriptor) {
     target.setModelPropSettings({
       name,
-      descriptor,
       ...settings
     });
     const descriptorInitialized = descriptor =>

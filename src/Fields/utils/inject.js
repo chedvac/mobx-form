@@ -18,7 +18,7 @@ export const getPropsInject =(wrappedObject,store,name) => {
         return ({
             update:store.getAction(name),
             field:  store[name],
-            message:  store.formObservablesProperties[name] ? store.formObservablesProperties[name].message : '',
+            message:  store.validateableObservablesProperties[name] ? store.validateableObservablesProperties[name].message : '',
             ...stores
         });
     })(wrappedObject);

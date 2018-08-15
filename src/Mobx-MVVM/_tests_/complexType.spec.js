@@ -1,27 +1,26 @@
 import ValidationsManager from '../../validations/src/core/validationsManager';
-import FormObservablesManager from '../src/FormObservablesManager';
+import ValidateableObservablesManager from '../src/ValidateableObservablesManager';
 import ModelPropsManager from '../src/ModelPropsManager';
 
 import { modelPropGenerator } from '../src/modelProp';
-import formObservableGenerator from '../src/formObservableGenerator';
+import validateableObservableGenerator from '../src/validateableObservableGenerator';
 
 jest.mock('../src/modelProp', () => ({
   default: require.requireActual('../src/modelProp').default,
   modelPropGenerator: jest.fn()
 }));
 jest.mock('../../validations/src/core/validationsManager');
-jest.mock('../src/formObservableGenerator');
-import ComplexType from 'core/ComplexType';
+jest.mock('../src/validateableObservableGenerator');
 import ComplexTab from './mocksExamples/ComplexTab';
 let customTab;
 const settings = { validations: [() => true] };
 beforeEach(() => {
   ValidationsManager.mockClear();
   modelPropGenerator.mockClear();
-  formObservableGenerator.mockClear();
+  validateableObservableGenerator.mockClear();
   Object.defineProperty = jest.fn();
   customTab = new ComplexTab();
-  customTab.formObservablesProperties.validate = jest.fn(() => {
+  customTab.validateableObservablesProperties.validate = jest.fn(() => {
     return {
       isValid: true,
       message: ''
@@ -51,49 +50,49 @@ describe('ComplexType constructor', () => {
         );
       });
     });
-    test('FormObservablesManager', () => {
-      expect(customTab.formObservablesProperties).toBeInstanceOf(FormObservablesManager);
+    test('ValidateableObservablesManager', () => {
+      expect(customTab.validateableObservablesProperties).toBeInstanceOf(ValidateableObservablesManager);
     });
     test('ModelPropsManager', () => {
       expect(customTab.modelPropsProperties).toBeInstanceOf(ModelPropsManager);
     });
   });
   describe('loop over _propertiesSettings', () => {
-    describe('call formObservableGenerator for formObservablesProperties properties', () => {
+    describe('call validateableObservableGenerator for validateableObservablesProperties properties', () => {
       test('agreement', () => {
-        expect(formObservableGenerator.mock.calls[0][0]).toBeDefined();
-        expect(formObservableGenerator.mock.calls[0][0].name).toBe(
+        expect(validateableObservableGenerator.mock.calls[0][0]).toBeDefined();
+        expect(validateableObservableGenerator.mock.calls[0][0].name).toBe(
           customTab._propertiesSettings.agreement.name
         );
-        expect(formObservableGenerator.mock.calls[0][0].descriptor).toEqual(
+        expect(validateableObservableGenerator.mock.calls[0][0].descriptor).toEqual(
           customTab._propertiesSettings.agreement.descriptor
         );
-        expect(formObservableGenerator.mock.calls[0][0].defaultValue).toBe(
+        expect(validateableObservableGenerator.mock.calls[0][0].defaultValue).toBe(
           customTab._propertiesSettings.agreement.defaultValue
         );
         expect(
-          formObservableGenerator.mock.calls[0][0].validationsManager
+          validateableObservableGenerator.mock.calls[0][0].validationsManager
         ).toBe(customTab._propertiesSettings.agreement.validationsManager);
-        expect(formObservableGenerator.mock.calls[0][0].formObservablesProperties).toBe(
-          customTab.formObservablesProperties
+        expect(validateableObservableGenerator.mock.calls[0][0].validateableObservablesProperties).toBe(
+          customTab.validateableObservablesProperties
         );
       });
       test('firstName', () => {
-        expect(formObservableGenerator.mock.calls[1][0]).toBeDefined();
-        expect(formObservableGenerator.mock.calls[1][0].name).toBe(
+        expect(validateableObservableGenerator.mock.calls[1][0]).toBeDefined();
+        expect(validateableObservableGenerator.mock.calls[1][0].name).toBe(
           customTab._propertiesSettings.firstName.name
         );
-        expect(formObservableGenerator.mock.calls[1][0].descriptor).toEqual(
+        expect(validateableObservableGenerator.mock.calls[1][0].descriptor).toEqual(
           customTab._propertiesSettings.firstName.descriptor
         );
-        expect(formObservableGenerator.mock.calls[1][0].defaultValue).toBe(
+        expect(validateableObservableGenerator.mock.calls[1][0].defaultValue).toBe(
           customTab._propertiesSettings.firstName.defaultValue
         );
         expect(
-          formObservableGenerator.mock.calls[1][0].validationsManager
+          validateableObservableGenerator.mock.calls[1][0].validationsManager
         ).toBe(customTab._propertiesSettings.firstName.validationsManager);
-        expect(formObservableGenerator.mock.calls[1][0].formObservablesProperties).toBe(
-          customTab.formObservablesProperties
+        expect(validateableObservableGenerator.mock.calls[1][0].validateableObservablesProperties).toBe(
+          customTab.validateableObservablesProperties
         );
       });
     });
@@ -115,30 +114,6 @@ describe('ComplexType constructor', () => {
         expect(modelPropGenerator.mock.calls[2][0].name).toBe('complex');
         expect(modelPropGenerator.mock.calls[2][0].descriptor).toBeDefined();
         expect(modelPropGenerator.mock.calls[2][0].modelPropsProperties).toBeDefined();
-      });
-    });
-  });
-});
-
-describe('initializeComplexProperties', () => {
-  beforeEach(() => {
-    customTab = new ComplexTab();
-    customTab.modelPropsProperties.setComplexProperty = jest.fn();
-    customTab.initializeComplexProperties();
-  });
-
-  describe('call setComplexProperty for every complex property', () => {
-    test('only with all complex properties', () => {
-      expect(customTab.modelPropsProperties.setComplexProperty.mock.calls.length).toBe(1);
-    });
-    test('params: propty name', () => {
-      expect(customTab.modelPropsProperties.setComplexProperty.mock.calls[0][0]).toBe(
-        'complex'
-      );
-    });
-    test('params: object with ref -', () => {
-      expect(customTab.modelPropsProperties.setComplexProperty.mock.calls[0][1]).toEqual({
-        ref: customTab.complex
       });
     });
   });
@@ -220,7 +195,7 @@ describe('setPropertySettings', () => {
     test('one properties not valid - return false', () => {
       const notValidResult = false;
       customTab = new ComplexTab();
-      customTab.formObservablesProperties.firstName.validate = jest.fn(
+      customTab.validateableObservablesProperties.firstName.validate = jest.fn(
         () => notValidResult
       );
       expect(customTab.validateModel()).toEqual(false);

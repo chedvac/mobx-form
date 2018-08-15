@@ -1,8 +1,8 @@
 import { action } from 'mobx';
-import formObservable from 'core/formObservable';
+import validateableObservable from 'core/validateableObservable';
 import modelProp from 'core/modelProp';
 
-import ComplexType from 'core/ComplexType';
+import ComplexType from 'core/complexType';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 
@@ -14,10 +14,10 @@ class TablesTab extends ComplexType {
     this.set_houseNumber = this.set_houseNumber.bind(this);
   }
   @modelProp()
-  @formObservable({ validations: [hebrew(), maxlength({ value: 5 })] })
+  @validateableObservable({ validations: [hebrew(), maxlength({ value: 5 })] })
   email = '';
   @modelProp()
-  @formObservable()
+  @validateableObservable()
   houseNumber = '';
   @action
   set_email(value) {

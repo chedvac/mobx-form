@@ -1,12 +1,12 @@
-import ComplexType from 'core/ComplexType';
+import ComplexType from 'core/complexType';
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
-export default function formObservable(settings = {}) {
+export default function validateableObservable(settings = {}) {
   return assertParametersType(
     {
       target: PropTypes.instanceOf(ComplexType)
     },
-    function formObservableDecorator(target, name, descriptor) {
+    function validateableObservableDecorator(target, name, descriptor) {
       descriptor.configurable = true;
       descriptor.writable = true;
       const defaultValue = descriptor.value
@@ -14,7 +14,7 @@ export default function formObservable(settings = {}) {
         : descriptor.initializer
           ? descriptor.initializer.call(target)
           : undefined;
-      target.setFormObservableSettings({
+      target.setValidateableObservableSettings({
         name,
         defaultValue,
         ...settings

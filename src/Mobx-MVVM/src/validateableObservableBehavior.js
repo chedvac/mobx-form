@@ -1,9 +1,9 @@
 import { observable } from 'mobx';
 import configuration from './mobxConfiguration';
-import ValidationState from 'core/ValidationState';
+import ValidationState from 'core/validationState';
 import validationsManagerFactory from 'validations/core/validationsManager';
 
-export default class FormObservableBehavior {
+export default class ValidateableObservableBehavior {
   constructor(property) {
     this.name = property.name;
     this.validationState = new ValidationState();
@@ -11,7 +11,7 @@ export default class FormObservableBehavior {
       property.validations || []
     );
     this.dependedObservables = property.dependedObservables || {};
-    this.ref = this.createObservableBox(property);
+    this.observable = this.createObservableBox(property);
   }
   createObservableBox(property) {
     const observableBox = observable.box(property.defaultValue, {
@@ -39,7 +39,7 @@ export default class FormObservableBehavior {
   
   validate(newValue) {
     //TODO move to utilities
-    const value = newValue !== undefined ? newValue : this.ref.get();
+    const value = newValue !== undefined ? newValue : this.observable.get();
     const failedValidation = this.validationsManager.validate(
       value,
       this.dependedObservables

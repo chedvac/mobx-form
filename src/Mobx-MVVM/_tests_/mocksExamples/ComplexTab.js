@@ -1,5 +1,5 @@
-import ComplexType from 'core/ComplexType';
-import formObservable from 'core/formObservable';
+import ComplexType from 'core/complexType';
+import validateableObservable from 'core/validateableObservable';
 import modelProp1 from 'core/modelProp';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
@@ -9,17 +9,16 @@ export class Complex extends ComplexType {
   constructor(settings) {
     super(settings);
   }
-  @formObservable() inSubComplex = false;
+  @validateableObservable() inSubComplex = false;
 }
 
 export default class ComplexTab extends ComplexType {
   constructor(settings, register) {
     super(settings);
     this.subComplex = new Complex();
-    this.initializeComplexProperties();
   }
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [
       hebrew(),
       maxlength({ value: 5})
@@ -27,7 +26,7 @@ export default class ComplexTab extends ComplexType {
   })
   agreement = '';
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [
       hebrew(),
       maxlength({ value: 5})

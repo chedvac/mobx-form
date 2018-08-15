@@ -13,7 +13,4 @@ export default class ModelPropBehavior {
       ? this.property.reset(this.property.defaultValue)
       : this.property.descriptor.set(this.property.defaultValue);
   }
-  setRef (ref) {//todo:rename
-    this.ref = ref;
-  }
 }

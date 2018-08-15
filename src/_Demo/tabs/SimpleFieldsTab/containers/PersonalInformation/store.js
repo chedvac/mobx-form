@@ -1,8 +1,8 @@
 import { action, computed } from 'mobx';
-import formObservable from 'core/formObservable';
+import validateableObservable from 'core/validateableObservable';
 import modelProp from 'core/modelProp';
 
-import ComplexType from 'core/ComplexType';
+import ComplexType from 'core/complexType';
 import { hebrew } from 'validations/rules/text';
 import {
   maxlength,
@@ -53,10 +53,9 @@ class PersonalInformation extends ComplexType {
     this.set_status = this.set_status.bind(this);
     this.set_agreement = this.set_agreement.bind(this);
     this.set_city = this.set_city.bind(this);
-    //this.initializeComplexProperties();
   }
   @modelProp({ reset: () => console.log('not reset FirstName') })
-  @formObservable({
+  @validateableObservable({
     validations: [
       maxlength({
         value: 15
@@ -69,7 +68,7 @@ class PersonalInformation extends ComplexType {
   firstName = '';
 
   @modelProp({reset:() => false})
-  @formObservable({
+  @validateableObservable({
     validations: [
       maxlength({
         value: 15,
@@ -80,7 +79,7 @@ class PersonalInformation extends ComplexType {
   lastName = '';
 
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [
       lessThan({
         value: 7,
@@ -96,13 +95,13 @@ class PersonalInformation extends ComplexType {
   }
 
   //   @modelProp()
-  //   @formObservable({
+  //   @validateableObservable({
   //     validations: [dependedGreaterThan({ number: 'age' })]
   //   })
   //   fatherAge = 0;
 
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [
       greaterThan({
         value: 20
@@ -114,13 +113,13 @@ class PersonalInformation extends ComplexType {
   fatherAge = 0;
 
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [] //conditionRequired({ condition: 'isAdult' })
   })
   fatherName = 0;
 
   @modelProp()
-  @formObservable({
+  @validateableObservable({
     validations: [
       generateAsyncValidation({
         name: 'tryAsyncValidation',
@@ -131,16 +130,16 @@ class PersonalInformation extends ComplexType {
   })
   comments = '';
   @modelProp()
-  @formObservable({ validations: [] })
+  @validateableObservable({ validations: [] })
   status = 'true';
   @modelProp()
-  @formObservable({ validations: [] })
+  @validateableObservable({ validations: [] })
   agreement = '';
   @modelProp()
-  @formObservable({ validations: [] })
+  @validateableObservable({ validations: [] })
   city = '';
   @modelProp()
-  @formObservable({ validations: [] })
+  @validateableObservable({ validations: [] })
   birthDate = '';
 
   // #region actions

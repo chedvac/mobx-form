@@ -1,6 +1,5 @@
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
-import fp from 'lodash/fp';
 import _ from 'lodash';
 
 const basicPropTypes = {

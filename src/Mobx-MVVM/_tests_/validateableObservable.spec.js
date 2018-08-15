@@ -1,4 +1,4 @@
-import formObservable from 'core/formObservable';
+import validateableObservable from 'core/validateableObservable';
 import ValidationsManager from 'validations/core/validationsManager';
 
 jest.mock('../../validations/src/core/validationsManager');
@@ -7,25 +7,25 @@ class ComplexType {
   registerPropertyToPrototype() {}
 }
 class complex extends ComplexType {
-  @formObservable({ validations })
+  @validateableObservable({ validations })
   firstName = 'yael';
 }
 
-describe('formObservable export function that return decorator', () => {
+describe('validateableObservable export function that return decorator', () => {
   beforeEach(() => {
     complex.registerPropertyToPrototype = jest.fn();
   });
-  test('typeof formObservable is function', () => {
-    expect(typeof formObservable).toBe('function');
+  test('typeof validateableObservable is function', () => {
+    expect(typeof validateableObservable).toBe('function');
   });
 
   // test('call decorator function fail if parent is not instanceof ComplexType', () => {
   //   expect(() => {
   //     Parent.firstName();
-  //   }).not.toThrow('formObservable parent must be instanceof ComplexType');
+  //   }).not.toThrow('validateableObservable parent must be instanceof ComplexType');
   // });
 
-  describe('call formObservable as decorator', () => {
+  describe('call validateableObservable as decorator', () => {
     test('inilize ValidationsManager', () => {
       expect(ValidationsManager.mock.instances.length).toBe(1);
     });

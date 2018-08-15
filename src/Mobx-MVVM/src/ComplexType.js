@@ -1,14 +1,14 @@
 import validationsManagerFactory from 'validations/core/validationsManager';
-import ValidationState from 'core/ValidationState';
+import ValidationState from 'core/validationState';
 import PropTypes from 'prop-types';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
-import FormObservableBehavior from 'core/FormObservableBehavior';
-import ModelPropBehavior from 'core/ModelPropBehavior';
+import ValidateableObservableBehavior from 'core/validateableObservableBehavior';
+import ModelPropBehavior from 'core/modelPropBehavior';
 
 export default class ComplexType {
   constructor(settings = {}) {
-    this.formObservablesProperties = {};
+    this.validateableObservablesProperties = {};
     this.modelPropsProperties = {};
 
     this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
@@ -21,18 +21,18 @@ export default class ComplexType {
     })(this._modelPropsSettings);
 
     fp.forOwn(value => {
-      this.generateFormObservable(value);
-    })(this._formObservablesSettings);
+      this.generateValidateableObservable(value);
+    })(this._validateableObservablesSettings);
   }
 
   generateModelProp(propertySettings) {
     const newModelProp = new ModelPropBehavior(propertySettings);
     this.modelPropsProperties[newModelProp.name] = newModelProp;
   }
-  generateFormObservable(propertySettings) {
-    const newFormObservable = new FormObservableBehavior(propertySettings);
-    this.formObservablesProperties[newFormObservable.name] = newFormObservable;
-    this._overrideTempDescriptor(newFormObservable);
+  generateValidateableObservable(propertySettings) {
+    const newValidateableObservable = new ValidateableObservableBehavior(propertySettings);
+    this.validateableObservablesProperties[newValidateableObservable.name] = newValidateableObservable;
+    this._overrideTempDescriptor(newValidateableObservable);
   }
 
   _overrideTempDescriptor(property) {
@@ -45,23 +45,16 @@ export default class ComplexType {
     delete descriptor.writable;
 
     descriptor.set = function(newValue) {
-      property.ref.set(newValue);
+      property.observable.set(newValue);
     };
 
     descriptor.get = function() {
-      return property.ref.get();
+      return property.observable.get();
     };
     Object.defineProperty(this, property.name, descriptor);
   }
-  initializeComplexProperties() {
-    const self = this;
-    Object.values(this.modelPropsProperties).forEach(modelProperty => {
-      const property = self[modelProperty.name];
-      if (property instanceof ComplexType) {
-        modelProperty.setRef(property);
-      }
-    });
-  }
+  
+  
   getAction(name) {
     //todo: check
     return newValue => {
@@ -97,15 +90,15 @@ export default class ComplexType {
     let propertiesState = true;
     Object.values(this.modelPropsProperties).forEach(property => {
       propertiesState =
-        propertiesState && this._validateByType(property.name, property);
+        propertiesState && this._validateByType(property.name);
     });
     return propertiesState;
   }
-  _validateByType(name, property) {
-    const instance = property.ref;
+  _validateByType(name) {
+    const instance =  this[name];
     return instance instanceof ComplexType
       ? instance.validate()
-      : this.formObservablesProperties[name].validate();
+      : this.validateableObservablesProperties[name].validate();
   }
   /**     
   * @memberof ComplexType         
@@ -117,12 +110,6 @@ export default class ComplexType {
   */
   reset() {
     Object.values(this.modelPropsProperties).forEach(property => {
-      // //if(property.reset){
-      // const instance = property.ref;
-      // instance instanceof ComplexType
-      //   ? instance.reset()
-      //   : property.reset();
-      // //}
       if (property.reset) {
         property.reset();
       }
@@ -146,18 +133,18 @@ export default class ComplexType {
 }
 /**     
 * @memberof ComplexType         
-* @function "setFormObservableSettings"
-* @description this function call from formObservabless, in classes that extends ComplexType. call in defenition,  not in instance
+* @function "setValidateableObservableSettings"
+* @description this function call from validateableObservabless, in classes that extends ComplexType. call in defenition,  not in instance
 * @param {object}  settings
 * @example 
-  PersonalInfo.setFormObservableSettings({});
+  PersonalInfo.setValidateableObservableSettings({});
 */
-ComplexType.prototype.setFormObservableSettings = assertParametersType(
+ComplexType.prototype.setValidateableObservableSettings = assertParametersType(
   { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
-  function setFormObservableSettings(settings) {
+  function setValidateableObservableSettings(settings) {
     //'this'- every class that extends ComplexType
-    this._formObservablesSettings = this._formObservablesSettings || {};
-    this._formObservablesSettings[settings.name] = settings;
+    this._validateableObservablesSettings = this._validateableObservablesSettings || {};
+    this._validateableObservablesSettings[settings.name] = settings;
   }
 );
 /**     
