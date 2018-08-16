@@ -7,8 +7,7 @@ export default function validateableObservable(settings = {}) {
       target: PropTypes.instanceOf(ComplexType)
     },
     function validateableObservableDecorator(target, name, descriptor) {
-      descriptor.configurable = true;
-      descriptor.writable = true;
+    
       const defaultValue = descriptor.value
         ? descriptor.value
         : descriptor.initializer
@@ -19,14 +18,7 @@ export default function validateableObservable(settings = {}) {
         defaultValue,
         ...settings
       });
-      Object.defineProperty(target, name, {
-        configurable: true,
-        enumerable: true,
-        get: () => defaultValue,
-        set: value => {
-          this[name] = value;
-        }
-      });
+     
       return Object.getOwnPropertyDescriptor(target, name);
     }
   );

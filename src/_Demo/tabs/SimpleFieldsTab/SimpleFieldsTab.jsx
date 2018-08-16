@@ -14,6 +14,9 @@ class SimpleFieldsTab extends React.Component {
         <PersonalInformation
           userDetails={this.props.simpleFields.userDetails}
         />
+        <PersonalInformation
+          userDetails={this.props.simpleFields.userDetails}
+        />
       </div>
     );
   }

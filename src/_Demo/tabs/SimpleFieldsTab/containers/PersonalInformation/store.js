@@ -1,7 +1,6 @@
-import { action, computed } from 'mobx';
+import { action, computed, autorun, observable } from 'mobx';
 import validateableObservable from 'core/validateableObservable';
 import modelProp from 'core/modelProp';
-
 import ComplexType from 'core/complexType';
 import { hebrew } from 'validations/rules/text';
 import {
@@ -35,6 +34,8 @@ class PersonalInformation extends ComplexType {
 
   constructor() {
     super();
+  
+   
     // this.setPropertiesReferences();
     // this.propertiesManager.properties.fatherAge.dependedObservables = {
     //   age: this.propertiesManager.properties.age.ref
@@ -45,15 +46,8 @@ class PersonalInformation extends ComplexType {
     this.condition = function() {
       return true;
     };
-    this.set_firstName = this.set_firstName.bind(this);
-    this.set_lastName = this.set_lastName.bind(this);
-    this.set_fatherAge = this.set_fatherAge.bind(this);
-    this.set_age = this.set_age.bind(this);
-    this.set_comments = this.set_comments.bind(this);
-    this.set_status = this.set_status.bind(this);
-    this.set_agreement = this.set_agreement.bind(this);
-    this.set_city = this.set_city.bind(this);
   }
+  @observable
   @modelProp({ reset: () => console.log('not reset FirstName') })
   @validateableObservable({
     validations: [
@@ -66,8 +60,8 @@ class PersonalInformation extends ComplexType {
     ]
   })
   firstName = '';
-
-  @modelProp({reset:() => false})
+  @observable
+  @modelProp({ reset: () => false })
   @validateableObservable({
     validations: [
       maxlength({
@@ -143,53 +137,56 @@ class PersonalInformation extends ComplexType {
   birthDate = '';
 
   // #region actions
-  @action
+  @action.bound
   set_firstName(value) {
     this.firstName = value;
   }
-  @action
+  
+  @action.bound
   set_birthDate(value) {
     this.birthDate = value;
   }
-  @action
+  @action.bound
   set_city(value) {
     this.city = value;
   }
-  @action
+  @action.bound
   set_lastName(value) {
     this.lastName = value;
   }
-  @action
+  @action.bound
   set_fatherAge(value) {
     this.fatherAge = value;
   }
 
-  @action
+  @action.bound
   set_age(value) {
     this.age = value;
   }
-  @action
+  @action.bound
   set_fatherName(value) {
     this.fatherName = value;
   }
-  @action
+  @action.bound
   set_comments(value) {
     this.comments = value;
   }
-  @action
+  @action.bound
   set_status(value) {
     this.status = value;
   }
-  @action
+  @action.bound
   set_agreement(value) {
     this.agreement = value;
   }
+
   //#endregion actions
 
   // #region computeds
+
   @computed
-  fullName() {
-    return this.firstName + this.lastName;
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
   }
 
   //#endregion computeds

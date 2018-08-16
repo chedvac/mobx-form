@@ -6,8 +6,10 @@ class SimpleFieldsTab extends ComplexType {
   constructor() {
     super();
     this.userDetails = new PersonalInformation();
+ 
   }
   @modelProp({reset:{}}) userDetails;
+ 
 }
 
 export default SimpleFieldsTab;
