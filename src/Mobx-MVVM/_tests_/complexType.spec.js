@@ -1,26 +1,26 @@
 import ValidationsManager from '../../validations/src/core/validationsManager';
-import ValidateableObservablesManager from '../src/ValidateableObservablesManager';
+import ValidateablesManager from '../src/ValidateablesManager';
 import ModelPropsManager from '../src/ModelPropsManager';
 
 import { modelPropGenerator } from '../src/modelProp';
-import validateableObservableGenerator from '../src/validateableObservableGenerator';
+import validateableGenerator from '../src/validateableGenerator';
 
 jest.mock('../src/modelProp', () => ({
   default: require.requireActual('../src/modelProp').default,
   modelPropGenerator: jest.fn()
 }));
 jest.mock('../../validations/src/core/validationsManager');
-jest.mock('../src/validateableObservableGenerator');
+jest.mock('../src/validateableGenerator');
 import ComplexTab from './mocksExamples/ComplexTab';
 let customTab;
 const settings = { validations: [() => true] };
 beforeEach(() => {
   ValidationsManager.mockClear();
   modelPropGenerator.mockClear();
-  validateableObservableGenerator.mockClear();
+  validateableGenerator.mockClear();
   Object.defineProperty = jest.fn();
   customTab = new ComplexTab();
-  customTab.validateableObservablesProperties.validate = jest.fn(() => {
+  customTab.validateablesProperties.validate = jest.fn(() => {
     return {
       isValid: true,
       message: ''
@@ -50,49 +50,49 @@ describe('ComplexType constructor', () => {
         );
       });
     });
-    test('ValidateableObservablesManager', () => {
-      expect(customTab.validateableObservablesProperties).toBeInstanceOf(ValidateableObservablesManager);
+    test('ValidateablesManager', () => {
+      expect(customTab.validateablesProperties).toBeInstanceOf(ValidateablesManager);
     });
     test('ModelPropsManager', () => {
       expect(customTab.modelPropsProperties).toBeInstanceOf(ModelPropsManager);
     });
   });
   describe('loop over _propertiesSettings', () => {
-    describe('call validateableObservableGenerator for validateableObservablesProperties properties', () => {
+    describe('call validateableGenerator for validateablesProperties properties', () => {
       test('agreement', () => {
-        expect(validateableObservableGenerator.mock.calls[0][0]).toBeDefined();
-        expect(validateableObservableGenerator.mock.calls[0][0].name).toBe(
+        expect(validateableGenerator.mock.calls[0][0]).toBeDefined();
+        expect(validateableGenerator.mock.calls[0][0].name).toBe(
           customTab._propertiesSettings.agreement.name
         );
-        expect(validateableObservableGenerator.mock.calls[0][0].descriptor).toEqual(
+        expect(validateableGenerator.mock.calls[0][0].descriptor).toEqual(
           customTab._propertiesSettings.agreement.descriptor
         );
-        expect(validateableObservableGenerator.mock.calls[0][0].defaultValue).toBe(
+        expect(validateableGenerator.mock.calls[0][0].defaultValue).toBe(
           customTab._propertiesSettings.agreement.defaultValue
         );
         expect(
-          validateableObservableGenerator.mock.calls[0][0].validationsManager
+          validateableGenerator.mock.calls[0][0].validationsManager
         ).toBe(customTab._propertiesSettings.agreement.validationsManager);
-        expect(validateableObservableGenerator.mock.calls[0][0].validateableObservablesProperties).toBe(
-          customTab.validateableObservablesProperties
+        expect(validateableGenerator.mock.calls[0][0].validateablesProperties).toBe(
+          customTab.validateablesProperties
         );
       });
       test('firstName', () => {
-        expect(validateableObservableGenerator.mock.calls[1][0]).toBeDefined();
-        expect(validateableObservableGenerator.mock.calls[1][0].name).toBe(
+        expect(validateableGenerator.mock.calls[1][0]).toBeDefined();
+        expect(validateableGenerator.mock.calls[1][0].name).toBe(
           customTab._propertiesSettings.firstName.name
         );
-        expect(validateableObservableGenerator.mock.calls[1][0].descriptor).toEqual(
+        expect(validateableGenerator.mock.calls[1][0].descriptor).toEqual(
           customTab._propertiesSettings.firstName.descriptor
         );
-        expect(validateableObservableGenerator.mock.calls[1][0].defaultValue).toBe(
+        expect(validateableGenerator.mock.calls[1][0].defaultValue).toBe(
           customTab._propertiesSettings.firstName.defaultValue
         );
         expect(
-          validateableObservableGenerator.mock.calls[1][0].validationsManager
+          validateableGenerator.mock.calls[1][0].validationsManager
         ).toBe(customTab._propertiesSettings.firstName.validationsManager);
-        expect(validateableObservableGenerator.mock.calls[1][0].validateableObservablesProperties).toBe(
-          customTab.validateableObservablesProperties
+        expect(validateableGenerator.mock.calls[1][0].validateablesProperties).toBe(
+          customTab.validateablesProperties
         );
       });
     });
@@ -195,7 +195,7 @@ describe('setPropertySettings', () => {
     test('one properties not valid - return false', () => {
       const notValidResult = false;
       customTab = new ComplexTab();
-      customTab.validateableObservablesProperties.firstName.validate = jest.fn(
+      customTab.validateablesProperties.firstName.validate = jest.fn(
         () => notValidResult
       );
       expect(customTab.validateModel()).toEqual(false);

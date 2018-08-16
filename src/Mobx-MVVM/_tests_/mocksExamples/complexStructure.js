@@ -8,7 +8,7 @@ export const descriptor = (target,
 export default {
   propertiesManager: {
     createProperty: jest.fn(),
-    setValidateableObservableProperty: jest.fn()
+    setValidateableProperty: jest.fn()
   },
   _propertiesInitialized: false,
   _properties: {

@@ -1,5 +1,5 @@
 import { action, computed, autorun, observable } from 'mobx';
-import validateableObservable from 'core/validateableObservable';
+import validateable from 'core/validateable';
 import modelProp from 'core/modelProp';
 import ComplexType from 'core/complexType';
 import { hebrew } from 'validations/rules/text';
@@ -49,7 +49,7 @@ class PersonalInformation extends ComplexType {
   }
   @observable
   @modelProp({ reset: () => console.log('not reset FirstName') })
-  @validateableObservable({
+  @validateable({
     validations: [
       maxlength({
         value: 15
@@ -62,7 +62,7 @@ class PersonalInformation extends ComplexType {
   firstName = '';
   @observable
   @modelProp({ reset: () => false })
-  @validateableObservable({
+  @validateable({
     validations: [
       maxlength({
         value: 15,
@@ -73,7 +73,7 @@ class PersonalInformation extends ComplexType {
   lastName = '';
 
   @modelProp()
-  @validateableObservable({
+  @validateable({
     validations: [
       lessThan({
         value: 7,
@@ -89,13 +89,13 @@ class PersonalInformation extends ComplexType {
   }
 
   //   @modelProp()
-  //   @validateableObservable({
+  //   @validateable({
   //     validations: [dependedGreaterThan({ number: 'age' })]
   //   })
   //   fatherAge = 0;
 
   @modelProp()
-  @validateableObservable({
+  @validateable({
     validations: [
       greaterThan({
         value: 20
@@ -107,13 +107,13 @@ class PersonalInformation extends ComplexType {
   fatherAge = 0;
 
   @modelProp()
-  @validateableObservable({
+  @validateable({
     validations: [] //conditionRequired({ condition: 'isAdult' })
   })
   fatherName = 0;
 
   @modelProp()
-  @validateableObservable({
+  @validateable({
     validations: [
       generateAsyncValidation({
         name: 'tryAsyncValidation',
@@ -124,16 +124,16 @@ class PersonalInformation extends ComplexType {
   })
   comments = '';
   @modelProp()
-  @validateableObservable({ validations: [] })
+  @validateable({ validations: [] })
   status = 'true';
   @modelProp()
-  @validateableObservable({ validations: [] })
+  @validateable({ validations: [] })
   agreement = '';
   @modelProp()
-  @validateableObservable({ validations: [] })
+  @validateable({ validations: [] })
   city = '';
   @modelProp()
-  @validateableObservable({ validations: [] })
+  @validateable({ validations: [] })
   birthDate = '';
 
   // #region actions

@@ -1,5 +1,5 @@
 import ComplexType from 'core/complexType';
-import validateableObservable from 'core/validateableObservable';
+import validateable from 'core/validateable';
 import modelProp1 from 'core/modelProp';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
@@ -9,7 +9,7 @@ export class Complex extends ComplexType {
   constructor(settings) {
     super(settings);
   }
-  @validateableObservable() inSubComplex = false;
+  @validateable() inSubComplex = false;
 }
 
 export default class ComplexTab extends ComplexType {
@@ -18,7 +18,7 @@ export default class ComplexTab extends ComplexType {
     this.subComplex = new Complex();
   }
   @modelProp()
-  @validateableObservable({
+  @validateable({
     validations: [
       hebrew(),
       maxlength({ value: 5})
@@ -26,7 +26,7 @@ export default class ComplexTab extends ComplexType {
   })
   agreement = '';
   @modelProp()
-  @validateableObservable({
+  @validateable({
     validations: [
       hebrew(),
       maxlength({ value: 5})

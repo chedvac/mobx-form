@@ -1,5 +1,5 @@
 import { action } from 'mobx';
-import validateableObservable from 'core/validateableObservable';
+import validateable from 'core/validateable';
 import modelProp from 'core/modelProp';
 
 import ComplexType from 'core/complexType';
@@ -14,10 +14,10 @@ class TablesTab extends ComplexType {
     this.set_houseNumber = this.set_houseNumber.bind(this);
   }
   @modelProp()
-  @validateableObservable({ validations: [hebrew(), maxlength({ value: 5 })] })
+  @validateable({ validations: [hebrew(), maxlength({ value: 5 })] })
   email = '';
   @modelProp()
-  @validateableObservable()
+  @validateable()
   houseNumber = '';
   @action
   set_email(value) {

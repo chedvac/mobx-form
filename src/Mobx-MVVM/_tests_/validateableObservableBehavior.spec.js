@@ -1,47 +1,47 @@
 import ValidationState from 'core/validationState';
-import ValidateableObservableBehavior from 'core/validateableObservableBehavior';
+import ValidateableBehavior from 'core/validateableBehavior';
 import validationsManager from 'validations/core/validationsManager';
 
-let validateableObservable;
+let validateable;
 beforeAll(() => {
-  validateableObservable = new ValidateableObservableBehavior();
+  validateable = new ValidateableBehavior();
 });
-describe('ValidateableObservableBehavior', () => {
+describe('ValidateableBehavior', () => {
   describe('define properties:', () => {
     test('validationState', () => {
-      expect(validateableObservable.validationState).toBeDefined();
+      expect(validateable.validationState).toBeDefined();
     });
     test('validationState is instanceof ValidationState', () => {
-      expect(validateableObservable.validationState instanceof ValidationState).toBe(
+      expect(validateable.validationState instanceof ValidationState).toBe(
         true
       );
     });
     test('setDependedObservables', () => {
-      expect(validateableObservable.setDependedObservables).toBeDefined();
+      expect(validateable.setDependedObservables).toBeDefined();
     });
     test('setValidate', () => {
-      expect(validateableObservable.setValidate).toBeDefined();
+      expect(validateable.setValidate).toBeDefined();
     });
     test('setValidationsManager', () => {
-      expect(validateableObservable.setValidationsManager).toBeDefined();
+      expect(validateable.setValidationsManager).toBeDefined();
     });
    
   });
   describe('logic:', () => {
     test('setDependedObservables', () => {
       const dependedObservables = {};
-      validateableObservable.setDependedObservables(dependedObservables);
-      expect(validateableObservable.dependedObservables).toBe(dependedObservables);
+      validateable.setDependedObservables(dependedObservables);
+      expect(validateable.dependedObservables).toBe(dependedObservables);
     });
     test('setValidate', () => {
       const validate = () => {};
-      validateableObservable.setValidate(validate);
-      expect(validateableObservable.validate).toBe(validate);
+      validateable.setValidate(validate);
+      expect(validateable.validate).toBe(validate);
     });
     test('setValidationsManager', () => {
       const validationsManage = new validationsManager();
-      validateableObservable.setValidationsManager(validationsManage);
-      expect(validateableObservable.validationsManager).toBe(validationsManage);
+      validateable.setValidationsManager(validationsManage);
+      expect(validateable.validationsManager).toBe(validationsManage);
     });
 
   

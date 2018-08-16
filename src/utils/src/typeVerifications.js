@@ -36,7 +36,7 @@ function assertByDecorator(types) {
  *   @assertParametersType({
     propertyName: PropTypes.string.isRequired,
     newProperty: PropTypes.oneOfType([
-      PropTypes.instanceOf(ValidateableObservableBehavior),
+      PropTypes.instanceOf(ValidateableBehavior),
       PropTypes.instanceOf(ModelPropBehavior)
     ])
   })

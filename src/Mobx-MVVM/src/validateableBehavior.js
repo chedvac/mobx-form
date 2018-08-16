@@ -2,7 +2,7 @@ import configuration from './mobxConfiguration';
 import ValidationState from 'core/validationState';
 import validationsManagerFactory from 'validations/core/validationsManager';
 
-export default class ValidateableObservableBehavior {
+export default class ValidateableBehavior {
   constructor(property) {
     this.name = property.name;
     this.validationState = new ValidationState();

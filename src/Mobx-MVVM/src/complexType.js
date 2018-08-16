@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { autorun } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
-import ValidateableObservableBehavior from 'core/validateableObservableBehavior';
+import ValidateableBehavior from 'core/validateableBehavior';
 import ModelPropBehavior from 'core/modelPropBehavior';
 
 export default class ComplexType {
   constructor(settings = {}) {
-    this.validateableObservablesProperties = {};
+    this.validateablesProperties = {};
     this.modelPropsProperties = {};
 
     this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
@@ -22,24 +22,24 @@ export default class ComplexType {
     })(this._modelPropsSettings);
 
     fp.forOwn(value => {
-      this.generateValidateableObservable(value);
-    })(this._validateableObservablesSettings);
+      this.generateValidateable(value);
+    })(this._validateablesSettings);
   }
 
   generateModelProp(propertySettings) {
     const newModelProp = new ModelPropBehavior(propertySettings);
     this.modelPropsProperties[newModelProp.name] = newModelProp;
   }
-  generateValidateableObservable(propertySettings) {
-    const newValidateableObservable = new ValidateableObservableBehavior(
+  generateValidateable(propertySettings) {
+    const newValidateable = new ValidateableBehavior(
       propertySettings
     );
-    this.validateableObservablesProperties[newValidateableObservable.name] = newValidateableObservable;
-    this.createObservableValidation(newValidateableObservable);
+    this.validateablesProperties[newValidateable.name] = newValidateable;
+    this.createObservableValidation(newValidateable);
 
   }
-  createObservableValidation(newValidateableObservable) {
-    autorun(() => newValidateableObservable.validate(this[newValidateableObservable.name]));
+  createObservableValidation(newValidateable) {
+    autorun(() => newValidateable.validate(this[newValidateable.name]));
   }
   
   /**     
@@ -89,7 +89,7 @@ export default class ComplexType {
     const instance = this[name];
     return instance instanceof ComplexType
       ? instance.validate()
-      : this.validateableObservablesProperties[name].validate(this[name]);
+      : this.validateablesProperties[name].validate(this[name]);
   }
   /**     
   * @memberof ComplexType         
@@ -124,19 +124,19 @@ export default class ComplexType {
 }
 /**     
 * @memberof ComplexType         
-* @function "setValidateableObservableSettings"
-* @description this function call from validateableObservabless, in classes that extends ComplexType. call in defenition,  not in instance
+* @function "setValidateableSettings"
+* @description this function call from validateabless, in classes that extends ComplexType. call in defenition,  not in instance
 * @param {object}  settings
 * @example 
-  PersonalInfo.setValidateableObservableSettings({});
+  PersonalInfo.setValidateableSettings({});
 */
-ComplexType.prototype.setValidateableObservableSettings = assertParametersType(
+ComplexType.prototype.setValidateableSettings = assertParametersType(
   { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
-  function setValidateableObservableSettings(settings) {
+  function setValidateableSettings(settings) {
     //'this'- every class that extends ComplexType
-    this._validateableObservablesSettings =
-      this._validateableObservablesSettings || {};
-    this._validateableObservablesSettings[settings.name] = settings;
+    this._validateablesSettings =
+      this._validateablesSettings || {};
+    this._validateablesSettings[settings.name] = settings;
   }
 );
 /**     
