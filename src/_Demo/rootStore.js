@@ -18,8 +18,10 @@ class RootStore extends ComplexType {
     this.submitForm = this.submitForm.bind(this);
     this.initializeComplexProperties();
   }
-  @modelProp() simpleFieldsTab;
-  @modelProp() tablesTab;
+  @modelProp()
+  simpleFieldsTab;
+  @modelProp()
+  tablesTab;
   submitForm() {
     submitAction(this.formInformation.set_isFormSent);
   }
@@ -30,13 +32,7 @@ class RootStore extends ComplexType {
       alert('נתוני הטופס תקינים');
     }
   }
-  getStoreAsJSon = () => {
-    return toJS(this.model.getModel());
-  };
-
-  getStoreAsJSon = () => {
-    return toJS(this.model.getModel());
-  };
+  getStoreAsJSon = () => toJS(this.model.getModel());
 }
 
 export default RootStore;

@@ -14,7 +14,8 @@ class Language extends ComplexType {
       }
     };
   }
-  @formObservable() name = 'hebrew';
+  @formObservable()
+  name = 'hebrew';
 }
 
 export default Language;

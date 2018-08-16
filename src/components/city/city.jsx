@@ -27,7 +27,13 @@ export default class City extends React.Component {
     // this.loadCityList();
     this.currentResources = this.currentResources.bind(this);
   }
+  componentWillMount() {
+    console.log('componentWillMount...');
+    this.loadCityList();
+    console.log('Will be called on the server...');
+  }
   componentDidMount() {
+    console.log('componentDidMount...');
     this.loadCityList();
   }
 

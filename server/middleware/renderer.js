@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
-
-// import our main App component
-import App from '../../src/_Demo/App';
+import ServerComponent from './index';
 
 const path = require('path');
 const fs = require('fs');
@@ -18,23 +15,33 @@ export default (req, res, next) => {
       return res.status(404).end();
     }
 
-    const context = {};
-    console.log('run on server');
-    class component extends React.Component {
-      render() {
-        return (
-          <StaticRouter location={req.url} context={context}>
-            <App />
-          </StaticRouter>
-        );
-      }
-    }
     // render the app as a string
-    const html = ReactDOMServer.renderToString(<component />);
+    const html = ReactDOMServer.renderToString(<ServerComponent />);
+    console.log('html', html);
+
+    // fs.writeFile(filePath, `<div id="root">${html}</div>`);
 
     // inject the rendered app into our html and send it
-    return res.send(
-      htmlData.replace('<div id="root"></div>', `<div id="root">${html}</div>`)
+    let indexString = htmlData.replace(
+      '<div id="root"></div>',
+      `<div id="root">${html}</div>`
     );
+    indexString = indexString.replace(
+      '<script type="text/javascript" src="/static/js/main.87b1461f.js"></script>',
+      '<script type="text/javascript" src="/server.js"></script>'
+    );
+
+    fs.writeFile(
+      path.resolve(__dirname, '..', '..', 'build', 'server1.html'),
+      indexString,
+      err => {
+        if (err) {
+          console.log('err', err);
+        }
+        console.log('The file has been saved!');
+      }
+    );
+
+    return res.send(indexString);
   });
 };

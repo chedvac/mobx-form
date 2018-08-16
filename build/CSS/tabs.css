@@ -1,0 +1,52 @@
+@font-face {
+  font-family: arimo;
+  src: url(fonts/Arimo-Regular.eot?#iefix) format("embedded-opentype");
+  src: url(fonts/Arimo-Regular.ttf) format("truetype"); }
+
+@font-face {
+  font-family: arimo-bold;
+  src: url(fonts/Arimo-Bold.ttf); }
+
+.tabs-navigation-holder {
+  margin: 0 30px 10px;
+  height: 50px; }
+  .tabs-navigation-holder .tabs-navigation {
+    width: auto; }
+    .tabs-navigation-holder .tabs-navigation li {
+      display: table-cell;
+      padding: 0 25px;
+      cursor: pointer; }
+      .tabs-navigation-holder .tabs-navigation li.tab-item {
+        color: #275c7e;
+        border: 1px solid;
+        height: 3px;
+        position: relative;
+        border-left: 0;
+        border-right: 0; }
+        .tabs-navigation-holder .tabs-navigation li.tab-item .tab-title {
+          height: 50px;
+          font-size: 15px;
+          line-height: 17px;
+          width: 120px;
+          position: absolute;
+          top: 25px;
+          right: -20px; }
+        .tabs-navigation-holder .tabs-navigation li.tab-item a {
+          font-weight: inherit;
+          text-align: center;
+          border-radius: 20px;
+          border: 1px solid #717171;
+          height: 40px;
+          width: 40px;
+          display: block;
+          padding-top: 11px;
+          color: #717171;
+          outline: 0;
+          text-decoration: none;
+          position: absolute;
+          top: -20px;
+          right: 0;
+          background: #fff; }
+          .tabs-navigation-holder .tabs-navigation li.tab-item a.active-tab {
+            color: #fff;
+            background-color: #275c7e; }
