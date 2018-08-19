@@ -8,7 +8,7 @@
     "beforeEach": true,
     "test": true,
     "require": true,
-    "beforeAll":true
+    "beforeAll": true
   },
 
   "plugins": ["jest"],
@@ -109,7 +109,7 @@
     "prefer-arrow-callback": [
       "error",
       {
-        "allowNamedFunctions": false,
+        "allowNamedFunctions": true,
         "allowUnboundThis": true
       }
     ],
