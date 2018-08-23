@@ -16,7 +16,7 @@ import {
   lessThan
 } from 'validations/rules/number';
 import { sumAges } from './validations';
-import { generateAsyncValidation } from 'validations/core/validationsFactory';
+import { generateAsyncValidation } from 'vmValidations/validationsFactory';
 import axios from 'axios';
 const myRequest = function(value) {
   return axios
@@ -51,12 +51,13 @@ class PersonalInformation extends ComplexType {
   @modelProp({ reset: () => console.log('not reset FirstName') })
   @validateable({
     validations: [
-      maxlength({
-        value: 15
+      maxlength({ value: 15 }),
+      minlength({
+        value: 2,
+        message: () => ({ hebrew: 'my minlength message!!' })
       }),
-      minlength({ value: 2 }),
       required(),
-      hebrew()
+      hebrew({ message: () => ({ hebrew: 'my hebrew message!!' }) })
     ]
   })
   firstName = '';
@@ -67,13 +68,16 @@ class PersonalInformation extends ComplexType {
       maxlength({
         value: 15,
         message: () => ({ hebrew: 'too long...' })
-      })
+      }),
+      minlength({ value: 2 }),
+      hebrew()
     ]
   })
   lastName = '';
   
   @observable
   @modelProp()
+<<<<<<< HEAD
   @validateable({
     validations: [
       lessThan({
@@ -81,6 +85,10 @@ class PersonalInformation extends ComplexType {
         message: () => ({ hebrew: 'fasdghfasghf' })
       })
     ]
+=======
+  @formObservable({
+    validations: [lessThan({ value: 7 })]
+>>>>>>> validation
   })
   
   age = 15;
@@ -99,6 +107,8 @@ class PersonalInformation extends ComplexType {
   @modelProp()
   @validateable({
     validations: [
+      maxlength({ value: 15 }),
+      minlength({ value: 2 }),
       greaterThan({
         value: 20
         // compareToName: 'compareToName',
@@ -121,7 +131,7 @@ class PersonalInformation extends ComplexType {
     validations: [
       generateAsyncValidation({
         name: 'tryAsyncValidation',
-        message: 'my default error',
+        message: () => 'my default error',
         request: myRequest
       })
     ]

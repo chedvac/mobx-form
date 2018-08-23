@@ -31,17 +31,14 @@ export default class ComplexType {
     this.modelPropsProperties[newModelProp.name] = newModelProp;
   }
   generateValidateable(propertySettings) {
-    const newValidateable = new ValidateableBehavior(
-      propertySettings
-    );
+    const newValidateable = new ValidateableBehavior(propertySettings);
     this.validateablesProperties[newValidateable.name] = newValidateable;
     this.createObservableValidation(newValidateable);
-
   }
   createObservableValidation(newValidateable) {
     autorun(() => newValidateable.validate(this[newValidateable.name]));
   }
-  
+
   /**     
 * @memberof ComplexType         
 * @function "getAction"
@@ -134,8 +131,7 @@ ComplexType.prototype.setValidateableSettings = assertParametersType(
   { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
   function setValidateableSettings(settings) {
     //'this'- every class that extends ComplexType
-    this._validateablesSettings =
-      this._validateablesSettings || {};
+    this._validateablesSettings = this._validateablesSettings || {};
     this._validateablesSettings[settings.name] = settings;
   }
 );

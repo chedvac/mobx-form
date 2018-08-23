@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^1.4.0",
     "axios": "^0.18.0",
     "lodash": "^4.17.10",
     "mobx": "^4.1.1",
@@ -52,9 +53,12 @@
   "jest": {
     "moduleNameMapper": {
       "^_Demo(.*)$": "<rootDir>/src/_Demo$1",
-      "^validations(.*)$": "<rootDir>/src/validations/src$1",
+      "^validations(.*)$": "<rootDir>/src/functional-validations/src$1",
+      "^vmValidations(.*)$": "<rootDir>/src/vm-validations/src$1",
       "^core(.*)$": "<rootDir>/src/Mobx-MVVM/src$1",
-      "^utils(.*)$": "<rootDir>/src/utils/src$1"
+      "^utils(.*)$": "<rootDir>/src/utils/src$1",
+      "^mobxReactForm(.*)$": "<rootDir>/src/mobx-react-form/src$1",
+      "^reactUiComponents(.*)$": "<rootDir>/src/react-ui-components/src$1"
     }
   }
 }
