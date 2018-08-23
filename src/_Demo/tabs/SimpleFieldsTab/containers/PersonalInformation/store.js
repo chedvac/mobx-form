@@ -71,7 +71,8 @@ class PersonalInformation extends ComplexType {
     ]
   })
   lastName = '';
-
+  
+  @observable
   @modelProp()
   @validateable({
     validations: [
@@ -81,6 +82,7 @@ class PersonalInformation extends ComplexType {
       })
     ]
   })
+  
   age = 15;
 
   @computed
@@ -93,7 +95,7 @@ class PersonalInformation extends ComplexType {
   //     validations: [dependedGreaterThan({ number: 'age' })]
   //   })
   //   fatherAge = 0;
-
+  @observable
   @modelProp()
   @validateable({
     validations: [
@@ -105,13 +107,15 @@ class PersonalInformation extends ComplexType {
     ]
   })
   fatherAge = 0;
-
+  
+  @observable
   @modelProp()
   @validateable({
     validations: [] //conditionRequired({ condition: 'isAdult' })
   })
   fatherName = 0;
 
+  @observable
   @modelProp()
   @validateable({
     validations: [
@@ -123,15 +127,23 @@ class PersonalInformation extends ComplexType {
     ]
   })
   comments = '';
+  
+  @observable
   @modelProp()
   @validateable({ validations: [] })
   status = 'true';
+  
+  @observable
   @modelProp()
   @validateable({ validations: [] })
   agreement = '';
+
+  @observable
   @modelProp()
   @validateable({ validations: [] })
   city = '';
+
+  @observable
   @modelProp()
   @validateable({ validations: [] })
   birthDate = '';

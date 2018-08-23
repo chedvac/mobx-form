@@ -6,20 +6,12 @@ export default function validateable(settings = {}) {
     {
       target: PropTypes.instanceOf(ComplexType)
     },
-    function validateableDecorator(target, name, descriptor) {
-    
-      const defaultValue = descriptor.value
-        ? descriptor.value
-        : descriptor.initializer
-          ? descriptor.initializer.call(target)
-          : undefined;
+    function validateableDecorator(target, name) {
       target.setValidateableSettings({
         name,
-        defaultValue,
         ...settings
       });
-     
-      return Object.getOwnPropertyDescriptor(target, name);
+
     }
   );
 }
