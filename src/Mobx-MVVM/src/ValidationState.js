@@ -10,7 +10,7 @@ export default class ValidationState {
     this.setValidationState = this.setValidationState.bind(this);
   }
   @action
-  setMessage(message) {
+  setMessage(message) {// Unnecessary
     assertParametersType({ message }, { message: PropTypes.bool }, 'message');
     this.message = message;
   }

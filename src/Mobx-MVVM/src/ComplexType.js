@@ -1,4 +1,4 @@
-import validationsManagerFactory from 'validations/core/validationsManager';
+import validationsManagerFactory from 'vmValidations/validationsManager';
 import FormObservablesManager from './propertiesManager/FormObservablesManager';
 import ModelPropsManager from './propertiesManager/ModelPropsManager';
 import ValidationState from 'core/ValidationState';
@@ -68,7 +68,7 @@ export default class ComplexType {
       }
     });
   }
- /**     
+  /**     
 * @memberof ComplexType         
 * @function "validate"
 * @description validate complexType and its properties
@@ -89,17 +89,17 @@ export default class ComplexType {
     let propertiesState = true;
     Object.entries(this.modelPropsManager.getProperties()).forEach(
       ([name, property]) => {
-        propertiesState =propertiesState && this._validateByType(name, property);
+        propertiesState =
+          propertiesState && this._validateByType(name, property);
       }
     );
     return propertiesState;
   }
   _validateByType(name, property) {
     const instance = property.ref;
-    return instance instanceof ComplexType?
-      instance.validate()
+    return instance instanceof ComplexType
+      ? instance.validate()
       : this.formObservablesManager.getProperty(name).validate();
-
   }
 }
 /**     

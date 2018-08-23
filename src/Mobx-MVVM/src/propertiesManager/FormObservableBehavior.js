@@ -1,5 +1,5 @@
 import ValidationState from 'core/ValidationState';
-import ValidationsManager from 'validations/core/validationsManager';
+import ValidationsManager from 'vmValidations/validationsManager';
 
 export default class FormObservableBehavior {
   constructor() {

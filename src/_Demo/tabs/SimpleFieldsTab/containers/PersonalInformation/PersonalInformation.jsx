@@ -1,11 +1,11 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Input from '../../../../../Fields/Input';
-import Textarea from '../../../../../Fields/Textarea';
-import Select from '../../../../../Fields/Select';
-import Checkbox from '../../../../../Fields/Checkbox';
-import DatePicker from '../../../../../Fields/DatePicker/DatePicker';
-import { getPropsField } from '../../../../../Fields/utils/getProps';
+import Input from 'reactUiComponents/Input';
+import Textarea from 'reactUiComponents/Textarea';
+import Select from 'reactUiComponents/Select';
+import Checkbox from 'reactUiComponents/Checkbox';
+import DatePicker from 'reactUiComponents/DatePicker/DatePicker';
+import { getPropsField } from 'mobxReactForm/utils/getProps';
 import City from '../../../../../components/city/city';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';

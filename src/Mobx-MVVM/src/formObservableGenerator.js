@@ -1,4 +1,4 @@
-import { observable, autorun } from 'mobx';
+import { observable, autorun, reaction } from 'mobx';
 import configuration from './mobxConfiguration';
 
 export default function({
@@ -33,9 +33,11 @@ export default function({
   //   validate(change.newValue);
   //   return change;
   // });
-  autorun(() => {
-    validate(observableBox.value);
-  });
+  reaction(() => observableBox.value, value => validate(value));
+  // autorun(firstrun => {
+  //   observableBox.value;
+  //   if (!firstrun) validate(observableBox.value);
+  // });
   // observableBox.observe(function() {
   //   const dependedObservables = formObservablesManager.getProperty(name)
   //     .dependedObservables;

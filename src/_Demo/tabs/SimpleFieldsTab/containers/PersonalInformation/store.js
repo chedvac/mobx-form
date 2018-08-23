@@ -17,7 +17,7 @@ import {
   lessThan
 } from 'validations/rules/number';
 import { sumAges } from './validations';
-import { generateAsyncValidation } from 'validations/core/validationsFactory';
+import { generateAsyncValidation } from 'vmValidations/validationsFactory';
 import axios from 'axios';
 const myRequest = function(value) {
   return axios
@@ -57,12 +57,13 @@ class PersonalInformation extends ComplexType {
   @modelProp()
   @formObservable({
     validations: [
-      maxlength({
-        value: 15
+      maxlength({ value: 15 }),
+      minlength({
+        value: 2,
+        message: () => ({ hebrew: 'my minlength message!!' })
       }),
-      minlength({ value: 2 }),
       required(),
-      hebrew()
+      hebrew({ message: () => ({ hebrew: 'my hebrew message!!' }) })
     ]
   })
   firstName = '';
@@ -100,6 +101,8 @@ class PersonalInformation extends ComplexType {
   @modelProp()
   @formObservable({
     validations: [
+      maxlength({ value: 15 }),
+      minlength({ value: 2 }),
       greaterThan({
         value: 20
         // compareToName: 'compareToName',
