@@ -77,7 +77,6 @@ class PersonalInformation extends ComplexType {
   
   @observable
   @modelProp()
-<<<<<<< HEAD
   @validateable({
     validations: [
       lessThan({
@@ -85,10 +84,7 @@ class PersonalInformation extends ComplexType {
         message: () => ({ hebrew: 'fasdghfasghf' })
       })
     ]
-=======
-  @formObservable({
-    validations: [lessThan({ value: 7 })]
->>>>>>> validation
+
   })
   
   age = 15;
@@ -213,4 +209,4 @@ class PersonalInformation extends ComplexType {
 
   //#endregion computeds
 }
-export default PersonalInformation;
+export default PersonalInformation; 

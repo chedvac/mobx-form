@@ -1,7 +1,7 @@
-import validationsManagerFactory from 'validations/core/validationsManager';
+import validationsManagerFactory from 'vmValidations/validationsManager';
 import ValidationState from 'core/validationState';
 import PropTypes from 'prop-types';
-import { autorun } from 'mobx';
+import { reaction } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
 import ValidateableBehavior from 'core/validateableBehavior';
@@ -36,7 +36,11 @@ export default class ComplexType {
     this.createObservableValidation(newValidateable);
   }
   createObservableValidation(newValidateable) {
-    autorun(() => newValidateable.validate(this[newValidateable.name]));
+    reaction(
+      () => newValidateable,
+      newValidateable => newValidateable.validate(this[newValidateable.name])
+    );
+    //autorun(() => newValidateable.validate(this[newValidateable.name]));
   }
 
   /**     

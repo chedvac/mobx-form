@@ -1,6 +1,6 @@
 import configuration from './mobxConfiguration';
 import ValidationState from 'core/validationState';
-import validationsManagerFactory from 'validations/core/validationsManager';
+import validationsManagerFactory from 'vmValidations/validationsManager';
 
 export default class ValidateableBehavior {
   constructor(property) {
