@@ -3,13 +3,13 @@ import ValidationState from 'core/validationState';
 import validationsManagerFactory from 'validations/core/validationsManager';
 
 export default class ValidateableBehavior {
-  constructor(property) {
-    this.name = property.name;
+  constructor(settings) {
+    this.name = settings.name;
     this.validationState = new ValidationState();
     this.validationsManager = new validationsManagerFactory(
-      property.validations || []
+      settings.validations || []
     );
-    this.dependedObservables = property.dependedObservables || {};
+    this.dependedObservables = settings.dependedObservables || {};
   }
 
   validate(value) {

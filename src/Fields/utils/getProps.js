@@ -7,8 +7,8 @@ export function getPropsField(store, name) {
     // update: store['set_' + name],
     update: store.getAction(name),
     field: store[name],
-    message: store.validateablesProperties
-      ? store.validateablesProperties[name].validationState.message
+    message: store.validateablesSettings
+      ? store.validateablesSettings[name].validationState.message
       : ''
   };
 }
