@@ -1,10 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from './hocs/control';
-import field from './hocs/field';
+import control from 'mobx-react-form/control';
+import field from './field';
 import TextareaAutosize from 'react-textarea-autosize';
-
-import './CSS/Textarea.css';
 
 @observer
 class Textarea extends React.Component {

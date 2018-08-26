@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import Input from '../../../../../Fields/Input';
-import Textarea from '../../../../../Fields/Textarea';
-import Select from '../../../../../Fields/Select';
-import Checkbox from '../../../../../Fields/Checkbox';
-import DatePicker from '../../../../../Fields/DatePicker/DatePicker';
-import { getPropsField } from '../../../../../Fields/utils/getProps';
+import Input from 'react-ui-components/Input';
+import Textarea from 'react-ui-components/Textarea';
+import Select from 'react-ui-components/Select';
+import Checkbox from 'react-ui-components/Checkbox';
+import DatePicker from 'react-ui-components/DatePicker/DatePicker';
+import { getPropsField } from 'mobx-react-form/getProps';
 import City from '../../../../../components/city/city';
 
 @inject('applicationData')

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from './hocs/control';
+import control from 'mobx-react-form/control';
 import { Label } from './utils/Label';
 import { ErrorMessage } from './utils/ErrorMessage';
 

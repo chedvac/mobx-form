@@ -1,6 +1,6 @@
-import React from "react";
-import { Label } from "../utils/Label";
-import { ErrorMessage } from "../utils/ErrorMessage";
+import React from 'react';
+import { Label } from './utils/Label';
+import { ErrorMessage } from './utils/ErrorMessage';
 
 function field(Component) {
   return class extends React.Component {
