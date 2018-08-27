@@ -18,15 +18,8 @@ const config = {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         query: {
-          presets: [
-            'babel-preset-es2015',
-            'babel-preset-es2017',
-            'es2015',
-            'es2017',
-            'react',
-            'stage-2'
-          ],
-          plugins: ['transform-class-properties', 'transform-decorators-legacy']
+          presets: ['react', 'stage-2'],
+          plugins: ['transform-decorators-legacy']
         },
         exclude: /node_modules/
       },

@@ -95,11 +95,6 @@ export default class PersonalInformation extends React.Component {
             rows={4}
             isAutoResize={false}
           />
-          <DatePicker
-            className="col-md-4"
-            label={this.currentResources().birthDate}
-            {...getPropsField(userDetails, 'birthDate')}
-          />
 
           <Select
             className="col-md-4"
