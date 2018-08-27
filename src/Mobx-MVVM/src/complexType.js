@@ -1,11 +1,12 @@
-import validationsManagerFactory from 'validations/core/validationsManager';
-import ValidationState from 'core/validationState';
+import validationsManagerFactory from 'vmValidations/validationsManager';
+import validationState from 'vmValidations/validationState';
 import PropTypes from 'prop-types';
-import { autorun } from 'mobx';
+import { reaction, autorun } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
 import ValidateableBehavior from 'core/validateableBehavior';
 import ModelMemberBehavior from 'core/modelMemberBehavior';
+import { observable, runInAction } from 'mobx';
 
 export default class ComplexType {
   constructor(settings = {}) {
@@ -15,7 +16,7 @@ export default class ComplexType {
     this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
       settings.validations || []
     );
-    this.validationState = new ValidationState(); //todo: should be {messages<list>, isvalid}
+    this.validationState = observable(validationState); //todo: should be {messages<list>, isvalid}
 
     fp.forOwn(value => {
       this.generateModelMember(value);
@@ -33,7 +34,10 @@ export default class ComplexType {
   generateValidateable(propertySettings) {
     const validateable = new ValidateableBehavior(propertySettings);
     this.validateablesSettings[validateable.name] = validateable;
-    autorun(() => validateable.validate(this[validateable.name]));
+    reaction(
+      () => this[validateable.name],
+      value => validateable.validate(value)
+    );
   }
 
   /**     
@@ -57,11 +61,16 @@ export default class ComplexType {
 */
   validate() {
     const validationResult = this.validationsManager.validate(this);
-    this.validationState.setValidationState(validationResult);
+
+    runInAction(() => {
+      Object.assign(this.validationState, validationResult);
+    });
     const propertiesValidationResult = this.validateModel();
-    this.validationState.setIsValid(
-      propertiesValidationResult && validationResult.isValid
-    );
+    runInAction(() => {
+      Object.assign(this.validationState, {
+        isValid: propertiesValidationResult && validationResult.isValid
+      });
+    });
     return this.validationState.isValid;
   }
   /**     
@@ -84,6 +93,21 @@ export default class ComplexType {
     return instance instanceof ComplexType
       ? instance.validate()
       : this.validateablesSettings[name].validate(this[name]);
+  }
+  /**     
+    * @memberof ComplexType         
+    * @function "addValidations"
+    * @description add Validations to existing property
+    * @param {string} propertyName propertyName
+    * @param {array} validations validations to add
+    * @return {void} 
+    * @example 
+      PersonalInfo.addValidations('firstName',[ maxlength({ value: 15 })]);
+    */
+  addValidations(propertyName, validations) {
+    this.validateablesSettings[propertyName].validationsManager.addValidations(
+      validations
+    );
   }
   /**     
   * @memberof ComplexType         

@@ -6,6 +6,9 @@ export default class validationsManager {
   constructor(validations) {
     this.validations = concatArray(validations);
   }
+  addValidations = validations => {
+    this.validations = concatArray(validations, this.validations);
+  };
   setValidations = validations => {
     this.validations = concatArray(validations, this.validations);
   };
