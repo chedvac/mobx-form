@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
-import ComponentsDemo from './componentsDemo';
+import ComponentsDemo from '_Demo/componentsDemo';
 import { withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 
