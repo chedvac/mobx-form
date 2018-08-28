@@ -8,10 +8,16 @@ import DatePicker from 'reactUiComponents/DatePicker/DatePicker';
 import { getPropsField } from 'mobxReactForm/utils/getProps';
 import City from '../../../../../components/city/city';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-const styles = {
+import Row from 'reactUiComponents/core/row';
+import SubTitle from 'reactUiComponents/core/subTitle';
+import BlueButton from 'reactUiComponents/core/blueButton';
+import WhiteButton from 'reactUiComponents/core/whiteButton';
+
+const styles = theme => ({
   root: { flexGrow: 1 }
-};
+});
 
 @withStyles(styles)
 @inject('applicationData')
@@ -68,35 +74,45 @@ export default class PersonalInformation extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
-          <Input
-            xs={3}
-            label={this.currentResources().firstName}
-            {...getPropsField(userDetails, 'firstName')}
-          />
-          <Input
-            xs={3}
-            label={this.currentResources().lastName}
-            {...getPropsField(userDetails, 'lastName')}
-          />
-          <Input
-            xs={3}
-            label={this.currentResources().age}
-            {...getPropsField(userDetails, 'age')}
-          />
-          <Input
-            xs={3}
-            label={this.currentResources().fatherAge}
-            {...getPropsField(userDetails, 'fatherAge')}
-          />
-
-          <Textarea
-            xs={8}
-            label={this.currentResources().comments}
-            {...getPropsField(userDetails, 'comments')}
-            rows={3}
-            isAutoResize={false}
-          />
+        <Grid container>
+          <SubTitle>דוגמא לשדות רגילים</SubTitle>
+          <Row>
+            <Input
+              xs={4}
+              label={this.currentResources().firstName}
+              {...getPropsField(userDetails, 'firstName')}
+            />
+            <Input
+              xs={4}
+              label={this.currentResources().lastName}
+              {...getPropsField(userDetails, 'lastName')}
+            />
+            <Input
+              xs={4}
+              label={this.currentResources().age}
+              {...getPropsField(userDetails, 'age')}
+            />
+          </Row>
+          <Row>
+            <Input
+              xs={12}
+              label={this.currentResources().fatherAge}
+              {...getPropsField(userDetails, 'fatherAge')}
+            />
+          </Row>
+          <Row>
+            <WhiteButton>לשלב הקודם</WhiteButton>
+            <BlueButton>לשלב הבא</BlueButton>
+          </Row>
+          <Row>
+            <Textarea
+              xs={8}
+              label={this.currentResources().comments}
+              {...getPropsField(userDetails, 'comments')}
+              rows={3}
+              isAutoResize={false}
+            />
+          </Row>
           <br />
           <DatePicker
             xs={3}
