@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
+import Tab3 from './tabs/Tab3/tab3';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import Router from 'reactUiComponents/navigation/Router';
 import Toolbar from '../components/toolbar/Toolbar';
@@ -36,6 +37,12 @@ export default class ComponentsDemo extends Component {
         name: 'טבלאות',
         path: '/Tables',
         component: Tables
+      }),
+      new RouteSettings({
+        number: '3',
+        name: 'טאב 3',
+        path: '/Tab3',
+        component: Tab3
       })
     ];
     // const RouterIn = new Router({ routeSettings: tabs });
