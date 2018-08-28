@@ -13,6 +13,12 @@ module.exports = function override(config, env) {
   config.resolve.alias.core = path.resolve('src/Mobx-MVVM/src');
   config.resolve.alias.utils = path.resolve('src/utils/src');
   config.resolve.alias.mobxReactForm = path.resolve('src/mobx-react-form/src');
-  config.resolve.alias.reactUiComponents = path.resolve('src/react-ui-components/src');
+  config.resolve.alias.reactUiComponents = path.resolve(
+    'src/react-ui-components/src'
+  );
+  config.resolve.alias.reactNavigationRouter = path.resolve(
+    'src/react-navigation-router/src'
+  );
+
   return config;
 };

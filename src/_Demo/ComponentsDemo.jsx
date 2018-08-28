@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
-import TabSettings from '../components/navigation/TabSettings';
-import TabsRouter from '../components/navigation/Router';
+import RouteSettings from 'reactNavigationRouter/RouteSettings';
+import Router from 'reactUiComponents/navigation/Router';
 import Toolbar from '../components/toolbar/Toolbar';
 import { inject } from 'mobx-react';
+import Container from 'reactUiComponents/Containers/Container';
 
 export default class ComponentsDemo extends Component {
   // destruct non-valid props
@@ -13,27 +14,31 @@ export default class ComponentsDemo extends Component {
   }
 
   render() {
+    const TablesStepper = Container(TablesTab);
+    const SimpleFieldsStepper = Container(SimpleFieldsTab);
+
     const Tables = inject(stores => ({
       tables: this.props.rootStore.tablesTab
-    }))(TablesTab);
+    }))(TablesStepper);
     const SimpleFields = inject(stores => ({
       simpleFields: this.props.rootStore.simpleFieldsTab
-    }))(SimpleFieldsTab);
+    }))(SimpleFieldsStepper);
+
     const tabs = [
-      new TabSettings({
+      new RouteSettings({
         number: '1',
         name: 'לשדות רגילים',
         path: '/SimpleFields',
         component: SimpleFields
       }),
-      new TabSettings({
+      new RouteSettings({
         number: '2',
         name: 'טבלאות',
         path: '/Tables',
         component: Tables
       })
     ];
-
+    // const RouterIn = new Router({ routeSettings: tabs });
     console.log('rootStore', this.props.rootStore);
 
     return (
@@ -43,7 +48,7 @@ export default class ComponentsDemo extends Component {
         }}
       >
         <Toolbar />
-        <TabsRouter routeSettings={tabs} />
+        <Router routeSettings={tabs} />
         <div className="row">
           <div className="small-12 columns">
             <button
