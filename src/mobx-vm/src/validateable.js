@@ -1,4 +1,4 @@
-import ComplexType from 'core/complexType';
+import ComplexType from 'mobx-vm/complexType';
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
 export default function validateable(settings = {}) {
@@ -6,20 +6,11 @@ export default function validateable(settings = {}) {
     {
       target: PropTypes.instanceOf(ComplexType)
     },
-    function validateableDecorator(target, name, descriptor) {
-    
-      const defaultValue = descriptor.value
-        ? descriptor.value
-        : descriptor.initializer
-          ? descriptor.initializer.call(target)
-          : undefined;
+    function validateableDecorator(target, name) {
       target.setValidateableSettings({
         name,
-        defaultValue,
         ...settings
       });
-     
-      return Object.getOwnPropertyDescriptor(target, name);
     }
   );
 }

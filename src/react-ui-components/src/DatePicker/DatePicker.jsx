@@ -51,4 +51,4 @@ class DatePicker extends React.Component {
     );
   }
 }
-export default field(control(DatePicker));
+export default control(DatePicker);

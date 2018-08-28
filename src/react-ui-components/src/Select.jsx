@@ -45,4 +45,4 @@ class BaseSelect extends React.Component {
     );
   }
 }
-export default field(control(BaseSelect));
+export default control(BaseSelect);

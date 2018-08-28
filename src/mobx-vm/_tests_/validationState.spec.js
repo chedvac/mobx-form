@@ -1,4 +1,4 @@
-import ValidationState from 'core/validationState';
+import ValidationState from 'mobx-vm/validationState';
 import { isObservableProp } from 'mobx';
 let ValidationStateInst;
 beforeEach(() => {

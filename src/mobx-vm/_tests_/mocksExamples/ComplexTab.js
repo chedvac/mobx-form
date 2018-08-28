@@ -1,6 +1,6 @@
-import ComplexType from 'core/complexType';
-import validateable from 'core/validateable';
-import modelProp1 from 'core/modelProp';
+import ComplexType from 'mobx-vm/complexType';
+import validateable from 'mobx-vm/validateable';
+import modelProp1 from 'mobx-vm/modelProp';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 // console.log(modelProp1.default);

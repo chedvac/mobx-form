@@ -1,11 +1,11 @@
-import validationsManagerFactory from 'validations/core/validationsManager';
-import ValidationState from 'core/validationState';
+import validationsManagerFactory from 'vm-validations/validationsManager';
+import ValidationState from 'mobx-vm/validationState';
 import PropTypes from 'prop-types';
-import { autorun } from 'mobx';
+import { reaction } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
-import ValidateableBehavior from 'core/validateableBehavior';
-import ModelPropBehavior from 'core/modelPropBehavior';
+import ValidateableBehavior from 'mobx-vm/validateableBehavior';
+import ModelPropBehavior from 'mobx-vm/modelPropBehavior';
 
 export default class ComplexType {
   constructor(settings = {}) {
@@ -31,17 +31,18 @@ export default class ComplexType {
     this.modelPropsProperties[newModelProp.name] = newModelProp;
   }
   generateValidateable(propertySettings) {
-    const newValidateable = new ValidateableBehavior(
-      propertySettings
-    );
+    const newValidateable = new ValidateableBehavior(propertySettings);
     this.validateablesProperties[newValidateable.name] = newValidateable;
     this.createObservableValidation(newValidateable);
-
   }
   createObservableValidation(newValidateable) {
-    autorun(() => newValidateable.validate(this[newValidateable.name]));
+    reaction(
+      () => newValidateable,
+      newValidateable => newValidateable.validate(this[newValidateable.name])
+    );
+    //autorun(() => newValidateable.validate(this[newValidateable.name]));
   }
-  
+
   /**     
 * @memberof ComplexType         
 * @function "getAction"
@@ -134,8 +135,7 @@ ComplexType.prototype.setValidateableSettings = assertParametersType(
   { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
   function setValidateableSettings(settings) {
     //'this'- every class that extends ComplexType
-    this._validateablesSettings =
-      this._validateablesSettings || {};
+    this._validateablesSettings = this._validateablesSettings || {};
     this._validateablesSettings[settings.name] = settings;
   }
 );

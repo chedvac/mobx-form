@@ -1,6 +1,6 @@
 import PersonalInformation from './containers/PersonalInformation/store';
-import ComplexType from 'core/complexType';
-import modelProp from 'core/modelProp';
+import ComplexType from 'mobx-vm/complexType';
+import modelProp from 'mobx-vm/modelProp';
 
 class SimpleFieldsTab extends ComplexType {
   constructor() {

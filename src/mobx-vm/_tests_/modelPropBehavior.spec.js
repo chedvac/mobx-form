@@ -1,4 +1,4 @@
-import ModelPropBehavior from 'core/modelPropBehavior';
+import ModelPropBehavior from 'mobx-vm/modelPropBehavior';
 
 let modelProp;
 beforeAll(() => {

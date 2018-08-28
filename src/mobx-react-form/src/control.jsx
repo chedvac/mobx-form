@@ -1,5 +1,7 @@
 import React from 'react';
 import { enableUniqueIds } from 'react-html-id';
+import { format } from 'utils/stringExtension';
+import { autorun } from 'mobx';
 
 function control(WrappedComponent) {
   return class extends React.Component {
@@ -7,45 +9,51 @@ function control(WrappedComponent) {
       super(props);
       enableUniqueIds(this);
       this.state = {
-        value: props.field
+        value: props.value,
+        message: props.validationState.message
       };
-      this.updateStore = this.updateStore.bind(this);
-      this.updateState = this.updateState.bind(this);
+      this.handleBlur = this.handleBlur.bind(this);
+      this.handleChange = this.handleChange.bind(this);
     }
+
+    reactionValue = autorun(() => {
+      this.setState({ value: this.props.value });
+    });
+
+    reactionMessage = autorun(() => {
+      this.setState({ message: this.props.validationState.message });
+    });
 
     getEventValue = e => {
       return e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     };
 
-    updateStore = e => {
+    handleBlur = e => {
       const newValue = this.getEventValue(e);
       this.props.update(newValue);
+      this.setState({ message: this.props.validationState.message });
     };
 
-    updateState = e => {
-      this.setState({ value: this.getEventValue(e) });
-    };
-
-    shouldComponentUpdate(nextProps, nextState) {
-      if (
-        this.props.field !== nextProps.field &&
-        this.state.value !== nextProps.field
-      ) {
-        //
-        this.setState({ value: nextProps.field });
-        return true;
+    handleChange = e => {
+      const newValue = this.getEventValue(e);
+      const validatePattern = this.props.validateCharsPattern(newValue);
+      if (validatePattern.isValid) {
+        this.setState({ value: newValue, message: '' });
+      } else {
+        this.setState({ message: validatePattern.message });
       }
-      return true;
-    }
+    };
 
     render() {
+      const message = format(this.state.message, this.props.label);
       return (
         <WrappedComponent
           {...this.props}
-          {...this.state}
+          value={this.state.value}
+          message={message}
           id={this.lastUniqueId()}
-          onChange={this.updateState}
-          onBlur={this.updateStore}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
         />
       );
     }

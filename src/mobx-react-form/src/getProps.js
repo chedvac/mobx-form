@@ -3,12 +3,21 @@ export function getPropsField(store, name) {
   //             store.propertiesManager.properties[name] = store.propertiesManager.properties[name] ?store.propertiesManager.properties[name] : {@observable message: '', @observable isValid: ''};
 
   // }
+  const {
+    maxlength,
+    minlength,
+    pattern,
+    required
+  } = store.validateablesSettings[name].validationsManager;
   return {
-    // update: store['set_' + name],
     update: store.getAction(name),
-    field: store[name],
-    message: store.validateablesProperties
-      ? store.validateablesProperties[name].validationState.message
-      : ''
+    value: store[name], //todo: not fire reactionValue
+    validationState: store.validateablesSettings[name].validationState,
+    validateCharsPattern:
+      store.validateablesSettings[name].validationsManager.validateCharsPattern,
+    maxlength,
+    minlength,
+    pattern,
+    required
   };
 }

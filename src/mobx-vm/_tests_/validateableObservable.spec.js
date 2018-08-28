@@ -1,4 +1,4 @@
-import validateable from 'core/validateable';
+import validateable from 'mobx-vm/validateable';
 import ValidationsManager from 'validations/core/validationsManager';
 
 jest.mock('../../validations/src/core/validationsManager');

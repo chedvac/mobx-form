@@ -1,7 +1,7 @@
 import { action, computed, autorun, observable } from 'mobx';
-import validateable from 'core/validateable';
-import modelProp from 'core/modelProp';
-import ComplexType from 'core/complexType';
+import validateable from 'mobx-vm/validateable';
+import modelProp from 'mobx-vm/modelProp';
+import ComplexType from 'mobx-vm/complexType';
 import { hebrew } from 'validations/rules/text';
 import {
   maxlength,
@@ -16,7 +16,7 @@ import {
   lessThan
 } from 'validations/rules/number';
 import { sumAges } from './validations';
-import { generateAsyncValidation } from 'validations/core/validationsFactory';
+import { generateAsyncValidation } from 'vm-validations/validationsFactory';
 import axios from 'axios';
 const myRequest = function(value) {
   return axios
@@ -34,8 +34,7 @@ class PersonalInformation extends ComplexType {
 
   constructor() {
     super();
-  
-   
+
     // this.setPropertiesReferences();
     // this.propertiesManager.properties.fatherAge.dependedObservables = {
     //   age: this.propertiesManager.properties.age.ref
@@ -51,12 +50,13 @@ class PersonalInformation extends ComplexType {
   @modelProp({ reset: () => console.log('not reset FirstName') })
   @validateable({
     validations: [
-      maxlength({
-        value: 15
+      maxlength({ value: 15 }),
+      minlength({
+        value: 2,
+        message: () => ({ hebrew: 'my minlength message!!' })
       }),
-      minlength({ value: 2 }),
       required(),
-      hebrew()
+      hebrew({ message: () => ({ hebrew: 'my hebrew message!!' }) })
     ]
   })
   firstName = '';
@@ -67,11 +67,14 @@ class PersonalInformation extends ComplexType {
       maxlength({
         value: 15,
         message: () => ({ hebrew: 'too long...' })
-      })
+      }),
+      minlength({ value: 2 }),
+      hebrew()
     ]
   })
   lastName = '';
 
+  @observable
   @modelProp()
   @validateable({
     validations: [
@@ -93,10 +96,12 @@ class PersonalInformation extends ComplexType {
   //     validations: [dependedGreaterThan({ number: 'age' })]
   //   })
   //   fatherAge = 0;
-
+  @observable
   @modelProp()
   @validateable({
     validations: [
+      maxlength({ value: 15 }),
+      minlength({ value: 2 }),
       greaterThan({
         value: 20
         // compareToName: 'compareToName',
@@ -106,32 +111,42 @@ class PersonalInformation extends ComplexType {
   })
   fatherAge = 0;
 
+  @observable
   @modelProp()
   @validateable({
     validations: [] //conditionRequired({ condition: 'isAdult' })
   })
   fatherName = 0;
 
+  @observable
   @modelProp()
   @validateable({
     validations: [
       generateAsyncValidation({
         name: 'tryAsyncValidation',
-        message: 'my default error',
+        message: () => 'my default error',
         request: myRequest
       })
     ]
   })
   comments = '';
+
+  @observable
   @modelProp()
   @validateable({ validations: [] })
   status = 'true';
+
+  @observable
   @modelProp()
   @validateable({ validations: [] })
   agreement = '';
+
+  @observable
   @modelProp()
   @validateable({ validations: [] })
   city = '';
+
+  @observable
   @modelProp()
   @validateable({ validations: [] })
   birthDate = '';
@@ -141,7 +156,7 @@ class PersonalInformation extends ComplexType {
   set_firstName(value) {
     this.firstName = value;
   }
-  
+
   @action.bound
   set_birthDate(value) {
     this.birthDate = value;

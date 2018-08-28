@@ -1,4 +1,4 @@
-import { generateBasicValidation } from '../../../../../validations/src/core/validationsFactory';
+import { generateBasicValidation } from 'vm-validations/validationsFactory';
 
 export function sumAges(params) {
   let { number } = params;
