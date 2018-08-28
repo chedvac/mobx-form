@@ -1,10 +1,10 @@
 import ComplexType from 'core/complexType';
 import validateable from 'core/validateable';
-import modelProp1 from 'core/modelProp';
+import modelMember1 from 'core/modelMember';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
-// console.log(modelProp1.default);
-const modelProp = modelProp1.default;
+// console.log(modelMember1.default);
+const modelMember = modelMember1.default;
 export class Complex extends ComplexType {
   constructor(settings) {
     super(settings);
@@ -17,7 +17,7 @@ export default class ComplexTab extends ComplexType {
     super(settings);
     this.subComplex = new Complex();
   }
-  @modelProp()
+  @modelMember()
   @validateable({
     validations: [
       hebrew(),
@@ -25,7 +25,7 @@ export default class ComplexTab extends ComplexType {
     ]
   })
   agreement = '';
-  @modelProp()
+  @modelMember()
   @validateable({
     validations: [
       hebrew(),
@@ -33,5 +33,5 @@ export default class ComplexTab extends ComplexType {
     ]
   })
   firstName = 'יעל';
-  @modelProp() subComplex;
+  @modelMember() subComplex;
 }

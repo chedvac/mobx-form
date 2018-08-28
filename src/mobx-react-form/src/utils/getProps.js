@@ -8,14 +8,13 @@ export function getPropsField(store, name) {
     minlength,
     pattern,
     required
-  } = store.validateablesProperties[name].validationsManager;
+  } = store.validateablesSettings[name].validationsManager;
   return {
-    update: store['set_' + name],
-    value: store.validateablesProperties[name].ref,
-    validationState: store.validateablesProperties[name].validationState,
+    update: store.getAction(name),
+    value: store[name], //todo: not fire reactionValue
+    validationState: store.validateablesSettings[name].validationState,
     validateCharsPattern:
-      store.validateablesProperties[name].validationsManager
-        .validateCharsPattern,
+      store.validateablesSettings[name].validationsManager.validateCharsPattern,
     maxlength,
     minlength,
     pattern,

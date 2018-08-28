@@ -1,4 +1,4 @@
-export default function modelProp(settings = {}) {
+export default function modelMember(settings = {}) {
   return function(target, name, descriptor) {
     const defaultValue = descriptor
       ? descriptor.initializer
@@ -6,7 +6,7 @@ export default function modelProp(settings = {}) {
         : descriptor.value
       : undefined;
 
-    target.setModelPropSettings({
+    target.setModelMemberSettings({
       name,
       defaultValue,
       ...settings

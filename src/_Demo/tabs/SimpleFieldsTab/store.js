@@ -1,6 +1,6 @@
 import PersonalInformation from './containers/PersonalInformation/store';
 import ComplexType from 'core/complexType';
-import modelProp from 'core/modelProp';
+import modelMember from 'core/modelMember';
 
 class SimpleFieldsTab extends ComplexType {
   constructor() {
@@ -8,7 +8,7 @@ class SimpleFieldsTab extends ComplexType {
     this.userDetails = new PersonalInformation();
  
   }
-  @modelProp({reset:{}}) userDetails;
+  @modelMember({reset:{}}) userDetails;
  
 }
 

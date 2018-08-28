@@ -1,6 +1,6 @@
 import { action, computed, autorun, observable } from 'mobx';
 import validateable from 'core/validateable';
-import modelProp from 'core/modelProp';
+import modelMember from 'core/modelMember';
 import ComplexType from 'core/complexType';
 import { hebrew } from 'validations/rules/text';
 import {
@@ -48,7 +48,7 @@ class PersonalInformation extends ComplexType {
     };
   }
   @observable
-  @modelProp({ reset: () => console.log('not reset FirstName') })
+  @modelMember({ reset: () => console.log('not reset FirstName') })
   @validateable({
     validations: [
       maxlength({ value: 15 }),
@@ -62,7 +62,7 @@ class PersonalInformation extends ComplexType {
   })
   firstName = '';
   @observable
-  @modelProp({ reset: () => false })
+  @modelMember({ reset: () => false })
   @validateable({
     validations: [
       maxlength({
@@ -76,7 +76,7 @@ class PersonalInformation extends ComplexType {
   lastName = '';
   
   @observable
-  @modelProp()
+  @modelMember()
   @validateable({
     validations: [
       lessThan({
@@ -94,13 +94,13 @@ class PersonalInformation extends ComplexType {
     return this.age < 18;
   }
 
-  //   @modelProp()
+  //   @modelMember()
   //   @validateable({
   //     validations: [dependedGreaterThan({ number: 'age' })]
   //   })
   //   fatherAge = 0;
   @observable
-  @modelProp()
+  @modelMember()
   @validateable({
     validations: [
       maxlength({ value: 15 }),
@@ -115,14 +115,14 @@ class PersonalInformation extends ComplexType {
   fatherAge = 0;
   
   @observable
-  @modelProp()
+  @modelMember()
   @validateable({
     validations: [] //conditionRequired({ condition: 'isAdult' })
   })
   fatherName = 0;
 
   @observable
-  @modelProp()
+  @modelMember()
   @validateable({
     validations: [
       generateAsyncValidation({
@@ -135,22 +135,22 @@ class PersonalInformation extends ComplexType {
   comments = '';
   
   @observable
-  @modelProp()
+  @modelMember()
   @validateable({ validations: [] })
   status = 'true';
   
   @observable
-  @modelProp()
+  @modelMember()
   @validateable({ validations: [] })
   agreement = '';
 
   @observable
-  @modelProp()
+  @modelMember()
   @validateable({ validations: [] })
   city = '';
 
   @observable
-  @modelProp()
+  @modelMember()
   @validateable({ validations: [] })
   birthDate = '';
 
