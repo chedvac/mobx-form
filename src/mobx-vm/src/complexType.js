@@ -1,46 +1,42 @@
 import validationsManagerFactory from 'vm-validations/validationsManager';
-import ValidationState from 'mobx-vm/validationState';
+import validationState from 'vm-validations/validationState';
 import PropTypes from 'prop-types';
-import { reaction } from 'mobx';
+import { reaction, autorun, runInAction, observable } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
 import ValidateableBehavior from 'mobx-vm/validateableBehavior';
-import ModelPropBehavior from 'mobx-vm/modelPropBehavior';
+import ModelMemberBehavior from 'mobx-vm/modelMemberBehavior';
 
 export default class ComplexType {
   constructor(settings = {}) {
-    this.validateablesProperties = {};
-    this.modelPropsProperties = {};
-
+    this.validateablesSettings = {};
+    this.modelMembersSettings = {};
+    // this.validations = settings.validations||[];
     this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
       settings.validations || []
     );
-    this.validationState = new ValidationState(); //todo: should be {messages<list>, isvalid}
+    this.validationState = observable({ validationState }); //todo: should be {messages<list>, isvalid}
 
     fp.forOwn(value => {
-      this.generateModelProp(value);
-    })(this._modelPropsSettings);
+      this.generateModelMember(value);
+    })(this._modelMembersSettings);
 
     fp.forOwn(value => {
       this.generateValidateable(value);
     })(this._validateablesSettings);
   }
 
-  generateModelProp(propertySettings) {
-    const newModelProp = new ModelPropBehavior(propertySettings);
-    this.modelPropsProperties[newModelProp.name] = newModelProp;
+  generateModelMember(propertySettings) {
+    const modelMember = new ModelMemberBehavior(propertySettings);
+    this.modelMembersSettings[modelMember.name] = modelMember;
   }
   generateValidateable(propertySettings) {
-    const newValidateable = new ValidateableBehavior(propertySettings);
-    this.validateablesProperties[newValidateable.name] = newValidateable;
-    this.createObservableValidation(newValidateable);
-  }
-  createObservableValidation(newValidateable) {
+    const validateable = new ValidateableBehavior(propertySettings);
+    this.validateablesSettings[validateable.name] = validateable;
     reaction(
-      () => newValidateable,
-      newValidateable => newValidateable.validate(this[newValidateable.name])
+      () => this[validateable.name],
+      value => validateable.validate(value)
     );
-    //autorun(() => newValidateable.validate(this[newValidateable.name]));
   }
 
   /**     
@@ -64,11 +60,16 @@ export default class ComplexType {
 */
   validate() {
     const validationResult = this.validationsManager.validate(this);
-    this.validationState.setValidationState(validationResult);
+
+    runInAction(() => {
+      Object.assign(this.validationState, validationResult);
+    });
     const propertiesValidationResult = this.validateModel();
-    this.validationState.setIsValid(
-      propertiesValidationResult && validationResult.isValid
-    );
+    runInAction(() => {
+      Object.assign(this.validationState, {
+        isValid: propertiesValidationResult && validationResult.isValid
+      });
+    });
     return this.validationState.isValid;
   }
   /**     
@@ -81,7 +82,7 @@ export default class ComplexType {
   */
   validateModel() {
     let propertiesState = true;
-    Object.values(this.modelPropsProperties).forEach(property => {
+    Object.values(this.modelMembersSettings).forEach(property => {
       propertiesState = propertiesState && this._validateByType(property.name);
     });
     return propertiesState;
@@ -90,7 +91,22 @@ export default class ComplexType {
     const instance = this[name];
     return instance instanceof ComplexType
       ? instance.validate()
-      : this.validateablesProperties[name].validate(this[name]);
+      : this.validateablesSettings[name].validate(this[name]);
+  }
+  /**     
+    * @memberof ComplexType         
+    * @function "addValidations"
+    * @description add Validations to existing property
+    * @param {string} propertyName propertyName
+    * @param {array} validations validations to add
+    * @return {void} 
+    * @example 
+      PersonalInfo.addValidations('firstName',[ maxlength({ value: 15 })]);
+    */
+  addValidations(propertyName, validations) {
+    this.validateablesSettings[propertyName].validationsManager.addValidations(
+      validations
+    );
   }
   /**     
   * @memberof ComplexType         
@@ -101,7 +117,7 @@ export default class ComplexType {
     PersonalInfo.reset();
   */
   reset() {
-    Object.values(this.modelPropsProperties).forEach(property => {
+    Object.values(this.modelMembersSettings).forEach(property => {
       if (property.reset) {
         property.reset();
       }
@@ -109,12 +125,12 @@ export default class ComplexType {
   }
 
   /**     
-    * @memberof ModelPropsManager        
+    * @memberof ModelMembersManager        
     * @function "map"
     * @description map all properties array
     * @param {object} params
     * @example 
-        modelPropsManager1.map(tab);
+        modelMembersManager1.map(tab);
     */
   @assertParametersType({ params: PropTypes.object })
   map(params) {
@@ -141,17 +157,17 @@ ComplexType.prototype.setValidateableSettings = assertParametersType(
 );
 /**     
 * @memberof ComplexType         
-* @function "setModelPropSettings"
-* @description this function call from modelProp decorators, in classes that extends ComplexType. call in defenition,  not in instance
+* @function "setModelMemberSettings"
+* @description this function call from modelMember decorators, in classes that extends ComplexType. call in defenition,  not in instance
 * @param {object}  settings
 * @example 
-  PersonalInfo.setModelPropSettings({});
+  PersonalInfo.setModelMemberSettings({});
 */
-ComplexType.prototype.setModelPropSettings = assertParametersType(
+ComplexType.prototype.setModelMemberSettings = assertParametersType(
   { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
-  function setModelPropSettings(settings) {
+  function setModelMemberSettings(settings) {
     //'this'- every class that extends ComplexType
-    this._modelPropsSettings = this._modelPropsSettings || {};
-    this._modelPropsSettings[settings.name] = settings;
+    this._modelMembersSettings = this._modelMembersSettings || {};
+    this._modelMembersSettings[settings.name] = settings;
   }
 );

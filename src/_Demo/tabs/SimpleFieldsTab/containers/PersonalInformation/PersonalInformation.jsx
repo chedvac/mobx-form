@@ -8,6 +8,17 @@ import Checkbox from 'react-ui-components/Checkbox';
 import DatePicker from 'react-ui-components/DatePicker/DatePicker';
 import { getPropsField } from 'mobx-react-form/getProps';
 import City from '../../../../../components/city/city';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Row from 'react-ui-components/core/row';
+import SubTitle from 'react-ui-components/core/subTitle';
+import BlueButton from 'react-ui-components/core/blueButton';
+import WhiteButton from 'react-ui-components/core/whiteButton';
+
+const styles = theme => ({
+  root: { flexGrow: 1 }
+});
 
 @inject('applicationData')
 @observer
@@ -59,39 +70,50 @@ export default class PersonalInformation extends React.Component {
   };
 
   render() {
-    const { userDetails, classes } = this.props;
+    const { userDetails } = this.props;
 
     return (
       <div>
-        <div class="row">
-          <Input
-            className="col-md-4"
-            label={this.currentResources().firstName}
-            {...getPropsField(userDetails, 'firstName')}
-          />
-          <Input
-            className="col-md-4"
-            label={this.currentResources().lastName}
-            {...getPropsField(userDetails, 'lastName')}
-          />
-          <Input
-            className="col-md-4"
-            label={this.currentResources().age}
-            {...getPropsField(userDetails, 'age')}
-          />
-          <Input
-            className="col-md-4"
-            label={this.currentResources().fatherAge}
-            {...getPropsField(userDetails, 'fatherAge')}
-          />
-
-          <Textarea
-            className="col-md-8"
-            label={this.currentResources().comments}
-            {...getPropsField(userDetails, 'comments')}
-            rows={4}
-            isAutoResize={false}
-          />
+        <Grid container>
+          <SubTitle>דוגמא לשדות רגילים</SubTitle>
+          <Row>
+            <Input
+              xs={4}
+              label={this.currentResources().firstName}
+              {...getPropsField(userDetails, 'firstName')}
+            />
+            <Input
+              xs={4}
+              label={this.currentResources().lastName}
+              {...getPropsField(userDetails, 'lastName')}
+            />
+            <Input
+              xs={4}
+              label={this.currentResources().age}
+              {...getPropsField(userDetails, 'age')}
+            />
+          </Row>
+          <Row>
+            <Input
+              xs={12}
+              label={this.currentResources().fatherAge}
+              {...getPropsField(userDetails, 'fatherAge')}
+            />
+          </Row>
+          <Row>
+            <WhiteButton>לשלב הקודם</WhiteButton>
+            <BlueButton>לשלב הבא</BlueButton>
+          </Row>
+          <Row>
+            <Textarea
+              xs={8}
+              label={this.currentResources().comments}
+              {...getPropsField(userDetails, 'comments')}
+              rows={3}
+              isAutoResize={false}
+            />
+          </Row>
+          <br />
           <DatePicker
             className="col-md-4"
             label={this.currentResources().birthDate}
@@ -104,18 +126,8 @@ export default class PersonalInformation extends React.Component {
             {...getPropsField(userDetails, 'status')}
             options={this.statusOptions}
           />
+        </Grid>
 
-          {/*
-            <Grid item xs={6} sm={3}>
-            <City {...getPropsField(userDetails, "city")} />
-            </Grid> */}
-
-          {/* <Checkbox
-            className="col-md-4"
-            label={this.currentResources().agreement}
-            {...getPropsField(userDetails, "agreement")}
-          /> */}
-        </div>
         <span className="error-message">{this.props.message}</span>
       </div>
     );

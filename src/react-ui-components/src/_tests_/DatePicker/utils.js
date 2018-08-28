@@ -1,4 +1,4 @@
-import { formatDate, parseDate } from 'reactUiComponents/DatePicker/utils';
+import { formatDate, parseDate } from 'react-ui-components/DatePicker/utils';
 
 describe('formatDate', function() {
   test('return string date', function() {

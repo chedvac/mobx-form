@@ -1,6 +1,6 @@
 import { action } from 'mobx';
 import validateable from 'mobx-vm/validateable';
-import modelProp from 'mobx-vm/modelProp';
+import modelMember from 'mobx-vm/modelMember';
 
 import ComplexType from 'mobx-vm/complexType';
 import { hebrew } from 'validations/rules/text';
@@ -13,10 +13,10 @@ class TablesTab extends ComplexType {
     this.set_email = this.set_email.bind(this);
     this.set_houseNumber = this.set_houseNumber.bind(this);
   }
-  @modelProp()
+  @modelMember()
   @validateable({ validations: [hebrew(), maxlength({ value: 5 })] })
   email = '';
-  @modelProp()
+  @modelMember()
   @validateable()
   houseNumber = '';
   @action

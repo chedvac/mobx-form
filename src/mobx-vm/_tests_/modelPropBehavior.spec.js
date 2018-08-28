@@ -1,31 +1,29 @@
-import ModelPropBehavior from 'mobx-vm/modelPropBehavior';
+import ModelMemberBehavior from 'mobx-vm/modelMemberBehavior';
 
-let modelProp;
+let modelMember;
 beforeAll(() => {
-  modelProp = new ModelPropBehavior();
+  modelMember = new ModelMemberBehavior();
 });
-describe('ModelPropBehavior', () => {
+describe('ModelMemberBehavior', () => {
   describe('define properties:', () => {
     test('setReset', () => {
-      expect(modelProp.setReset).toBeDefined();
+      expect(modelMember.setReset).toBeDefined();
     });
 
     test('setMap', () => {
-      expect(modelProp.setMap).toBeDefined();
+      expect(modelMember.setMap).toBeDefined();
     });
-    
   });
   describe('logic:', () => {
     test('setReset', () => {
       const reset = () => {};
-      modelProp.setReset(reset);
-      expect(modelProp.reset).toBe(reset);
+      modelMember.setReset(reset);
+      expect(modelMember.reset).toBe(reset);
     });
     test('setMap', () => {
       const map = () => {};
-      modelProp.setMap(map);
-      expect(modelProp.map).toBe(map);
+      modelMember.setMap(map);
+      expect(modelMember.map).toBe(map);
     });
-   
   });
 });

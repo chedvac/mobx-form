@@ -1,15 +1,15 @@
 import PersonalInformation from './containers/PersonalInformation/store';
+
 import ComplexType from 'mobx-vm/complexType';
-import modelProp from 'mobx-vm/modelProp';
+import modelMember from 'mobx-vm/modelMember';
 
 class SimpleFieldsTab extends ComplexType {
   constructor() {
     super();
     this.userDetails = new PersonalInformation();
- 
   }
-  @modelProp({reset:{}}) userDetails;
- 
+  @modelMember({ reset: {} })
+  userDetails;
 }
 
 export default SimpleFieldsTab;

@@ -1,25 +1,27 @@
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
+import validationState from 'vm-validations/validationState';
+
 const concatValidationArray = assertParametersType(
   {
-    array: PropTypes.array,
-    type: PropTypes.func
+    validations: PropTypes.array,
+    type: PropTypes.func,
+    baseArray: PropTypes.array
   },
-  function concatValidationArray(array = [], type) {
-    let newArray = [];
-    array.forEach(element => {
+  function concatValidationArray(validations = [], type, baseArray = []) {
+    validations.forEach(element => {
       if (element instanceof type) {
-        newArray = newArray.concat(element.validations);
+        baseArray = baseArray.concat(element.validations);
       } else {
-        newArray.push(element);
+        baseArray.push(element);
       }
     });
-    return newArray;
+    return baseArray;
   }
 );
 
 function getPatternArray(array) {
-  let patternArray = [];
+  const patternArray = [];
   array.forEach(element => {
     if (element.regex) {
       patternArray.push(element.regex);
@@ -61,11 +63,15 @@ export default class ValidationsManager {
     this.failedValidation = this.validations.find(item => {
       return !item.validator(value, observable);
     });
-    return {
+
+    return Object.assign(validationState, {
       message: this.failedValidation
         ? this.failedValidation.message(value, observable).hebrew
         : '',
       isValid: this.failedValidation ? false : true
-    };
+    });
+  };
+  addValidations = validations => {
+    concatValidationArray(validations, ValidationsManager, this.validations);
   };
 }
