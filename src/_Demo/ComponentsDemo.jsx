@@ -14,15 +14,15 @@ export default class ComponentsDemo extends Component {
   }
 
   render() {
-    const TablesStepper = Container(TablesTab);
-    const SimpleFieldsStepper = Container(SimpleFieldsTab);
+    const TablesContainer = Container(TablesTab);
+    const SimpleFieldsContainer = Container(SimpleFieldsTab);
 
     const Tables = inject(stores => ({
       tables: this.props.rootStore.tablesTab
-    }))(TablesStepper);
+    }))(TablesContainer);
     const SimpleFields = inject(stores => ({
       simpleFields: this.props.rootStore.simpleFieldsTab
-    }))(SimpleFieldsStepper);
+    }))(SimpleFieldsContainer);
 
     const tabs = [
       new RouteSettings({
