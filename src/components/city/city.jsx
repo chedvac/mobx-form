@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction, flow } from 'mobx';
 import Select from 'reactUiComponents/Select';
-import request from '../../networking/axiosWrapper';
+import request from 'utils/serviceRequest';
 import qs from 'qs';
 
 @observer
