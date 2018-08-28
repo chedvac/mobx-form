@@ -1,4 +1,4 @@
-import ModelMemberBehavior from 'core/modelMemberBehavior';
+import ModelMemberBehavior from 'mobx-vm/modelMemberBehavior';
 
 let modelMember;
 beforeAll(() => {
@@ -13,7 +13,6 @@ describe('ModelMemberBehavior', () => {
     test('setMap', () => {
       expect(modelMember.setMap).toBeDefined();
     });
-    
   });
   describe('logic:', () => {
     test('setReset', () => {
@@ -26,6 +25,5 @@ describe('ModelMemberBehavior', () => {
       modelMember.setMap(map);
       expect(modelMember.map).toBe(map);
     });
-   
   });
 });

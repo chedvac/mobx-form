@@ -1,5 +1,5 @@
-import ValidationState from 'core/validationState';
-import ValidateableBehavior from 'core/validateableBehavior';
+import ValidationState from 'mobx-vm/validationState';
+import ValidateableBehavior from 'mobx-vm/validateableBehavior';
 import validationsManager from 'validations/core/validationsManager';
 
 let validateable;

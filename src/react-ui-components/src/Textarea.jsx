@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from 'mobxReactForm/control';
+import control from 'mobx-react-form/control';
+import field from './field';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import { withStyles } from '@material-ui/core/styles';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, reaction } from 'mobx-react';
-import control from 'mobxReactForm/control';
+import control from 'mobx-react-form/control';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';

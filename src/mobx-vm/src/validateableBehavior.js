@@ -1,7 +1,7 @@
 import { observable, runInAction } from 'mobx';
 import configuration from './mobxConfiguration';
-import validationState from 'vmValidations/validationState';
-import validationsManagerFactory from 'vmValidations/validationsManager';
+import validationState from 'vm-validations/validationState';
+import validationsManagerFactory from 'vm-validations/validationsManager';
 
 export default class ValidateableBehavior {
   constructor(settings) {

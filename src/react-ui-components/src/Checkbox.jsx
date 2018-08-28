@@ -1,6 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from 'mobxReactForm/control';
+import control from 'mobx-react-form/control';
+import { Label } from './utils/Label';
+import { ErrorMessage } from './utils/ErrorMessage';
 
 @observer
 class Checkbox extends React.Component {
@@ -12,6 +14,8 @@ class Checkbox extends React.Component {
     return (
       <div>
         <input type="checkbox" {...this.props} className="checkbox-field" />
+        <Label {...this.props} />
+        <ErrorMessage message={this.props.message} />
       </div>
     );
   }

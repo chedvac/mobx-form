@@ -1,4 +1,4 @@
-import ComplexType from 'core/complexType';
+import ComplexType from 'mobx-vm/complexType';
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
 export default function validateable(settings = {}) {
@@ -11,7 +11,6 @@ export default function validateable(settings = {}) {
         name,
         ...settings
       });
-
     }
   );
 }

@@ -1,6 +1,6 @@
-import ComplexType from 'core/complexType';
-import validateable from 'core/validateable';
-import modelMember1 from 'core/modelMember';
+import ComplexType from 'mobx-vm/complexType';
+import validateable from 'mobx-vm/validateable';
+import modelProp1 from 'mobx-vm/modelProp';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 // console.log(modelMember1.default);
@@ -9,7 +9,8 @@ export class Complex extends ComplexType {
   constructor(settings) {
     super(settings);
   }
-  @validateable() inSubComplex = false;
+  @validateable()
+  inSubComplex = false;
 }
 
 export default class ComplexTab extends ComplexType {
@@ -19,19 +20,14 @@ export default class ComplexTab extends ComplexType {
   }
   @modelMember()
   @validateable({
-    validations: [
-      hebrew(),
-      maxlength({ value: 5})
-    ]
+    validations: [hebrew(), maxlength({ value: 5 })]
   })
   agreement = '';
   @modelMember()
   @validateable({
-    validations: [
-      hebrew(),
-      maxlength({ value: 5})
-    ]
+    validations: [hebrew(), maxlength({ value: 5 })]
   })
   firstName = 'יעל';
-  @modelMember() subComplex;
+  @modelMember()
+  subComplex;
 }

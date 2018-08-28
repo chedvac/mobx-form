@@ -9,10 +9,16 @@ module.exports = function override(config, env) {
   config.resolve.alias.validations = path.resolve(
     'src/functional-validations/src'
   );
-  config.resolve.alias.vmValidations = path.resolve('src/vm-validations/src');
-  config.resolve.alias.core = path.resolve('src/Mobx-MVVM/src');
+  config.resolve.alias['vm-validations'] = path.resolve(
+    'src/vm-validations/src'
+  );
+  config.resolve.alias['mobx-vm'] = path.resolve('src/mobx-vm/src');
   config.resolve.alias.utils = path.resolve('src/utils/src');
-  config.resolve.alias.mobxReactForm = path.resolve('src/mobx-react-form/src');
-  config.resolve.alias.reactUiComponents = path.resolve('src/react-ui-components/src');
+  config.resolve.alias['react-ui-components'] = path.resolve(
+    'src/react-ui-components/src'
+  );
+  config.resolve.alias['mobx-react-form'] = path.resolve(
+    'src/mobx-react-form/src'
+  );
   return config;
 };
