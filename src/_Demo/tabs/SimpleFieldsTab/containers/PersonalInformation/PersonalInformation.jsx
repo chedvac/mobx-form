@@ -90,7 +90,7 @@ export default class PersonalInformation extends React.Component {
             {...getPropsField(userDetails, 'fatherAge')}
           />
 
-          <Textarea
+          <Input
             xs={8}
             label={this.currentResources().comments}
             {...getPropsField(userDetails, 'comments')}
@@ -122,7 +122,9 @@ export default class PersonalInformation extends React.Component {
             {...getPropsField(userDetails, "agreement")}
           /> */}
         </Grid>
-        <span className="error-message">{this.props.message}</span>
+        <span className="error-message">
+          {userDetails.validationState.messages}
+        </span>
       </div>
     );
   }

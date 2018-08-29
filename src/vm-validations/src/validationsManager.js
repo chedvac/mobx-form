@@ -1,6 +1,6 @@
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
-import validationState from 'vmValidations/validationState';
+import validationState,{validationStateMultyMessages} from 'vmValidations/validationState';
 
 const concatValidationArray = assertParametersType(
   {
@@ -38,7 +38,7 @@ function getPropertyFromArray(array, property) {
 }
 
 export default class ValidationsManager {
-  failedValidation = {};
+  // failedValidation = {};
 
   constructor(validations) {
     this.validations = concatValidationArray(validations, ValidationsManager);
@@ -58,19 +58,46 @@ export default class ValidationsManager {
     };
   };
 
-  validate = (value, observable) => {
-    //observable ??
-    this.failedValidation = this.validations.find(item => {
-      return !item.validator(value, observable);
-    });
-
+   validate = async(value, observable) => {
+    let failedValidation;
+    for (const item of this.validations) {
+        if(!await item.validator(value, observable)){
+          failedValidation=item; 
+          break;
+        }
+    }
     return Object.assign(validationState, {
-      message: this.failedValidation
-        ? this.failedValidation.message(value, observable).hebrew
+      message: failedValidation
+        ? failedValidation.message(value, observable).hebrew
         : '',
-      isValid: this.failedValidation ? false : true
+      isValid: failedValidation ? false : true
     });
   };
+   validateAll = async type => {
+    const messages = [];
+    const isValid = this.validations.every(async item => {
+      let result;
+      try{
+      result = await item.validator(type);
+      }catch(e){
+        result = e//?
+      }
+      result.message ? messages.push(result.message) : null;
+      
+      return result.isValid;
+    });
+    return Object.assign(validationStateMultyMessages, {isValid,messages});
+  };
+  // validateAll = type => {
+  //   const messages = [];
+  //   const isValid = this.validations.every(item => {
+  //     const result = item.validator(type);
+  //     result.message ? messages.push(result.message) : null;
+  //     return result.isValid;
+  //   });
+  //   return Object.assign(validationStateMultyMessages, {isValid,messages});
+  // };
+
   addValidations = validations => {
     concatValidationArray(validations, ValidationsManager, this.validations);
   };

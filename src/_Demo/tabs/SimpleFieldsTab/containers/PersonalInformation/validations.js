@@ -15,9 +15,12 @@ export function sumAges(params) {
     return age + fatherAge === number;
   };
 
-  return generateBasicValidation(
-    { name: 'sumAges', message: `סכום הגילאים חייב להיות ${number}` },
+  return generateBasicValidation({
+    name: 'sumAges',
+    message: () => {
+      hebrew: `סכום הגילאים חייב להיות ${number}`;
+    },
     params,
     validator
-  );
+  });
 }

@@ -1,5 +1,5 @@
 import validationsManagerFactory from 'vmValidations/validationsManager';
-import validationState from 'vmValidations/validationState';
+import { validationStateMultyMessages } from 'vmValidations/validationState';
 import PropTypes from 'prop-types';
 import { reaction, autorun } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
@@ -12,11 +12,11 @@ export default class ComplexType {
   constructor(settings = {}) {
     this.validateablesSettings = {};
     this.modelMembersSettings = {};
-    // this.validations = settings.validations||[];
+    this.validations = settings.validations || [];
     this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
       settings.validations || []
     );
-    this.validationState = observable(validationState); //todo: should be {messages<list>, isvalid}
+    this.validationState = observable(validationStateMultyMessages); //todo: should be {messages<list>, isvalid}
 
     fp.forOwn(value => {
       this.generateModelMember(value);
@@ -25,6 +25,7 @@ export default class ComplexType {
     fp.forOwn(value => {
       this.generateValidateable(value);
     })(this._validateablesSettings);
+    this.validate = this.validate.bind(this);
   }
 
   generateModelMember(propertySettings) {
@@ -59,13 +60,13 @@ export default class ComplexType {
 * @example 
   PersonalInfo.validate();
 */
-  validate() {
-    const validationResult = this.validationsManager.validate(this);
-
+  async validate() {
+    const validationResult = await this.validationsManager.validateAll(this);
     runInAction(() => {
       Object.assign(this.validationState, validationResult);
     });
-    const propertiesValidationResult = this.validateModel();
+
+    const propertiesValidationResult = await this.validateModel();
     runInAction(() => {
       Object.assign(this.validationState, {
         isValid: propertiesValidationResult && validationResult.isValid
@@ -73,6 +74,7 @@ export default class ComplexType {
     });
     return this.validationState.isValid;
   }
+
   /**     
   * @memberof ComplexType         
   * @function "validateModel"
@@ -81,18 +83,22 @@ export default class ComplexType {
   * @example 
     PersonalInfo.validateModel();
   */
-  validateModel() {
+  async validateModel() {
     let propertiesState = true;
-    Object.values(this.modelMembersSettings).forEach(property => {
-      propertiesState = propertiesState && this._validateByType(property.name);
-    });
+    for (const property in this.modelMembersSettings) {
+      if (this.modelMembersSettings.hasOwnProperty(property)) {
+        const isValid = await this._validateByType(property);
+        propertiesState = propertiesState && isValid;
+        // propertiesState = propertiesState && await this._validateByType(property);
+      }
+  }
     return propertiesState;
   }
-  _validateByType(name) {
+  async _validateByType(name) {
     const instance = this[name];
-    return instance instanceof ComplexType
-      ? instance.validate()
-      : this.validateablesSettings[name].validate(this[name]);
+    return await instance instanceof ComplexType
+      ?  instance.validate()
+      :  this.validateablesSettings[name].validate(this[name]);
   }
   /**     
     * @memberof ComplexType         

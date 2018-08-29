@@ -17,14 +17,16 @@ class RootStore extends ComplexType {
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
-  @modelMember() simpleFieldsTab;
-  @modelMember() tablesTab;
+  @modelMember()
+  simpleFieldsTab;
+  @modelMember()
+  tablesTab;
   submitForm() {
     submitAction(this.formInformation.set_isFormSent);
   }
 
-  validateForm() {
-    const isStoreValid = this.validate();
+  async validateForm() {
+    const isStoreValid = await this.validate();
     if (isStoreValid) {
       alert('נתוני הטופס תקינים');
     }

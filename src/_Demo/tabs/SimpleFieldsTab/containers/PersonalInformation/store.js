@@ -20,22 +20,25 @@ import { generateAsyncValidation } from 'vmValidations/validationsFactory';
 import axios from 'axios';
 const myRequest = function(value) {
   return axios
-    .get('http://gov.forms.local/MW/File//', { params: { ID: value } })
+    .get(
+      'https://forms.gov.il/globalData/GetSequence/Gethtmlform.aspx?formType=componentsdemo@test.gov.il'
+    )
     .then(res => {
-      if (res && res.data.statusCode === 0) {
-        return true;
+      if (value === 'error') {
+        throw new Error();
       }
-      throw { error: 'async validaion failed' };
+      return true;
+    })
+    .catch(e => {
+      return false;
     });
 };
 
 class PersonalInformation extends ComplexType {
-  // validations = [sumAges({ number: 60 })];
-
   constructor() {
-    super();
-  
-   
+    const validations = [sumAges({ number: 60 })];
+    super(/*{ validations }*/);
+
     // this.setPropertiesReferences();
     // this.propertiesManager.properties.fatherAge.dependedObservables = {
     //   age: this.propertiesManager.properties.age.ref
@@ -74,19 +77,17 @@ class PersonalInformation extends ComplexType {
     ]
   })
   lastName = '';
-  
+
   @observable
   @modelMember()
   @validateable({
     validations: [
-      lessThan({
-        value: 7,
-        message: () => ({ hebrew: 'fasdghfasghf' })
-      })
+      // lessThan({
+      //   value: 7,
+      //   message: () => ({ hebrew: 'fasdghfasghf' })
+      // })
     ]
-
   })
-  
   age = 15;
 
   @computed
@@ -113,7 +114,7 @@ class PersonalInformation extends ComplexType {
     ]
   })
   fatherAge = 0;
-  
+
   @observable
   @modelMember()
   @validateable({
@@ -127,18 +128,18 @@ class PersonalInformation extends ComplexType {
     validations: [
       generateAsyncValidation({
         name: 'tryAsyncValidation',
-        message: () => 'my default error',
+        message: () => ({ hebrew: 'my default error' }),
         request: myRequest
       })
     ]
   })
   comments = '';
-  
+
   @observable
   @modelMember()
   @validateable({ validations: [] })
   status = 'true';
-  
+
   @observable
   @modelMember()
   @validateable({ validations: [] })
@@ -159,7 +160,7 @@ class PersonalInformation extends ComplexType {
   set_firstName(value) {
     this.firstName = value;
   }
-  
+
   @action.bound
   set_birthDate(value) {
     this.birthDate = value;
@@ -209,4 +210,4 @@ class PersonalInformation extends ComplexType {
 
   //#endregion computeds
 }
-export default PersonalInformation; 
+export default PersonalInformation;
