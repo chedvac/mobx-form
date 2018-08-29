@@ -7,7 +7,7 @@ import ComplexType from 'mobx-vm/complexType';
 //import LanguageStore from '../components/language/store'
 import complexType from 'mobx-vm/complexType';
 
-import submitAction from '../actions/submit';
+// import submitAction from '../actions/submit';
 
 import { toJS } from 'mobx';
 
@@ -24,7 +24,7 @@ class RootStore extends ComplexType {
   @modelMember()
   tablesTab;
   submitForm() {
-    submitAction(this.formInformation.set_isFormSent);
+    // submitAction(this.formInformation.set_isFormSent);
   }
 
   validateForm() {
