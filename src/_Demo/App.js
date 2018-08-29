@@ -13,7 +13,8 @@ import customTheme from 'reactUiComponents/CSS/customTheme';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    direction: 'rtl'
+    direction: 'rtl',
+    backgroundColor: '#fff'
   }
 });
 

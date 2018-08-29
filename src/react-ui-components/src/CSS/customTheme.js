@@ -16,7 +16,6 @@ const customTheme = createMuiTheme({
       width: '100%',
       backgroundColor: lightBasicColor,
       borderRight: '4px solid ' + basicColor,
-      marginTop: '20px',
       padding: '10px 15px'
     }
   },
