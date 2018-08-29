@@ -1,12 +1,11 @@
-import validationsManagerFactory from 'vmValidations/validationsManager';
-import validationState from 'vmValidations/validationState';
+import validationsManagerFactory from 'vm-validations/validationsManager';
+import validationState from 'vm-validations/validationState';
 import PropTypes from 'prop-types';
-import { reaction, autorun } from 'mobx';
+import { reaction, autorun, runInAction, observable } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
-import ValidateableBehavior from 'core/validateableBehavior';
-import ModelMemberBehavior from 'core/modelMemberBehavior';
-import { observable, runInAction } from 'mobx';
+import ValidateableBehavior from 'mobx-vm/validateableBehavior';
+import ModelMemberBehavior from 'mobx-vm/modelMemberBehavior';
 
 export default class ComplexType {
   constructor(settings = {}) {
@@ -16,7 +15,7 @@ export default class ComplexType {
     this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
       settings.validations || []
     );
-    this.validationState = observable(validationState); //todo: should be {messages<list>, isvalid}
+    this.validationState = observable({ validationState }); //todo: should be {messages<list>, isvalid}
 
     fp.forOwn(value => {
       this.generateModelMember(value);

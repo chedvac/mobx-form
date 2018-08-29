@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
-import ComponentsDemo from '_Demo/componentsDemo';
 import { withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 
@@ -21,7 +20,7 @@ class FormSection extends Component {
     const { classes } = this.props;
     return (
       <Grid item xs={12} className={classes.formSection}>
-        <ComponentsDemo {...this.props} />
+        {React.cloneElement(this.props.children, { ...this.props })}
       </Grid>
     );
   }

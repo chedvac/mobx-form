@@ -1,8 +1,8 @@
 import { action } from 'mobx';
-import validateable from 'core/validateable';
-import modelMember from 'core/modelMember';
+import validateable from 'mobx-vm/validateable';
+import modelMember from 'mobx-vm/modelMember';
 
-import ComplexType from 'core/complexType';
+import ComplexType from 'mobx-vm/complexType';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 
