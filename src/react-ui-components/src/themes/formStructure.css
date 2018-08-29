@@ -1,11 +1,11 @@
 @font-face {
   font-family: arimo;
-  src: url(fonts/Arimo-Regular.ttf) format('truetype');
+  src: url(../fonts/Arimo-Regular.ttf) format('truetype');
 }
 
 @font-face {
   font-family: arimo-bold;
-  src: url(fonts/Arimo-Bold.ttf);
+  src: url(../fonts/Arimo-Bold.ttf);
 }
 
 /* body {

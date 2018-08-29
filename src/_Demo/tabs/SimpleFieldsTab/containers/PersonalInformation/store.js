@@ -52,11 +52,13 @@ class PersonalInformation extends ComplexType {
     validations: [
       maxlength({ value: 15 }),
       minlength({
-        value: 2,
-        message: () => ({ hebrew: 'my minlength message!!' })
+        value: 2
+        // message: () => ({ hebrew: 'my minlength message!!' })
       }),
       required(),
-      hebrew({ message: () => ({ hebrew: 'my hebrew message!!' }) })
+      hebrew({
+        // message: () => ({ hebrew: 'my hebrew message!!' })
+      })
     ]
   })
   firstName = '';

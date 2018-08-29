@@ -4,7 +4,7 @@ import '_Demo/index.css';
 import App from '_Demo/App';
 import registerServiceWorker from '_Demo/registerServiceWorker';
 import DevTools from 'mobx-react-devtools';
-import './react-ui-components/src/CSS/formStructure.css';
+import 'react-ui-components/themes/formStructure.css';
 
 ReactDOM.render(
   <React.Fragment>

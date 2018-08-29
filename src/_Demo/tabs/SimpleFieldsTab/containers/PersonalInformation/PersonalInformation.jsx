@@ -1,24 +1,21 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-
-import Input from 'react-ui-components/Input';
-import Textarea from 'react-ui-components/Textarea';
-import Select from 'react-ui-components/Select';
-import Checkbox from 'react-ui-components/Checkbox';
-import DatePicker from 'react-ui-components/DatePicker/DatePicker';
-import { getPropsField } from 'mobx-react-form/getProps';
-import City from '../../../../../components/city/city';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import Row from 'react-ui-components/core/row';
-import SubTitle from 'react-ui-components/core/subTitle';
-import BlueButton from 'react-ui-components/core/blueButton';
-import WhiteButton from 'react-ui-components/core/whiteButton';
 
-const styles = theme => ({
-  root: { flexGrow: 1 }
-});
+import { getPropsField } from 'mobx-react-form/getProps';
+
+import Input from 'react-ui-components/fields/Input';
+import Textarea from 'react-ui-components/fields/Textarea';
+import Select from 'react-ui-components/fields/Select';
+import DatePicker from 'react-ui-components/fields/DatePicker/DatePicker';
+import Row from 'react-ui-components/structure/row';
+import SubTitle from 'react-ui-components/titles/subTitle';
+import BlueButton from 'react-ui-components/buttons/blueButton';
+import WhiteButton from 'react-ui-components/buttons/whiteButton';
+
+// const styles = theme => ({
+//   root: { flexGrow: 1 }
+// });
 
 @inject('applicationData')
 @observer
@@ -78,24 +75,18 @@ export default class PersonalInformation extends React.Component {
           <SubTitle>דוגמא לשדות רגילים</SubTitle>
           <Row>
             <Input
-              xs={4}
               label={this.currentResources().firstName}
               {...getPropsField(userDetails, 'firstName')}
             />
             <Input
-              xs={4}
               label={this.currentResources().lastName}
               {...getPropsField(userDetails, 'lastName')}
             />
             <Input
-              xs={4}
               label={this.currentResources().age}
               {...getPropsField(userDetails, 'age')}
             />
-          </Row>
-          <Row>
             <Input
-              xs={12}
               label={this.currentResources().fatherAge}
               {...getPropsField(userDetails, 'fatherAge')}
             />

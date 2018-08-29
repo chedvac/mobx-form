@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
+import { observer, Provider } from 'mobx-react';
 import './App.css';
 import RootStore from './rootStore';
 import LanguageStore from '../components/language/store';
-import FormSection from 'react-ui-components/formSection';
-import FormHeader from 'react-ui-components/header';
-import { observer, Provider } from 'mobx-react';
+
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import customTheme from 'react-ui-components/CSS/customTheme';
+
+import FormSection from 'react-ui-components/structure/formSection';
+import FormHeader from 'react-ui-components/structure/header';
+import customTheme from 'react-ui-components/themes/customTheme';
+
 import ComponentDemo from './ComponentsDemo';
+
 const styles = theme => ({
   root: {
     flexGrow: 1,

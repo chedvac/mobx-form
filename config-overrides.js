@@ -14,6 +14,7 @@ module.exports = function override(config, env) {
   );
   config.resolve.alias['mobx-vm'] = path.resolve('src/mobx-vm/src');
   config.resolve.alias.utils = path.resolve('src/utils/src');
+  config.resolve.alias.resources = path.resolve('src/resources');
   config.resolve.alias['react-ui-components'] = path.resolve(
     'src/react-ui-components/src'
   );

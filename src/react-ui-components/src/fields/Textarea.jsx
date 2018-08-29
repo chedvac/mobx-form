@@ -1,13 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import control from 'mobx-react-form/control';
-import field from './field';
-import TextareaAutosize from 'react-textarea-autosize';
 
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
-import './CSS/Textarea.css';
 const styles = theme => ({
   textField: {
     float: 'right',
