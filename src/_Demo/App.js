@@ -34,7 +34,7 @@ class App extends Component {
         <CssBaseline />
         <Provider applicationData={applicationData}>
           <Grid container className={classes.root}>
-            <FormHeader />
+            {/* <FormHeader /> */}
             <FormSection rootStore={rootStore} />
           </Grid>
         </Provider>
