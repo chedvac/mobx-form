@@ -1,6 +1,6 @@
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
-import validationState from 'vmValidations/validationState';
+import validationState from 'vm-validations/validationState';
 
 const concatValidationArray = assertParametersType(
   {

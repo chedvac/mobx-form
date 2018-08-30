@@ -1,4 +1,4 @@
-import { generateRegexValidation } from 'vmValidations/validationsFactory';
+import { generateRegexValidation } from 'vm-validations/validationsFactory';
 import validationsManager from '../core/validationsManager';
 import regex from '../regularExpressions/address';
 import messages from '../messages/address';

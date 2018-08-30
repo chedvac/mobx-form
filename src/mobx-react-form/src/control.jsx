@@ -1,6 +1,5 @@
 import React from 'react';
 import { enableUniqueIds } from 'react-html-id';
-import { getEventValue } from './utils';
 import { format } from 'utils/stringExtension';
 import { autorun } from 'mobx';
 
@@ -25,14 +24,18 @@ function control(WrappedComponent) {
       this.setState({ message: this.props.validationState.message });
     });
 
+    getEventValue = e => {
+      return e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    };
+
     handleBlur = e => {
-      const newValue = getEventValue(e);
+      const newValue = this.getEventValue(e);
       this.props.update(newValue);
       this.setState({ message: this.props.validationState.message });
     };
 
     handleChange = e => {
-      const newValue = getEventValue(e);
+      const newValue = this.getEventValue(e);
       const validatePattern = this.props.validateCharsPattern(newValue);
       if (validatePattern.isValid) {
         this.setState({ value: newValue, message: '' });

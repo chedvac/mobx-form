@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
+import { observer, Provider } from 'mobx-react';
 import './App.css';
 import RootStore from './rootStore';
 import LanguageStore from '../components/language/store';
-import FormSection from 'reactUiComponents/formSection';
-import FormHeader from 'reactUiComponents/header';
-import { observer, Provider } from 'mobx-react';
+
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import customTheme from 'reactUiComponents/CSS/customTheme';
+
+import FormSection from 'react-ui-components/structure/formSection';
+import FormHeader from 'react-ui-components/structure/header';
+import customTheme from 'react-ui-components/themes/customTheme';
+
+import ComponentDemo from './componentsDemo';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    direction: 'rtl'
+    direction: 'rtl',
+    backgroundColor: '#fff'
   }
 });
 
@@ -34,8 +39,15 @@ class App extends Component {
         <CssBaseline />
         <Provider applicationData={applicationData}>
           <Grid container className={classes.root}>
+<<<<<<< HEAD
             {/* <FormHeader /> */}
             <FormSection rootStore={rootStore} />
+=======
+            <FormHeader />
+            <FormSection rootStore={rootStore}>
+              <ComponentDemo />
+            </FormSection>
+>>>>>>> acd92d9c65d80064ec8a5894e01b960b67ac1c1d
           </Grid>
         </Provider>
       </MuiThemeProvider>

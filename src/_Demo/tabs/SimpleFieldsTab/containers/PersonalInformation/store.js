@@ -1,7 +1,7 @@
 import { action, computed, autorun, observable } from 'mobx';
-import validateable from 'core/validateable';
-import modelMember from 'core/modelMember';
-import ComplexType from 'core/complexType';
+import validateable from 'mobx-vm/validateable';
+import modelMember from 'mobx-vm/modelMember';
+import ComplexType from 'mobx-vm/complexType';
 import { hebrew } from 'validations/rules/text';
 import {
   maxlength,
@@ -16,7 +16,7 @@ import {
   lessThan
 } from 'validations/rules/number';
 import { sumAges } from './validations';
-import { generateAsyncValidation } from 'vmValidations/validationsFactory';
+import { generateAsyncValidation } from 'vm-validations/validationsFactory';
 import axios from 'axios';
 const myRequest = function(value) {
   return axios
@@ -34,8 +34,7 @@ class PersonalInformation extends ComplexType {
 
   constructor() {
     super();
-  
-   
+
     // this.setPropertiesReferences();
     // this.propertiesManager.properties.fatherAge.dependedObservables = {
     //   age: this.propertiesManager.properties.age.ref
@@ -53,11 +52,13 @@ class PersonalInformation extends ComplexType {
     validations: [
       maxlength({ value: 15 }),
       minlength({
-        value: 2,
-        message: () => ({ hebrew: 'my minlength message!!' })
+        value: 2
+        // message: () => ({ hebrew: 'my minlength message!!' })
       }),
       required(),
-      hebrew({ message: () => ({ hebrew: 'my hebrew message!!' }) })
+      hebrew({
+        // message: () => ({ hebrew: 'my hebrew message!!' })
+      })
     ]
   })
   firstName = '';
@@ -74,7 +75,7 @@ class PersonalInformation extends ComplexType {
     ]
   })
   lastName = '';
-  
+
   @observable
   @modelMember()
   @validateable({
@@ -84,9 +85,7 @@ class PersonalInformation extends ComplexType {
         message: () => ({ hebrew: 'fasdghfasghf' })
       })
     ]
-
   })
-  
   age = 15;
 
   @computed
@@ -113,7 +112,7 @@ class PersonalInformation extends ComplexType {
     ]
   })
   fatherAge = 0;
-  
+
   @observable
   @modelMember()
   @validateable({
@@ -133,12 +132,12 @@ class PersonalInformation extends ComplexType {
     ]
   })
   comments = '';
-  
+
   @observable
   @modelMember()
   @validateable({ validations: [] })
   status = 'true';
-  
+
   @observable
   @modelMember()
   @validateable({ validations: [] })
@@ -159,7 +158,7 @@ class PersonalInformation extends ComplexType {
   set_firstName(value) {
     this.firstName = value;
   }
-  
+
   @action.bound
   set_birthDate(value) {
     this.birthDate = value;
@@ -209,4 +208,4 @@ class PersonalInformation extends ComplexType {
 
   //#endregion computeds
 }
-export default PersonalInformation; 
+export default PersonalInformation;
