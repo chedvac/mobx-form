@@ -1,9 +1,8 @@
 import PersonalInformation from './containers/PersonalInformation/store';
-
-import ComplexType from 'mobx-vm/complexType';
+import ModularViewModel from 'mobx-vm/modularViewModel';
 import modelMember from 'mobx-vm/modelMember';
 
-class SimpleFieldsTab extends ComplexType {
+class SimpleFieldsTab extends ModularViewModel {
   constructor() {
     super();
     this.userDetails = new PersonalInformation();

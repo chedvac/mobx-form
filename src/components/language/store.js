@@ -1,8 +1,8 @@
 import { action } from 'mobx';
 import validateable from 'mobx-vm/validateable';
-import ComplexType from 'mobx-vm/complexType';
+import ModularViewModel from 'mobx-vm/modularViewModel';
 
-class Language extends ComplexType {
+class Language extends ModularViewModel {
   constructor() {
     super();
     const self = this;
@@ -14,7 +14,8 @@ class Language extends ComplexType {
       }
     };
   }
-  @validateable() name = 'hebrew';
+  @validateable()
+  name = 'hebrew';
 }
 
 export default Language;
