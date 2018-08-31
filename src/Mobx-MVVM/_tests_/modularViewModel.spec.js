@@ -34,7 +34,7 @@ beforeEach(() => {
   });
 });
 
-describe('ComplexType constructor', () => {
+describe('ModularViewModel constructor', () => {
   describe('define properties:', () => {
     test('validationState', () => {
       expect(customTab.validationState).toBeDefined();
@@ -43,7 +43,7 @@ describe('ComplexType constructor', () => {
       test('is instanceof validationsManagerFactory', () => {
         expect(customTab.validationsManager).toBeInstanceOf(ValidationsManager);
       });
-      test('constructor call with settings.validations that passed to ComplexType constructor', () => {
+      test('constructor call with settings.validations that passed to ModularViewModel constructor', () => {
         customTab = new ComplexTab(settings);
         expect(ValidationsManager.mock.instances[0][0]).toBe(
           settings.validations
@@ -51,10 +51,14 @@ describe('ComplexType constructor', () => {
       });
     });
     test('ValidateablesManager', () => {
-      expect(customTab.validateablesSettings).toBeInstanceOf(ValidateablesManager);
+      expect(customTab.validateablesSettings).toBeInstanceOf(
+        ValidateablesManager
+      );
     });
     test('ModelMembersManager', () => {
-      expect(customTab.modelMembersSettings).toBeInstanceOf(ModelMembersManager);
+      expect(customTab.modelMembersSettings).toBeInstanceOf(
+        ModelMembersManager
+      );
     });
   });
   describe('loop over _propertiesSettings', () => {
@@ -70,12 +74,12 @@ describe('ComplexType constructor', () => {
         expect(validateableGenerator.mock.calls[0][0].defaultValue).toBe(
           customTab._propertiesSettings.agreement.defaultValue
         );
-        expect(
-          validateableGenerator.mock.calls[0][0].validationsManager
-        ).toBe(customTab._propertiesSettings.agreement.validationsManager);
-        expect(validateableGenerator.mock.calls[0][0].validateablesSettings).toBe(
-          customTab.validateablesSettings
+        expect(validateableGenerator.mock.calls[0][0].validationsManager).toBe(
+          customTab._propertiesSettings.agreement.validationsManager
         );
+        expect(
+          validateableGenerator.mock.calls[0][0].validateablesSettings
+        ).toBe(customTab.validateablesSettings);
       });
       test('firstName', () => {
         expect(validateableGenerator.mock.calls[1][0]).toBeDefined();
@@ -88,12 +92,12 @@ describe('ComplexType constructor', () => {
         expect(validateableGenerator.mock.calls[1][0].defaultValue).toBe(
           customTab._propertiesSettings.firstName.defaultValue
         );
-        expect(
-          validateableGenerator.mock.calls[1][0].validationsManager
-        ).toBe(customTab._propertiesSettings.firstName.validationsManager);
-        expect(validateableGenerator.mock.calls[1][0].validateablesSettings).toBe(
-          customTab.validateablesSettings
+        expect(validateableGenerator.mock.calls[1][0].validationsManager).toBe(
+          customTab._propertiesSettings.firstName.validationsManager
         );
+        expect(
+          validateableGenerator.mock.calls[1][0].validateablesSettings
+        ).toBe(customTab.validateablesSettings);
       });
     });
     describe('call modelMemberGenerator for modelMembersSettings properties', () => {
@@ -101,19 +105,25 @@ describe('ComplexType constructor', () => {
         expect(modelMemberGenerator.mock.calls[0][0]).toBeDefined();
         expect(modelMemberGenerator.mock.calls[0][0].name).toBe('agreement');
         expect(modelMemberGenerator.mock.calls[0][0].descriptor).toBeDefined();
-        expect(modelMemberGenerator.mock.calls[0][0].modelMembersSettings).toBeDefined();
+        expect(
+          modelMemberGenerator.mock.calls[0][0].modelMembersSettings
+        ).toBeDefined();
       });
       test('firstName', () => {
         expect(modelMemberGenerator.mock.calls[1][0]).toBeDefined();
         expect(modelMemberGenerator.mock.calls[1][0].name).toBe('firstName');
         expect(modelMemberGenerator.mock.calls[1][0].descriptor).toBeDefined();
-        expect(modelMemberGenerator.mock.calls[1][0].modelMembersSettings).toBeDefined();
+        expect(
+          modelMemberGenerator.mock.calls[1][0].modelMembersSettings
+        ).toBeDefined();
       });
       test('complex', () => {
         expect(modelMemberGenerator.mock.calls[2][0]).toBeDefined();
         expect(modelMemberGenerator.mock.calls[2][0].name).toBe('complex');
         expect(modelMemberGenerator.mock.calls[2][0].descriptor).toBeDefined();
-        expect(modelMemberGenerator.mock.calls[2][0].modelMembersSettings).toBeDefined();
+        expect(
+          modelMemberGenerator.mock.calls[2][0].modelMembersSettings
+        ).toBeDefined();
       });
     });
   });

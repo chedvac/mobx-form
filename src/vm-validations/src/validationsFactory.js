@@ -92,16 +92,10 @@ export const generateAsyncValidation = assertParametersType(
     })
   },
   function generateAsyncValidation(settings) {
-    const { message } = settings;
-    async function validator(value, result) {
+    async function validator(value) {
       try {
-        const result =  await settings.request(value);
-        console.log('return ',result)
-        return result;
-        // return await settings.request(value);
+        return await settings.request(value);
       } catch (err) {
-        console.log('return false')
-
         return false;
       }
     }

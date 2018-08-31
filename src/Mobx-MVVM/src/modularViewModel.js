@@ -1,14 +1,14 @@
 import validationsManagerFactory from 'vmValidations/validationsManager';
-import { validationStateMultyMessages } from 'vmValidations/validationState';
+import { validationStateMultiMessages } from 'vmValidations/validationState';
 import PropTypes from 'prop-types';
-import { reaction, autorun } from 'mobx';
+import { reaction, action } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
 import ValidateableBehavior from 'core/validateableBehavior';
 import ModelMemberBehavior from 'core/modelMemberBehavior';
-import { observable, runInAction } from 'mobx';
+import { observable } from 'mobx';
 
-export default class ComplexType {
+export default class ModularViewModel {
   constructor(settings = {}) {
     this.validateablesSettings = {};
     this.modelMembersSettings = {};
@@ -16,7 +16,7 @@ export default class ComplexType {
     this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
       settings.validations || []
     );
-    this.validationState = observable(validationStateMultyMessages); //todo: should be {messages<list>, isvalid}
+    this.validationState = observable(validationStateMultiMessages); //todo: should be {messages<list>, isvalid}
 
     fp.forOwn(value => {
       this.generateModelMember(value);
@@ -42,7 +42,7 @@ export default class ComplexType {
   }
 
   /**     
-* @memberof ComplexType         
+* @memberof ModularViewModel         
 * @function "getAction"
 * @description return action of property
 * @return {function} action
@@ -52,31 +52,32 @@ export default class ComplexType {
   getAction(name) {
     return this[`set_${name}`];
   }
+  @action
+  setValidationState(validationState) {
+    Object.assign(this.validationState, validationState);
+  }
   /**     
-* @memberof ComplexType         
+* @memberof ModularViewModel         
 * @function "validate"
-* @description validate complexType and its properties
+* @description validate modularViewModel and its properties
 * @return {bool} manipulation result
 * @example 
   PersonalInfo.validate();
 */
   async validate() {
-    const validationResult = await this.validationsManager.validateAll(this);
-    runInAction(() => {
-      Object.assign(this.validationState, validationResult);
-    });
-
-    const propertiesValidationResult = await this.validateModel();
-    runInAction(() => {
-      Object.assign(this.validationState, {
-        isValid: propertiesValidationResult && validationResult.isValid
-      });
+    const validationResult = await this.validationsManager.validateMultiResults(
+      this
+    );
+    const modelValidationResult = await this.validateModel();
+    this.setValidationState({
+      messages: validationResult.messages,
+      isValid: modelValidationResult && validationResult.isValid
     });
     return this.validationState.isValid;
   }
 
   /**     
-  * @memberof ComplexType         
+  * @memberof ModularViewModel         
   * @function "validateModel"
   * @description validate all model properties
   * @return {bool} properties validation state result
@@ -84,24 +85,23 @@ export default class ComplexType {
     PersonalInfo.validateModel();
   */
   async validateModel() {
-    let propertiesState = true;
+    let modelValid = true;
     for (const property in this.modelMembersSettings) {
       if (this.modelMembersSettings.hasOwnProperty(property)) {
-        const isValid = await this._validateByType(property);
-        propertiesState = propertiesState && isValid;
-        // propertiesState = propertiesState && await this._validateByType(property);
+        const currentPropertyValid = await this._validateByType(property);
+        modelValid = modelValid && currentPropertyValid;
       }
-  }
-    return propertiesState;
+    }
+    return modelValid;
   }
   async _validateByType(name) {
     const instance = this[name];
-    return await instance instanceof ComplexType
-      ?  instance.validate()
-      :  this.validateablesSettings[name].validate(this[name]);
+    return (await instance) instanceof ModularViewModel
+      ? instance.validate()
+      : this.validateablesSettings[name].validate(this[name]);
   }
   /**     
-    * @memberof ComplexType         
+    * @memberof ModularViewModel         
     * @function "addValidations"
     * @description add Validations to existing property
     * @param {string} propertyName propertyName
@@ -116,7 +116,7 @@ export default class ComplexType {
     );
   }
   /**     
-  * @memberof ComplexType         
+  * @memberof ModularViewModel         
   * @function "reset"
   * @description validate all model properties
   * @return {bool} properties validation state result
@@ -147,33 +147,33 @@ export default class ComplexType {
   }
 }
 /**     
-* @memberof ComplexType         
+* @memberof ModularViewModel         
 * @function "setValidateableSettings"
-* @description this function call from validateabless, in classes that extends ComplexType. call in defenition,  not in instance
+* @description this function call from validateabless, in classes that extends ModularViewModel. call in defenition,  not in instance
 * @param {object}  settings
 * @example 
   PersonalInfo.setValidateableSettings({});
 */
-ComplexType.prototype.setValidateableSettings = assertParametersType(
+ModularViewModel.prototype.setValidateableSettings = assertParametersType(
   { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
   function setValidateableSettings(settings) {
-    //'this'- every class that extends ComplexType
+    //'this'- every class that extends ModularViewModel
     this._validateablesSettings = this._validateablesSettings || {};
     this._validateablesSettings[settings.name] = settings;
   }
 );
 /**     
-* @memberof ComplexType         
+* @memberof ModularViewModel         
 * @function "setModelMemberSettings"
-* @description this function call from modelMember decorators, in classes that extends ComplexType. call in defenition,  not in instance
+* @description this function call from modelMember decorators, in classes that extends ModularViewModel. call in defenition,  not in instance
 * @param {object}  settings
 * @example 
   PersonalInfo.setModelMemberSettings({});
 */
-ComplexType.prototype.setModelMemberSettings = assertParametersType(
+ModularViewModel.prototype.setModelMemberSettings = assertParametersType(
   { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
   function setModelMemberSettings(settings) {
-    //'this'- every class that extends ComplexType
+    //'this'- every class that extends ModularViewModel
     this._modelMembersSettings = this._modelMembersSettings || {};
     this._modelMembersSettings[settings.name] = settings;
   }

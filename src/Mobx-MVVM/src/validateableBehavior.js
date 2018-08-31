@@ -1,4 +1,4 @@
-import { observable, runInAction } from 'mobx';
+import { observable, action } from 'mobx';
 import configuration from './mobxConfiguration';
 import validationState from 'vmValidations/validationState';
 import validationsManagerFactory from 'vmValidations/validationsManager';
@@ -11,12 +11,13 @@ export default class ValidateableBehavior {
       settings.validations || []
     );
   }
-
+  @action
+  setValidationState(validationState){
+    Object.assign(this.validationState, validationState);
+  }
   async validate(value) {
     const failedValidation = await this.validationsManager.validate(value);
-    runInAction(() => {
-      Object.assign(this.validationState, failedValidation);
-    });
+    this.setValidationState(failedValidation);
     return failedValidation.isValid;
   }
 }

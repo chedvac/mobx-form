@@ -2,11 +2,11 @@ import { action } from 'mobx';
 import validateable from 'core/validateable';
 import modelMember from 'core/modelMember';
 
-import ComplexType from 'core/complexType';
+import ModularViewModel from 'core/modularViewModel';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 
-class TablesTab extends ComplexType {
+class TablesTab extends ModularViewModel {
   constructor() {
     super();
     // this.email = "yaelp@gov.il"

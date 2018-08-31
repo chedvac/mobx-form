@@ -1,7 +1,7 @@
 import { action, computed, autorun, observable } from 'mobx';
 import validateable from 'core/validateable';
 import modelMember from 'core/modelMember';
-import ComplexType from 'core/complexType';
+import ModularViewModel from 'core/modularViewModel';
 import { hebrew } from 'validations/rules/text';
 import {
   maxlength,
@@ -34,10 +34,10 @@ const myRequest = function(value) {
     });
 };
 
-class PersonalInformation extends ComplexType {
+class PersonalInformation extends ModularViewModel {
   constructor() {
     const validations = [sumAges({ number: 60 })];
-    super(/*{ validations }*/);
+    super({ validations });
 
     // this.setPropertiesReferences();
     // this.propertiesManager.properties.fatherAge.dependedObservables = {

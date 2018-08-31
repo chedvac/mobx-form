@@ -17,9 +17,9 @@ export function sumAges(params) {
 
   return generateBasicValidation({
     name: 'sumAges',
-    message: () => {
-      hebrew: `סכום הגילאים חייב להיות ${number}`;
-    },
+    message: () => ({
+      hebrew: `סכום הגילאים חייב להיות ${number}`
+    }),
     params,
     validator
   });

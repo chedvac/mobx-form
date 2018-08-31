@@ -3,12 +3,12 @@
 // import {observable, autorun, action} from "mobx";
 // import BaseTextareaAutoSize from "../../Fields/BaseTextarea";
 
-// @complexType()
+// @modularViewModel()
 // export class Attachment:IContainer {
-    
+
 //     constructor(){
 //         this.model={
-//             @property<Number> size 
+//             @property<Number> size
 //             @property<String>(validations[fileName])name
 //             @property(Number)guid
 //         }

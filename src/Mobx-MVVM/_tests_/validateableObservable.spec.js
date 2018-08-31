@@ -3,10 +3,10 @@ import ValidationsManager from 'validations/core/validationsManager';
 
 jest.mock('../../validations/src/core/validationsManager');
 const validations = [() => true];
-class ComplexType {
+class ModularViewModel {
   registerPropertyToPrototype() {}
 }
-class complex extends ComplexType {
+class complex extends ModularViewModel {
   @validateable({ validations })
   firstName = 'yael';
 }
@@ -19,10 +19,10 @@ describe('validateable export function that return decorator', () => {
     expect(typeof validateable).toBe('function');
   });
 
-  // test('call decorator function fail if parent is not instanceof ComplexType', () => {
+  // test('call decorator function fail if parent is not instanceof ModularViewModel', () => {
   //   expect(() => {
   //     Parent.firstName();
-  //   }).not.toThrow('validateable parent must be instanceof ComplexType');
+  //   }).not.toThrow('validateable parent must be instanceof ModularViewModel');
   // });
 
   describe('call validateable as decorator', () => {
@@ -38,7 +38,7 @@ describe('validateable export function that return decorator', () => {
     test('registerPoperty is call', () => {
       expect(complex.registerProperty).toBeCalledWith({
         name: 'firstName',
-        descriptor: complex.firstName,
+        descriptor: complex.firstName
         // validationsManager,
       });
     });

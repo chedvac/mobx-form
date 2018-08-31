@@ -2,14 +2,14 @@ import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
 //import LanguageStore from '../components/language/store'
 import modelMember from 'core/modelMember';
-import ComplexType from 'core/complexType';
+import ModularViewModel from 'core/modularViewModel';
 //import model from '../core/model'
 //import externalized from '../core/externalized'
 import submitAction from '../actions/submit';
 
 import { toJS } from 'mobx';
 
-class RootStore extends ComplexType {
+class RootStore extends ModularViewModel {
   constructor() {
     super();
     this.simpleFieldsTab = new SimpleFieldsTab();
@@ -22,7 +22,7 @@ class RootStore extends ComplexType {
   @modelMember()
   tablesTab;
   submitForm() {
-    submitAction(this.formInformation.set_isFormSent);
+    submitAction(this.formInformation.setIsFormSent);
   }
 
   async validateForm() {
