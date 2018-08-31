@@ -1,22 +1,22 @@
-import validationsManagerFactory from 'vmValidations/validationsManager';
-import { validationStateMultiMessages } from 'vmValidations/validationState';
+import validationsManagerFactory from 'vm-validations/validationsManager';
+import { validationStateMultiMessages } from 'vm-validations/validationState';
 import PropTypes from 'prop-types';
 import { reaction, action } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
-import ValidateableBehavior from 'core/validateableBehavior';
-import ModelMemberBehavior from 'core/modelMemberBehavior';
+import ValidateableBehavior from 'mobx-vm/validateableBehavior';
+import ModelMemberBehavior from 'mobx-vm/modelMemberBehavior';
 import { observable } from 'mobx';
 
 export default class ModularViewModel {
   constructor(settings = {}) {
     this.validateablesSettings = {};
     this.modelMembersSettings = {};
-    this.validations = settings.validations || [];
-    this.validationsManager = new validationsManagerFactory( //todo: not use validationsManager, create validate function that run all validations and return {messages<list>, isvalid}
+   
+    this.validationsManager = new validationsManagerFactory( 
       settings.validations || []
     );
-    this.validationState = observable(validationStateMultiMessages); //todo: should be {messages<list>, isvalid}
+    this.validationState = observable(validationStateMultiMessages); 
 
     fp.forOwn(value => {
       this.generateModelMember(value);
