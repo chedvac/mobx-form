@@ -1,7 +1,7 @@
 import {
   generateBasicValidation,
   generateRequiredValidation
-} from 'vmValidations/validationsFactory';
+} from 'vm-validations/validationsFactory';
 import messages from 'validations/messages/basic';
 import PropTypes from 'prop-types';
 import assertParametersType from 'utils/typeVerifications';

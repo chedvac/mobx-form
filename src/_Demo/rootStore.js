@@ -1,11 +1,13 @@
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
+
+import modelMember from 'mobx-vm/modelMember';
+import ComplexType from 'mobx-vm/complexType';
+
 //import LanguageStore from '../components/language/store'
-import modelMember from 'core/modelMember';
-import ComplexType from 'core/complexType';
-//import model from '../core/model'
-//import externalized from '../core/externalized'
-import submitAction from '../actions/submit';
+import complexType from 'mobx-vm/complexType';
+
+// import submitAction from '../actions/submit';
 
 import { toJS } from 'mobx';
 
@@ -17,10 +19,12 @@ class RootStore extends ComplexType {
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
-  @modelMember() simpleFieldsTab;
-  @modelMember() tablesTab;
+  @modelMember()
+  simpleFieldsTab;
+  @modelMember()
+  tablesTab;
   submitForm() {
-    submitAction(this.formInformation.set_isFormSent);
+    // submitAction(this.formInformation.set_isFormSent);
   }
 
   validateForm() {

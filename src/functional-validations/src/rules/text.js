@@ -1,8 +1,8 @@
-import { generateRegexValidation } from 'vmValidations/validationsFactory';
+import { generateRegexValidation } from 'vm-validations/validationsFactory';
 import messages from 'validations/messages/text';
 import regex from '../regularExpressions/text';
 import PropTypes from 'prop-types';
-import validationsManager from 'vmValidations/validationsManager';
+import validationsManager from 'vm-validations/validationsManager';
 import { minlength } from './basic';
 import assertParametersType from 'utils/typeVerifications';
 

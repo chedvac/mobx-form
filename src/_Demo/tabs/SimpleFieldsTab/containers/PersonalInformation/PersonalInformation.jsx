@@ -1,19 +1,22 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Input from 'reactUiComponents/Input';
-import Textarea from 'reactUiComponents/Textarea';
-import Select from 'reactUiComponents/Select';
-import Checkbox from 'reactUiComponents/Checkbox';
-import DatePicker from 'reactUiComponents/DatePicker/DatePicker';
-import { getPropsField } from 'mobxReactForm/utils/getProps';
-import City from '../../../../../components/city/city';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
-const styles = {
-  root: { flexGrow: 1 }
-};
 
-@withStyles(styles)
+import { getPropsField } from 'mobx-react-form/getProps';
+
+import Input from 'react-ui-components/fields/Input';
+import Textarea from 'react-ui-components/fields/Textarea';
+import Select from 'react-ui-components/fields/Select';
+import DatePicker from 'react-ui-components/fields/DatePicker/DatePicker';
+import Row from 'react-ui-components/structure/row';
+import SubTitle from 'react-ui-components/titles/subTitle';
+import BlueButton from 'react-ui-components/buttons/blueButton';
+import WhiteButton from 'react-ui-components/buttons/whiteButton';
+
+// const styles = theme => ({
+//   root: { flexGrow: 1 }
+// });
+
 @inject('applicationData')
 @observer
 export default class PersonalInformation extends React.Component {
@@ -64,64 +67,58 @@ export default class PersonalInformation extends React.Component {
   };
 
   render() {
-    const { userDetails, classes } = this.props;
+    const { userDetails } = this.props;
 
     return (
-      <div className={classes.root}>
-        <Grid container spacing={24}>
-          <Input
-            xs={3}
-            label={this.currentResources().firstName}
-            {...getPropsField(userDetails, 'firstName')}
-          />
-          <Input
-            xs={3}
-            label={this.currentResources().lastName}
-            {...getPropsField(userDetails, 'lastName')}
-          />
-          <Input
-            xs={3}
-            label={this.currentResources().age}
-            {...getPropsField(userDetails, 'age')}
-          />
-          <Input
-            xs={3}
-            label={this.currentResources().fatherAge}
-            {...getPropsField(userDetails, 'fatherAge')}
-          />
-
-          <Textarea
-            xs={8}
-            label={this.currentResources().comments}
-            {...getPropsField(userDetails, 'comments')}
-            rows={3}
-            isAutoResize={false}
-          />
+      <div>
+        <Grid container>
+          <SubTitle>דוגמא לשדות רגילים</SubTitle>
+          <Row>
+            <Input
+              label={this.currentResources().firstName}
+              {...getPropsField(userDetails, 'firstName')}
+            />
+            <Input
+              label={this.currentResources().lastName}
+              {...getPropsField(userDetails, 'lastName')}
+            />
+            <Input
+              label={this.currentResources().age}
+              {...getPropsField(userDetails, 'age')}
+            />
+            <Input
+              label={this.currentResources().fatherAge}
+              {...getPropsField(userDetails, 'fatherAge')}
+            />
+          </Row>
+          <Row>
+            <WhiteButton>לשלב הקודם</WhiteButton>
+            <BlueButton>לשלב הבא</BlueButton>
+          </Row>
+          <Row>
+            <Textarea
+              xs={8}
+              label={this.currentResources().comments}
+              {...getPropsField(userDetails, 'comments')}
+              rows={3}
+              isAutoResize={false}
+            />
+          </Row>
           <br />
           <DatePicker
-            xs={3}
+            className="col-md-4"
             label={this.currentResources().birthDate}
             {...getPropsField(userDetails, 'birthDate')}
           />
 
           <Select
-            xs={3}
+            className="col-md-4"
             label={this.currentResources().status}
             {...getPropsField(userDetails, 'status')}
             options={this.statusOptions}
           />
-
-          {/*
-            <Grid item xs={6} sm={3}>
-            <City {...getPropsField(userDetails, "city")} />
-            </Grid> */}
-
-          {/* <Checkbox
-            className="col-md-4"
-            label={this.currentResources().agreement}
-            {...getPropsField(userDetails, "agreement")}
-          /> */}
         </Grid>
+
         <span className="error-message">{this.props.message}</span>
       </div>
     );

@@ -4,8 +4,8 @@ import messages from 'validations/messages/number';
 import {
   generateBasicValidation,
   generateRegexValidation
-} from 'vmValidations/validationsFactory';
-import validationsManager from 'vmValidations/validationsManager';
+} from 'vm-validations/validationsFactory';
+import validationsManager from 'vm-validations/validationsManager';
 
 // TODO:
 // decimal,

@@ -1,6 +1,6 @@
 import { action } from 'mobx';
-import validateable from 'core/validateable';
-import ComplexType from 'core/complexType';
+import validateable from 'mobx-vm/validateable';
+import ComplexType from 'mobx-vm/complexType';
 
 class Language extends ComplexType {
   constructor() {

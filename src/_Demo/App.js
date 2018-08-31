@@ -1,27 +1,32 @@
 import React, { Component } from 'react';
+import { observer, Provider } from 'mobx-react';
 import './App.css';
 import RootStore from './rootStore';
 import LanguageStore from '../components/language/store';
-import ComponentsDemo from './ComponentsDemo';
-import { observer, Provider } from 'mobx-react';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
-  typography: {
-    fontSize: 14
+import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+
+import FormSection from 'react-ui-components/structure/formSection';
+import FormHeader from 'react-ui-components/structure/header';
+import customTheme from 'react-ui-components/themes/customTheme';
+
+import ComponentDemo from './componentsDemo';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    direction: 'rtl',
+    backgroundColor: '#fff'
   }
-  // ,overrides: {
-  //   MuiStepIcon: {
-  //     root: {
-  //       color: 'red'
-  //     }
-  //   }
-  // }
 });
 
+@withStyles(styles)
 @observer
 class App extends Component {
   render() {
+    const { classes } = this.props;
     const rootStore = new RootStore();
     window.rootStore = rootStore;
     const applicationData = {
@@ -30,12 +35,15 @@ class App extends Component {
     window.applicationData = applicationData;
     console.log('applicationData', applicationData);
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={customTheme}>
+        <CssBaseline />
         <Provider applicationData={applicationData}>
-          <div className="App">
-            <header />
-            <ComponentsDemo rootStore={rootStore} />
-          </div>
+          <Grid container className={classes.root}>
+            <FormHeader />
+            <FormSection rootStore={rootStore}>
+              <ComponentDemo />
+            </FormSection>
+          </Grid>
         </Provider>
       </MuiThemeProvider>
     );
