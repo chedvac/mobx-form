@@ -2,16 +2,14 @@ import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
 
 import modelMember from 'mobx-vm/modelMember';
-import ComplexType from 'mobx-vm/complexType';
+import ModularViewModel from 'mobx-vm/modularViewModel';
 
 //import LanguageStore from '../components/language/store'
-import complexType from 'mobx-vm/complexType';
-
 // import submitAction from '../actions/submit';
 
 import { toJS } from 'mobx';
 
-class RootStore extends ComplexType {
+class RootStore extends ModularViewModel {
   constructor() {
     super();
     this.simpleFieldsTab = new SimpleFieldsTab();
@@ -27,8 +25,8 @@ class RootStore extends ComplexType {
     // submitAction(this.formInformation.set_isFormSent);
   }
 
-  validateForm() {
-    const isStoreValid = this.validate();
+  async validateForm() {
+    const isStoreValid = await this.validate();
     if (isStoreValid) {
       alert('נתוני הטופס תקינים');
     }

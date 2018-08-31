@@ -2,7 +2,7 @@ export default class ModelMemberBehavior {
   constructor(settings) {
     this.name = settings.name;
     this.defaultValue = settings.defaultValue;
-    this.reset = settings.reset;
+    this.resetfn = settings.reset;
     this.map = settings.map;
 
   }
@@ -12,7 +12,7 @@ export default class ModelMemberBehavior {
       : value;
   }
   reset() {
-    return typeof this.reset === 'function'
+    return typeof this.resetfn === 'function'
       ? this.reset(this.defaultValue)
       : this.descriptor.set(this.defaultValue);
   }

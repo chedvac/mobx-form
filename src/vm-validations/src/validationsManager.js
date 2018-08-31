@@ -1,6 +1,8 @@
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
-import validationState from 'vm-validations/validationState';
+import validationState, {
+  validationStateMultiMessages
+} from 'vm-validations/validationState';
 
 const concatValidationArray = assertParametersType(
   {
@@ -38,7 +40,6 @@ function getPropertyFromArray(array, property) {
 }
 
 export default class ValidationsManager {
-  failedValidation = {};
 
   constructor(validations) {
     this.validations = concatValidationArray(validations, ValidationsManager);
@@ -58,19 +59,36 @@ export default class ValidationsManager {
     };
   };
 
-  validate = (value, observable) => {
-    //observable ??
-    this.failedValidation = this.validations.find(item => {
-      return !item.validator(value, observable);
-    });
+  validate = async value => {
+    let failedValidation;
 
+    for (const item of this.validations) {
+      if (!(await item.validator(value))) {
+        failedValidation = item;
+        break;
+      }
+    }
     return Object.assign(validationState, {
-      message: this.failedValidation
-        ? this.failedValidation.message(value, observable).hebrew
+      message: failedValidation
+        ? failedValidation.message(value).hebrew
         : '',
-      isValid: this.failedValidation ? false : true
+      isValid: failedValidation ? false : true
     });
+   
   };
+  validateMultiResults = async value => {
+    const messages = [];
+    let isValid = true;
+    for (const item of this.validations) {
+      if (!(await item.validator(value))) {
+        messages.push(item.message(value).hebrew);
+        isValid = false;
+      }
+    }
+    return Object.assign(validationStateMultiMessages, { isValid, messages });
+  };
+  
+ 
   addValidations = validations => {
     concatValidationArray(validations, ValidationsManager, this.validations);
   };
