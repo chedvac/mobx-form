@@ -9,7 +9,7 @@ function control(WrappedComponent) {
       super(props);
       enableUniqueIds(this);
       this.state = {
-        value: props.value,
+        value: props.value[props.name],
         message: props.validationState.message
       };
       this.handleBlur = this.handleBlur.bind(this);
@@ -17,7 +17,7 @@ function control(WrappedComponent) {
     }
 
     reactionValue = autorun(() => {
-      this.setState({ value: this.props.value });
+      this.setState({ value: this.props.value[this.props.name] });
     });
 
     reactionMessage = autorun(() => {

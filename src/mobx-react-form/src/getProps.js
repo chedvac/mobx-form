@@ -11,7 +11,8 @@ export function getPropsField(store, name) {
   } = store.validateablesSettings[name].validationsManager;
   return {
     update: store.getAction(name),
-    value: store[name], //todo: not fire reactionValue
+    name: name,
+    value: store,
     validationState: store.validateablesSettings[name].validationState,
     validateCharsPattern:
       store.validateablesSettings[name].validationsManager.validateCharsPattern,
