@@ -12,7 +12,9 @@ class Router extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          {React.cloneElement(this.props.children, { ...this.props })}
+          {this.props.children
+            ? React.cloneElement(this.props.children, { ...this.props })
+            : ''}
           <Route
             path="/"
             exact
@@ -27,7 +29,7 @@ class Router extends React.Component {
     );
   }
 }
-Router.propTypes = {
-  routeSettings: PropTypes.arrayOf(RouteSettings)
-};
+// Router.propTypes = {
+//   routeSettings: PropTypes.arrayOf(RouteSettings)
+// };
 export default Router;

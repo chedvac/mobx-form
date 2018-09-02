@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
-import Router from 'reactUiComponents/navigation/Router';
+import Navigation from 'reactUiComponents/navigation/Navigation';
 import Toolbar from '../components/toolbar/Toolbar';
 import { inject } from 'mobx-react';
-import Container from 'reactUiComponents/Containers/Container';
 
 export default class ComponentsDemo extends Component {
   // destruct non-valid props
@@ -14,15 +13,12 @@ export default class ComponentsDemo extends Component {
   }
 
   render() {
-    const TablesContainer = Container(TablesTab);
-    const SimpleFieldsContainer = Container(SimpleFieldsTab);
-
     const Tables = inject(stores => ({
       tables: this.props.rootStore.tablesTab
-    }))(TablesContainer);
+    }))(TablesTab);
     const SimpleFields = inject(stores => ({
       simpleFields: this.props.rootStore.simpleFieldsTab
-    }))(SimpleFieldsContainer);
+    }))(SimpleFieldsTab);
 
     const tabs = [
       new RouteSettings({
@@ -48,7 +44,7 @@ export default class ComponentsDemo extends Component {
         }}
       >
         <Toolbar />
-        <Router routeSettings={tabs} />
+        <Navigation routeSettings={tabs} />
         <div className="row">
           <div className="small-12 columns">
             <button

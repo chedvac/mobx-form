@@ -17,7 +17,7 @@ export default class ComplexType {
       settings.validations || []
     );
     this.validationState = observable(validationState); //todo: should be {messages<list>, isvalid}
-
+    this.validate = this.validate.bind(this);
     fp.forOwn(value => {
       this.generateModelMember(value);
     })(this._modelMembersSettings);
