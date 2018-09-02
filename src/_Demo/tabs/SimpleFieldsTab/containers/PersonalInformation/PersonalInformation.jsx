@@ -118,8 +118,9 @@ export default class PersonalInformation extends React.Component {
             options={this.statusOptions}
           />
         </Grid>
-
-        <span className="error-message">{this.props.message}</span>
+        <span className="error-message">
+          {userDetails.validationState.messages}
+        </span>
       </div>
     );
   }

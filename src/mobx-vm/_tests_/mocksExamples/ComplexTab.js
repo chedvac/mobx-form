@@ -1,11 +1,11 @@
-import ComplexType from 'mobx-vm/complexType';
+import ModularViewModel from 'mobx-vm/modularViewModel';
 import validateable from 'mobx-vm/validateable';
-import modelProp1 from 'mobx-vm/modelProp';
+import modelMember1 from 'mobx-vm/modelMember';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 // console.log(modelMember1.default);
 const modelMember = modelMember1.default;
-export class Complex extends ComplexType {
+export class Complex extends ModularViewModel {
   constructor(settings) {
     super(settings);
   }
@@ -13,7 +13,7 @@ export class Complex extends ComplexType {
   inSubComplex = false;
 }
 
-export default class ComplexTab extends ComplexType {
+export default class ComplexTab extends ModularViewModel {
   constructor(settings, register) {
     super(settings);
     this.subComplex = new Complex();

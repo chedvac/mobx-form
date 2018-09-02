@@ -1,7 +1,7 @@
 import { action, computed, autorun, observable } from 'mobx';
 import validateable from 'mobx-vm/validateable';
 import modelMember from 'mobx-vm/modelMember';
-import ComplexType from 'mobx-vm/complexType';
+import ModularViewModel from 'mobx-vm/modularViewModel';
 import { hebrew } from 'validations/rules/text';
 import {
   maxlength,
@@ -20,20 +20,24 @@ import { generateAsyncValidation } from 'vm-validations/validationsFactory';
 import axios from 'axios';
 const myRequest = function(value) {
   return axios
-    .get('http://gov.forms.local/MW/File//', { params: { ID: value } })
+    .get(
+      'https://forms.gov.il/globalData/GetSequence/Gethtmlform.aspx?formType=componentsdemo@test.gov.il'
+    )
     .then(res => {
-      if (res && res.data.statusCode === 0) {
-        return true;
+      if (value === 'error') {
+        throw new Error();
       }
-      throw { error: 'async validaion failed' };
+      return true;
+    })
+    .catch(e => {
+      return false;
     });
 };
 
-class PersonalInformation extends ComplexType {
-  // validations = [sumAges({ number: 60 })];
-
+class PersonalInformation extends ModularViewModel {
   constructor() {
-    super();
+    const validations = [sumAges({ number: 60 })];
+    super({ validations });
 
     // this.setPropertiesReferences();
     // this.propertiesManager.properties.fatherAge.dependedObservables = {
@@ -80,10 +84,10 @@ class PersonalInformation extends ComplexType {
   @modelMember()
   @validateable({
     validations: [
-      lessThan({
-        value: 7,
-        message: () => ({ hebrew: 'fasdghfasghf' })
-      })
+      // lessThan({
+      //   value: 7,
+      //   message: () => ({ hebrew: 'fasdghfasghf' })
+      // })
     ]
   })
   age = 15;
@@ -126,7 +130,7 @@ class PersonalInformation extends ComplexType {
     validations: [
       generateAsyncValidation({
         name: 'tryAsyncValidation',
-        message: () => 'my default error',
+        message: () => ({ hebrew: 'my default error' }),
         request: myRequest
       })
     ]
