@@ -3,13 +3,53 @@ import Link from 'reactNavigationRouter/Link';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import StepButton from '@material-ui/core/StepButton';
+import Typography from '@material-ui/core/Typography';
+import {
+  MuiThemeProvider,
+  withStyles,
+  createMuiTheme
+} from '@material-ui/core/styles';
+import customTheme from 'reactUiComponents/CSS/customTheme';
+
 const styles = theme => ({
-  stepLabel: {
-    width: '40px',
-    height: '40px'
+  blueTitle: {
+    ...theme.typography.blueTitle,
+    marginTop: '-30px'
   }
 });
+
+const customSteppersTheme = () => {
+  let from = 'right',
+    to = 'left';
+  if (customTheme.direction === 'ltr') {
+    from = 'left';
+    to = 'right';
+  }
+  return createMuiTheme({
+    ...customTheme,
+    overrides: {
+      MuiStepConnector: {
+        alternativeLabel: {
+          top: '20px',
+          [to]: 'calc(-50% + 20px)',
+          [from]: 'calc(50% + 20px)'
+        }
+      },
+      MuiSvgIcon: {
+        root: {
+          fontSize: '40px'
+        }
+      },
+      MuiStep: { horizontal: { paddingLeft: 0, paddingRight: 0 } },
+      MuiStepIcon: {
+        text: {
+          fontSize: '10px'
+        }
+      }
+    }
+  });
+};
 
 @withStyles(styles)
 export default class Steppers extends React.Component {
@@ -20,18 +60,31 @@ export default class Steppers extends React.Component {
   state = {
     activeStep: 0
   };
+
+  handleStep = step => () => {
+    this.setState({
+      activeStep: step
+    });
+  };
+
   render() {
+    const { activeStep } = this.state;
+    const { classes } = this.props;
     return (
-      <Stepper>
-        {this.props.routeSettings.map((route, index) => (
-          <Step key={route.name} {...this.props}>
-            <Link to={route.path}>
-              <StepLabel className="stepLabel" />
-            </Link>
-            <span>{route.name}</span>
-          </Step>
-        ))}
-      </Stepper>
+      <MuiThemeProvider theme={customSteppersTheme}>
+        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+          {this.props.routeSettings.map((route, index) => (
+            <Step key={route.name} {...this.props}>
+              <Link to={route.path}>
+                <StepButton onClick={this.handleStep(index)} />
+              </Link>
+              <Typography className={classes.blueTitle}>
+                {route.name}
+              </Typography>
+            </Step>
+          ))}
+        </Stepper>
+      </MuiThemeProvider>
     );
   }
 }
