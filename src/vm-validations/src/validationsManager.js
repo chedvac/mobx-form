@@ -33,14 +33,11 @@ function getPatternArray(array) {
 }
 
 function getPropertyFromArray(array, property) {
-  const foundProperty = array.find(element => {
-    return element[property];
-  });
+  const foundProperty = array.find(element => element[property]);
   return foundProperty ? foundProperty[property] : undefined;
 }
 
 export default class ValidationsManager {
-
   constructor(validations) {
     this.validations = concatValidationArray(validations, ValidationsManager);
     this.pattern = getPatternArray(this.validations);
@@ -69,12 +66,9 @@ export default class ValidationsManager {
       }
     }
     return Object.assign(validationState, {
-      message: failedValidation
-        ? failedValidation.message(value).hebrew
-        : '',
+      message: failedValidation ? failedValidation.message(value).hebrew : '',
       isValid: failedValidation ? false : true
     });
-   
   };
   validateMultiResults = async value => {
     const messages = [];
@@ -87,8 +81,7 @@ export default class ValidationsManager {
     }
     return Object.assign(validationStateMultiMessages, { isValid, messages });
   };
-  
- 
+
   addValidations = validations => {
     concatValidationArray(validations, ValidationsManager, this.validations);
   };

@@ -6,7 +6,7 @@ import LanguageStore from '../components/language/store';
 
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
+import { Grid } from '@material-ui/core';
 
 import FormSection from 'react-ui-components/structure/formSection';
 import FormHeader from 'react-ui-components/structure/header';
@@ -15,13 +15,13 @@ import Dialog from 'react-ui-components/dialogs/dialog.jsx';
 
 import ComponentDemo from './componentsDemo';
 
-const styles = theme => ({
+const styles = {
   root: {
     flexGrow: 1,
     direction: 'rtl',
     backgroundColor: '#fff'
   }
-});
+};
 
 @withStyles(styles)
 @observer
@@ -34,7 +34,6 @@ class App extends Component {
       formLanguage: new LanguageStore()
     };
     window.applicationData = applicationData;
-    console.log('applicationData', applicationData);
     return (
       <MuiThemeProvider theme={customTheme}>
         <CssBaseline />

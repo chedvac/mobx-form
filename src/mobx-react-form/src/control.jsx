@@ -4,7 +4,7 @@ import { format } from 'utils/stringExtension';
 import { autorun } from 'mobx';
 
 function control(WrappedComponent) {
-  return class extends React.Component {
+  return class control extends React.Component {
     constructor(props) {
       super(props);
       enableUniqueIds(this);
@@ -25,7 +25,9 @@ function control(WrappedComponent) {
     });
 
     getEventValue = e => {
-      return e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+      const value =
+        e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+      return value;
     };
 
     handleBlur = e => {
