@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer, reaction } from 'mobx-react';
+import { observer } from 'mobx-react';
 import control from 'mobx-react-form/control';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';

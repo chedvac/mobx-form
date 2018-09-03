@@ -10,13 +10,19 @@
     "require": true,
     "beforeAll": true
   },
-
-  "plugins": ["jest"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["jest", "react"],
   "rules": {
     "react/jsx-sort-prop-types": "off",
     "react/require-extension": "off",
     "react/wrap-multilines": "off",
-
+    "react/prop-types": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "indent": [0, 2],
     "quotes": [2, "single", { "allowTemplateLiterals": true }],
     "semi": [2, "always"],
@@ -51,7 +57,6 @@
     "no-extra-parens": [0],
     "no-unused-vars": [
       2,
-
       {
         "vars": "local"
       }
@@ -160,5 +165,5 @@
     "es6": true
   },
   "parser": "babel-eslint",
-  "extends": ["eslint:recommended"]
+  "extends": ["eslint:recommended", "plugin:react/recommended"]
 }

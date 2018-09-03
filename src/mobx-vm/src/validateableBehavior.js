@@ -12,7 +12,7 @@ export default class ValidateableBehavior {
     );
   }
   @action
-  setValidationState(validationState){
+  setValidationState(validationState) {
     Object.assign(this.validationState, validationState);
   }
   async validate(value) {
