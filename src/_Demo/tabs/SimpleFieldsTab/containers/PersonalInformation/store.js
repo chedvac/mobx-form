@@ -65,7 +65,7 @@ class PersonalInformation extends ModularViewModel {
       })
     ]
   })
-  firstName = '';
+  firstName = 'כגד';
   @observable
   @modelMember({ reset: () => false })
   @validateable({
@@ -90,7 +90,7 @@ class PersonalInformation extends ModularViewModel {
       // })
     ]
   })
-  age = 15;
+  age = 60;
 
   @computed
   get isAdult() {

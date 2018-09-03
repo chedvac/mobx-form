@@ -1,12 +1,12 @@
 import validationsManagerFactory from 'vm-validations/validationsManager';
 import { validationStateMultiMessages } from 'vm-validations/validationState';
 import PropTypes from 'prop-types';
-import { reaction, action } from 'mobx';
+import {observable, reaction, action } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import fp from 'lodash/fp';
 import ValidateableBehavior from 'mobx-vm/validateableBehavior';
 import ModelMemberBehavior from 'mobx-vm/modelMemberBehavior';
-import { observable } from 'mobx';
+
 
 export default class ModularViewModel {
   constructor(settings = {}) {
@@ -53,7 +53,7 @@ export default class ModularViewModel {
     return this[`set_${name}`];
   }
   @action
-  setValidationState(validationState) {
+  set_validationState(validationState) {
     Object.assign(this.validationState, validationState);
   }
   /**     
@@ -69,7 +69,7 @@ export default class ModularViewModel {
       this
     );
     const modelValidationResult = await this.validateModel();
-    this.setValidationState({
+    this.set_validationState({
       messages: validationResult.messages,
       isValid: modelValidationResult && validationResult.isValid
     });

@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import configuration from './mobxConfiguration';
+import configuration from './mobxConfiguration';//eslint-disable-line no-unused-vars
 import validationState from 'vm-validations/validationState';
 import validationsManagerFactory from 'vm-validations/validationsManager';
 
@@ -12,12 +12,12 @@ export default class ValidateableBehavior {
     );
   }
   @action
-  setValidationState(validationState){
+  set_validationState(validationState){
     Object.assign(this.validationState, validationState);
   }
   async validate(value) {
     const failedValidation = await this.validationsManager.validate(value);
-    this.setValidationState(failedValidation);
+    this.set_validationState(failedValidation);
     return failedValidation.isValid;
   }
 }

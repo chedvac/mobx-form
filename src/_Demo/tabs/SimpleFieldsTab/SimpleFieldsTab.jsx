@@ -4,10 +4,7 @@ import PersonalInformation from './containers/PersonalInformation/PersonalInform
 
 @observer
 class SimpleFieldsTab extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+ 
   render() {
     return (
       <div>
