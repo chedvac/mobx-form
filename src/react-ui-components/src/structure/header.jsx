@@ -9,19 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const styles = theme => {
-  return {
-    menuButton: {
-      marginLeft: -12,
-      marginRight: 20
-    },
-    appBar: {
-      zIndex: 65001,
-    },
-    menuButton: {
-      marginLeft: 12,
-      marginRight: 36,
-    }
-  }
+
 };
 
 @withStyles(styles)
@@ -40,7 +28,6 @@ class Header extends React.Component {
             color="inherit"
             aria-label="Open drawer"
             onClick={handleDrawer}
-            className={classNames(classes.menuButton)}
           >
             <MenuIcon />
           </IconButton>

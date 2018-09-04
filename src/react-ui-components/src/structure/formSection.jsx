@@ -1,37 +1,15 @@
 import React, { Component } from 'react';
-import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 import Header from './header';
 import SideToolbar from './sideToolbar'
-import classNames from 'classnames';
 
 const styles = theme => ({
-  root1: {
-    flexGrow: 1,
-    height: '100%',
-    zIndex: 65001,
-    overflow: 'hidden',
-    position: 'relative',
-    display: 'flex',
-  },
-  hide: {
-    display: 'none',
-  },
-  formSection: {
-    padding: theme.spacing.unit * 5
-  },
   content: {
+    width: 1,
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
   }
 });
 
@@ -62,10 +40,9 @@ class FormSection extends Component {
   };
   render() {
     const { classes } = this.props;
-    const isMobile = true;
-    const actionsList = ['validateForm', 'submitForm'];
+    const actionsList = ['validateForm', 'submitForm', 'print', 'saveAsPDF', 'attachments', 'save'];
     return (
-      <div>
+      <React.Fragment>
         <Header handleDrawer={this.handleDrawer} />
         <SideToolbar
           open={this.state.open}
@@ -73,8 +50,12 @@ class FormSection extends Component {
           handleDrawerCloseByFocus={this.handleDrawerCloseByFocus}
           actionsList={actionsList}
         />
-        <ComponentsDemo {...this.props} />
-      </div>
+        <div className={classes.content}>
+          {
+            this.props.children
+          }
+        </div>
+      </React.Fragment>
     );
   }
 }

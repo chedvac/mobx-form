@@ -39,15 +39,10 @@ class App extends Component {
         <CssBaseline />
         <Provider applicationData={applicationData}>
           <Grid container className={classes.root}>
-<<<<<<< HEAD
             {/* <FormHeader /> */}
-            <FormSection rootStore={rootStore} />
-=======
-            <FormHeader />
             <FormSection rootStore={rootStore}>
-              <ComponentDemo />
+              <ComponentDemo rootStore={rootStore} />
             </FormSection>
->>>>>>> acd92d9c65d80064ec8a5894e01b960b67ac1c1d
           </Grid>
         </Provider>
       </MuiThemeProvider>

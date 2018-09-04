@@ -8,7 +8,12 @@
   src: url(../fonts/Arimo-Bold.ttf);
 }
 
-[class*="ic_"]:before, [class^=ic_]:before {
+@font-face {
+  font-family: forms2;
+  src: url(../fonts/forms2.ttf);
+}
+
+.material-icons {
   font-family: forms2;
   font-style: normal;
   font-weight: 400;
