@@ -7,23 +7,12 @@ class Container extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-  }
-  shouldComponentUpdate(nextProps) {
-    if (
-      nextProps.history.location.pathname ===
-      this.props.history.location.pathname
-    ) {
-      return true;
-    }
-    const sholdUpdate = this.props.beforeLeave
-      ? this.props.beforeLeave()
-      : true;
-    if (sholdUpdate) {
-      return true;
-    }
-    this.props.history.block(() => {
-      return false;
+    this.unblock = this.props.history.block(() => {
+      return this.props.beforeLeave();
     });
+  }
+  componentWillUnmount() {
+    this.unblock();
   }
   render() {
     return <div>{this.props.children}</div>;

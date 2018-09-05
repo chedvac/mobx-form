@@ -13,6 +13,7 @@ class SimpleFieldsTab extends React.Component {
       <Container
         beforeLeave={this.props.simpleFields.validate}
         history={this.props.history}
+        location={this.props.location}
       >
         <PersonalInformation
           userDetails={this.props.simpleFields.userDetails}

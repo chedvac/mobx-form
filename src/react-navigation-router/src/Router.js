@@ -23,7 +23,6 @@ class Router extends React.Component {
           {this.props.routeSettings.map((tab, index) => (
             <Route key={index} path={tab.path} component={tab.component} />
           ))}
-          <Redirect to={this.props.routeSettings[0].component} />
         </div>
       </BrowserRouter>
     );
