@@ -21,5 +21,8 @@ module.exports = function override(config, env) {
   config.resolve.alias['mobx-react-form'] = path.resolve(
     'src/mobx-react-form/src'
   );
+  config.resolve.alias['govil-common-content'] = path.resolve(
+    'src/govil-common-content/src'
+  );
   return config;
 };

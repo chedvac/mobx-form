@@ -3,7 +3,6 @@ import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
 import TabSettings from '../components/navigation/TabSettings';
 import TabsRouter from '../components/navigation/Router';
-import Toolbar from '../components/toolbar/Toolbar';
 import { inject } from 'mobx-react';
 
 export default class ComponentsDemo extends Component {
@@ -42,7 +41,6 @@ export default class ComponentsDemo extends Component {
           this.Form = c;
         }}
       >
-        <Toolbar />
         <TabsRouter routeSettings={tabs} />
         <div className="row">
           <div className="small-12 columns">
