@@ -17,9 +17,10 @@ const customTheme = createMuiTheme({
     fontSize: basicFontSize,
     fontFamily: basicFontFamily,
     title: {},
+    boldText: { fontFamily: boldBasicFontFamily },
     subTitle: {
       color: basicColor,
-      fontSize: boldBasicFontFamily,
+      fontFamily: boldBasicFontFamily,
       width: '100%',
       backgroundColor: lightBasicColor,
       borderRight: '4px solid ' + basicColor,

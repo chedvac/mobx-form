@@ -1,6 +1,7 @@
 import React from 'react';
 import Router from 'reactNavigationRouter/Router';
 import Steppers from './Steppers';
+import NextPrevButtons from './nextPrevButtons';
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -9,9 +10,11 @@ export default class Navigation extends React.Component {
   }
   render() {
     return (
-      <Router {...this.props}>
-        <Steppers />
-      </Router>
+      <Router
+        {...this.props}
+        aboveElements={Steppers}
+        belowElements={NextPrevButtons}
+      />
     );
   }
 }

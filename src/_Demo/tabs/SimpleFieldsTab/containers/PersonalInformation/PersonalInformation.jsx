@@ -12,8 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Row from 'reactUiComponents/core/row';
 import SubTitle from 'reactUiComponents/core/subTitle';
-import BlueButton from 'reactUiComponents/core/blueButton';
-import WhiteButton from 'reactUiComponents/core/whiteButton';
 
 const styles = theme => ({
   root: { flexGrow: 1 }
@@ -99,10 +97,6 @@ export default class PersonalInformation extends React.Component {
               label={this.currentResources().fatherAge}
               {...getPropsField(userDetails, 'fatherAge')}
             />
-          </Row>
-          <Row>
-            <WhiteButton>לשלב הקודם</WhiteButton>
-            <BlueButton>לשלב הבא</BlueButton>
           </Row>
           <Row>
             <Textarea

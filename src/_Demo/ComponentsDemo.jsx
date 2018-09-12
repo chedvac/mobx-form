@@ -41,7 +41,7 @@ export default class ComponentsDemo extends Component {
         component: Tab3
       })
     ];
-    // const RouterIn = new Router({ routeSettings: tabs });
+    const pathesArray = tabs.map(route => route.path);
     console.log('rootStore', this.props.rootStore);
 
     return (
@@ -51,7 +51,7 @@ export default class ComponentsDemo extends Component {
         }}
       >
         <Toolbar />
-        <Navigation routeSettings={tabs} />
+        <Navigation routeSettings={tabs} pathesArray={pathesArray} />
         <div className="row">
           <div className="small-12 columns">
             <button

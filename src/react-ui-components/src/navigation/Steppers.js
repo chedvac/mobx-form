@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'reactNavigationRouter/Link';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import StepButton from '@material-ui/core/StepButton';
 import Typography from '@material-ui/core/Typography';
 import {
@@ -62,6 +61,7 @@ export default class Steppers extends React.Component {
   };
 
   handleStep = step => () => {
+    console.log(this.props);
     this.setState({
       activeStep: step
     });

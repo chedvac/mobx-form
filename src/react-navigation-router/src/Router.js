@@ -9,26 +9,33 @@ class Router extends React.Component {
     this.props = props;
   }
   render() {
+    const AboveElements = this.props.aboveElements;
+    const BelowElements = this.props.belowElements;
+
     return (
       <BrowserRouter>
         <div>
-          {this.props.children
-            ? React.cloneElement(this.props.children, { ...this.props })
-            : ''}
+          {AboveElements && <AboveElements {...this.props} />}
           <Route
             path="/"
             exact
-            component={this.props.routeSettings[0].component}
+            render={() => (
+              <Redirect
+                to={this.props.routeSettings[0].path}
+                isByFirstRedirect={true}
+              />
+            )}
           />
           {this.props.routeSettings.map((tab, index) => (
             <Route key={index} path={tab.path} component={tab.component} />
           ))}
+          {BelowElements && <BelowElements {...this.props} />}
         </div>
       </BrowserRouter>
     );
   }
 }
-// Router.propTypes = {
-//   routeSettings: PropTypes.arrayOf(RouteSettings)
-// };
+Router.propTypes = {
+  routeSettings: PropTypes.arrayOf(RouteSettings)
+};
 export default Router;
