@@ -23,7 +23,7 @@ const styles = theme => ({
 
 @withStyles(styles)
 class NextPrevButtons extends React.Component {
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     this.props = props;
   }

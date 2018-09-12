@@ -4,6 +4,8 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import Typography from '@material-ui/core/Typography';
+import { withRouter } from 'react-router';
+
 import {
   MuiThemeProvider,
   withStyles,
@@ -51,17 +53,22 @@ const customSteppersTheme = () => {
 };
 
 @withStyles(styles)
-export default class Steppers extends React.Component {
+class Steppers extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
+    this.props.history.listen(location => {
+      this.handleStep(location);
+    });
   }
   state = {
     activeStep: 0
   };
 
-  handleStep = step => () => {
-    console.log(this.props);
+  handleStep = location => {
+    const step = this.props.routeSettings.findIndex(
+      route => route.path === location.pathname
+    );
     this.setState({
       activeStep: step
     });
@@ -76,7 +83,7 @@ export default class Steppers extends React.Component {
           {this.props.routeSettings.map((route, index) => (
             <Step key={route.name} {...this.props}>
               <Link to={route.path}>
-                <StepButton onClick={this.handleStep(index)} />
+                <StepButton />
               </Link>
               <Typography className={classes.blueTitle}>
                 {route.name}
@@ -88,3 +95,4 @@ export default class Steppers extends React.Component {
     );
   }
 }
+export default withRouter(Steppers);
