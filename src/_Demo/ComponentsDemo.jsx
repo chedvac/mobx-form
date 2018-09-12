@@ -23,25 +23,21 @@ export default class ComponentsDemo extends Component {
 
     const tabs = [
       new RouteSettings({
-        number: '1',
         name: 'לשדות רגילים',
         path: '/SimpleFields',
         component: SimpleFields
       }),
       new RouteSettings({
-        number: '2',
         name: 'טבלאות',
         path: '/Tables',
         component: Tables
       }),
       new RouteSettings({
-        number: '3',
         name: 'טאב 3',
         path: '/Tab3',
         component: Tab3
       })
     ];
-    const pathesArray = tabs.map(route => route.path);
     console.log('rootStore', this.props.rootStore);
 
     return (
@@ -51,7 +47,7 @@ export default class ComponentsDemo extends Component {
         }}
       >
         <Toolbar />
-        <Navigation routeSettings={tabs} pathesArray={pathesArray} />
+        <Navigation routeSettings={tabs} />
         <div className="row">
           <div className="small-12 columns">
             <button

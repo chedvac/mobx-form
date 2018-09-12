@@ -18,7 +18,8 @@ const styles = theme => ({
   navigateButton: {
     'text-decoration': 'none',
     ...theme.typography.boldText
-  }
+  },
+  hide: theme.typography.hide
 });
 
 @withStyles(styles)
@@ -26,35 +27,58 @@ class NextPrevButtons extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
+    this.pathesArray = this.props.routeSettings.map(route => route.path);
+    this.props.history.listen(location => {
+      this.saveCurrentStep(location);
+    });
   }
+  state = {
+    currentStep: 0
+  };
 
-  getNextPath() {
-    const currentIndex = this.props.pathesArray.indexOf(
+  saveCurrentStep = location => {
+    const currentStep = this.pathesArray.indexOf(
       this.props.history.location.pathname
     );
-    return this.props.pathesArray[currentIndex + 1]
-      ? this.props.pathesArray[currentIndex + 1]
-      : '/';
+    this.setState({
+      currentStep: currentStep,
+      prevStep: currentStep - 1,
+      nextStep: currentStep + 1
+    });
+  };
+  getNextPath() {
+    return this.pathesArray[this.state.nextStep] || '/';
   }
   getBackPath() {
-    const currentIndex = this.props.pathesArray.indexOf(
-      this.props.history.location.pathname
-    );
-    return this.props.pathesArray[currentIndex - 1]
-      ? this.props.pathesArray[currentIndex - 1]
-      : '/';
+    return this.pathesArray[this.state.prevStep] || '/';
+  }
+  isFirstRoute() {
+    return this.state.currentStep === 0;
+  }
+  isLastRoute() {
+    return this.pathesArray.length === this.state.nextStep;
   }
   render() {
     const { classes } = this.props;
     return (
       <Grid>
         <Row>
-          <Link to={this.getBackPath()} className={classes.navigateButton}>
+          <Link
+            to={this.getBackPath()}
+            className={`${classes.navigateButton} ${
+              this.isFirstRoute() ? classes.hide : ''
+            }`}
+          >
             <BlueButton variant="outlined" className={classes.button}>
               לשלב הקודם
             </BlueButton>
           </Link>
-          <Link to={this.getNextPath()} className={classes.navigateButton}>
+          <Link
+            to={this.getNextPath()}
+            className={`${classes.navigateButton} ${
+              this.isLastRoute() ? classes.hide : ''
+            }`}
+          >
             <WhiteButton>לשלב הבא</WhiteButton>
           </Link>
         </Row>
