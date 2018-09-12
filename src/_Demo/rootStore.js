@@ -28,7 +28,7 @@ class RootStore extends ModularViewModel {
   async validateForm() {
     const isStoreValid = await this.validate();
     if (isStoreValid) {
-      dialog.open({message:'נתוני הטופס תקינים'});
+      dialog.alert({ message: 'נתוני הטופס תקינים' });
     }
   }
   getStoreAsJSon = () => toJS(this.model.getModel());
