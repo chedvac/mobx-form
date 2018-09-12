@@ -1,6 +1,6 @@
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
-
+import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore'
 import modelMember from 'mobx-vm/modelMember';
 import ComplexType from 'mobx-vm/complexType';
 
@@ -16,6 +16,7 @@ class RootStore extends ComplexType {
     super();
     this.simpleFieldsTab = new SimpleFieldsTab();
     this.tablesTab = new TablesTab();
+    this.toolbarButtons = toolbarButtons;
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }

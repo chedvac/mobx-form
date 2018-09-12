@@ -4,20 +4,23 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import ToolBarButton from 'react-ui-components/buttons/toolbarButton';
+import ToolbarButton from 'govil-common-content/forms-components/src/toolbarButton';
+import toolbarButtons from './toolbarButtons'
+import _ from 'lodash';
 
 const styles = theme => {
-    const drawerWidth = 240;
-    const margin = theme.direction === 'rtl' ? 'marginLeft' : 'marginRight';
+    theme.drawerWidth = 240;
+    //const margin = theme.direction === 'rtl' ? 'marginLeft' : 'marginRight';
+
     return {
-        drawerClass: {
-            height: '100%',
-            float: 'right'
-        },
+        // drawerClass: {
+        //     height: '100%',
+        //     // float: 'right'
+        // },
         drawerPaper: {
             position: 'relative',
             whiteSpace: 'nowrap',
-            width: drawerWidth,
+            width: theme.drawerWidth,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
@@ -32,54 +35,40 @@ const styles = theme => {
             width: theme.spacing.unit * 7,
             [theme.breakpoints.up('sm')]: {
                 width: theme.spacing.unit * 9,
-            },
+            }
         },
-        content: {
-            flexGrow: 1,
-            backgroundColor: theme.palette.background.default,
-            padding: theme.spacing.unit * 3
-        },
-        ic_validateForm: {
+        'ic-validateForm': {
             '&:before': {
                 content: '"\\70"'
             }
         },
-        ic_submitForm: {
+        'ic-submit': {
             '&:before': {
                 content: '"\\6c"'
             }
         },
-        ic_print: {
+        'ic-print': {
             '&:before': {
                 content: '"\\7a"'
             }
         },
-        ic_saveAsPDF: {
+        'ic-saveAsPDF': {
             '&:before': {
                 content: '"\\79"'
             }
         },
-        ic_attachments: {
+        'ic-attachments': {
             '&:before': {
                 content: '"\\6a"'
             }
         },
-        ic_save: {
+        'ic-save': {
             '&:before': {
                 content: '"\\42"'
             }
         }
     }
 };
-
-const texts = {
-    validateForm: 'בדוק תקינות',
-    submitForm: 'שלח',
-    print: 'הדפס',
-    saveAsPDF: 'שמור כ PDF',
-    attachments: 'צרופות',
-    save: 'שמור'
-}
 
 @withStyles(styles)
 @observer
@@ -88,29 +77,26 @@ class SideToolbar extends React.Component {
         super(props);
     }
     render() {
-        debugger;
-        const { classes, open, handleDrawerOpenByFocus, handleDrawerCloseByFocus, actionsList } = this.props;
+        const { classes, opened, openToolbarOnOver, closeToolbarOnOut, toolbarButtonsStore } = this.props;
         return (
             <Drawer
-                className={classes.drawerClass}
                 variant="permanent"
                 classes={{
-                    paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose)
+                    paper: classNames(classes.drawerPaper, !opened && classes.drawerPaperClose)
                 }}
-                open={open}
+                opened={opened}
             >
                 <Divider />
                 {
-                    actionsList.map((action) =>
-                        <ToolBarButton
+                    Object.entries(toolbarButtons).map((toolbarButton) =>
+                        toolbarButtonsStore.toolbarButtonsList[toolbarButton[0]] ? <ToolbarButton
                             classes={classes}
-                            buttonText={texts[action]}
-                            iconClass={`ic_${action}`}
-                            buttonAction={action}
-                            open={open}
-                            onMouseOverEvent={handleDrawerOpenByFocus}
-                            onMouseOutEvent={handleDrawerCloseByFocus}
-                        />
+                            buttonText={toolbarButton[1].buttonText.hebrew}
+                            className={toolbarButton[1].className}
+                            buttonAction={toolbarButton[1].action}
+                            onMouseOverEvent={openToolbarOnOver}
+                            onMouseOutEvent={closeToolbarOnOut}
+                        /> : ''
                     )
                 }
             </Drawer>

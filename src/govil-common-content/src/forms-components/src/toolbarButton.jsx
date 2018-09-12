@@ -3,7 +3,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
-import { Icon } from '../../../../node_modules/@material-ui/core';
+import { Icon } from '@material-ui/core';
 
 const styles = theme => {
 
@@ -16,12 +16,12 @@ class ToolbarButton extends React.Component {
     }
 
     render() {
-        const { classes, onMouseOverEvent, onMouseOutEvent, iconClass, buttonText } = this.props;
+        const { classes, className, onMouseOverEvent, onMouseOutEvent, buttonText, visible, buttonAction } = this.props;
 
         return (
-            <ListItem button onMouseOver={() => { onMouseOverEvent() }} onMouseOut={() => { onMouseOutEvent() }}>
+            <ListItem button onMouseOver={() => { onMouseOverEvent() }} onMouseOut={() => { onMouseOutEvent() }} visible={visible} onClick={buttonAction}>
                 <ListItemIcon>
-                    <Icon className={classes[iconClass]}></Icon>
+                    <Icon className={classes[className]}></Icon>
                 </ListItemIcon>
                 <ListItemText primary={buttonText} />
             </ListItem>

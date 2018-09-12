@@ -19,15 +19,14 @@ class Header extends React.Component {
     super(props);
   }
   render() {
-    debugger;
-    const { classes, handleDrawer } = this.props;
+    const { classes, toggleToolbar } = this.props;
     return (
       <AppBar position="static" className={classNames(classes.appBar)}>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
-            onClick={handleDrawer}
+            onClick={toggleToolbar}
           >
             <MenuIcon />
           </IconButton>
