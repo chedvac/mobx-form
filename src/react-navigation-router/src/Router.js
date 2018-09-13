@@ -36,6 +36,6 @@ class Router extends React.Component {
   }
 }
 Router.propTypes = {
-  routeSettings: PropTypes.arrayOf(RouteSettings)
+  routeSettings: PropTypes.arrayOf(RouteSettings).isRequired
 };
 export default Router;
