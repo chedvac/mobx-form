@@ -7,17 +7,21 @@ class Container extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-    if (!this.props.isByFirstRedirect) {
+    if (!this.props.isFirstRedirect) {
       this.unblock = this.props.history.block(() => {
         return this.props.beforeLeave();
       });
     }
   }
   componentWillUnmount() {
-    this.unblock();
+    if (this.unblock) {
+      this.unblock();
+    }
   }
   componentDidMount() {
-    this.props.onEnter ? this.props.onEnter() : true;
+    if (this.props.onEnter) {
+      this.props.onEnter();
+    }
   }
   render() {
     return <div>{this.props.children}</div>;
