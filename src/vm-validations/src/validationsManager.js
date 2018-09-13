@@ -58,15 +58,15 @@ export default class ValidationsManager {
     };
   };
 
-  validate = (value, observable) => {
+  validate = (value, getDepended) => {
     //observable ??
     this.failedValidation = this.validations.find(item => {
-      return !item.validator(value, observable);
+      return !item.validator(value, getDepended);
     });
 
     return Object.assign(validationState, {
       message: this.failedValidation
-        ? this.failedValidation.message(value, observable).hebrew
+        ? this.failedValidation.message(value, getDepended).hebrew
         : '',
       isValid: this.failedValidation ? false : true
     });

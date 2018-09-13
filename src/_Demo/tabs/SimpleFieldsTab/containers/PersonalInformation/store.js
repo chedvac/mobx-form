@@ -10,8 +10,8 @@ import {
   //   conditionRequired
 } from 'validations/rules/basic';
 import {
-  //   dependedGreaterThan,
-  //   dependedLessThan,
+  dependedGreaterThan,
+  // dependedLessThan,
   greaterThan,
   lessThan
 } from 'validations/rules/number';
@@ -62,6 +62,7 @@ class PersonalInformation extends ComplexType {
     ]
   })
   firstName = '';
+
   @observable
   @modelMember({ reset: () => false })
   @validateable({
@@ -102,10 +103,8 @@ class PersonalInformation extends ComplexType {
   @modelMember()
   @validateable({
     validations: [
-      maxlength({ value: 15 }),
-      minlength({ value: 2 }),
-      greaterThan({
-        value: 20
+      dependedGreaterThan({
+        compareTo: 'age'
         // compareToName: 'compareToName',
         // message: { hebrew: 'my message' }
       })

@@ -12,7 +12,7 @@ import FormSection from 'react-ui-components/structure/formSection';
 import FormHeader from 'react-ui-components/structure/header';
 import customTheme from 'react-ui-components/themes/customTheme';
 
-import ComponentDemo from './componentsDemo';
+import ComponentDemo from './ComponentsDemo';
 
 const styles = theme => ({
   root: {

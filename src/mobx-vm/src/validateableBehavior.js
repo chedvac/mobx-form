@@ -12,8 +12,8 @@ export default class ValidateableBehavior {
     );
   }
 
-  validate(value) {
-    const failedValidation = this.validationsManager.validate(value);
+  validate(value, type) {
+    const failedValidation = this.validationsManager.validate(value, type);
     runInAction(() => {
       Object.assign(this.validationState, failedValidation);
     });

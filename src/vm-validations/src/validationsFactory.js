@@ -106,3 +106,34 @@ export const generateAsyncValidation = assertParametersType(
     return { ...settings, validator };
   }
 );
+
+export const generateDependedValidation = assertParametersType(
+  {
+    settings: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      message: PropTypes.func.isRequired,
+      validator: PropTypes.func.isRequired,
+      params: PropTypes.shape({
+        message: PropTypes.func
+      })
+    })
+  },
+  function generateDependedValidation(settings) {
+    const messageWrapper = (value, getDepended) => {
+      const message = _.get(settings, 'params.message', settings.message);
+      return message(value, getDepended(settings.params.compareTo));
+    };
+
+    const validatorWrapper = (value, getDepended) => {
+      if (!value) {
+        return true;
+      }
+      return settings.validator(value, getDepended(settings.params.compareTo));
+    };
+    return {
+      ...settings,
+      validator: validatorWrapper,
+      message: messageWrapper
+    };
+  }
+);

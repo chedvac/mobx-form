@@ -24,18 +24,22 @@ export default class ComplexType {
     fp.forOwn(value => {
       this.generateValidateable(value);
     })(this._validateablesSettings);
+    this.getDepended = this.getDepended.bind(this);
   }
 
   generateModelMember(propertySettings) {
     const modelMember = new ModelMemberBehavior(propertySettings);
     this.modelMembersSettings[modelMember.name] = modelMember;
   }
+  getDepended(propertyName) {
+    return this[propertyName];
+  }
   generateValidateable(propertySettings) {
     const validateable = new ValidateableBehavior(propertySettings);
     this.validateablesSettings[validateable.name] = validateable;
     reaction(
       () => this[validateable.name],
-      value => validateable.validate(value)
+      value => validateable.validate(value, this.getDepended)
     );
   }
 
