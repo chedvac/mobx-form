@@ -44,14 +44,6 @@ export default class City extends React.Component {
       console.log(error);
     }
   });
-  // @action
-  // loadCityList = async function(){
-  //     const response = await request({url: 'http://formsdev.vcloud.gov.il/govservicelist/ListProvider/GetList', method: 'POST', data: qs.stringify({listName: 'City'})})
-  //     const self = this;
-  //     runInAction(()=>{
-  //         self.cityList = response.data.Data.List.map(item => ({key: item.city_code, value: item.city_name_he}));
-  //     })
-  // }
 
   currentResources = function() {
     return this.texts['hebrew'];

@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Grid from '@material-ui/core/Grid';
-
+import { observable, flow } from 'mobx';
 import { getPropsField } from 'mobx-react-form/getProps';
 
 import Input from 'react-ui-components/fields/Input';
@@ -12,6 +12,7 @@ import Row from 'react-ui-components/structure/row';
 import SubTitle from 'react-ui-components/titles/subTitle';
 import BlueButton from 'react-ui-components/buttons/blueButton';
 import WhiteButton from 'react-ui-components/buttons/whiteButton';
+import { getList2 } from 'govil-integrator/lists';
 
 // const styles = theme => ({
 //   root: { flexGrow: 1 }
@@ -20,6 +21,8 @@ import WhiteButton from 'react-ui-components/buttons/whiteButton';
 @inject('applicationData')
 @observer
 export default class PersonalInformation extends React.Component {
+  @observable
+  statusOptions = [];
   constructor(props) {
     super(props);
 
@@ -56,12 +59,30 @@ export default class PersonalInformation extends React.Component {
       }
     };
     this.currentResources = this.currentResources.bind(this);
-    this.statusOptions = [
-      { key: '1', value: 'נשוי' },
-      { key: '2', value: 'רווק' },
-      { key: '3', value: 'גרוש' }
-    ];
+    // this.statusOptions = [
+    //   { value: '1', label: 'נשוי' },
+    //   { value: '2', label: 'רווק' },
+    //   { value: '3', label: 'גרוש' },
+    //   { value: '4', label: 'אאאא' },
+    //   { value: '5', label: 'אבגדד' },
+    //   { value: '6', label: 'אאבגגג' },
+    //   { value: '7', label: 'אאבבב' }
+    // ];
+
+    this.loadCityList();
   }
+  loadCityList = flow(function*() {
+    try {
+      this.statusOptions = yield getList2({
+        listName: 'City',
+        code: 'city_code',
+        value: 'city_name_he'
+      });
+      // this.statusOptions = response;
+    } catch (error) {
+      console.log(error);
+    }
+  });
   currentResources = function() {
     return this.texts[this.props.applicationData.formLanguage.name];
   };
@@ -103,19 +124,19 @@ export default class PersonalInformation extends React.Component {
               rows={3}
               isAutoResize={false}
             />
+
+            <Select
+              className="col-md-4"
+              label={this.currentResources().status}
+              {...getPropsField(userDetails, 'status')}
+              options={this.statusOptions}
+            />
           </Row>
           <br />
           <DatePicker
             className="col-md-4"
             label={this.currentResources().birthDate}
             {...getPropsField(userDetails, 'birthDate')}
-          />
-
-          <Select
-            className="col-md-4"
-            label={this.currentResources().status}
-            {...getPropsField(userDetails, 'status')}
-            options={this.statusOptions}
           />
         </Grid>
         <span className="error-message">

@@ -140,7 +140,8 @@ class PersonalInformation extends ModularViewModel {
   @observable
   @modelMember()
   @validateable({ validations: [] })
-  status = 'true';
+  // @entityBase
+  status;
 
   @observable
   @modelMember()

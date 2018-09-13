@@ -23,7 +23,7 @@ describe('services', () => {
       });
       test('settings must be an object', () => {
         expect(() => {
-          services.govServiceListRequest('aaa').toThrow();
+          govServiceListRequest('aaa').toThrow();
         });
       });
       test('route is mandatory ', () => {

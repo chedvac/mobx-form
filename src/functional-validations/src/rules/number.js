@@ -84,7 +84,7 @@ export const greaterThan = assertParametersType(
         name: 'greaterThan',
         message: () => messages.greaterThan(compareToName || value),
         params,
-        validator: greaterThanChecker(params)
+        validator: greaterThanChecker(value)
       })
     ]);
   }
@@ -109,7 +109,7 @@ export const lessThan = assertParametersType(
       name: 'lessThan',
       message: () => messages.lessThan(compareToName || value),
       params,
-      validator: lessThanChecker(params)
+      validator: lessThanChecker(value)
     });
   }
 );

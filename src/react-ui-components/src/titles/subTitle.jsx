@@ -2,9 +2,11 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
-  subTitle: theme.typography.subTitle
-});
+const styles = theme => {
+  return {
+    subTitle: theme.typography.subTitle
+  };
+};
 
 @withStyles(styles)
 class SubTitle extends React.Component {
