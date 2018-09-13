@@ -10,11 +10,7 @@ class SimpleFieldsTab extends React.Component {
 
   render() {
     return (
-      <Container
-        beforeLeave={this.props.simpleFields.validate}
-        history={this.props.history}
-        location={this.props.location}
-      >
+      <Container beforeLeave={this.props.simpleFields.validate}>
         <PersonalInformation
           userDetails={this.props.simpleFields.userDetails}
         />

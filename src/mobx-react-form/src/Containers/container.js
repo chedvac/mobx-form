@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import { withRouter } from 'react-router';
 
 @observer
 class Container extends React.Component {
@@ -32,4 +33,4 @@ Container.propTypes = {
   onEnter: PropTypes.func
   //content: PropTypes.component.isRequired
 };
-export default Container;
+export default withRouter(Container);

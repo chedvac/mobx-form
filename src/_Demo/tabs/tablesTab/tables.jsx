@@ -31,11 +31,7 @@ export default class Tables extends React.Component {
   render() {
     const { tables } = this.props;
     return (
-      <Container
-        beforeLeave={this.props.tables.validate}
-        history={this.props.history}
-        location={this.props.location}
-      >
+      <Container beforeLeave={this.props.tables.validate}>
         <div className="row">
           <div className="col-md-4">
             <Input
