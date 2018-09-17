@@ -10,8 +10,8 @@ class TablesTab extends ModularViewModel {
   constructor() {
     super();
     // this.email = "yaelp@gov.il"
-    this.set_email = this.set_email.bind(this);
-    this.set_houseNumber = this.set_houseNumber.bind(this);
+    this.setEmail = this.setEmail.bind(this);
+    this.setHouseNumber = this.setHouseNumber.bind(this);
   }
   @modelMember()
   @validateable({ validations: [hebrew(), maxlength({ value: 5 })] })
@@ -20,11 +20,11 @@ class TablesTab extends ModularViewModel {
   @validateable()
   houseNumber = '';
   @action
-  set_email(value) {
+  setEmail(value) {
     this.email = value;
   }
   @action
-  set_houseNumber(value) {
+  setHouseNumber(value) {
     this.houseNumber = value;
   }
 }

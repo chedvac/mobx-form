@@ -8,8 +8,7 @@ import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
 
-import FormSection from 'react-ui-components/structure/formSection';
-import FormHeader from 'react-ui-components/structure/header';
+import FormSection from 'govil-common-content/forms-components/src/formSection';
 import customTheme from 'react-ui-components/themes/customTheme';
 import Dialog from 'react-ui-components/dialogs/dialog.jsx';
 
@@ -39,10 +38,10 @@ class App extends Component {
         <CssBaseline />
         <Provider applicationData={applicationData}>
           <Grid container className={classes.root}>
-          <Dialog/>
-            <FormHeader />
+            <Dialog />
+
             <FormSection rootStore={rootStore}>
-              <ComponentDemo />
+              <ComponentDemo rootStore={rootStore} />
             </FormSection>
           </Grid>
         </Provider>

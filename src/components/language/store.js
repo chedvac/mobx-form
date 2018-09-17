@@ -7,7 +7,7 @@ class Language extends ModularViewModel {
     super();
     this.actions = {
       @action
-      set_name: value => {
+      setName: value => {
         this.model.name = value;
       }
     };

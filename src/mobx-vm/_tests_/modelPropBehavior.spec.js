@@ -1,10 +1,10 @@
-import ModelMemberBehavior from 'mobx-vm/modelMemberBehavior';
+import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
 
 let modelMember;
 beforeAll(() => {
-  modelMember = new ModelMemberBehavior();
+  modelMember = new ModelMemberDefinition();
 });
-describe('ModelMemberBehavior', () => {
+describe('ModelMemberDefinition', () => {
   describe('define properties:', () => {
     test('setReset', () => {
       expect(modelMember.setReset).toBeDefined();

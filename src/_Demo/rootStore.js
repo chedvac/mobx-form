@@ -1,6 +1,6 @@
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
-
+import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore';
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
 import dialog from 'react-ui-components/dialogs/dialog.js';
@@ -14,6 +14,7 @@ class RootStore extends ModularViewModel {
     super();
     this.simpleFieldsTab = new SimpleFieldsTab();
     this.tablesTab = new TablesTab();
+    this.toolbarButtons = toolbarButtons;
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
@@ -22,7 +23,7 @@ class RootStore extends ModularViewModel {
   @modelMember()
   tablesTab;
   submitForm() {
-    // submitAction(this.formInformation.set_isFormSent);
+    // submitAction(this.formInformation.setIsFormSent);
   }
 
   async validateForm() {

@@ -3,7 +3,7 @@ import configuration from './mobxConfiguration'; //eslint-disable-line no-unused
 import validationState from 'vm-validations/validationState';
 import validationsManagerFactory from 'vm-validations/validationsManager';
 
-export default class ValidateableBehavior {
+export default class ValidateableDefinition {
   constructor(settings) {
     this.name = settings.name;
     this.validationState = observable(validationState);
@@ -12,12 +12,12 @@ export default class ValidateableBehavior {
     );
   }
   @action
-  set_validationState(validationState) {
+  setValidationState(validationState) {
     Object.assign(this.validationState, validationState);
   }
   async validate(value) {
     const failedValidation = await this.validationsManager.validate(value);
-    this.set_validationState(failedValidation);
+    this.setValidationState(failedValidation);
     return failedValidation.isValid;
   }
 }

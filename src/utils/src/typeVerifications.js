@@ -36,8 +36,8 @@ function assertByDecorator(types) {
  *   @assertParametersType({
     propertyName: PropTypes.string.isRequired,
     newProperty: PropTypes.oneOfType([
-      PropTypes.instanceOf(ValidateableBehavior),
-      PropTypes.instanceOf(ModelMemberBehavior)
+      PropTypes.instanceOf(ValidateableDefinition),
+      PropTypes.instanceOf(ModelMemberDefinition)
     ])
   })
   createProperty(propertyName, newProperty) {
@@ -60,4 +60,3 @@ export default function assertParametersType(types, wrappedFunction) {
     ? assertByHighOrderFunction(types, wrappedFunction)
     : assertByDecorator(types);
 }
-
