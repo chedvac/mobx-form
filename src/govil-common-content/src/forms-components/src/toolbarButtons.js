@@ -1,4 +1,3 @@
-import toolbarButtonsStore from 'govil-common-content/application-data/src/toolbarStore'
 
 const toolbarButtons = {
     validateForm: {
@@ -7,7 +6,6 @@ const toolbarButtons = {
         },
         className: 'ic-validateForm',
         action: () => {
-            toolbarButtonsStore.changeToolbarButtonState('validateForm', false);
             console.log('בודק תקינות הטופס');
         }
     },
