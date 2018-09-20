@@ -20,15 +20,6 @@ const styles = theme => {
   }
 };
 
-// const ContentDiv = style(React.Fragment)(({ theme, props }) => ({
-//   root: {
-//     backgroundColor: theme.palette.background.default,
-//     padding: theme.spacing.unit * 3,
-//     [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: `${props.drawerForContentWidth}px`,
-//     width: `calc(100% - ${props.drawerForContentWidth}px)`
-//   },
-// }));
-
 @withStyles(styles, { withTheme: true })
 @observer
 class FormSection extends Component {
@@ -68,10 +59,7 @@ class FormSection extends Component {
   render() {
     const { classes, rootStore, theme } = this.props;
     closeWidth = theme.isMobile ? '0' : '72';
-    // const contentStyle = {
-    //   [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: `${this.state.drawerForContentWidth}px`,
-    //   width: `calc(100% - ${this.state.drawerForContentWidth}px)`,
-    // };
+
     return (
       <React.Fragment>
         <Header toggleToolbar={this.toggleToolbar} />
@@ -87,14 +75,6 @@ class FormSection extends Component {
             React.cloneElement(this.props.children, { drawerForContentWidth: this.state.drawerForContentWidth })
           }
 
-          {/* <ComponentDemo drawerForContentWidth={this.state.drawerForContentWidth} rootStore={rootStore} /> */}
-          {/* <ComponentDemoStyled rootStore={rootStore} drawerForContentWidth={this.state.drawerForContentWidth} /> */}
-          {/* <ContentDiv drawerForContentWidth={this.state.drawerForContentWidth} classes={classes} > */}
-          {/* <div style={contentStyle} className={classes.content}> */}
-          {/* { */}
-          {/* this.props.children */}
-          {/* }
-          </div> */}
         </div>
       </React.Fragment>
     );
