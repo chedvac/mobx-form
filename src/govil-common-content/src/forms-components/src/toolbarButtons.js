@@ -1,6 +1,14 @@
+export const toolbarButtonsNames = {
+    validateForm: 'validateForm',
+    submit: 'submit',
+    print: 'print',
+    saveAsPDF: 'saveAsPDF',
+    attachments: 'attachments',
+    save: 'save'
+}
 
-const toolbarButtons = {
-    validateForm: {
+export const toolbarButtonsObject = {
+    [toolbarButtonsNames.validateForm]: {
         buttonText: {
             hebrew: 'בדוק תקינות'
         },
@@ -9,7 +17,7 @@ const toolbarButtons = {
             console.log('בודק תקינות הטופס');
         }
     },
-    submit: {
+    [toolbarButtonsNames.submit]: {
         buttonText: {
             hebrew: 'שלח'
         },
@@ -18,7 +26,7 @@ const toolbarButtons = {
             console.log('שולח את הטופס');
         }
     },
-    print: {
+    [toolbarButtonsNames.print]: {
         buttonText: {
             hebrew: 'הדפס'
         },
@@ -27,7 +35,7 @@ const toolbarButtons = {
             console.log('מדפיס את הטופס');
         }
     },
-    saveAsPDF: {
+    [toolbarButtonsNames.saveAsPDF]: {
         buttonText: {
             hebrew: 'שמור כ PDF'
         },
@@ -36,7 +44,7 @@ const toolbarButtons = {
             console.log('שומר כ PDF');
         }
     },
-    attachments: {
+    [toolbarButtonsNames.attachments]: {
         buttonText: {
             hebrew: 'צרופות'
         },
@@ -45,7 +53,7 @@ const toolbarButtons = {
             console.log('צרופות הטופס');
         }
     },
-    save: {
+    [toolbarButtonsNames.save]: {
         buttonText: {
             hebrew: 'שמור'
         },
@@ -56,4 +64,4 @@ const toolbarButtons = {
     }
 }
 
-export default toolbarButtons;
+//export default toolbarButtons;

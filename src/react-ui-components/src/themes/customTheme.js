@@ -23,7 +23,8 @@ const customTheme = createMuiTheme({
     primary: {
       main: basicColor
     }
-  }
+  },
+  isMobile: false
   // ,overrides: {
   //   MuiStepIcon: {
   //     root: {

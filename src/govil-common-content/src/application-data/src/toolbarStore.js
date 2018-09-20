@@ -1,10 +1,10 @@
-import { action, observable } from "mobx";
-import toolbarButtons from 'govil-common-content/forms-components/src/toolbarButtons'
+import { action, observable } from 'mobx';
+import { toolbarButtonsNames } from 'govil-common-content/forms-components/src/toolbarButtons'
 
 class toolbarButtonsStore {
 
-    constructor(toolbarButtons) {
-        Object.entries(toolbarButtons).map((toolbarButton) => {
+    constructor(toolbarButtonsNames) {
+        Object.entries(toolbarButtonsNames).map((toolbarButton) => {
             const toolbarButtonName = toolbarButton[0];
             this.toolbarButtonsList[toolbarButtonName] = true;
         })
@@ -18,4 +18,4 @@ class toolbarButtonsStore {
     };
 }
 
-export default new toolbarButtonsStore(toolbarButtons);
+export default new toolbarButtonsStore(toolbarButtonsNames);

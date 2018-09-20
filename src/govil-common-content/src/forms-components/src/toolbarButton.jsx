@@ -16,10 +16,10 @@ class ToolbarButton extends React.Component {
     }
 
     render() {
-        const { classes, className, onMouseOverEvent, onMouseOutEvent, buttonText, visible, buttonAction } = this.props;
+        const { classes, className, buttonText, visible, buttonAction } = this.props;
 
         return (
-            <ListItem button onMouseOver={() => { onMouseOverEvent() }} onMouseOut={() => { onMouseOutEvent() }} visible={visible} onClick={buttonAction}>
+            <ListItem button visible={visible} onClick={buttonAction}>
                 <ListItemIcon>
                     <Icon className={classes[className]}></Icon>
                 </ListItemIcon>
