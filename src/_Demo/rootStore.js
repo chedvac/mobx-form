@@ -3,7 +3,7 @@ import TablesTab from './tabs/tablesTab/store';
 import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore';
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
-import dialog from 'react-ui-components/dialogs/dialog.js';
+import dialog from 'reactUiComponents/dialogs/dialog.js';
 //import LanguageStore from '../components/language/store'
 // import submitAction from '../actions/submit';
 
