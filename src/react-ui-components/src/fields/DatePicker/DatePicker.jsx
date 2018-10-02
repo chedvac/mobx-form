@@ -29,7 +29,9 @@ class DatePicker extends React.Component {
   }
 
   currentResources = () => {
-    return languageResources[this.props.applicationData.formLanguage.name];
+    return languageResources[
+      this.props.applicationData.formLanguage.languageName
+    ];
   };
 
   render() {

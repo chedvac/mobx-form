@@ -26,7 +26,7 @@ class BaseSelect extends React.Component {
     this.props.options.unshift({ key: '', value: optionCaption });
   };
   currentResources = function() {
-    return this.texts[this.props.applicationData.formLanguage.name];
+    return this.texts[this.props.applicationData.formLanguage.languageName];
   };
 
   render() {

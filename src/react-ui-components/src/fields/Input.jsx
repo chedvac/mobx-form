@@ -35,11 +35,20 @@ class Input extends React.Component {
   }
 
   render() {
-    const { classes, xs = 12, sm = 6, lg = 3, ...props } = this.props;
+    const {
+      classes,
+      texts,
+      language,
+      xs = 12,
+      sm = 6,
+      lg = 3,
+      ...props
+    } = this.props;
     return (
       <Grid item xs={xs} sm={sm} lg={lg}>
         <TextField
           {...this.props}
+          label={texts[language]}
           className={classes.textField}
           margin="normal"
           error={props.message ? true : false}

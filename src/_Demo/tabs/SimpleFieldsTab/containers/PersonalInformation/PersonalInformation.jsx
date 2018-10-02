@@ -24,50 +24,32 @@ export default class PersonalInformation extends React.Component {
     super(props);
 
     this.texts = {
-      hebrew: {
-        firstName: ' שם פרטי',
-        lastName: ' שם משפחה',
-        age: 'גיל הבן',
-        fatherAge: 'גיל האב',
-        comments: 'הערות',
-        status: 'מצב משפחתי',
-        agreement: 'אני מצהיר...',
-        birthDate: 'תאריך לידה'
+      firstName: {
+        hebrew: ' שם פרטי',
+        english: 'first name',
+        arabic: ' שם פרטי'
       },
-      english: {
-        firstName: 'first name',
-        lastName: 'last name',
-        age: 'age',
-        fatherAge: 'fatherAge',
-        comments: 'comments',
-        status: 'status',
-        agreement: 'I Agree...',
-        birthDate: 'birth date'
+      lastName: { hebrew: 'שם משפחה', english: 'last name', arabic: '' },
+      age: { hebrew: 'גיל הבן', english: 'age', arabic: '' },
+      fatherAge: { hebrew: 'גיל האב', english: 'father Age', arabic: '' },
+      comments: { hebrew: 'הערות', english: 'comments', arabic: '' },
+      status: { hebrew: 'מצב משפחתי', english: 'status', arabic: '' },
+      agreement: {
+        hebrew: 'אני מצהיר...',
+        english: 'I Agree...',
+        arabic: ''
       },
-      arabic: {
-        firstName: 'first name',
-        lastName: 'last name',
-        age: 'age',
-        fatherAge: 'fatherAge',
-        comments: 'comments',
-        status: 'status',
-        agreement: 'I Agree...',
-        birthDate: 'birth date'
-      }
+      birthDate: { hebrew: 'תאריך לידה', english: 'birth date', arabic: '' }
     };
-    this.currentResources = this.currentResources.bind(this);
     this.statusOptions = [
       { key: '1', value: 'נשוי' },
       { key: '2', value: 'רווק' },
       { key: '3', value: 'גרוש' }
     ];
   }
-  currentResources = function() {
-    return this.texts[this.props.applicationData.formLanguage.name];
-  };
 
   render() {
-    const { userDetails } = this.props;
+    const { userDetails, applicationData } = this.props;
 
     return (
       <div>
@@ -75,20 +57,20 @@ export default class PersonalInformation extends React.Component {
           <SubTitle>דוגמא לשדות רגילים</SubTitle>
           <Row>
             <Input
-              label={this.currentResources().firstName}
-              {...getPropsField(userDetails, 'firstName')}
+              texts={this.texts.firstName}
+              {...getPropsField(userDetails, 'firstName', applicationData)}
             />
             <Input
-              label={this.currentResources().lastName}
-              {...getPropsField(userDetails, 'lastName')}
+              texts={this.texts.lastName}
+              {...getPropsField(userDetails, 'lastName', applicationData)}
             />
             <Input
-              label={this.currentResources().age}
-              {...getPropsField(userDetails, 'age')}
+              texts={this.texts.age}
+              {...getPropsField(userDetails, 'age', applicationData)}
             />
             <Input
-              label={this.currentResources().fatherAge}
-              {...getPropsField(userDetails, 'fatherAge')}
+              texts={this.texts.fatherAge}
+              {...getPropsField(userDetails, 'fatherAge', applicationData)}
             />
           </Row>
           <Row>
@@ -98,8 +80,8 @@ export default class PersonalInformation extends React.Component {
           <Row>
             <Textarea
               xs={8}
-              label={this.currentResources().comments}
-              {...getPropsField(userDetails, 'comments')}
+              texts={this.texts.comments}
+              {...getPropsField(userDetails, 'comments', applicationData)}
               rows={3}
               isAutoResize={false}
             />
@@ -107,14 +89,14 @@ export default class PersonalInformation extends React.Component {
           <br />
           <DatePicker
             className="col-md-4"
-            label={this.currentResources().birthDate}
-            {...getPropsField(userDetails, 'birthDate')}
+            texts={this.texts.birthDate}
+            {...getPropsField(userDetails, 'birthDate', applicationData)}
           />
 
           <Select
             className="col-md-4"
-            label={this.currentResources().status}
-            {...getPropsField(userDetails, 'status')}
+            texts={this.texts.status}
+            {...getPropsField(userDetails, 'status', applicationData)}
             options={this.statusOptions}
           />
         </Grid>

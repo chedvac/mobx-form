@@ -9,38 +9,24 @@ export default class Tables extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
-      hebrew: {
-        email: ' מייל',
-        houseNumber: ' מספר בית'
-      },
-      english: {
-        email: 'first name',
-        houseNumber: 'last name'
-      },
-      arabic: {
-        email: 'first name',
-        houseNumber: 'last name'
-      }
+      email: { hebrew: 'מייל', english: 'email', arabic: '' },
+      houseNumber: { hebrew: 'מספר בית', english: 'House Number', arabic: '' }
     };
-    this.currentResources = this.currentResources.bind(this);
   }
-  currentResources = function() {
-    return this.texts[this.props.applicationData.formLanguage.name];
-  };
   render() {
-    const { tables } = this.props;
+    const { tables, applicationData } = this.props;
     return (
       <div className="row">
         <div className="col-md-4">
           <Input
-            label={this.currentResources().email}
-            {...getPropsField(tables, 'email')}
+            texts={this.texts.email}
+            {...getPropsField(tables, 'email', applicationData)}
           />
         </div>
         <div className="col-md-4">
           <Input
-            label={this.currentResources().houseNumber}
-            {...getPropsField(tables, 'houseNumber')}
+            texts={this.texts.houseNumber}
+            {...getPropsField(tables, 'houseNumber', applicationData)}
           />
         </div>
       </div>

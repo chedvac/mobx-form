@@ -6,9 +6,12 @@ const basicFontSize = '15px';
 const basicFontFamily = 'arimo-bold, Arial';
 
 const customTheme = createMuiTheme({
+  direction: 'rtl',
   typography: {
     fontSize: basicFontSize,
     fontFamily: basicFontFamily,
+    rtlDirection: { direction: 'rtl' },
+    ltrDirection: { direction: 'ltr' },
     title: {},
     subTitle: {
       color: basicColor,
