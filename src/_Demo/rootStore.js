@@ -4,6 +4,8 @@ import toolbarButtons from 'govil-common-content/application-data/src/toolbarSto
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
 import dialog from 'react-ui-components/dialogs/dialog.js';
+import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/PersonalInformation';
+import Link from 'react-ui-components/dialogs/Link';
 //import LanguageStore from '../components/language/store'
 // import submitAction from '../actions/submit';
 
@@ -22,14 +24,27 @@ class RootStore extends ModularViewModel {
   simpleFieldsTab;
   @modelMember()
   tablesTab;
-  submitForm() {
+  async submitForm() {
     // submitAction(this.formInformation.setIsFormSent);
+    try {
+      await dialog.confirm({
+        content: Link,
+        title: 'שליחת טופס'
+      });
+      console.log('resolve');
+    } catch (err) {
+      console.log('reject');
+    }
+    // dialog.confirm({
+    //   message: 'הטופס נשלח בהצלחה',
+    //   title: 'שליחת טופס'
+    // });
   }
 
   async validateForm() {
     const isStoreValid = await this.validate();
     if (isStoreValid) {
-      dialog.alert({ message: 'נתוני הטופס תקינים' });
+      dialog.alert({ content: 'נתוני הטופס תקינים' });
     }
   }
   getStoreAsJSon = () => toJS(this.model.getModel());

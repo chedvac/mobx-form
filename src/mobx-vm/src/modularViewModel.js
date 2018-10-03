@@ -50,8 +50,7 @@ export default class ModularViewModel {
   PersonalInfo.getAction();
 */
   getAction(name) {
-    console.log('action', `set${upperFirst(name)}`);
-    return this[`set${upperFirst(name)}`]; //todo: toupercase
+    return this[`set${upperFirst(name)}`];
   }
   @action
   setValidationState(validationState) {
