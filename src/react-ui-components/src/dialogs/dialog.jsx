@@ -32,8 +32,8 @@ class Dialog extends React.Component {
             )}
           </DialogContent>
           <DialogActions>
-            {Object.entries(buttons).forEach(([key, btn]) => (
-              <Button key={key} onClick={btn.click} color="primary">
+            {Object.values(buttons).map((btn, index) => (
+              <Button key={index} onClick={btn.click} color="primary">
                 {btn.text}
               </Button>
             ))}
