@@ -9,6 +9,7 @@ import { maxlength } from 'validations/rules/basic';
 class TablesTab extends ComplexType {
   constructor() {
     super();
+
     // this.email = "yaelp@gov.il"
     this.set_email = this.set_email.bind(this);
     this.set_houseNumber = this.set_houseNumber.bind(this);
