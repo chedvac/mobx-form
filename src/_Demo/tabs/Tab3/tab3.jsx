@@ -9,6 +9,7 @@ export default class Tab3 extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
+
       hebrew: {
         email: ' מייל',
         houseNumber: ' מספר בית'
@@ -24,7 +25,7 @@ export default class Tab3 extends React.Component {
     };
     this.currentResources = this.currentResources.bind(this);
   }
-  currentResources = function() {
+  currentResources = function () {
     return this.texts[this.props.applicationData.formLanguage.name];
   };
   render() {
