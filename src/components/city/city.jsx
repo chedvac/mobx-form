@@ -14,7 +14,7 @@ export default class City extends React.Component {
     super(props);
 
     this.texts = {
-        selectLanguage:{hebrew: , english: 'select', arabic: ''} 
+      selectLanguage: { hebrew: 'בחר', english: 'select', arabic: '' }
     };
     // this.loadCityList = this.loadCityList.bind(this);
     this.loadCityList();
@@ -44,8 +44,6 @@ export default class City extends React.Component {
   //     })
   // }
 
-
-
   render() {
     return (
       <div className="row">
@@ -53,7 +51,11 @@ export default class City extends React.Component {
           <Select
             options={this.cityList}
             {...this.props}
-            label={this.texts.selectLanguage[this.props.applicationData.formLanguage.languageName]}
+            label={
+              this.texts.selectLanguage[
+                this.props.applicationData.formLanguage.languageName
+              ]
+            }
           />
         </div>
       </div>

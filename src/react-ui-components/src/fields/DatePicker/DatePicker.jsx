@@ -39,7 +39,6 @@ class DatePicker extends React.Component {
     return (
       <DayPickerInput
         {...this.settings}
-        //label={this.props.label.get()}
         value={this.props.value}
         inputProps={{ ...this.props }}
         dayPickerProps={{

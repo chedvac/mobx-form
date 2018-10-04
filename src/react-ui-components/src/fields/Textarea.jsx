@@ -26,7 +26,7 @@ class Textarea extends React.Component {
     super(props);
   }
   render() {
-    const { classes, label } = this.props;
+    const { classes } = this.props;
     const { rows = 3, isAutoResize = false, ...props } = this.props || {};
     const ROW_VS_PX = 20.666666666666667;
     const MAX_ROWS = 1000;
@@ -35,7 +35,6 @@ class Textarea extends React.Component {
       <div>
         <TextField
           {...props}
-          //label={label.get()}
           multiline
           rows={rows}
           defaultValue="Default Value"

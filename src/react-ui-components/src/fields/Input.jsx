@@ -33,7 +33,6 @@ class Input extends React.Component {
   render() {
     const {
       classes,
-      label,
       languageStore,
       xs = 12,
       sm = 6,
@@ -44,7 +43,6 @@ class Input extends React.Component {
       <Grid item xs={xs} sm={sm} lg={lg}>
         <TextField
           {...this.props}
-          //label={label.get()}
           className={classes.textField}
           margin="normal"
           error={props.message ? true : false}
