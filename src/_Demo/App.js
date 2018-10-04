@@ -32,9 +32,7 @@ class App extends Component {
     window.rootStore = rootStore;
     languageStore.setAvaliableLanguges(['hebrew', 'english']);
     // rootStore.toolbarButtons.changeToolbarButtonState('selectLanguage', false);
-    const applicationData = {
-      formLanguage: languageStore
-    };
+    const applicationData = {};
     // autorun(() => {
     //   customTheme.direction = applicationData.formLanguage.isHebrew
     //     ? 'rtl'

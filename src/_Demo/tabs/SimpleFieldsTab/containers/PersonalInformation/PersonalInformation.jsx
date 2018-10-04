@@ -73,7 +73,7 @@ export default class PersonalInformation extends React.Component {
   }
 
   render() {
-    const { userDetails, applicationData } = this.props;
+    const { userDetails } = this.props;
 
     return (
       <div>

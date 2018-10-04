@@ -24,6 +24,34 @@ const languagesDefinitions = [
     text: 'العربي',
     defaultLanguage: 'hebrew',
     dir: 'rtl'
+  },
+  {
+    longName: 'french',
+    shortName: 'fr',
+    text: 'Français',
+    defaultLanguage: 'english',
+    dir: 'ltr'
+  },
+  {
+    longName: 'spanish',
+    shortName: 'es',
+    text: 'Español',
+    defaultLanguage: 'english',
+    dir: 'ltr'
+  },
+  {
+    longName: 'russian',
+    shortName: 'ru',
+    text: 'Русский',
+    defaultLanguage: 'english',
+    dir: 'ltr'
+  },
+  {
+    longName: 'german',
+    shortName: 'de',
+    text: 'Deutsche',
+    defaultLanguage: 'english',
+    dir: 'ltr'
   }
 ];
 class Languages extends ModularViewModel {
@@ -120,7 +148,7 @@ class Languages extends ModularViewModel {
   */
   @computed
   get isRtl() {
-    return this.languageDefinition.get().dir === 'rtl';
+    return this.languageDefinition.dir === 'rtl';
   }
   /* @computed <b>direction</b>
   * @description return current language direction
@@ -131,7 +159,7 @@ class Languages extends ModularViewModel {
   */
   @computed
   get direction() {
-    return this.languageDefinition.get().dir;
+    return this.languageDefinition.dir;
   }
   /* @function <b>getShortName</b>
   * @description return the current language short name
@@ -139,8 +167,9 @@ class Languages extends ModularViewModel {
   * @example 
   var shortName = languageViewModel.getShortName()// return 'he'
   */
-  getShortName() {
-    return this.languageDefinition.get().shortName;
+  @computed
+  get getShortName() {
+    return this.languageDefinition.shortName;
   }
   /* @function <b>getDefaultLanguage</b>
     * @description return the default language for sent language

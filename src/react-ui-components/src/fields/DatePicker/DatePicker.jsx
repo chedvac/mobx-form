@@ -9,15 +9,14 @@ import { formatDate, parseDate } from './utils';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import 'moment/locale/ar';
 import 'moment/locale/he';
-import languageResources from 'resources/languages';
 import './DatePicker.css';
 
 @inject('applicationData')
+@inject('languageStore')
 @observer
 class DatePicker extends React.Component {
   constructor(props) {
     super(props);
-    this.currentResources = this.currentResources.bind(this);
 
     const defaultSettings = {
       format: 'L',
@@ -28,14 +27,8 @@ class DatePicker extends React.Component {
     this.settings = { ...defaultSettings, ...props.settings };
   }
 
-  currentResources = () => {
-    return languageResources[
-      this.props.applicationData.formLanguage.languageName
-    ];
-  };
-
   render() {
-    const className = `direction-${this.currentResources().dir}`;
+    const className = `direction-${this.props.languageStore.direction}`;
     return (
       <DayPickerInput
         {...this.settings}
@@ -43,9 +36,9 @@ class DatePicker extends React.Component {
         inputProps={{ ...this.props }}
         dayPickerProps={{
           localeUtils: MomentLocaleUtils,
-          locale: this.currentResources().shortName,
+          locale: this.props.languageStore.getShortName,
           className: className,
-          dir: this.currentResources().dir
+          dir: this.props.languageStore.direction
         }}
       />
     );
