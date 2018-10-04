@@ -51,7 +51,7 @@ class PersonalInformation extends ModularViewModel {
     };
   }
   @observable
-  @modelMember({ reset: () => console.log('not reset FirstName') })
+  @modelMember()
   @validateable({
     validations: [
       maxlength({ value: 15 }),
@@ -65,7 +65,7 @@ class PersonalInformation extends ModularViewModel {
       })
     ]
   })
-  firstName = '';
+  firstName = 'כגד';
   @observable
   @modelMember({ reset: () => false })
   @validateable({
@@ -90,7 +90,7 @@ class PersonalInformation extends ModularViewModel {
       // })
     ]
   })
-  age = 15;
+  age = 60;
 
   @computed
   get isAdult() {
@@ -159,45 +159,45 @@ class PersonalInformation extends ModularViewModel {
 
   // #region actions
   @action.bound
-  set_firstName(value) {
+  setFirstName(value) {
     this.firstName = value;
   }
 
   @action.bound
-  set_birthDate(value) {
+  setBirthDate(value) {
     this.birthDate = value;
   }
   @action.bound
-  set_city(value) {
+  setCity(value) {
     this.city = value;
   }
   @action.bound
-  set_lastName(value) {
+  setLastName(value) {
     this.lastName = value;
   }
   @action.bound
-  set_fatherAge(value) {
+  setFatherAge(value) {
     this.fatherAge = value;
   }
 
   @action.bound
-  set_age(value) {
+  setAge(value) {
     this.age = value;
   }
   @action.bound
-  set_fatherName(value) {
+  setFatherName(value) {
     this.fatherName = value;
   }
   @action.bound
-  set_comments(value) {
+  setComments(value) {
     this.comments = value;
   }
   @action.bound
-  set_status(value) {
+  setStatus(value) {
     this.status = value;
   }
   @action.bound
-  set_agreement(value) {
+  setAgreement(value) {
     this.agreement = value;
   }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import control from 'mobx-react-form/control';
+import control from 'mobxReactForm/control';
 
 @inject('applicationData')
 @observer
@@ -30,7 +30,7 @@ class BaseSelect extends React.Component {
   };
 
   render() {
-    const { options = [] } = this.props || {};
+    const { options = [], label } = this.props || {};
     return (
       <div>
         <select className="select-field" {...this.props}>

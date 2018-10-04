@@ -111,6 +111,7 @@ class SideToolbar extends React.Component {
                 className={toolbarButton[1].className}
                 buttonAction={toolbarButton[1].action}
                 Popup={toolbarButton[1].popup}
+                isToolbarOpened={opened}
                 onMouseOverEvent={openToolbarOnOver}
                 onMouseOutEvent={closeToolbarOnOut}
               />

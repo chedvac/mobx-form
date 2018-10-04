@@ -2,9 +2,9 @@ import React from 'react';
 import { enableUniqueIds } from 'react-html-id';
 import { format } from 'utils/stringExtension';
 import { autorun } from 'mobx';
-
+import { inject } from 'mobx-react';
 function control(WrappedComponent) {
-  return class control extends React.Component {
+  class control extends React.Component {
     constructor(props) {
       super(props);
       enableUniqueIds(this);
@@ -59,6 +59,7 @@ function control(WrappedComponent) {
         />
       );
     }
-  };
+  }
+  return control;
 }
 export default control;

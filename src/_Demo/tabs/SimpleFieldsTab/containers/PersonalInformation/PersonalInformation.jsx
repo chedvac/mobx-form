@@ -1,45 +1,69 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Row from 'reactUiComponents/structure/row';
+import SubTitle from 'reactUiComponents/titles/subTitle';
 
-import { getPropsField } from 'mobx-react-form/getProps';
+import { getPropsField } from 'mobxReactForm/getProps';
 
-import Input from 'react-ui-components/fields/Input';
-import Textarea from 'react-ui-components/fields/Textarea';
-import Select from 'react-ui-components/fields/Select';
-import DatePicker from 'react-ui-components/fields/DatePicker/DatePicker';
-import Row from 'react-ui-components/structure/row';
-import SubTitle from 'react-ui-components/titles/subTitle';
-import BlueButton from 'react-ui-components/buttons/blueButton';
-import WhiteButton from 'react-ui-components/buttons/whiteButton';
+import Input from 'reactUiComponents/fields/Input';
+import Textarea from 'reactUiComponents/fields/Textarea';
+import Select from 'reactUiComponents/fields/Select';
+import DatePicker from 'reactUiComponents/fields/DatePicker/DatePicker';
 
 // const styles = theme => ({
 //   root: { flexGrow: 1 }
 // });
 
 @inject('applicationData')
+@inject('languageStore')
 @observer
 export default class PersonalInformation extends React.Component {
   constructor(props) {
     super(props);
-
     this.texts = {
-      firstName: {
+      firstName: this.props.languageStore.getText({
         hebrew: ' שם פרטי',
         english: 'first name',
         arabic: ' שם פרטי'
-      },
-      lastName: { hebrew: 'שם משפחה', english: 'last name', arabic: '' },
-      age: { hebrew: 'גיל הבן', english: 'age', arabic: '' },
-      fatherAge: { hebrew: 'גיל האב', english: 'father Age', arabic: '' },
-      comments: { hebrew: 'הערות', english: 'comments', arabic: '' },
-      status: { hebrew: 'מצב משפחתי', english: 'status', arabic: '' },
-      agreement: {
+      }),
+      lastName: this.props.languageStore.getText({
+        hebrew: 'שם משפחה',
+        english: 'last name',
+        arabic: ''
+      }),
+      age: this.props.languageStore.getText({
+        hebrew: 'גיל הבן',
+        english: 'age',
+        arabic: ''
+      }),
+      fatherAge: this.props.languageStore.getText({
+        hebrew: 'גיל האב',
+        english: 'father Age',
+        arabic: ''
+      }),
+      comments: this.props.languageStore.getText({
+        hebrew: 'הערות',
+        english: 'comments',
+        arabic: ''
+      }),
+      status: this.props.languageStore.getText({
+        hebrew: 'מצב משפחתי',
+        english: 'status',
+        arabic: ''
+      }),
+      agreement: this.props.languageStore.getText({
         hebrew: 'אני מצהיר...',
         english: 'I Agree...',
         arabic: ''
-      },
-      birthDate: { hebrew: 'תאריך לידה', english: 'birth date', arabic: '' }
+      }),
+      birthDate: this.props.languageStore.getText({
+        hebrew: 'תאריך לידה',
+        english: 'birth date',
+        arabic: ''
+      })
     };
     this.statusOptions = [
       { key: '1', value: 'נשוי' },
@@ -57,31 +81,27 @@ export default class PersonalInformation extends React.Component {
           <SubTitle>דוגמא לשדות רגילים</SubTitle>
           <Row>
             <Input
-              texts={this.texts.firstName}
-              {...getPropsField(userDetails, 'firstName', applicationData)}
+              label={this.texts.firstName.get()}
+              {...getPropsField(userDetails, 'firstName')}
             />
             <Input
-              texts={this.texts.lastName}
-              {...getPropsField(userDetails, 'lastName', applicationData)}
+              label={this.texts.lastName.get()}
+              {...getPropsField(userDetails, 'lastName')}
             />
             <Input
-              texts={this.texts.age}
-              {...getPropsField(userDetails, 'age', applicationData)}
+              label={this.texts.age.get()}
+              {...getPropsField(userDetails, 'age')}
             />
             <Input
-              texts={this.texts.fatherAge}
-              {...getPropsField(userDetails, 'fatherAge', applicationData)}
+              label={this.texts.fatherAge.get()}
+              {...getPropsField(userDetails, 'fatherAge')}
             />
-          </Row>
-          <Row>
-            <WhiteButton>לשלב הקודם</WhiteButton>
-            <BlueButton>לשלב הבא</BlueButton>
           </Row>
           <Row>
             <Textarea
               xs={8}
-              texts={this.texts.comments}
-              {...getPropsField(userDetails, 'comments', applicationData)}
+              label={this.texts.comments.get()}
+              {...getPropsField(userDetails, 'comments')}
               rows={3}
               isAutoResize={false}
             />
@@ -89,14 +109,14 @@ export default class PersonalInformation extends React.Component {
           <br />
           <DatePicker
             className="col-md-4"
-            texts={this.texts.birthDate}
-            {...getPropsField(userDetails, 'birthDate', applicationData)}
+            label={this.texts.birthDate.get()}
+            {...getPropsField(userDetails, 'birthDate')}
           />
 
           <Select
             className="col-md-4"
-            texts={this.texts.status}
-            {...getPropsField(userDetails, 'status', applicationData)}
+            label={this.texts.status.get()}
+            {...getPropsField(userDetails, 'status')}
             options={this.statusOptions}
           />
         </Grid>

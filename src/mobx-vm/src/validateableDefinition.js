@@ -1,9 +1,9 @@
 import { observable, action } from 'mobx';
-import configuration from './mobxConfiguration';
+import configuration from './mobxConfiguration'; //eslint-disable-line no-unused-vars
 import validationState from 'vm-validations/validationState';
 import validationsManagerFactory from 'vm-validations/validationsManager';
 
-export default class ValidateableBehavior {
+export default class ValidateableDefinition {
   constructor(settings) {
     this.name = settings.name;
     this.validationState = observable(validationState);

@@ -4,8 +4,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 import { Icon } from '@material-ui/core';
-
-const styles = theme => {};
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
+const styles = theme => {
+  nested: {
+    marginRight: theme.spacing.unit * 4;
+  }
+};
 
 @withStyles(styles)
 class ToolbarButton extends React.Component {
@@ -19,6 +25,9 @@ class ToolbarButton extends React.Component {
   listItemClickEvent() {
     if (this.props.Popup) {
       this.setState({ isOpen: !this.state.isOpen });
+      // if(this.state.isOpen){
+      //   ReactDOM.render(<Popup isOpen={this.state.isOpen} />,)
+      // }
     }
     if (this.props.buttonAction) {
       this.props.buttonAction();
@@ -36,23 +45,35 @@ class ToolbarButton extends React.Component {
     } = this.props;
 
     return (
-      <ListItem
-        button
-        onMouseOver={() => {
-          onMouseOverEvent();
-        }}
-        onMouseOut={() => {
-          onMouseOutEvent();
-        }}
-        visible={visible}
-        onClick={this.listItemClickEvent}
-      >
-        <ListItemIcon>
-          <Icon className={classes[className]} />
-        </ListItemIcon>
-        <ListItemText primary={buttonText} />
-        {this.state.isOpen && <Popup isOpen={this.state.isOpen} />}
-      </ListItem>
+      <div>
+        <ListItem
+          button
+          onMouseOver={() => {
+            onMouseOverEvent();
+          }}
+          onMouseOut={() => {
+            onMouseOutEvent();
+          }}
+          visible={visible}
+          onClick={this.listItemClickEvent}
+        >
+          <ListItemIcon>
+            <Icon className={classes[className]} />
+          </ListItemIcon>
+          <ListItemText primary={buttonText} />
+          {Popup ? (
+            this.state.isOpen ? (
+              <ExpandLess className={classes.nested} />
+            ) : (
+              <ExpandMore className={classes.nested} />
+            )
+          ) : (
+            false
+          )}
+        </ListItem>
+        {this.state.isOpen &&
+          this.props.isToolbarOpened && <Popup isOpen={this.state.isOpen} />}
+      </div>
     );
   }
 }

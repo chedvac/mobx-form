@@ -10,7 +10,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
 
 import FormSection from 'govil-common-content/forms-ui-components/src/formSection';
-import customTheme from 'react-ui-components/themes/customTheme';
+import customTheme from 'reactUiComponents/themes/customTheme';
+import Dialog from 'reactUiComponents/dialogs/dialog.jsx';
 
 import ComponentDemo from './componentsDemo';
 
@@ -30,6 +31,7 @@ class App extends Component {
     const rootStore = new RootStore();
     window.rootStore = rootStore;
     languageStore.setAvaliableLanguges(['hebrew', 'english']);
+    // rootStore.toolbarButtons.changeToolbarButtonState('selectLanguage', false);
     const applicationData = {
       formLanguage: languageStore
     };
@@ -42,8 +44,13 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={customTheme}>
         <CssBaseline />
-        <Provider applicationData={applicationData}>
+        <Provider
+          applicationData={applicationData}
+          languageStore={languageStore}
+        >
           <Grid container className={classes.root}>
+            <Dialog />
+
             <FormSection rootStore={rootStore}>
               <ComponentDemo rootStore={rootStore} />
             </FormSection>

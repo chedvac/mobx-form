@@ -1,17 +1,17 @@
 import { action } from 'mobx';
-import validateable from 'mobx-vm/validateable';
-import modelMember from 'mobx-vm/modelMember';
+import validateable from 'core/validateable';
+import modelMember from 'core/modelMember';
 
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ComplexType from 'core/complexType';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 
-class TablesTab extends ModularViewModel {
+class TablesTab extends ComplexType {
   constructor() {
     super();
     // this.email = "yaelp@gov.il"
-    this.setEmail = this.setEmail.bind(this);
-    this.setHouseNumber = this.setHouseNumber.bind(this);
+    this.set_email = this.set_email.bind(this);
+    this.set_houseNumber = this.set_houseNumber.bind(this);
   }
   @modelMember()
   @validateable({ validations: [hebrew(), maxlength({ value: 5 })] })
@@ -20,11 +20,11 @@ class TablesTab extends ModularViewModel {
   @validateable()
   houseNumber = '';
   @action
-  setEmail(value) {
+  set_email(value) {
     this.email = value;
   }
   @action
-  setHouseNumber(value) {
+  set_houseNumber(value) {
     this.houseNumber = value;
   }
 }

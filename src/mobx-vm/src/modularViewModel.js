@@ -1,40 +1,40 @@
 import validationsManagerFactory from 'vm-validations/validationsManager';
 import { validationStateMultiMessages } from 'vm-validations/validationState';
 import PropTypes from 'prop-types';
-import { reaction, action } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
-import fp from 'lodash/fp';
-import ValidateableBehavior from 'mobx-vm/validateableBehavior';
-import ModelMemberBehavior from 'mobx-vm/modelMemberBehavior';
-import { observable } from 'mobx';
+import { forOwn, upperFirst } from 'lodash/fp';
+
+import ValidateableDefinition from 'mobx-vm/validateableDefinition';
+import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
 
 export default class ModularViewModel {
   constructor(settings = {}) {
-    this.validateablesSettings = {};
-    this.modelMembersSettings = {};
-   
-    this.validationsManager = new validationsManagerFactory( 
+    this.validateables = {};
+    this.modelMembers = {};
+
+    this.validationsManager = new validationsManagerFactory(
       settings.validations || []
     );
-    this.validationState = observable(validationStateMultiMessages); 
+    this.validationState = observable(validationStateMultiMessages);
 
-    fp.forOwn(value => {
+    forOwn(value => {
       this.generateModelMember(value);
     })(this._modelMembersSettings);
 
-    fp.forOwn(value => {
+    forOwn(value => {
       this.generateValidateable(value);
     })(this._validateablesSettings);
     this.validate = this.validate.bind(this);
   }
 
   generateModelMember(propertySettings) {
-    const modelMember = new ModelMemberBehavior(propertySettings);
-    this.modelMembersSettings[modelMember.name] = modelMember;
+    const modelMember = new ModelMemberDefinition(propertySettings);
+    this.modelMembers[modelMember.name] = modelMember;
   }
   generateValidateable(propertySettings) {
-    const validateable = new ValidateableBehavior(propertySettings);
-    this.validateablesSettings[validateable.name] = validateable;
+    const validateable = new ValidateableDefinition(propertySettings);
+    this.validateables[validateable.name] = validateable;
     reaction(
       () => this[validateable.name],
       value => validateable.validate(value)
@@ -50,7 +50,8 @@ export default class ModularViewModel {
   PersonalInfo.getAction();
 */
   getAction(name) {
-    return this[`set_${name}`];
+    console.log('action', `set${upperFirst(name)}`);
+    return this[`set${upperFirst(name)}`]; //todo: toupercase
   }
   @action
   setValidationState(validationState) {
@@ -86,8 +87,8 @@ export default class ModularViewModel {
   */
   async validateModel() {
     let modelValid = true;
-    for (const property in this.modelMembersSettings) {
-      if (this.modelMembersSettings.hasOwnProperty(property)) {
+    for (const property in this.modelMembers) {
+      if (this.modelMembers.hasOwnProperty(property)) {
         const currentPropertyValid = await this._validateByType(property);
         modelValid = modelValid && currentPropertyValid;
       }
@@ -98,7 +99,7 @@ export default class ModularViewModel {
     const instance = this[name];
     return (await instance) instanceof ModularViewModel
       ? instance.validate()
-      : this.validateablesSettings[name].validate(this[name]);
+      : this.validateables[name].validate(this[name]);
   }
   /**     
     * @memberof ModularViewModel         
@@ -111,7 +112,7 @@ export default class ModularViewModel {
       PersonalInfo.addValidations('firstName',[ maxlength({ value: 15 })]);
     */
   addValidations(propertyName, validations) {
-    this.validateablesSettings[propertyName].validationsManager.addValidations(
+    this.validateables[propertyName].validationsManager.addValidations(
       validations
     );
   }
@@ -124,7 +125,7 @@ export default class ModularViewModel {
     PersonalInfo.reset();
   */
   reset() {
-    Object.values(this.modelMembersSettings).forEach(property => {
+    Object.values(this.modelMembers).forEach(property => {
       if (property.reset) {
         property.reset();
       }

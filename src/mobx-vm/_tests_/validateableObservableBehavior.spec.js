@@ -1,12 +1,12 @@
 import ValidationState from 'mobx-vm/validationState';
-import ValidateableBehavior from 'mobx-vm/validateableBehavior';
+import ValidateableDefinition from 'mobx-vm/validateableDefinition';
 import validationsManager from 'validations/core/validationsManager';
 
 let validateable;
 beforeAll(() => {
-  validateable = new ValidateableBehavior();
+  validateable = new ValidateableDefinition();
 });
-describe('ValidateableBehavior', () => {
+describe('ValidateableDefinition', () => {
   describe('define properties:', () => {
     test('validationState', () => {
       expect(validateable.validationState).toBeDefined();
@@ -25,7 +25,6 @@ describe('ValidateableBehavior', () => {
     test('setValidationsManager', () => {
       expect(validateable.setValidationsManager).toBeDefined();
     });
-   
   });
   describe('logic:', () => {
     test('setDependedObservables', () => {
@@ -43,7 +42,5 @@ describe('ValidateableBehavior', () => {
       validateable.setValidationsManager(validationsManage);
       expect(validateable.validationsManager).toBe(validationsManage);
     });
-
-  
   });
 });

@@ -24,150 +24,132 @@ const languagesDefinitions = [
     text: 'العربي',
     defaultLanguage: 'hebrew',
     dir: 'rtl'
-  },
-  {
-    longName: 'russian',
-    shortName: 'ru',
-    text: 'Русский',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'amharic',
-    shortName: 'am',
-    text: 'አማርኛ',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'french',
-    shortName: 'fr',
-    text: 'Français',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'spanish',
-    shortName: 'es',
-    text: 'Español',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'german',
-    shortName: 'de',
-    text: 'Deutsche',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'korean',
-    shortName: 'ko',
-    text: '한국어',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'chinese',
-    shortName: 'zh',
-    text: '中文',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'nepali',
-    shortName: 'ne',
-    text: 'नेपाली',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'romanian',
-    shortName: 'ro',
-    text: 'Română',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'hindi',
-    shortName: 'hi',
-    text: 'हिंदी',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'thai',
-    shortName: 'th',
-    text: 'ไทย',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'bulgarian',
-    shortName: 'bg',
-    text: 'български',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'ukrainian',
-    shortName: 'uk',
-    text: 'український',
-    defaultLanguage: 'english',
-    dir: 'ltr'
-  },
-  {
-    longName: 'tagalog',
-    shortName: 'tl',
-    text: 'tagalog',
-    defaultLanguage: 'english',
-    dir: 'ltr'
   }
 ];
 class Languages extends ModularViewModel {
-  constructor(availableLanguages = ['hebrew', 'english', 'arabic']) {
+  constructor(availableLanguages = ['hebrew']) {
     super();
     this.setAvaliableLanguges(availableLanguages);
-  }
-  getLanguageDefinition(languageName) {
-    return languagesDefinitions.find(item => item.longName === languageName);
   }
 
   @observable
   languageName = 'hebrew';
 
+  @observable
+  availableLanguagesList = [];
+
+  @action.bound
+  set_language(languageName) {
+    //TODO rename to setLanguage
+    this.languageName = languageName;
+  }
+  _isLanguageDefined(languageName) {
+    return this.availableLanguagesList
+      .map(lang => lang.longName)
+      .includes(languageName);
+  }
+  /* @function <b>setAvaliableLanguges</b>
+  * @description  set definition object of the requested languages in availableLanguagesList array 
+  * @param {array} availableLanguages - array of  languages longName
+  * @example  setAvaliableLanguges(['english', 'hebrew'])
+  */
   @action
   setAvaliableLanguges(availableLanguages) {
-    this.availableLanguagesList = [];
+    //TODO rename to setAvaliableLanguages
     availableLanguages.forEach(languageName => {
+      if (this._isLanguageDefined(languageName)) {
+        return;
+      }
       const langugeObject = this.getLanguageDefinition(languageName);
       langugeObject
         ? this.availableLanguagesList.push(langugeObject)
-        : fail(`missing definitions to requested language: ${languageName}`);
+        : fail(
+            `missing definitions to the requested language: ${languageName}`
+          );
     });
   }
-  @computed
-  get isHebrew() {
-    this.languageName === 'hebrew';
+  /* @function <b>getText</b>
+  * @description return computed of text in current language, if th eobject not include key for the current language throw error
+  * @param {object} texts - object with available languages as keys and texts for each one as value 
+  * @returns {computed} 
+  */
+  @assertParametersType({ texts: PropTypes.object })
+  getText(texts = {}) {
+    return computed(() => {
+      return (
+        texts[this.languageName] ||
+        fail(
+          `missing text in current language. the reuested object is ${texts}`
+        )
+      );
+    });
   }
-  @action.bound
-  set_language(languageName) {
-    this.languageName = languageName; //this.getLanguageDefinition(languageName);
+  /* @function <b>getLanguageDefinition</b>
+  * @description return language object from languagesDefinitions by sent language
+  * @param {string} languageLongName - long name of language
+  * @returns {object} language object from languagesDefinitions or null
+  */
+  getLanguageDefinition(languageLongName) {
+    return languagesDefinitions.find(
+      item => item.longName === languageLongName
+    );
   }
+  /* @computed <b>languageDefinition</b>
+  * @description return  current language definition object
+  * @returns {object} 
+  * @example 
+    var isRtl = languageViewModel.languageDefinition.get()// return {longName: 'english',shortName: 'en',text: 'English',defaultLanguage: 'english',dir: 'ltr'}
+  */
   @computed
   get languageDefinition() {
     return this.getLanguageDefinition(this.languageName);
   }
-  @observable
-  availableLanguagesList = [];
-
-  @assertParametersType({ texts: PropTypes.object })
-  getText(texts = {}) {
-    return texts[this.language]
-      ? texts[this.language.longName]
-      : fail(
-          `missing text in current language. the reuested object is ${texts}`
-        );
+  /* @computed <b>isMultiLanguages</b>
+  * @description return  is defined more then one language
+  * @returns {bool} 
+  */
+  @computed
+  get isMultiLanguages() {
+    this.availableLanguagesList.length > 1;
+  }
+  /* @computed <b>isRtl</b>
+  * @description return true when current language dir is rtl
+  * @returns {bool} true/false
+  * @example 
+    var isRtl = languageViewModel.isRtl()// return true
+  */
+  @computed
+  get isRtl() {
+    return this.languageDefinition.get().dir === 'rtl';
+  }
+  /* @computed <b>direction</b>
+  * @description return current language direction
+  * @returns {string} "ltr"/"rtl"
+  * @example 
+  get direction() {
+    var גןרקבאןםמ = languageViewModel.direction()// "rtl"
+  */
+  @computed
+  get direction() {
+    return this.languageDefinition.get().dir;
+  }
+  /* @function <b>getShortName</b>
+  * @description return the current language short name
+  * @returns {string} short name
+  * @example 
+  var shortName = languageViewModel.getShortName()// return 'he'
+  */
+  getShortName() {
+    return this.languageDefinition.get().shortName;
+  }
+  /* @function <b>getDefaultLanguage</b>
+    * @description return the default language for sent language
+    * @param {string} languageName - long name of language
+    * @returns {string} default language
+    */
+  getDefaultLanguage(languageName) {
+    return this.getLanguageDefinition(languageName).defaultLanguage;
   }
 }
+
 export default new Languages();

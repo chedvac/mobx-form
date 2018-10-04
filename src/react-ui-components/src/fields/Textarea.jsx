@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from 'mobx-react-form/control';
+import control from 'mobxReactForm/control';
 
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -26,7 +26,7 @@ class Textarea extends React.Component {
     super(props);
   }
   render() {
-    const { classes } = this.props;
+    const { classes, label } = this.props;
     const { rows = 3, isAutoResize = false, ...props } = this.props || {};
     const ROW_VS_PX = 20.666666666666667;
     const MAX_ROWS = 1000;
@@ -35,6 +35,7 @@ class Textarea extends React.Component {
       <div>
         <TextField
           {...props}
+          //label={label.get()}
           multiline
           rows={rows}
           defaultValue="Default Value"

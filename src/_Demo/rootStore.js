@@ -1,9 +1,9 @@
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
-import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore'
+import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore';
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
-
+import dialog from 'reactUiComponents/dialogs/dialog.js';
 //import LanguageStore from '../components/language/store'
 // import submitAction from '../actions/submit';
 
@@ -23,13 +23,13 @@ class RootStore extends ModularViewModel {
   @modelMember()
   tablesTab;
   submitForm() {
-    // submitAction(this.formInformation.set_isFormSent);
+    // submitAction(this.formInformation.setIsFormSent);
   }
 
   async validateForm() {
     const isStoreValid = await this.validate();
     if (isStoreValid) {
-      alert('נתוני הטופס תקינים');
+      dialog.alert({ message: 'נתוני הטופס תקינים' });
     }
   }
   getStoreAsJSon = () => toJS(this.model.getModel());
