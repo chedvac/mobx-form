@@ -30,7 +30,7 @@ class App extends Component {
     const { classes } = this.props;
     const rootStore = new RootStore();
     window.rootStore = rootStore;
-    languageStore.setAvaliableLanguges(['hebrew', 'english']);
+    languageStore.setAvaliableLanguages(['hebrew', 'english']);
     // rootStore.toolbarButtons.changeToolbarButtonState('selectLanguage', false);
     const applicationData = {};
     // autorun(() => {

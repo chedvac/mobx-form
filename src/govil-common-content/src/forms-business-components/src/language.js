@@ -3,61 +3,62 @@ import ModularViewModel from 'mobx-vm/modularViewModel';
 import PropTypes from 'prop-types';
 import assertParametersType from 'utils/typeVerifications';
 import fail from 'utils/fail';
+import LanguageDefinition from './languageDefinition';
 const languagesDefinitions = [
-  {
+  new LanguageDefinition({
     longName: 'english',
     shortName: 'en',
     text: 'English',
     defaultLanguage: 'english',
     dir: 'ltr'
-  },
-  {
+  }),
+  new LanguageDefinition({
     longName: 'hebrew',
     shortName: 'he',
     text: 'עברית',
     defaultLanguage: 'hebrew',
     dir: 'rtl'
-  },
-  {
+  }),
+  new LanguageDefinition({
     longName: 'arabic',
     shortName: 'ar',
     text: 'العربي',
     defaultLanguage: 'hebrew',
     dir: 'rtl'
-  },
-  {
+  }),
+  new LanguageDefinition({
     longName: 'french',
     shortName: 'fr',
     text: 'Français',
     defaultLanguage: 'english',
     dir: 'ltr'
-  },
-  {
+  }),
+  new LanguageDefinition({
     longName: 'spanish',
     shortName: 'es',
     text: 'Español',
     defaultLanguage: 'english',
     dir: 'ltr'
-  },
-  {
+  }),
+  new LanguageDefinition({
     longName: 'russian',
     shortName: 'ru',
     text: 'Русский',
     defaultLanguage: 'english',
     dir: 'ltr'
-  },
-  {
+  }),
+  new LanguageDefinition({
     longName: 'german',
     shortName: 'de',
     text: 'Deutsche',
     defaultLanguage: 'english',
     dir: 'ltr'
-  }
+  })
 ];
-class Languages extends ModularViewModel {
-  constructor(availableLanguages = ['hebrew']) {
+export class Languages extends ModularViewModel {
+  constructor() {
     super();
-    this.setAvaliableLanguges(availableLanguages);
+    this.setAvaliableLanguages(['hebrew']);
   }
 
   @observable
@@ -71,23 +72,15 @@ class Languages extends ModularViewModel {
     //TODO rename to setLanguage
     this.languageName = languageName;
   }
-  _isLanguageDefined(languageName) {
-    return this.availableLanguagesList
-      .map(lang => lang.longName)
-      .includes(languageName);
-  }
   /* @function <b>setAvaliableLanguges</b>
   * @description  set definition object of the requested languages in availableLanguagesList array 
   * @param {array} availableLanguages - array of  languages longName
   * @example  setAvaliableLanguges(['english', 'hebrew'])
   */
   @action
-  setAvaliableLanguges(availableLanguages) {
-    //TODO rename to setAvaliableLanguages
+  setAvaliableLanguages(availableLanguages) {
+    this.availableLanguagesList = [];
     availableLanguages.forEach(languageName => {
-      if (this._isLanguageDefined(languageName)) {
-        return;
-      }
       const langugeObject = this.getLanguageDefinition(languageName);
       langugeObject
         ? this.availableLanguagesList.push(langugeObject)
@@ -101,7 +94,7 @@ class Languages extends ModularViewModel {
   * @param {object} texts - object with available languages as keys and texts for each one as value 
   * @returns {computed} 
   */
-  @assertParametersType({ texts: PropTypes.object })
+  @assertParametersType({ texts: PropTypes.object.isRequired })
   getText(texts = {}) {
     return computed(() => {
       return (
@@ -117,6 +110,7 @@ class Languages extends ModularViewModel {
   * @param {string} languageLongName - long name of language
   * @returns {object} language object from languagesDefinitions or null
   */
+  @assertParametersType({ languageLongName: PropTypes.string.isRequired })
   getLanguageDefinition(languageLongName) {
     return languagesDefinitions.find(
       item => item.longName === languageLongName
@@ -138,7 +132,7 @@ class Languages extends ModularViewModel {
   */
   @computed
   get isMultiLanguages() {
-    this.availableLanguagesList.length > 1;
+    return this.availableLanguagesList.length > 1;
   }
   /* @computed <b>isRtl</b>
   * @description return true when current language dir is rtl
@@ -176,6 +170,7 @@ class Languages extends ModularViewModel {
     * @param {string} languageName - long name of language
     * @returns {string} default language
     */
+  @assertParametersType({ languageName: PropTypes.string.isRequired })
   getDefaultLanguage(languageName) {
     return this.getLanguageDefinition(languageName).defaultLanguage;
   }
