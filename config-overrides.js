@@ -15,14 +15,16 @@ module.exports = function override(config, env) {
   config.resolve.alias['mobx-vm'] = path.resolve('src/mobx-vm/src');
   config.resolve.alias.utils = path.resolve('src/utils/src');
   config.resolve.alias.resources = path.resolve('src/resources');
-  config.resolve.alias['react-ui-components'] = path.resolve(
+  config.resolve.alias.mobxReactForm = path.resolve('src/mobx-react-form/src');
+  config.resolve.alias.reactUiComponents = path.resolve(
     'src/react-ui-components/src'
   );
-  config.resolve.alias['mobx-react-form'] = path.resolve(
-    'src/mobx-react-form/src'
+  config.resolve.alias.reactNavigationRouter = path.resolve(
+    'src/react-navigation-router/src'
   );
   config.resolve.alias['govil-common-content'] = path.resolve(
     'src/govil-common-content/src'
   );
+
   return config;
 };

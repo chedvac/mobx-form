@@ -9,8 +9,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
 
 import FormSection from 'govil-common-content/forms-components/src/formSection';
-import customTheme from 'react-ui-components/themes/customTheme';
-import Dialog from 'react-ui-components/dialogs/dialog.jsx';
+import customTheme from 'reactUiComponents/themes/customTheme';
+import Dialog from 'reactUiComponents/dialogs/dialog.jsx';
 
 import ComponentDemo from './componentsDemo';
 

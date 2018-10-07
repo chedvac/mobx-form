@@ -17,12 +17,28 @@ function wrapperFunction(types, orginalFunction, functionName) {
     return orginalFunction.apply(this, args);
   };
 }
+function wrapperClass(types, orginalClass) {
+  return class wrapperClass {
+    constructor(...settings) {
+      const term = 'parameter';
+      const parameters = mergeArgumentsWithTypes(types, settings);
+      const className = orginalClass.prototype.constructor.name;
+      assertPropTypes(types, parameters, term, className);
+      return new orginalClass(...settings);
+    }
+  };
+}
+
 function assertByHighOrderFunction(types, wrappedFunction) {
   return wrapperFunction(types, wrappedFunction, wrappedFunction.name);
 }
 function assertByDecorator(types) {
-  return function(t, key, descriptor) {
-    descriptor.value = wrapperFunction(types, descriptor.value, key);
+  return function(target, key, descriptor) {
+    if (descriptor) {
+      descriptor.value = wrapperFunction(types, descriptor.value, key);
+    } else {
+      return wrapperClass(types, target);
+    }
   };
 }
 
