@@ -11,7 +11,7 @@ import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
 export default class ModularViewModel {
     constructor(settings = {}) {
         this.validateables = {};
-        this.modaelMembers = {};
+        this.modelMembers = {};
 
         this.validationsManager = new validationsManagerFactory(
             settings.validations || []
