@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import control from 'mobx-react-form/control';
+import control from 'mobxReactForm/control';
 
 @inject('applicationData')
 @observer
