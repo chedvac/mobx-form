@@ -6,6 +6,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import ToolbarButton from 'govil-common-content/forms-components/src/toolbarButton';
 import { toolbarButtonsObject } from './toolbarButtons';
+import fp from 'lodash/fp';
 
 const styles = theme => {
     return {
@@ -81,7 +82,7 @@ class SideToolbar extends React.Component {
             >
                 <Divider />
                 {
-                    Object.entries(toolbarButtonsObject).map((toolbarButton) =>
+                    fp.entriesIn(toolbarButtonsObject).map((toolbarButton) =>
                         toolbarButtonsStore.toolbarButtonsList[toolbarButton[0]] ? <ToolbarButton
                             classes={classes}
                             buttonText={toolbarButton[1].buttonText.hebrew}

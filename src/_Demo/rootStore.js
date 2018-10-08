@@ -3,6 +3,7 @@ import TablesTab from './tabs/tablesTab/store';
 import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore'
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
+import { toolbarButtonsNames } from 'govil-common-content/forms-components/src/toolbarButtons'
 
 //import LanguageStore from '../components/language/store'
 // import submitAction from '../actions/submit';
@@ -14,7 +15,7 @@ class RootStore extends ModularViewModel {
     super();
     this.simpleFieldsTab = new SimpleFieldsTab();
     this.tablesTab = new TablesTab();
-    this.toolbarButtons = toolbarButtons;
+    this.toolbarButtons = new toolbarButtons({ [toolbarButtonsNames.submit]: false });
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }

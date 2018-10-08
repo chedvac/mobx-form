@@ -3,10 +3,10 @@ import { toolbarButtonsNames } from 'govil-common-content/forms-components/src/t
 
 class toolbarButtonsStore {
 
-    constructor(toolbarButtonsNames) {
+    constructor(toolbarButtonsState = {}) {
         Object.entries(toolbarButtonsNames).map((toolbarButton) => {
             const toolbarButtonName = toolbarButton[0];
-            this.toolbarButtonsList[toolbarButtonName] = true;
+            this.toolbarButtonsList[toolbarButtonName] = toolbarButtonsState[toolbarButtonName] !== undefined ? toolbarButtonsState[toolbarButtonName] : true;
         })
     }
 
@@ -18,4 +18,4 @@ class toolbarButtonsStore {
     };
 }
 
-export default new toolbarButtonsStore(toolbarButtonsNames);
+export default toolbarButtonsStore;
