@@ -158,6 +158,7 @@ ModularViewModel.prototype.setValidateableSettings = assertParametersType(
   { settings: PropTypes.shape({ name: PropTypes.string.isRequired }) },
   function setValidateableSettings(settings) {
     //'this'- every class that extends ModularViewModel
+    console.log('in setValidateableSettings... this: ', this);
     this._validateablesSettings = this._validateablesSettings || {};
     this._validateablesSettings[settings.name] = settings;
   }
