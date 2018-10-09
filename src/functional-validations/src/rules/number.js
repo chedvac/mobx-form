@@ -63,9 +63,7 @@ export const decimal = assertParametersType(
 );
 
 function greaterThanChecker(value) {
-  return val => {
-    return parseFloat(val) > parseFloat(value);
-  };
+  return val => parseFloat(val) > parseFloat(value);
 }
 
 export const greaterThan = assertParametersType(
@@ -84,16 +82,14 @@ export const greaterThan = assertParametersType(
         name: 'greaterThan',
         message: () => messages.greaterThan(compareToName || value),
         params,
-        validator: greaterThanChecker(params)
+        validator: greaterThanChecker(value)
       })
     ]);
   }
 );
 
 function lessThanChecker(value) {
-  return val => {
-    return parseFloat(val) < parseFloat(value);
-  };
+  return val => parseFloat(val) < parseFloat(value);
 }
 
 export const lessThan = assertParametersType(
@@ -109,33 +105,11 @@ export const lessThan = assertParametersType(
       name: 'lessThan',
       message: () => messages.lessThan(compareToName || value),
       params,
-      validator: lessThanChecker(params)
+      validator: lessThanChecker(value)
     });
   }
 );
 
-export const greaterThan2 = assertParametersType(
-  {
-    params: PropTypes.shape({
-      value: PropTypes.number.isRequired,
-      compareToName: PropTypes.string,
-      message: PropTypes.func
-    })
-  },
-  function greaterThan2(params) {
-    const { value, compareToName } = params;
-    return new validationsManager([
-      greaterThan(params),
-      number(params),
-      generateBasicValidation({
-        name: 'greaterThan2',
-        message: () => messages.greaterThan(compareToName || value),
-        params,
-        validator: greaterThanChecker(params)
-      })
-    ]);
-  }
-);
 // export function notZeroDigits(params) {
 //   return generateRegexValidation({
 //     name: 'notZeroDigits',

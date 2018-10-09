@@ -1,3 +1,4 @@
+/*eslint-disable*/
 export default {
   hebrew: /^([א-ת-'"\s()]*)\s*$/,
   hebrewNumber: /^[\s\dא-ת‎]*$/,
@@ -17,3 +18,4 @@ export default {
   fileName: /^[^\/\\:*?"<>\|]*$/,
   freeText: /^(?![\x00-\x7Fא-ת]*[&<>])[\x00-\x7Fא-ת]*$/
 };
+/*eslint-enable*/

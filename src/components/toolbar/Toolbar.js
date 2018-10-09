@@ -1,9 +1,9 @@
-import React from "react";
-import ToolbarAction from "./ToolbarAction";
-import actionsSettings from "./actionsSettings";
-import actionsDefaultState from "./actionsDefaultState";
-import { observer } from "mobx-react";
-import { observable, computed } from "mobx";
+import React from 'react';
+import ToolbarAction from './ToolbarAction';
+import actionsSettings from './actionsSettings';
+import actionsDefaultState from './actionsDefaultState';
+import { observer } from 'mobx-react';
+
 @observer
 class Toolbar extends React.Component {
   constructor(props) {

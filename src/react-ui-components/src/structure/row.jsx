@@ -8,10 +8,6 @@ const styles = theme => ({
 
 @withStyles(styles)
 class Row extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {
       classes,

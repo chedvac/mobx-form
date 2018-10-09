@@ -5,11 +5,9 @@ import ModularViewModel from 'mobx-vm/modularViewModel';
 class Language extends ModularViewModel {
   constructor() {
     super();
-    const self = this;
-
     this.actions = {
       @action
-      set_name: value => {
+      setName: value => {
         this.model.name = value;
       }
     };

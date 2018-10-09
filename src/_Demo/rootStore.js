@@ -1,9 +1,9 @@
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
-
+import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore';
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
-
+import dialog from 'reactUiComponents/dialogs/dialog.js';
 //import LanguageStore from '../components/language/store'
 // import submitAction from '../actions/submit';
 
@@ -12,8 +12,14 @@ import { toJS } from 'mobx';
 class RootStore extends ModularViewModel {
   constructor() {
     super();
-    this.simpleFieldsTab = new SimpleFieldsTab();
+    const map = {
+      to: simpleFields => ({
+        arrayPersonal: simpleFields.users
+      })
+    };
+    this.simpleFieldsTab = new SimpleFieldsTab({ map });
     this.tablesTab = new TablesTab();
+    this.toolbarButtons = toolbarButtons;
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
@@ -22,13 +28,17 @@ class RootStore extends ModularViewModel {
   @modelMember()
   tablesTab;
   submitForm() {
-    // submitAction(this.formInformation.set_isFormSent);
+    // submitAction(this.formInformation.setIsFormSent);
+  }
+
+  from(data) {
+    this.simpleFieldsTab.mapping(data.personal);
   }
 
   async validateForm() {
     const isStoreValid = await this.validate();
     if (isStoreValid) {
-      alert('נתוני הטופס תקינים');
+      dialog.alert({ message: 'נתוני הטופס תקינים' });
     }
   }
   getStoreAsJSon = () => toJS(this.model.getModel());

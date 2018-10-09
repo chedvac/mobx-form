@@ -12,10 +12,6 @@ const styles = theme => ({
 @withStyles(styles)
 @observer
 class FormSection extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes } = this.props;
     return (

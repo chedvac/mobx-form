@@ -8,10 +8,6 @@ const styles = theme => ({
 
 @withStyles(styles)
 class SubTitle extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes, children } = this.props;
     return <Typography className={classes.subTitle}>{children}</Typography>;

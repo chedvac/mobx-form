@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from 'mobx-react-form/control';
+import control from 'mobxReactForm/control';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -30,10 +30,6 @@ const styles = theme => ({
 @withStyles(styles)
 @observer
 class Input extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes, xs = 12, sm = 6, lg = 3, ...props } = this.props;
     return (
