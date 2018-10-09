@@ -3,20 +3,16 @@ import validateable from 'mobx-vm/validateable';
 import modelMember1 from 'mobx-vm/modelMember';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
-// console.log(modelMember1.default);
 const modelMember = modelMember1.default;
-export class Complex extends ModularViewModel {
-  constructor(settings) {
-    super(settings);
-  }
+export class SubComplex extends ModularViewModel {
   @validateable()
   inSubComplex = false;
 }
 
 export default class ComplexTab extends ModularViewModel {
-  constructor(settings, register) {
+  constructor(settings) {
     super(settings);
-    this.subComplex = new Complex();
+    this.subModular = new SubComplex();
   }
   @modelMember()
   @validateable({
@@ -29,5 +25,5 @@ export default class ComplexTab extends ModularViewModel {
   })
   firstName = 'יעל';
   @modelMember()
-  subComplex;
+  subModular;
 }

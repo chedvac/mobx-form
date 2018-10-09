@@ -21,7 +21,6 @@ export default class ModularViewModel {
     forOwn(value => {
       this.generateModelMember(value);
     })(this._modelMembersSettings);
-
     forOwn(value => {
       this.generateValidateable(value);
     })(this._validateablesSettings);
@@ -47,8 +46,9 @@ export default class ModularViewModel {
 * @description return action of property
 * @return {function} action
 * @example 
-  PersonalInfo.getAction();
+  PersonalInfo.getAction('firstName');
 */
+  @assertParametersType({ name: PropTypes.string.isRequired })
   getAction(name) {
     return this[`set${upperFirst(name)}`];
   }
@@ -110,6 +110,10 @@ export default class ModularViewModel {
     * @example 
       PersonalInfo.addValidations('firstName',[ maxlength({ value: 15 })]);
     */
+  @assertParametersType({
+    propertyName: PropTypes.string.isRequired,
+    validations: PropTypes.array
+  })
   addValidations(propertyName, validations) {
     this.validateables[propertyName].validationsManager.addValidations(
       validations
