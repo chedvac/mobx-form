@@ -15,12 +15,20 @@ class SimpleFieldsTab extends React.Component {
     return <div />;
   }
 }
+class AboveContentElements extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div />;
+  }
+}
 const Component = new SimpleFieldsTab();
 const routeSettingsArray = [
   new RouteSettings({
     name: 'לשדות רגילים',
     path: '/SimpleFields',
-    component: <Component />
+    component: SimpleFieldsTab
   }),
   new RouteSettings({
     name: 'טבלאות',
@@ -55,6 +63,12 @@ describe('<Router />', () => {
       shallow(<Router routeSettings={routeSettingsArray} />);
       expect(console.error).not.toBeCalled();
     });
+    describe('AboveContentElements', ()=>{
+      it('routeSettings should be array of RouteSettings', () => {
+        shallow(<Router routeSettings={routeSettingsArray} aboveContentElements={} />);
+        expect(console.error).not.toBeCalled();
+      });
+    })
   });
   describe('define routes', () => {
     test('use page module', () => {

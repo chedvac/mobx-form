@@ -31,7 +31,14 @@ const styles = theme => ({
 @observer
 class Input extends React.Component {
   render() {
-    const { classes, xs = 12, sm = 6, lg = 3, ...props } = this.props;
+    const {
+      classes,
+      languageStore,
+      xs = 12,
+      sm = 6,
+      lg = 3,
+      ...props
+    } = this.props;
     return (
       <Grid item xs={xs} sm={sm} lg={lg}>
         <TextField
