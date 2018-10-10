@@ -28,11 +28,9 @@ class App extends Component {
   render() {
     const { classes } = this.props;
     const rootStore = new RootStore();
-    window.rootStore = rootStore;
     const applicationData = {
       formLanguage: new LanguageStore()
     };
-    window.applicationData = applicationData;
     return (
       <MuiThemeProvider theme={customTheme}>
         <CssBaseline />
