@@ -24,42 +24,42 @@ export default class PersonalInformation extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
-      firstName: this.props.languageStore.getText({
+      firstName: this.props.languageStore.computedResourcesProvider({
         hebrew: ' שם פרטי',
         english: 'first name',
         arabic: ' שם פרטי'
       }),
-      lastName: this.props.languageStore.getText({
+      lastName: this.props.languageStore.computedResourcesProvider({
         hebrew: 'שם משפחה',
         english: 'last name',
         arabic: ''
       }),
-      age: this.props.languageStore.getText({
+      age: this.props.languageStore.computedResourcesProvider({
         hebrew: 'גיל הבן',
         english: 'age',
         arabic: ''
       }),
-      fatherAge: this.props.languageStore.getText({
+      fatherAge: this.props.languageStore.computedResourcesProvider({
         hebrew: 'גיל האב',
         english: 'father Age',
         arabic: ''
       }),
-      comments: this.props.languageStore.getText({
+      comments: this.props.languageStore.computedResourcesProvider({
         hebrew: 'הערות',
         english: 'comments',
         arabic: ''
       }),
-      status: this.props.languageStore.getText({
+      status: this.props.languageStore.computedResourcesProvider({
         hebrew: 'מצב משפחתי',
         english: 'status',
         arabic: ''
       }),
-      agreement: this.props.languageStore.getText({
+      agreement: this.props.languageStore.computedResourcesProvider({
         hebrew: 'אני מצהיר...',
         english: 'I Agree...',
         arabic: ''
       }),
-      birthDate: this.props.languageStore.getText({
+      birthDate: this.props.languageStore.computedResourcesProvider({
         hebrew: 'תאריך לידה',
         english: 'birth date',
         arabic: ''

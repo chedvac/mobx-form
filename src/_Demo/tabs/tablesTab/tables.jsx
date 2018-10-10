@@ -12,12 +12,12 @@ export default class Tables extends React.Component {
     super(props);
 
     this.texts = {
-      email: this.props.languageStore.getText({
+      email: this.props.languageStore.computedResourcesProvider({
         hebrew: 'מייל',
         english: 'email',
         arabic: ''
       }),
-      houseNumber: this.props.languageStore.getText({
+      houseNumber: this.props.languageStore.computedResourcesProvider({
         hebrew: 'מספר בית',
         english: 'House Number',
         arabic: ''
@@ -27,7 +27,7 @@ export default class Tables extends React.Component {
   render() {
     const { tables } = this.props;
     return (
-      <Container beforeLeave={this.props.tables.validate}>
+      <Container beforeLeave={this.props.tables.validate} {...this.props}>
         <div className="row">
           <div className="col-md-4">
             <Input
