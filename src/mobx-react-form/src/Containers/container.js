@@ -8,15 +8,26 @@ class Container extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-    if (!this.props.isFirstRedirect) {
-      this.unblock = this.props.history.block(() => {
-        return this.props.beforeLeave();
-      });
-    }
+    this.props.page.exit(this.props.path, (ctx, next) => {
+      if (this.props.beforeLeave) {
+        this.runBeforeLeave(next, ctx);
+      }
+    });
+  }
+  runBeforeLeave(next, ctx) {
+    const promise = this.props.beforeLeave();
+    promise.then(res => {
+      if (res) {
+        next();
+      } else {
+        ctx.pushState(ctx.prevContext);
+        ctx.page.replace(ctx.path);
+      }
+    });
   }
   componentWillUnmount() {
-    if (this.unblock) {
-      this.unblock();
+    if (this.props.onLeave) {
+      this.props.onLeave();
     }
   }
   componentDidMount() {
@@ -30,7 +41,8 @@ class Container extends React.Component {
 }
 Container.propTypes = {
   beforeLeave: PropTypes.func,
-  onEnter: PropTypes.func
+  onEnter: PropTypes.func,
+  onLeave: PropTypes.func
   //content: PropTypes.component.isRequired
 };
-export default withRouter(Container);
+export default Container;
