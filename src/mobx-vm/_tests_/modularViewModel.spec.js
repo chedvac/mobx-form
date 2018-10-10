@@ -2,9 +2,9 @@ import { action, observable } from 'mobx';
 import ModularViewModel from 'mobx-vm/modularViewModel';
 import ValidationsManager from 'vm-validations/validationsManager';
 import ValidateableDefinition from 'mobx-vm/validateableDefinition';
-import ModelMemberDefinition from '../src/modelMemberDefinition';
-jest.mock('../src/modelMemberDefinition');
-jest.mock('mobx-vm/validateableDefinition');
+import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
+// jest.mock('../src/modelMemberDefinition');
+// jest.mock('mobx-vm/validateableDefinition');
 
 jest.mock('vm-validations/validationsManager');
 
@@ -78,6 +78,12 @@ describe('ModularViewModel prototype methods', () => {
       expect(ModularExample.prototype._modelMembersSettings.lastName).toBe(
         properties.modelMembers.lastName
       );
+      ModularExample.prototype.setModelMemberSettings(
+        properties.modelMembers.subModular
+      );
+      expect(ModularExample.prototype._modelMembersSettings.subModular).toBe(
+        properties.modelMembers.subModular
+      );
     });
   });
   describe('setValidateableSettings', () => {
@@ -131,9 +137,6 @@ describe('ModularViewModel prototype methods', () => {
     });
     describe('generate ModelMemberDefinition for each modelMembers properties', () => {
       test('create definition', () => {
-        // expect(ModelMemberDefinition).toHaveBeenCalledWith(
-        //   properties.modelMembers.firstName
-        // );
         expect(customTab.modelMembers.firstName).toBeInstanceOf(
           ModelMemberDefinition
         );
@@ -141,10 +144,6 @@ describe('ModularViewModel prototype methods', () => {
     });
     describe('generate ValidateableDefinition for each validateables properties', () => {
       test('create definition', () => {
-        // expect(ValidateableDefinition).toHaveBeenCalledWith(
-        //   properties.validateables.firstName
-        // );
-
         expect(customTab.validateables.firstName).toBeInstanceOf(
           ValidateableDefinition
         );
@@ -177,7 +176,7 @@ describe('ModularViewModel prototype methods', () => {
           });
         orginalValidateModel = customTab.validateModel;
 
-        customTab.validateMode = jest.fn().mockReturnValue(false);
+        customTab.validateModel = jest.fn().mockReturnValue(false);
       });
       test('is async', () => {
         expect(customTab.validate[Symbol.toStringTag]).toEqual('AsyncFunction');
@@ -197,34 +196,27 @@ describe('ModularViewModel prototype methods', () => {
     });
     describe('validateModel', () => {
       beforeAll(() => {
-        console.log(
-          '-----------------------orginalValidateModel2',
-          orginalValidateModel
-        );
-
         customTab.validateModel = orginalValidateModel;
       });
       test('is async', () => {
-        console.log(
-          '------------------------------customTab.validateModel',
-          customTab.validateModel
-        );
         expect(customTab.validateModel[Symbol.toStringTag]).toEqual(
           'AsyncFunction'
         );
       });
-      test('call validate for all modelMembers properties', () => {
+      test('call validate for all modelMembers properties', async () => {
         customTab.validateables.firstName.validate = jest.fn();
         customTab.validateables.lastName.validate = jest.fn();
+        await customTab.validateModel();
         expect(customTab.validateables.firstName.validate).toHaveBeenCalled();
         expect(customTab.validateables.lastName.validate).toHaveBeenCalled();
       });
-      test('call  modularViewModel.validate for sub modular', () => {
+      test('call  modularViewModel.validate for sub modular', async () => {
         customTab.subModular.validate = jest.fn();
+        await customTab.validateModel();
         expect(customTab.subModular.validate).toHaveBeenCalled();
       });
       test('return validation result', async () => {
-        expect(await customTab.validate()).toBeFalsy();
+        expect(await customTab.validateModel()).toBeFalsy();
       });
     });
   });
