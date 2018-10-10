@@ -4,10 +4,9 @@ import PersonalInformation from './containers/PersonalInformation/PersonalInform
 import Container from 'mobxReactForm/Containers/container';
 @observer
 class SimpleFieldsTab extends React.Component {
- 
   render() {
     return (
-      <Container beforeLeave={this.props.simpleFields.validate}>
+      <Container beforeLeave={this.props.simpleFields.validate} {...this.props}>
         <PersonalInformation
           userDetails={this.props.simpleFields.userDetails}
         />

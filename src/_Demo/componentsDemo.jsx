@@ -4,7 +4,6 @@ import TablesTab from './tabs/tablesTab/tables';
 import Tab3 from './tabs/Tab3/tab3';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import Navigation from 'reactUiComponents/navigation/Navigation';
-import Toolbar from '../components/toolbar/Toolbar';
 import { inject } from 'mobx-react';
 
 export default class ComponentsDemo extends Component {
@@ -46,7 +45,6 @@ export default class ComponentsDemo extends Component {
           this.Form = c;
         }}
       >
-        <Toolbar />
         <Navigation routeSettings={tabs} />
         <div className="row">
           <div className="small-12 columns">

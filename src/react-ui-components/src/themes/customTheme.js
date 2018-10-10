@@ -16,6 +16,8 @@ const customTheme = createMuiTheme({
   typography: {
     fontSize: basicFontSize,
     fontFamily: basicFontFamily,
+    rtlDirection: { direction: 'rtl' },
+    ltrDirection: { direction: 'ltr' },
     title: {},
     hide: { display: 'none' },
     boldText: { fontFamily: boldBasicFontFamily },

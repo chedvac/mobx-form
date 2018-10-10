@@ -3,12 +3,9 @@ export function getPropsField(store, name) {
   //             store.propertiesManager.properties[name] = store.propertiesManager.properties[name] ?store.propertiesManager.properties[name] : {@observable message: '', @observable isValid: ''};
 
   // }
-  const {
-    maxlength,
-    minlength,
-    pattern,
-    required
-  } = store.validateables[name].validationsManager;
+  const { maxlength, minlength, pattern, required } = store.validateables[
+    name
+  ].validationsManager;
   return {
     update: store.getAction(name),
     name: name,

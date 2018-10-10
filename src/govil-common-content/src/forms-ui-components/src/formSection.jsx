@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 import Header from './header';
-import SideToolbar from './sideToolbar'
+import SideToolbar from './sideToolbar';
+import LanguagesMenu from 'govil-common-content/forms-ui-components/src/languagesMenu';
 
 const styles = theme => {
   return {
@@ -11,9 +12,9 @@ const styles = theme => {
       //width: `calc(100% - ${theme.drawerWidth}px)`,
       flexGrow: 1,
       backgroundColor: theme.palette.background.default,
-      padding: theme.spacing.unit * 3,
+      padding: theme.spacing.unit * 3
     }
-  }
+  };
 };
 
 @withStyles(styles)
@@ -30,7 +31,10 @@ class FormSection extends Component {
   };
 
   toggleToolbar = () => {
-    this.setState({ opened: !this.state.opened, openedByToolbarButton: !this.state.opened });
+    this.setState({
+      opened: !this.state.opened,
+      openedByToolbarButton: !this.state.opened
+    });
   };
 
   openToolbarOnOver = () => {
@@ -55,11 +59,7 @@ class FormSection extends Component {
           openToolbarOnOver={this.openToolbarOnOver}
           closeToolbarOnOut={this.closeToolbarOnOut}
         />
-        <div className={classes.content}>
-          {
-            this.props.children
-          }
-        </div>
+        <div className={classes.content}>{this.props.children}</div>
       </React.Fragment>
     );
   }

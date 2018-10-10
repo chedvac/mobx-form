@@ -14,19 +14,10 @@ export default class City extends React.Component {
     super(props);
 
     this.texts = {
-      hebrew: {
-        selectLanguage: 'בחר'
-      },
-      english: {
-        selectLanguage: 'בחר'
-      },
-      arabic: {
-        selectLanguage: 'בחר'
-      }
+      selectLanguage: { hebrew: 'בחר', english: 'select', arabic: '' }
     };
     // this.loadCityList = this.loadCityList.bind(this);
     this.loadCityList();
-    this.currentResources = this.currentResources.bind(this);
   }
   loadCityList = flow(function*() {
     try {
@@ -53,10 +44,6 @@ export default class City extends React.Component {
   //     })
   // }
 
-  currentResources = function() {
-    return this.texts['hebrew'];
-  };
-
   render() {
     return (
       <div className="row">
@@ -64,7 +51,11 @@ export default class City extends React.Component {
           <Select
             options={this.cityList}
             {...this.props}
-            label={this.currentResources().selectLanguage}
+            label={
+              this.texts.selectLanguage[
+                this.props.applicationData.formLanguage.languageName
+              ]
+            }
           />
         </div>
       </div>

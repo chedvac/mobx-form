@@ -18,53 +18,59 @@ import DatePicker from 'reactUiComponents/fields/DatePicker/DatePicker';
 // });
 
 @inject('applicationData')
+@inject('languageStore')
 @observer
 export default class PersonalInformation extends React.Component {
   constructor(props) {
     super(props);
-
     this.texts = {
-      hebrew: {
-        firstName: ' שם פרטי',
-        lastName: ' שם משפחה',
-        age: 'גיל הבן',
-        fatherAge: 'גיל האב',
-        comments: 'הערות',
-        status: 'מצב משפחתי',
-        agreement: 'אני מצהיר...',
-        birthDate: 'תאריך לידה'
-      },
-      english: {
-        firstName: 'first name',
-        lastName: 'last name',
-        age: 'age',
-        fatherAge: 'fatherAge',
-        comments: 'comments',
-        status: 'status',
-        agreement: 'I Agree...',
-        birthDate: 'birth date'
-      },
-      arabic: {
-        firstName: 'first name',
-        lastName: 'last name',
-        age: 'age',
-        fatherAge: 'fatherAge',
-        comments: 'comments',
-        status: 'status',
-        agreement: 'I Agree...',
-        birthDate: 'birth date'
-      }
+      firstName: this.props.languageStore.computedResourcesProvider({
+        hebrew: ' שם פרטי',
+        english: 'first name',
+        arabic: ' שם פרטי'
+      }),
+      lastName: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'שם משפחה',
+        english: 'last name',
+        arabic: ''
+      }),
+      age: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'גיל הבן',
+        english: 'age',
+        arabic: ''
+      }),
+      fatherAge: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'גיל האב',
+        english: 'father Age',
+        arabic: ''
+      }),
+      comments: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'הערות',
+        english: 'comments',
+        arabic: ''
+      }),
+      status: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'מצב משפחתי',
+        english: 'status',
+        arabic: ''
+      }),
+      agreement: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'אני מצהיר...',
+        english: 'I Agree...',
+        arabic: ''
+      }),
+      birthDate: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'תאריך לידה',
+        english: 'birth date',
+        arabic: ''
+      })
     };
-    this.currentResources = this.currentResources.bind(this);
     this.statusOptions = [
       { key: '1', value: 'נשוי' },
       { key: '2', value: 'רווק' },
       { key: '3', value: 'גרוש' }
     ];
   }
-  currentResources = function() {
-    return this.texts[this.props.applicationData.formLanguage.name];
-  };
 
   render() {
     const { userDetails } = this.props;
@@ -75,26 +81,26 @@ export default class PersonalInformation extends React.Component {
           <SubTitle>דוגמא לשדות רגילים</SubTitle>
           <Row>
             <Input
-              label={this.currentResources().firstName}
+              label={this.texts.firstName.get()}
               {...getPropsField(userDetails, 'firstName')}
             />
             <Input
-              label={this.currentResources().lastName}
+              label={this.texts.lastName.get()}
               {...getPropsField(userDetails, 'lastName')}
             />
             <Input
-              label={this.currentResources().age}
+              label={this.texts.age.get()}
               {...getPropsField(userDetails, 'age')}
             />
             <Input
-              label={this.currentResources().fatherAge}
+              label={this.texts.fatherAge.get()}
               {...getPropsField(userDetails, 'fatherAge')}
             />
           </Row>
           <Row>
             <Textarea
               xs={8}
-              label={this.currentResources().comments}
+              label={this.texts.comments.get()}
               {...getPropsField(userDetails, 'comments')}
               rows={3}
               isAutoResize={false}
@@ -103,13 +109,13 @@ export default class PersonalInformation extends React.Component {
           <br />
           <DatePicker
             className="col-md-4"
-            label={this.currentResources().birthDate}
+            label={this.texts.birthDate.get()}
             {...getPropsField(userDetails, 'birthDate')}
           />
 
           <Select
             className="col-md-4"
-            label={this.currentResources().status}
+            label={this.texts.status.get()}
             {...getPropsField(userDetails, 'status')}
             options={this.statusOptions}
           />

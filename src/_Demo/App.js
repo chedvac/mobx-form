@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { observer, Provider } from 'mobx-react';
+import { autorun } from 'mobx';
 import './App.css';
 import RootStore from './rootStore';
-import LanguageStore from '../components/language/store';
+import languageStore from 'govil-common-content/forms-business-components/src/language';
 
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
 
-import FormSection from 'govil-common-content/forms-components/src/formSection';
+import FormSection from 'govil-common-content/forms-ui-components/src/formSection';
 import customTheme from 'reactUiComponents/themes/customTheme';
 import Dialog from 'reactUiComponents/dialogs/dialog.jsx';
 
@@ -29,14 +30,22 @@ class App extends Component {
     const { classes } = this.props;
     const rootStore = new RootStore();
     window.rootStore = rootStore;
-    const applicationData = {
-      formLanguage: new LanguageStore()
-    };
+    languageStore.setAvaliableLanguages(['hebrew', 'english']);
+    // rootStore.toolbarButtons.changeToolbarButtonState('selectLanguage', false);
+    const applicationData = {};
+    // autorun(() => {
+    //   customTheme.direction = applicationData.formLanguage.isHebrew
+    //     ? 'rtl'
+    //     : 'ltr';
+    // });
     window.applicationData = applicationData;
     return (
       <MuiThemeProvider theme={customTheme}>
         <CssBaseline />
-        <Provider applicationData={applicationData}>
+        <Provider
+          applicationData={applicationData}
+          languageStore={languageStore}
+        >
           <Grid container className={classes.root}>
             <Dialog />
 
