@@ -12,8 +12,8 @@ export default class Navigation extends React.Component {
     return (
       <Router
         {...this.props}
-        aboveContentElements={Steppers}
-        belowContentElements={NextPrevButtons}
+        topNavigation={Steppers}
+        bottomNavigation={NextPrevButtons}
       />
     );
   }

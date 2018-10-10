@@ -15,8 +15,7 @@ class Container extends React.Component {
     });
   }
   runBeforeLeave(next, ctx) {
-    const promise = this.props.beforeLeave();
-    promise.then(res => {
+    this.props.beforeLeave().then(res => {
       if (res) {
         next();
       } else {

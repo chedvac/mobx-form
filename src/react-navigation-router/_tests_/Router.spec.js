@@ -3,6 +3,8 @@ import React from 'react';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
+import page from 'page';
+jest.mock('page');
 
 Enzyme.configure({ adapter: new Adapter() });
 class SimpleFieldsTab extends React.Component {
@@ -35,13 +37,13 @@ describe('<Router />', () => {
     afterEach(() => {
       spy.mockRestore();
     });
-    it('routeSettings is require', () => {
+    test('routeSettings is require', () => {
       expect(() => {
         const wrapper = shallow(<Router />);
       }).toThrow();
       expect(console.error).toBeCalled();
     });
-    it('routeSettings should be array', () => {
+    test('routeSettings should be array', () => {
       expect(() => {
         const wrapper = shallow(
           <Router routeSettings={routeSettingsArray[0]} />
@@ -49,13 +51,16 @@ describe('<Router />', () => {
       }).toThrow();
       expect(console.error).toBeCalled();
     });
-    it('routeSettings should be array of RouteSettings', () => {
+    test('routeSettings should be array of RouteSettings', () => {
       shallow(<Router routeSettings={routeSettingsArray} />);
       expect(console.error).not.toBeCalled();
     });
   });
-  xit('renders three <Foo /> components', () => {
-    const wrapper = shallow(<Router />);
-    expect(wrapper.find()).to.have.lengthOf(3);
+  describe('define routes', () => {
+    test('use page module', () => {
+      shallow(<Router routeSettings={routeSettingsArray} />);
+      expect(page.mock.calls.length).toBe(2);
+      expect(page.mock.calls[0].args[0]).toBe(routeSettingsArray[0].path);
+    });
   });
 });
