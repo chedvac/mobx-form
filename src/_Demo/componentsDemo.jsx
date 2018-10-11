@@ -6,7 +6,7 @@ import Tab3 from './tabs/Tab3/tab3';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import Navigation from 'reactUiComponents/navigation/Navigation';
 import { inject } from 'mobx-react';
-import withPropsStyles from 'govil-common-content/forms-components/src/styles'
+import withPropsStyles from 'govil-common-content/forms-ui-components/src/styles'
 
 const styles = (props, theme) => {
   return {

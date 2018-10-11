@@ -5,8 +5,7 @@ import Header from './header';
 import SideToolbar from './sideToolbar';
 
 let closeWidth = '72';
-const openWidth = '210';
-
+const openWidth = '275';
 
 const styles = theme => {
   return {
