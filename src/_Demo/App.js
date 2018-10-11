@@ -29,6 +29,7 @@ class App extends Component {
     const { classes } = this.props;
     const rootStore = new RootStore();
     window.rootStore = rootStore;
+    customTheme.direction = 'rtl';
     const applicationData = {
       formLanguage: new LanguageStore()
     };

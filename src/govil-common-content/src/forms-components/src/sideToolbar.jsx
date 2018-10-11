@@ -5,34 +5,27 @@ import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import ToolbarButton from 'govil-common-content/forms-components/src/toolbarButton';
-import toolbarButtons from './toolbarButtons'
-import _ from 'lodash';
+import { toolbarButtonsObject } from './toolbarButtons';
+import fp from 'lodash/fp';
 
 const styles = theme => {
-    theme.drawerWidth = 240;
-    //const margin = theme.direction === 'rtl' ? 'marginLeft' : 'marginRight';
-
     return {
-        // drawerClass: {
-        //     height: '100%',
-        //     // float: 'right'
-        // },
         drawerPaper: {
-            position: 'relative',
+            display: 'flex',
+            position: 'absolute',
             whiteSpace: 'nowrap',
-            width: theme.drawerWidth,
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
         },
         drawerPaperClose: {
+            display: theme.isMobile ? 'none' : '',
             overflowX: 'hidden',
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
             }),
-            width: theme.spacing.unit * 7,
             [theme.breakpoints.up('sm')]: {
                 width: theme.spacing.unit * 9,
             }
@@ -70,7 +63,7 @@ const styles = theme => {
     }
 };
 
-@withStyles(styles)
+@withStyles(styles, { withTheme: true })
 @observer
 class SideToolbar extends React.Component {
     constructor(props) {
@@ -80,6 +73,7 @@ class SideToolbar extends React.Component {
         const { classes, opened, openToolbarOnOver, closeToolbarOnOut, toolbarButtonsStore } = this.props;
         return (
             <Drawer
+                onMouseEnter={() => { openToolbarOnOver() }} onMouseLeave={() => { closeToolbarOnOut() }}
                 variant="permanent"
                 classes={{
                     paper: classNames(classes.drawerPaper, !opened && classes.drawerPaperClose)
@@ -88,14 +82,12 @@ class SideToolbar extends React.Component {
             >
                 <Divider />
                 {
-                    Object.entries(toolbarButtons).map((toolbarButton) =>
+                    fp.entriesIn(toolbarButtonsObject).map((toolbarButton) =>
                         toolbarButtonsStore.toolbarButtonsList[toolbarButton[0]] ? <ToolbarButton
                             classes={classes}
                             buttonText={toolbarButton[1].buttonText.hebrew}
                             className={toolbarButton[1].className}
                             buttonAction={toolbarButton[1].action}
-                            onMouseOverEvent={openToolbarOnOver}
-                            onMouseOutEvent={closeToolbarOnOut}
                         /> : ''
                     )
                 }

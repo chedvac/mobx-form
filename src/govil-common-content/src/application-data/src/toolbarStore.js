@@ -1,21 +1,22 @@
-import { action, observable } from "mobx";
-import toolbarButtons from 'govil-common-content/forms-components/src/toolbarButtons'
+import { action, observable, computed } from 'mobx';
+import { toolbarButtonsNames } from 'govil-common-content/forms-components/src/toolbarButtons'
+import fp from 'lodash/fp';
+//TODO Toolbar
+class ToolbarButtonsStore {
 
-class toolbarButtonsStore {
-
-    constructor(toolbarButtons) {
-        Object.entries(toolbarButtons).map((toolbarButton) => {
+    constructor(toolbarButtonsState = {}) {
+        fp.entriesIn(toolbarButtonsNames).map((toolbarButton) => {
             const toolbarButtonName = toolbarButton[0];
-            this.toolbarButtonsList[toolbarButtonName] = true;
+            this.toolbarButtonsList[toolbarButtonName] = toolbarButtonsState[toolbarButtonName] !== undefined ? toolbarButtonsState[toolbarButtonName] : true;
         })
     }
 
     @observable toolbarButtonsList = {};
 
-    @action
+    @action.bound
     changeToolbarButtonState = (toolbarButtonName, newState) => {
         this.toolbarButtonsList[toolbarButtonName] = newState;
     };
 }
 
-export default new toolbarButtonsStore(toolbarButtons);
+export default ToolbarButtonsStore;

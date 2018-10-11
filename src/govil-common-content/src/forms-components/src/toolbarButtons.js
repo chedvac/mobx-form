@@ -1,15 +1,26 @@
+import examples from 'govil-common-content/application-data/src/DemoData'
 
-const toolbarButtons = {
-    validateForm: {
+export const toolbarButtonsNames = {
+    validateForm: 'validateForm',
+    submit: 'submit',
+    print: 'print',
+    saveAsPDF: 'saveAsPDF',
+    attachments: 'attachments',
+    save: 'save'
+}
+
+export const toolbarButtonsObject = {
+    [toolbarButtonsNames.validateForm]: {
         buttonText: {
             hebrew: 'בדוק תקינות'
         },
         className: 'ic-validateForm',
         action: () => {
             console.log('בודק תקינות הטופס');
+            examples.set_obsVal();
         }
     },
-    submit: {
+    [toolbarButtonsNames.submit]: {
         buttonText: {
             hebrew: 'שלח'
         },
@@ -18,7 +29,7 @@ const toolbarButtons = {
             console.log('שולח את הטופס');
         }
     },
-    print: {
+    [toolbarButtonsNames.print]: {
         buttonText: {
             hebrew: 'הדפס'
         },
@@ -27,7 +38,7 @@ const toolbarButtons = {
             console.log('מדפיס את הטופס');
         }
     },
-    saveAsPDF: {
+    [toolbarButtonsNames.saveAsPDF]: {
         buttonText: {
             hebrew: 'שמור כ PDF'
         },
@@ -36,7 +47,7 @@ const toolbarButtons = {
             console.log('שומר כ PDF');
         }
     },
-    attachments: {
+    [toolbarButtonsNames.attachments]: {
         buttonText: {
             hebrew: 'צרופות'
         },
@@ -45,7 +56,7 @@ const toolbarButtons = {
             console.log('צרופות הטופס');
         }
     },
-    save: {
+    [toolbarButtonsNames.save]: {
         buttonText: {
             hebrew: 'שמור'
         },
@@ -56,4 +67,3 @@ const toolbarButtons = {
     }
 }
 
-export default toolbarButtons;
