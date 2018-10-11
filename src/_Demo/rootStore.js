@@ -4,6 +4,7 @@ import toolbarButtons from 'govil-common-content/application-data/src/toolbarSto
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
 import { toolbarButtonsNames } from 'govil-common-content/forms-components/src/toolbarButtons'
+import examples from 'govil-common-content/application-data/src/DemoData'
 
 //import LanguageStore from '../components/language/store'
 // import submitAction from '../actions/submit';
@@ -15,7 +16,7 @@ class RootStore extends ModularViewModel {
     super();
     this.simpleFieldsTab = new SimpleFieldsTab();
     this.tablesTab = new TablesTab();
-    this.toolbarButtons = new toolbarButtons({ [toolbarButtonsNames.submit]: false });
+    this.toolbarButtons = new toolbarButtons({ [toolbarButtonsNames.submit]: examples.obsVal });
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }

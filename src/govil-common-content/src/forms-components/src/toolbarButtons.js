@@ -1,3 +1,5 @@
+import examples from 'govil-common-content/application-data/src/DemoData'
+
 export const toolbarButtonsNames = {
     validateForm: 'validateForm',
     submit: 'submit',
@@ -15,6 +17,7 @@ export const toolbarButtonsObject = {
         className: 'ic-validateForm',
         action: () => {
             console.log('בודק תקינות הטופס');
+            examples.set_obsVal();
         }
     },
     [toolbarButtonsNames.submit]: {
@@ -64,4 +67,3 @@ export const toolbarButtonsObject = {
     }
 }
 
-//export default toolbarButtons;
