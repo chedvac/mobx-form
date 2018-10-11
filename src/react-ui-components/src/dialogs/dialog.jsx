@@ -7,27 +7,32 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import dialog from './dialog';
 import { observer } from 'mobx-react';
+import PropTypes from 'prop-types';
 
 @observer
 class Dialog extends React.Component {
   render() {
-    const { buttons, title, message, isOpen, close } = dialog.state;
+    const { isOpen, title, content: Content, buttons } = dialog.state;
+
     return (
       <div>
         <DialogMaterial
           open={isOpen}
-          onClose={close}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title"> {title}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              {message}
-            </DialogContentText>
+            {typeof Content === 'string' ? (
+              <DialogContentText id="alert-dialog-description">
+                {Content}
+              </DialogContentText>
+            ) : (
+              <Content />
+            )}
           </DialogContent>
           <DialogActions>
-            {buttons.map((btn, index) => (
+            {Object.values(buttons).map((btn, index) => (
               <Button key={index} onClick={btn.click} color="primary">
                 {btn.text}
               </Button>
@@ -38,5 +43,12 @@ class Dialog extends React.Component {
     );
   }
 }
-
+Dialog.propTypes = {
+  state: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    content: PropTypes.any.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    buttons: PropTypes.array.isRequired
+  })
+};
 export default Dialog;

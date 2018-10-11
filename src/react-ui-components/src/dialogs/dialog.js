@@ -2,103 +2,102 @@ import { observable, action } from 'mobx';
 
 class Dialog {
   constructor() {
-    this.state = observable({
-      isOpen: false,
-      message: '',
-      title: '',
-      buttons: []
-    });
-    this.prevFocus;
-    this.defaultButtonsTexts = {
-      hebrew: {
-        ok: 'אישור',
-        cancel: 'ביטול'
+    this.defaultSettings = {
+      buttonsTexts: {
+        hebrew: {
+          ok: 'אישור',
+          cancel: 'ביטול'
+        },
+        arabic: {
+          ok: 'التأكيد',
+          cancel: 'الغاء'
+        },
+        english: {
+          ok: 'OK',
+          cancel: 'Cancel'
+        }
       },
-      arabic: {
-        ok: 'التأكيد',
-        cancel: 'الغاء'
-      },
-      english: {
-        ok: 'OK',
-        cancel: 'Cancel'
+      state: {
+        isOpen: false,
+        title: '',
+        content: '',
+        buttons: []
       }
     };
-    this.defaultSettings = {
-      isOpen: false,
-      modal: true,
-      title: '',
-      message: '',
-      autoOpen: true,
-      width: 300,
-      resizable: false,
-      close: () => this.prevFocus.focus(),
-      buttons: [],
-      dialogClass: 'dialog-component top-zindex position-fixed',
-      closeText: '',
-      draggable: false
-    };
-    this.okButton = () => ({
-      text: this.texts.ok,
+    this.state = observable(this.defaultSettings.state);
+  }
+
+  _getButtonsTexts = buttonTexts => {
+    const buttonResources = Object.assign(
+      this.defaultSettings.buttonsTexts,
+      buttonTexts
+    );
+    //texts = ko.multiLanguageObservable({ resource: texts });
+    return buttonResources.hebrew;
+  };
+  _getButtonsByType = params => {
+    const { type, texts, resolve, reject } = params;
+    const okButton = {
+      text: texts.ok,
       click: () => {
-        this.promiseResolve();
+        resolve();
         this.close();
       }
-    });
-    this.promiseReject;
-    this.promiseResolve;
-    this.dialogTypes = () => ({
+    };
+    const cancelButton = {
+      text: texts.cancel,
+      click: () => {
+        reject();
+        this.close();
+      }
+    };
+    const buttonsByType = {
       alert: {
-        buttons: [this.okButton()]
+        buttons: { ok: okButton }
       },
       confirm: {
-        buttons: [
-          this.okButton(),
-          {
-            text: this.texts.cancel,
-            click: () => {
-              this.promiseReject();
-              this.close();
-            }
-          }
-        ]
+        buttons: {
+          ok: okButton,
+          cancel: cancelButton
+        }
       }
+    };
+
+    return buttonsByType[type];
+  };
+
+  _mergeSettings = (buttonsSettings, settings) =>
+    Object.assign({}, this.defaultSettings.state, buttonsSettings, settings);
+
+  _openByType = type => (settings = {}) => {
+    const self = this;
+    const dialogPromise = new Promise((resolve, reject) => {
+      const texts = self._getButtonsTexts(settings.buttonTexts);
+      const buttonsSettings = self._getButtonsByType({
+        type,
+        texts,
+        resolve,
+        reject
+      });
+      const dialogSettings = self._mergeSettings(buttonsSettings, settings);
+
+      self.open(dialogSettings);
     });
-  }
+    return dialogPromise;
+  };
 
   @action
   open = settings => {
-    this.prevFocus = document.activeElement;
-    const { message, title, buttons } = settings;
-
-    this.state.buttons = buttons;
-    this.state.message = message;
-    this.state.title = title;
-    this.state.isOpen = true;
+    settings.isOpen = true;
+    Object.assign(this.state, settings);
   };
+
+  @action
   close = () => {
     this.state.isOpen = false;
-    this.prevFocus.focus();
   };
-  dialogFactory = type => {
-    return (settings = {}) => {
-      const self = this;
-      const promise = new Promise(function(resolve, reject) {
-        self.promiseResolve = resolve;
-        self.promiseReject = reject;
-      });
-      const buttonTexts = Object.assign(
-        this.defaultButtonsTexts,
-        settings.buttonTexts
-      );
-      //texts = ko.multiLanguageObservable({ resource: buttonTexts });
-      this.texts = buttonTexts.hebrew;
-      const innerDefaultSettings = this.dialogTypes[type];
-      const factorySettings = Object.assign(innerDefaultSettings, settings);
-      this.open(factorySettings);
-      return promise; //deffer.promise;
-    };
-  };
-  alert = this.dialogFactory('alert');
-  confirm = this.dialogFactory('confirm');
+
+  alert = this._openByType('alert');
+  confirm = this._openByType('confirm');
 }
 export default new Dialog();

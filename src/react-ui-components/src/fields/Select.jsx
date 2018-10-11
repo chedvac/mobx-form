@@ -3,34 +3,28 @@ import { observer, inject } from 'mobx-react';
 import control from 'mobxReactForm/control';
 
 @inject('applicationData')
+@inject('languageStore')
 @observer
 class BaseSelect extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
-      english: {
-        optionCaption: 'Choose'
-      },
-      hebrew: {
-        optionCaption: 'בחר'
-      },
-      arabic: {
-        optionCaption: 'اختر'
-      }
+      optionCaption: this.props.languageStore.computedResourcesProvider({
+        english: 'Choose',
+        hebrew: 'בחר',
+        arabic: 'اختر'
+      })
     };
     !props.noOptionsCaption ? this.addOptionCaption() : null;
   }
   addOptionCaption = function() {
     const optionCaption =
-      this.props.optionCaption || this.currentResources().optionCaption;
+      this.props.optionCaption || this.texts.optionCaption.get();
     this.props.options.unshift({ key: '', value: optionCaption });
-  };
-  currentResources = function() {
-    return this.texts[this.props.applicationData.formLanguage.name];
   };
 
   render() {
-    const { options = [] } = this.props || {};
+    const { options = [], label } = this.props || {};
     return (
       <div>
         <select className="select-field" {...this.props}>
