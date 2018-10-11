@@ -10,6 +10,7 @@ const openWidth = '275';
 const styles = theme => {
   return {
     contentDiv: {
+      width: '100%',
       display: 'flex',
       position: 'relative',
     },

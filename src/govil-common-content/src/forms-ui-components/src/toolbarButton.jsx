@@ -37,8 +37,6 @@ class ToolbarButton extends React.Component {
     const {
       classes,
       className,
-      onMouseOverEvent,
-      onMouseOutEvent,
       buttonText,
       visible,
       Popup

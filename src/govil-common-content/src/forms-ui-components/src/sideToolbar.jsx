@@ -100,6 +100,7 @@ class SideToolbar extends React.Component {
                 buttonText={toolbarButton[1].buttonText.hebrew}
                 className={toolbarButton[1].className}
                 buttonAction={toolbarButton[1].action}
+                isToolbarOpened={opened}
                 Popup={toolbarButton[1].popup}
               />
             ) : (
