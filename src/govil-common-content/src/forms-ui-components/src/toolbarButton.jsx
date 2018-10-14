@@ -37,8 +37,6 @@ class ToolbarButton extends React.Component {
     const {
       classes,
       className,
-      onMouseOverEvent,
-      onMouseOutEvent,
       buttonText,
       visible,
       Popup
@@ -48,12 +46,6 @@ class ToolbarButton extends React.Component {
       <div>
         <ListItem
           button
-          onMouseOver={() => {
-            onMouseOverEvent();
-          }}
-          onMouseOut={() => {
-            onMouseOutEvent();
-          }}
           visible={visible}
           onClick={this.listItemClickEvent}
         >
@@ -65,11 +57,11 @@ class ToolbarButton extends React.Component {
             this.state.isOpen ? (
               <ExpandLess className={classes.nested} />
             ) : (
-              <ExpandMore className={classes.nested} />
-            )
+                <ExpandMore className={classes.nested} />
+              )
           ) : (
-            false
-          )}
+              false
+            )}
         </ListItem>
         {this.state.isOpen &&
           this.props.isToolbarOpened && <Popup isOpen={this.state.isOpen} />}

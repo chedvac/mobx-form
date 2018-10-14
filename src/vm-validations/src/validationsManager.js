@@ -39,7 +39,11 @@ function getPropertyFromArray(array, property) {
 
 export default class ValidationsManager {
   constructor(validations) {
+    //console.log('--------------validations', validations);
+
     this.validations = concatValidationArray(validations, ValidationsManager);
+    //console.log('--------------this.validations', this.validations);
+
     this.pattern = getPatternArray(this.validations);
     this.maxlength = getPropertyFromArray(this.validations, 'maxLength');
     this.minlength = getPropertyFromArray(this.validations, 'minLength');
@@ -58,7 +62,6 @@ export default class ValidationsManager {
 
   validate = async value => {
     let failedValidation;
-
     for (const item of this.validations) {
       if (!(await item.validator(value))) {
         failedValidation = item;

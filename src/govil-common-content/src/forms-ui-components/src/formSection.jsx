@@ -3,21 +3,25 @@ import { withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 import Header from './header';
 import SideToolbar from './sideToolbar';
-import LanguagesMenu from 'govil-common-content/forms-ui-components/src/languagesMenu';
+
+let closeWidth = '72';
+const openWidth = '275';
 
 const styles = theme => {
   return {
+    contentDiv: {
+      width: '100%',
+      display: 'flex',
+      position: 'relative',
+    },
     content: {
-      width: 1,
-      //width: `calc(100% - ${theme.drawerWidth}px)`,
-      flexGrow: 1,
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3
     }
   };
 };
 
-@withStyles(styles)
+@withStyles(styles, { withTheme: true })
 @observer
 class FormSection extends Component {
   constructor(props) {
@@ -27,39 +31,52 @@ class FormSection extends Component {
 
   state = {
     opened: false,
-    openedByToolbarButton: false
+    openedByToolbarButton: false,
+    drawerWidth: this.props.theme.isMobile ? '0' : closeWidth,
+    drawerForContentWidth: this.props.theme.isMobile ? '0' : closeWidth
   };
 
   toggleToolbar = () => {
     this.setState({
       opened: !this.state.opened,
-      openedByToolbarButton: !this.state.opened
+      openedByToolbarButton: !this.state.opened,
+      drawerWidth: !this.state.opened ? openWidth : closeWidth,
+      drawerForContentWidth: !this.state.opened ? openWidth : closeWidth
     });
   };
 
   openToolbarOnOver = () => {
     if (!this.state.opened) {
-      this.setState({ opened: true });
+      this.setState({ opened: true, drawerWidth: openWidth });
     }
   };
 
   closeToolbarOnOut = () => {
     if (!this.state.openedByToolbarButton) {
-      this.setState({ opened: false });
+      this.setState({ opened: false, drawerWidth: closeWidth });
     }
   };
+
   render() {
-    const { classes, rootStore } = this.props;
+    const { classes, rootStore, theme } = this.props;
+    closeWidth = theme.isMobile ? '0' : '72';
+
     return (
       <React.Fragment>
         <Header toggleToolbar={this.toggleToolbar} />
-        <SideToolbar
-          toolbarButtonsStore={rootStore.toolbarButtons}
-          opened={this.state.opened}
-          openToolbarOnOver={this.openToolbarOnOver}
-          closeToolbarOnOut={this.closeToolbarOnOut}
-        />
-        <div className={classes.content}>{this.props.children}</div>
+        <div className={classes.contentDiv}>
+          <SideToolbar
+            width={this.state.drawerWidth}
+            toolbarButtonsStore={rootStore.toolbarButtons}
+            opened={this.state.opened}
+            openToolbarOnOver={this.openToolbarOnOver}
+            closeToolbarOnOut={this.closeToolbarOnOut}
+          />
+          {
+            React.cloneElement(this.props.children, { drawerForContentWidth: this.state.drawerForContentWidth })
+          }
+
+        </div>
       </React.Fragment>
     );
   }

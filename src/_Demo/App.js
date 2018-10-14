@@ -30,14 +30,10 @@ class App extends Component {
     const { classes } = this.props;
     const rootStore = new RootStore();
     window.rootStore = rootStore;
+    customTheme.direction = 'rtl';
+    const applicationData = {
+    };
     languageStore.setAvaliableLanguages(['hebrew', 'english']);
-    // rootStore.toolbarButtons.changeToolbarButtonState('selectLanguage', false);
-    const applicationData = {};
-    // autorun(() => {
-    //   customTheme.direction = applicationData.formLanguage.isHebrew
-    //     ? 'rtl'
-    //     : 'ltr';
-    // });
     window.applicationData = applicationData;
     return (
       <MuiThemeProvider theme={customTheme}>
