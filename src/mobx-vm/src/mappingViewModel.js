@@ -1,79 +1,88 @@
-import { isObservableArray } from 'mobx';
+//TODO errorHandling
 import { forOwn } from 'lodash/fp';
-import { find, forEach } from 'lodash';
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import _ from 'lodash';
+import {
+  enumeTypes as modelMemberTypes,
+  getMemberType
+} from './modelMemberTypes';
 
-const getMemberType = member => {
-  if (member instanceof ModularViewModel) return 'ModularViewModel';
-  if (isObservableArray(member)) return 'array';
-  return 'default';
+const identity = data => data;
+
+const hasMappingRule = (modelMember, mappingType, mode) =>
+  modelMember.map[mappingType] && modelMember.map[mappingType][mode];
+
+const getMappingRule = (modelMember, mappingType, mode) => {
+  return hasMappingRule(modelMember, mappingType, mode)
+    ? modelMember.map[mappingType][mode]
+    : identity;
 };
 
-const isExistToMappingType = (modelMember, mappingType) => {
-  return modelMember.map[mappingType] && modelMember.map[mappingType].to;
-};
-
-const mapToData = (data, modelMember, mappingType) => {
-  if (isExistToMappingType(modelMember, mappingType)) {
-    return modelMember.map[mappingType].to(data);
-  }
-  return data;
+const mapData = (data, modelMember, mappingType, mode) => {
+  const mappingRule = getMappingRule(modelMember, mappingType, mode);
+  return mappingRule(data);
 };
 
 const getMapValue = (modelMember, item, mappingType) => {
   switch (getMemberType(item)) {
-    case 'array': {
+    case modelMemberTypes.array: {
       return item.map(itemData => {
-        const mappedItemData = itemData.toJSON(mappingType);
-        return mapToData(mappedItemData, modelMember, mappingType);
+        const memberData = getDataFromModelMembers(itemData, mappingType);
+        // const mappedItemData = itemData.toJSON(mappingType);
+        return mapData(memberData, modelMember, mappingType, 'to');
       });
     }
-    case 'ModularViewModel':
+    case modelMemberTypes.modularViewModel:
       return item;
     default: {
-      return mapToData(item, modelMember, mappingType);
+      return mapData(item, modelMember, mappingType, 'to');
     }
   }
-};
-const getVMDataFromModelMembers = (data, mappingType) => {
-  let jsonObj = {};
-  forEach(data, (value, key) => {
-    if (getMemberType(value) === 'ModularViewModel')
-      value = value.toJSON(mappingType);
-    Object.assign(jsonObj, { [key]: value });
-  });
-  return jsonObj;
 };
 
 const getDataFromModelMembers = (modelMember, mappingType) => {
-  let jsonObj = {};
+  const mappedModelMembers = {};
   forOwn(memberSettings => {
     const { name } = memberSettings;
     const value = getMapValue(memberSettings, modelMember[name], mappingType);
-    Object.assign(jsonObj, { [name]: value });
-  })(modelMember.modelMembersSettings);
-  return jsonObj;
+    Object.assign(mappedModelMembers, { [name]: value });
+  })(modelMember.modelMembers);
+  return mappedModelMembers;
 };
 
-const isExistFromMappingType = (modelMember, mappingType) => {
-  return modelMember.map[mappingType] && modelMember.map[mappingType].from;
-};
+// const memberData = getDataFromModelMembers(itemData, mappingType);
+// const mappedItemData = itemData.toJSON(mappingType);
+// return mapToData(memberData, modelMember, mappingType);
 
-const mapFromData = (data, modelMember, mappingType) => {
-  if (isExistFromMappingType(modelMember, mappingType)) {
-    return modelMember.map[mappingType].from(data);
-  }
-  return data;
+const getVMDataFromModelMembers = (data, mappingType) => {
+  const mappedModelMembers = {};
+  _.forEach(data, (value, key) => {
+    switch (getMemberType(value)) {
+      case modelMemberTypes.array: {
+        value = value.map(itemData => {
+          getVMDataFromModelMembers(itemData, mappingType);
+        });
+        break;
+      }
+      case modelMemberTypes.modularViewModel:
+        value = value.toJSON(mappingType);
+        break;
+      default:
+        break;
+    }
+    Object.assign(mappedModelMembers, { [key]: value });
+  });
+  return mappedModelMembers;
 };
 
 const mapArrayByKey = (key, arrayData, modelMember, name, mappingType) => {
   forOwn(data => {
-    const mappedData = mapFromData(
+    const mappedData = mapData(
       data,
-      modelMember.modelMembersSettings[name],
-      mappingType
+      modelMember.modelMembers[name],
+      mappingType,
+      'from'
     );
-    const itemFoundByKey = find(modelMember[name], item => {
+    const itemFoundByKey = _.find(modelMember[name], item => {
       return item[key].tostring() === mappedData[key].tostring();
     });
     if (itemFoundByKey) {
@@ -85,10 +94,11 @@ const mapArrayByKey = (key, arrayData, modelMember, name, mappingType) => {
 const mapArrayByAdd = (arrayData, modelMember, name, mappingType) => {
   modelMember[name].clear();
   forOwn(data => {
-    const mappedData = mapFromData(
+    const mappedData = mapData(
       data,
-      modelMember.modelMembersSettings[name],
-      mappingType
+      modelMember.modelMembers[name],
+      mappingType,
+      'from'
     );
     const newItem = modelMember.getAddAction(name)();
     newItem.fromJSON(mappedData);
@@ -96,10 +106,8 @@ const mapArrayByAdd = (arrayData, modelMember, name, mappingType) => {
 };
 
 const mapArray = (arrayData, modelMember, name, mappingType) => {
-  if (
-    isExistFromMappingType(modelMember.modelMembersSettings[name], mappingType)
-  ) {
-    const key = modelMember.modelMembersSettings[name].map[mappingType].key;
+  if (hasMappingRule(modelMember.modelMembers[name], mappingType, 'from')) {
+    const { key } = modelMember.modelMembers[name].map[mappingType];
     if (key) {
       mapArrayByKey(key, arrayData, modelMember, name, mappingType);
     } else {
@@ -117,32 +125,33 @@ const mapArray = (arrayData, modelMember, name, mappingType) => {
 const setMappedDataToModelMembers = (data, modelMember, mappingType) => {
   forOwn(memberSettings => {
     const { name } = memberSettings;
-    if (data[name]) {
+    if (_.has(data, name)) {
       switch (getMemberType(modelMember[name])) {
-        case 'ModularViewModel':
+        case modelMemberTypes.modularViewModel:
           modelMember[name].fromJSON(data[name], mappingType);
           break;
-        case 'array':
+        case modelMemberTypes.array:
           mapArray(data[name], modelMember, name, mappingType);
           break;
         default: {
-          const memberMapData = mapFromData(
+          const memberMapData = mapData(
             data[name],
-            modelMember.modelMembersSettings[name],
-            mappingType
+            modelMember.modelMembers[name],
+            mappingType,
+            'from'
           );
           modelMember.getAction(name)(memberMapData);
         }
       }
     }
-  })(modelMember.modelMembersSettings);
+  })(modelMember.modelMembers);
 };
 
 export default {
-  mapFromData,
-  mapToData,
+  mapData,
   setMappedDataToModelMembers,
   getDataFromModelMembers,
+  getVMDataFromModelMembers,
   mapArray,
-  getVMDataFromModelMembers
+  getMemberType
 };

@@ -1,7 +1,7 @@
 import validationsManagerFactory from 'vm-validations/validationsManager';
 import { validationStateMultiMessages } from 'vm-validations/validationState';
 import PropTypes from 'prop-types';
-import { observable, reaction, action } from 'mobx';
+import { observable, reaction, action, isObservableArray } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import { forOwn, upperFirst } from 'lodash/fp';
 
@@ -13,6 +13,7 @@ export default class ModularViewModel {
   constructor(settings = {}) {
     this.validateables = {};
     this.modelMembers = {};
+    this.map = settings.map || {};
 
     this.validationsManager = new validationsManagerFactory(
       settings.validations || []
@@ -122,24 +123,14 @@ export default class ModularViewModel {
       validations
     );
   }
-  /**     
-  * @memberof ModularViewModel         
-  * @function "reset"
-  * @description validate all model properties
-  * @return {bool} properties validation state result
-  * @example 
-    PersonalInfo.reset();
-  */
-  reset() {
-    Object.values(this.modelMembers).forEach(property => {
-      if (property.reset) {
-        property.reset();
-      }
-    });
-  }
 
   fromJSON(data, mappingType) {
-    const mappedData = mappingViewModel.mapFromData(data, this, mappingType);
+    const mappedData = mappingViewModel.mapData(
+      data,
+      this,
+      mappingType,
+      'from'
+    );
     mappingViewModel.setMappedDataToModelMembers(mappedData, this, mappingType);
   }
 
@@ -148,20 +139,25 @@ export default class ModularViewModel {
       this,
       mappingType
     );
-    const mappingData = mappingViewModel.mapToData(
+    const mappingData = mappingViewModel.mapData(
       memberData,
       this,
-      mappingType
+      mappingType,
+      'to'
     );
     return mappingViewModel.getVMDataFromModelMembers(mappingData, mappingType);
   }
 
-  resetArray(array) {}
+  resetArray(array) {
+    forOwn(item => {
+      item.reset();
+    })(array);
+  }
 
   reset() {
     forOwn(memberSettings => {
       const { name } = memberSettings;
-      switch (this.getMemberType(this[name])) {
+      switch (mappingViewModel.getMemberType(this[name])) {
         case 'ModularViewModel':
           this[name].reset();
           break;
@@ -171,7 +167,7 @@ export default class ModularViewModel {
         default:
           this.getAction(name)(memberSettings.defaultValue);
       }
-    })(this.modelMembersSettings);
+    })(this.modelMembers);
   }
 }
 /**     
