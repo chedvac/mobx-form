@@ -8,6 +8,10 @@ import { forOwn, upperFirst } from 'lodash/fp';
 import ValidateableDefinition from 'mobx-vm/validateableDefinition';
 import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
 import mappingViewModel from 'mobx-vm/mappingViewModel';
+import {
+  enumeTypes as modelMemberTypes,
+  getMemberType
+} from './modelMemberTypes';
 
 export default class ModularViewModel {
   constructor(settings = {}) {
@@ -139,33 +143,25 @@ export default class ModularViewModel {
       this,
       mappingType
     );
-    const mappingData = mappingViewModel.mapData(
-      memberData,
-      this,
-      mappingType,
-      'to'
-    );
-    return mappingViewModel.getVMDataFromModelMembers(mappingData, mappingType);
-  }
-
-  resetArray(array) {
-    forOwn(item => {
-      item.reset();
-    })(array);
+    return mappingViewModel.mapData(memberData, this, mappingType, 'to');
   }
 
   reset() {
     forOwn(memberSettings => {
-      const { name } = memberSettings;
-      switch (mappingViewModel.getMemberType(this[name])) {
-        case 'ModularViewModel':
-          this[name].reset();
-          break;
-        case 'array':
-          this.resetArray(this[name]);
-          break;
-        default:
-          this.getAction(name)(memberSettings.defaultValue);
+      const { name, resetIgnor } = memberSettings;
+      if (!resetIgnor) {
+        switch (getMemberType(this[name])) {
+          case modelMemberTypes.modularViewModel:
+            this[name].reset();
+            break;
+          case modelMemberTypes.array:
+            this[name].forEach(item => {
+              item.reset();
+            });
+            break;
+          default:
+            this.getAction(name)(memberSettings.defaultValue);
+        }
       }
     })(this.modelMembers);
   }

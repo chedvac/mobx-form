@@ -3,5 +3,6 @@ export default class ModelMemberDefinition {
     this.name = settings.name;
     this.defaultValue = settings.defaultValue;
     this.map = settings.map || {};
+    this.resetIgnor = settings.resetIgnor || false;
   }
 }

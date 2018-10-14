@@ -14,7 +14,7 @@ export const enumeTypes = {
 
 //Todo check parimitive type and throw exceptioon
 const isPrimitive = value => {
-  return value;
+  return value || true;
   //typeof ? date, string, int, undefine, null,
 };
 

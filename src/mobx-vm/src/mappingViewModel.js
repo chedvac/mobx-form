@@ -26,13 +26,12 @@ const getMapValue = (modelMember, item, mappingType) => {
   switch (getMemberType(item)) {
     case modelMemberTypes.array: {
       return item.map(itemData => {
-        const memberData = getDataFromModelMembers(itemData, mappingType);
-        // const mappedItemData = itemData.toJSON(mappingType);
-        return mapData(memberData, modelMember, mappingType, 'to');
+        const mappedItemData = itemData.toJSON(mappingType);
+        return mapData(mappedItemData, modelMember, mappingType, 'to');
       });
     }
     case modelMemberTypes.modularViewModel:
-      return item;
+      return item.toJSON(mappingType);
     default: {
       return mapData(item, modelMember, mappingType, 'to');
     }
@@ -46,31 +45,6 @@ const getDataFromModelMembers = (modelMember, mappingType) => {
     const value = getMapValue(memberSettings, modelMember[name], mappingType);
     Object.assign(mappedModelMembers, { [name]: value });
   })(modelMember.modelMembers);
-  return mappedModelMembers;
-};
-
-// const memberData = getDataFromModelMembers(itemData, mappingType);
-// const mappedItemData = itemData.toJSON(mappingType);
-// return mapToData(memberData, modelMember, mappingType);
-
-const getVMDataFromModelMembers = (data, mappingType) => {
-  const mappedModelMembers = {};
-  _.forEach(data, (value, key) => {
-    switch (getMemberType(value)) {
-      case modelMemberTypes.array: {
-        value = value.map(itemData => {
-          getVMDataFromModelMembers(itemData, mappingType);
-        });
-        break;
-      }
-      case modelMemberTypes.modularViewModel:
-        value = value.toJSON(mappingType);
-        break;
-      default:
-        break;
-    }
-    Object.assign(mappedModelMembers, { [key]: value });
-  });
   return mappedModelMembers;
 };
 
@@ -151,7 +125,5 @@ export default {
   mapData,
   setMappedDataToModelMembers,
   getDataFromModelMembers,
-  getVMDataFromModelMembers,
-  mapArray,
-  getMemberType
+  mapArray
 };
