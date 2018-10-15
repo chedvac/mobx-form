@@ -1,38 +1,17 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
-import Input from 'reactUiComponents/fields/Input';
-import { getPropsField } from 'mobxReactForm/getProps';
+import { observer } from 'mobx-react';
+import SimpleFieldsTab from '../SimpleFieldsTab/SimpleFieldsTab';
 
-@inject('applicationData')
 @observer
-export default class Tab3 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.texts = {
-      hebrew: {
-        email: ' מייל',
-        houseNumber: ' מספר בית'
-      },
-      english: {
-        email: 'first name',
-        houseNumber: 'last name'
-      },
-      arabic: {
-        email: 'first name',
-        houseNumber: 'last name'
-      }
-    };
-    this.currentResources = this.currentResources.bind(this);
-  }
-  currentResources = function() {
-    return this.texts[this.props.applicationData.formLanguage.name];
-  };
+class Tab3 extends React.Component {
   render() {
-    const { tables } = this.props;
     return (
-      <div className="row">
-        <div className="col-md-4">טאב 3</div>
+      <div>
+        {this.props.tab3.listUsers.map(element => (
+          <SimpleFieldsTab simpleFields={element} />
+        ))}
       </div>
     );
   }
 }
+export default Tab3;

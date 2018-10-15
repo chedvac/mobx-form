@@ -20,10 +20,10 @@ class SimpleFieldsTab extends ModularViewModel {
         })
       },
       externalMap: {
-        from: data => ({
-          firstName: data.name,
-          ...data
-        }),
+        // from: data => ({
+        //   firstName: data.name,
+        //   ...data
+        // }),
         to: userDetails => ({
           name: userDetails.firstName,
           family: userDetails.lastName
@@ -57,7 +57,8 @@ class SimpleFieldsTab extends ModularViewModel {
           ...data
         })
       }
-    }
+    },
+    resetIgnor: true
   })
   @validateable({
     validations: []

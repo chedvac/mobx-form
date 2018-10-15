@@ -1,5 +1,6 @@
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
+import Tab3 from './tabs/Tab3/store';
 import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore';
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
@@ -18,13 +19,24 @@ class RootStore extends ModularViewModel {
       })
     };
     this.simpleFieldsTab = new SimpleFieldsTab({ map });
+    this.tab3Tab = new Tab3({
+      map: {
+        serverMap: {
+          to: data => ({
+            mapListUsers: data.listUsers
+          })
+        }
+      }
+    });
     this.tablesTab = new TablesTab();
     this.toolbarButtons = toolbarButtons;
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
-  @modelMember()
+  @modelMember({ resetIgnor: true })
   simpleFieldsTab;
+  @modelMember()
+  tab3Tab;
   @modelMember()
   tablesTab;
   submitForm() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
-import Tab3 from './tabs/Tab3/tab3';
+import Tab3Tab from './tabs/Tab3/tab3';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import Navigation from 'reactUiComponents/navigation/Navigation';
 import Toolbar from '../components/toolbar/Toolbar';
@@ -12,6 +12,11 @@ export default class ComponentsDemo extends Component {
     const Tables = inject(() => ({
       tables: this.props.rootStore.tablesTab
     }))(TablesTab);
+
+    const Tab3 = inject(() => ({
+      tab3: this.props.rootStore.tab3Tab
+    }))(Tab3Tab);
+
     const SimpleFields = inject(() => ({
       simpleFields: this.props.rootStore.simpleFieldsTab
     }))(SimpleFieldsTab);
@@ -41,7 +46,6 @@ export default class ComponentsDemo extends Component {
           this.Form = c;
         }}
       >
-        <Toolbar />
         <Navigation routeSettings={tabs} />
         <div className="row">
           <div className="small-12 columns">
