@@ -1,22 +1,19 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import PersonalInformation from './containers/PersonalInformation/PersonalInformation';
-
+import Container from 'mobxReactForm/Containers/container';
 @observer
 class SimpleFieldsTab extends React.Component {
   render() {
     return (
-      <div>
+      <Container beforeLeave={this.props.simpleFields.validate} {...this.props}>
         <PersonalInformation
           userDetails={this.props.simpleFields.userDetails}
         />
         <PersonalInformation
           userDetails={this.props.simpleFields.userDetails}
         />
-        {this.props.simpleFields.users.map(element => (
-          <PersonalInformation userDetails={element} />
-        ))}
-      </div>
+      </Container>
     );
   }
 }

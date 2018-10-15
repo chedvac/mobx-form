@@ -4,7 +4,13 @@ import Tab3 from './tabs/Tab3/store';
 import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore';
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
+import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/PersonalInformation';
+import Link from 'reactUiComponents/dialogs/Link';
 import dialog from 'reactUiComponents/dialogs/dialog.js';
+import { toolbarButtonsNames } from 'govil-common-content/forms-ui-components/src/toolbarButtons'
+import examples from 'govil-common-content/application-data/src/DemoData'
+
+
 //import LanguageStore from '../components/language/store'
 // import submitAction from '../actions/submit';
 
@@ -29,7 +35,7 @@ class RootStore extends ModularViewModel {
       }
     });
     this.tablesTab = new TablesTab();
-    this.toolbarButtons = toolbarButtons;
+    this.toolbarButtons = new toolbarButtons({ [toolbarButtonsNames.submit]: examples.obsVal });
     this.validateForm = this.validateForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
@@ -39,18 +45,27 @@ class RootStore extends ModularViewModel {
   tab3Tab;
   @modelMember()
   tablesTab;
-  submitForm() {
+  async submitForm() {
     // submitAction(this.formInformation.setIsFormSent);
-  }
-
-  from(data) {
-    this.simpleFieldsTab.mapping(data.personal);
+    try {
+      await dialog.confirm({
+        content: Link,
+        title: 'שליחת טופס'
+      });
+      console.log('resolve');
+    } catch (err) {
+      console.log('reject');
+    }
+    // dialog.confirm({
+    //   message: 'הטופס נשלח בהצלחה',
+    //   title: 'שליחת טופס'
+    // });
   }
 
   async validateForm() {
     const isStoreValid = await this.validate();
     if (isStoreValid) {
-      dialog.alert({ message: 'נתוני הטופס תקינים' });
+      dialog.alert({ content: 'נתוני הטופס תקינים' });
     }
   }
   getStoreAsJSon = () => toJS(this.model.getModel());

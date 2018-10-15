@@ -2,7 +2,6 @@ import React from 'react';
 import { enableUniqueIds } from 'react-html-id';
 import { format } from 'utils/stringExtension';
 import { autorun } from 'mobx';
-
 function control(WrappedComponent) {
   return class control extends React.Component {
     constructor(props) {

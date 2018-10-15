@@ -1,7 +1,7 @@
 import validationsManagerFactory from 'vm-validations/validationsManager';
 import { validationStateMultiMessages } from 'vm-validations/validationState';
 import PropTypes from 'prop-types';
-import { observable, reaction, action, isObservableArray } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import { forOwn, upperFirst } from 'lodash/fp';
 
@@ -27,7 +27,6 @@ export default class ModularViewModel {
     forOwn(value => {
       this.generateModelMember(value);
     })(this._modelMembersSettings);
-
     forOwn(value => {
       this.generateValidateable(value);
     })(this._validateablesSettings);
@@ -53,16 +52,25 @@ export default class ModularViewModel {
 * @description return action of property
 * @return {function} action
 * @example 
-  PersonalInfo.getAction();
+  PersonalInfo.getAction('firstName');
 */
+  @assertParametersType({ name: PropTypes.string.isRequired })
   getAction(name) {
-    console.log('action', `set${upperFirst(name)}`);
-    return this[`set${upperFirst(name)}`]; //todo: toupercase
+    return this[`set${upperFirst(name)}`];
   }
 
-  getAddAction(name) {
-    return this[`add_${name}`];
-  }
+  /**     
+* @memberof ModularViewModel         
+* @function "getAddAction"
+* @description return add action of property
+* @return {function} add action
+* @example 
+  PersonalInfo.getAddAction('firstName');
+*/
+@assertParametersType({ name: PropTypes.string.isRequired })
+getAddAction(name) {
+  return this[`add${upperFirst(name)}`];
+}
 
   @action
   setValidationState(validationState) {
@@ -122,6 +130,10 @@ export default class ModularViewModel {
     * @example 
       PersonalInfo.addValidations('firstName',[ maxlength({ value: 15 })]);
     */
+  @assertParametersType({
+    propertyName: PropTypes.string.isRequired,
+    validations: PropTypes.array
+  })
   addValidations(propertyName, validations) {
     this.validateables[propertyName].validationsManager.addValidations(
       validations

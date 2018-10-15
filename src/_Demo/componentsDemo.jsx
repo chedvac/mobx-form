@@ -1,15 +1,34 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
 import Tab3Tab from './tabs/Tab3/tab3';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import Navigation from 'reactUiComponents/navigation/Navigation';
-import Toolbar from '../components/toolbar/Toolbar';
 import { inject } from 'mobx-react';
+import withPropsStyles from 'govil-common-content/forms-ui-components/src/styles'
 
-export default class ComponentsDemo extends Component {
+const styles = (props, theme) => {
+  return {
+    content: {
+      backgroundColor: theme.palette.background.default,
+      padding: theme.spacing.unit * 3,
+      [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: `${props.drawerForContentWidth}px`,
+      width: `calc(100% - ${props.drawerForContentWidth}px)`
+    },
+  }
+};
+
+// @withStyles(styles, { withTheme: true })
+class ComponentsDemo extends Component {
+  // destruct non-valid props
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    const Tables = inject(() => ({
+    const { classes } = this.props;
+    const Tables = inject(stores => ({
       tables: this.props.rootStore.tablesTab
     }))(TablesTab);
 
@@ -41,7 +60,7 @@ export default class ComponentsDemo extends Component {
     console.log('rootStore', this.props.rootStore);
 
     return (
-      <form
+      <form className={classes.content}
         ref={c => {
           this.Form = c;
         }}
@@ -72,3 +91,5 @@ export default class ComponentsDemo extends Component {
     );
   }
 }
+
+export default withPropsStyles(styles, true)(ComponentsDemo)

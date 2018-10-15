@@ -1,17 +1,16 @@
-import ValidationManager from '../validationsManager';
+import ValidationManager from 'vm-validations/validationsManager';
 import { greaterThan } from 'validations/rules/number';
 import { maxlength, minlength, required } from 'validations/rules/basic';
 import { hebrew } from 'validations/rules/text';
 import { isObservableProp } from 'mobx';
-let validationManagerInst, validationArray, errorMessage;
+let validationManagerInst, errorMessage;
 
-beforeEach(() => {
-  validationArray = [
-    maxlength({ value: 15 }),
-    minlength({ value: 2 }),
-    greaterThan({ value: 20 })
-  ];
-});
+const validationArray = [
+  maxlength({ value: 15 }),
+  minlength({ value: 2 }),
+  greaterThan({ value: 20 })
+];
+
 describe('ValidationManager', () => {
   describe('constructor', () => {
     describe('validations params', () => {
@@ -97,25 +96,83 @@ describe('ValidationManager', () => {
   });
 
   describe('validate', () => {
-    beforeEach(() => {
-      const hebrewVlidate = hebrew();
+    beforeAll(() => {
+      validationManagerInst = new ValidationManager(validationArray);
       errorMessage = { hebrew: 'error message....' };
-      hebrewVlidate.message = jest.fn(() => errorMessage);
-      validationManagerInst = new ValidationManager([hebrewVlidate]);
+      for (const item of validationManagerInst.validations) {
+        item.validator = jest.fn().mockReturnValue(false);
+        item.message = jest.fn().mockReturnValue(errorMessage);
+      }
     });
-    test('faild char pattern', () => {
-      const result = {
-        message: errorMessage.hebrew,
-        isValid: false
-      };
-      expect(validationManagerInst.validateCharsPattern('abc')).toEqual(result);
+
+    test('is async', () => {
+      expect(validationManagerInst.validate[Symbol.toStringTag]).toEqual(
+        'AsyncFunction'
+      );
     });
-    test('success char pattern', () => {
-      const result = {
-        message: '',
-        isValid: true
-      };
-      expect(validationManagerInst.validateCharsPattern('אבג')).toEqual(result);
+    test('call validations.validator until first fail', async () => {
+      await validationManagerInst.validate('abc');
+      expect(
+        validationManagerInst.validations[0].validator
+      ).toHaveBeenCalledWith('abc');
+      expect(
+        validationManagerInst.validations[1].validator
+      ).not.toHaveBeenCalled();
+    });
+    test('return object contains isValid', async () => {
+      expect(await validationManagerInst.validate('abc')).toEqual(
+        expect.objectContaining({
+          isValid: false
+        })
+      );
+    });
+    test('return object contains message', async () => {
+      expect(await validationManagerInst.validate('abc')).toEqual(
+        expect.objectContaining({
+          message: errorMessage.hebrew
+        })
+      );
+    });
+  });
+  describe('validateMultiResults', () => {
+    beforeAll(() => {
+      validationManagerInst = new ValidationManager(validationArray);
+      errorMessage = { hebrew: 'error message....' };
+      for (const item of validationManagerInst.validations) {
+        item.validator = jest.fn().mockReturnValue(false);
+        item.message = jest.fn().mockReturnValue(errorMessage);
+      }
+    });
+
+    test('is async', () => {
+      expect(
+        validationManagerInst.validateMultiResults[Symbol.toStringTag]
+      ).toEqual('AsyncFunction');
+    });
+    test('call all validations', async () => {
+      await validationManagerInst.validateMultiResults('abc');
+      for (const item of validationManagerInst.validations) {
+        expect(item.validator).toHaveBeenCalledWith('abc');
+      }
+    });
+    test('return object contains isValid', async () => {
+      expect(await validationManagerInst.validateMultiResults('abc')).toEqual(
+        expect.objectContaining({
+          isValid: false
+        })
+      );
+    });
+    test('return object contains messages', async () => {
+      expect(await validationManagerInst.validateMultiResults('abc')).toEqual(
+        expect.objectContaining({
+          messages: [
+            errorMessage.hebrew,
+            errorMessage.hebrew,
+            errorMessage.hebrew,
+            errorMessage.hebrew
+          ]
+        })
+      );
     });
   });
 });
