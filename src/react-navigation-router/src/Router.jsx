@@ -25,16 +25,16 @@ class Router extends React.Component {
   }
 
   render() {
-    const AboveContentElements = this.props.aboveContentElements;
-    const BelowContentElements = this.props.belowContentElements;
+    const TopNavigation = this.props.topNavigation;
+    const BottomNavigation = this.props.bottomNavigation;
     return (
       <div>
-        {AboveContentElements && (
-          <AboveContentElements history={this.state.context} {...this.props} />
+        {TopNavigation && (
+          <TopNavigation history={this.state.context} {...this.props} />
         )}
         {this.state.component}
-        {BelowContentElements && (
-          <BelowContentElements history={this.state.context} {...this.props} />
+        {BottomNavigation && (
+          <BottomNavigation history={this.state.context} {...this.props} />
         )}
       </div>
     );

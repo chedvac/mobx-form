@@ -1,12 +1,9 @@
 import Router from 'reactNavigationRouter/Router';
 import React from 'react';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
-//import Adapter from 'enzyme-adapter-react-16';
 import { shallow } from 'enzyme';
 import page from 'page';
 jest.mock('page');
-// import jsdom from 'jsdom';
-//Enzyme.configure({ adapter: new Adapter() });
 class SimpleFieldsTab extends React.Component {
   constructor(props) {
     super(props);
@@ -64,6 +61,7 @@ describe('<Router />', () => {
       shallow(<Router routeSettings={routeSettingsArray} />);
       expect(page.mock.calls.length).toBe(2);
       expect(page.mock.calls[0].args[0]).toBe(routeSettingsArray[0].path);
+<<<<<<< HEAD
       expect(page.start).toBeCalled();
       expect(page.redirect).toBeCalledWith(routeSettingsArray[0].path);
     });
@@ -84,6 +82,8 @@ describe('<Router />', () => {
       expect(page.mock.calls[0].args[0]).toBe(routeSettingsArray[0].path);
       expect(page.start).toBeCalled();
       expect(page.redirect).toBeCalledWith(routeSettingsArray[0].path);
+=======
+>>>>>>> 49e3777982243fcafc361ad5195bdaf20b044ba0
     });
   });
 });
