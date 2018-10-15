@@ -4,37 +4,28 @@ class Dialog {
   constructor() {
     this.defaultSettings = {
       buttonsTexts: {
-        hebrew: {
-          ok: 'אישור',
-          cancel: 'ביטול'
+        ok: {
+          hebrew: 'אישור',
+          english: 'OK',
+          arabic: 'التأكيد'
         },
-        arabic: {
-          ok: 'التأكيد',
-          cancel: 'الغاء'
-        },
-        english: {
-          ok: 'OK',
-          cancel: 'Cancel'
+        cancel: {
+          hebrew: 'ביטול',
+          english: 'Cancel',
+          arabic: 'الغاء'
         }
       },
       state: {
         isOpen: false,
         title: '',
         content: '',
-        buttons: []
+        buttons: [],
+        ffff: ''
       }
     };
     this.state = observable(this.defaultSettings.state);
   }
 
-  _getButtonsTexts = buttonTexts => {
-    const buttonResources = Object.assign(
-      this.defaultSettings.buttonsTexts,
-      buttonTexts
-    );
-    //texts = ko.multiLanguageObservable({ resource: texts });
-    return buttonResources.hebrew;
-  };
   _getButtonsByType = params => {
     const { type, texts, resolve, reject } = params;
     const okButton = {
@@ -65,6 +56,8 @@ class Dialog {
 
     return buttonsByType[type];
   };
+  _getButtonsTexts = buttonTexts =>
+    Object.assign(this.defaultSettings.buttonsTexts, buttonTexts);
 
   _mergeSettings = (buttonsSettings, settings) =>
     Object.assign({}, this.defaultSettings.state, buttonsSettings, settings);
