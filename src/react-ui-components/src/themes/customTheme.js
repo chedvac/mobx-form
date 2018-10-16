@@ -35,8 +35,8 @@ const customTheme = createMuiTheme({
       fontFamily: basicFontFamily,
       textAlign: 'center'
     }
-  }
-
+  },
+  isMobile: false
   // ,overrides: {
   //   MuiStepIcon: {
   //     root: {
