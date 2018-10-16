@@ -1,42 +1,34 @@
 import { observable, action } from 'mobx';
 
+const ButtonTypes = Object.freeze({
+  OK: 'ok',
+  CANCEL: 'cancel'
+});
 class Dialog {
   constructor() {
     this.defaultSettings = {
-      buttonsTexts: {
-        ok: {
-          hebrew: 'אישור',
-          english: 'OK',
-          arabic: 'التأكيد'
-        },
-        cancel: {
-          hebrew: 'ביטול',
-          english: 'Cancel',
-          arabic: 'الغاء'
-        }
-      },
-      state: {
-        isOpen: false,
-        title: '',
-        content: '',
-        buttons: [],
-        ffff: ''
-      }
+      isOpen: false,
+      title: '',
+      content: '',
+      buttons: [],
+      ffff: ''
     };
-    this.state = observable(this.defaultSettings.state);
+    this.settings = this.defaultSettings;
   }
+  @observable
+  isOpen = false;
 
   _getButtonsByType = params => {
-    const { type, texts, resolve, reject } = params;
+    const { type, resolve, reject } = params;
     const okButton = {
-      text: texts.ok,
+      type: ButtonTypes.OK,
       click: () => {
         resolve();
         this.close();
       }
     };
     const cancelButton = {
-      text: texts.cancel,
+      type: ButtonTypes.CANCEL,
       click: () => {
         reject();
         this.close();
@@ -56,19 +48,15 @@ class Dialog {
 
     return buttonsByType[type];
   };
-  _getButtonsTexts = buttonTexts =>
-    Object.assign(this.defaultSettings.buttonsTexts, buttonTexts);
 
   _mergeSettings = (buttonsSettings, settings) =>
-    Object.assign({}, this.defaultSettings.state, buttonsSettings, settings);
+    Object.assign({}, this.defaultSettings, buttonsSettings, settings);
 
   _openByType = type => (settings = {}) => {
     const self = this;
     const dialogPromise = new Promise((resolve, reject) => {
-      const texts = self._getButtonsTexts(settings.buttonTexts);
       const buttonsSettings = self._getButtonsByType({
         type,
-        texts,
         resolve,
         reject
       });
@@ -81,13 +69,13 @@ class Dialog {
 
   @action
   open = settings => {
-    settings.isOpen = true;
-    Object.assign(this.state, settings);
+    this.settings = settings;
+    this.isOpen = true;
   };
 
   @action
   close = () => {
-    this.state.isOpen = false;
+    this.isOpen = false;
   };
 
   alert = this._openByType('alert');

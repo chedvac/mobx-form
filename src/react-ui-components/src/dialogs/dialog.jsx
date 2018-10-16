@@ -22,7 +22,7 @@ const styles = theme => ({
 class Dialog extends React.Component {
   constructor(props) {
     super(props);
-    this.buttonsTexts = {
+    this.defaultButtonsTexts = {
       ok: {
         hebrew: 'אישור',
         english: 'OK',
@@ -35,10 +35,14 @@ class Dialog extends React.Component {
       }
     };
   }
+  mergeButtonsTexts = buttonTexts =>
+    Object.assign({}, this.defaultButtonsTexts, buttonTexts);
+
   render() {
-    const { isOpen, title, content: Content, buttons } = dialog.state;
+    const isOpen = dialog.isOpen;
+    const { title, content: Content, buttons, buttonsTexts } = dialog.settings;
+    const texts = this.mergeButtonsTexts(buttonsTexts);
     const { classes } = this.props;
-    console.log('-------------------in jsx dialog.state', dialog.state);
 
     return (
       <div>
@@ -58,26 +62,24 @@ class Dialog extends React.Component {
               <Content />
             )}
           </DialogContent>
-          <DialogActions>
-            {Object.values(buttons).map((btn, index) => (
-              <Button key={index} onClick={btn.click} color="primary">
-                {this.props.languageStore
-                  .computedResourcesProvider(btn.text)
-                  .get()}
-              </Button>
-            ))}
-          </DialogActions>
+          {buttons && (
+            <DialogActions>
+              {Object.values(buttons).map((btn, index) => (
+                <Button key={index} onClick={btn.click} color="primary">
+                  {this.props.languageStore
+                    .computedResourcesProvider(texts[btn.type])
+                    .get()}
+                </Button>
+              ))}
+            </DialogActions>
+          )}
         </DialogMaterial>
       </div>
     );
   }
 }
 Dialog.propTypes = {
-  state: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    content: PropTypes.any.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    buttons: PropTypes.array.isRequired
-  })
+  languageStore: PropTypes.any.isRequired,
+  classes: PropTypes.any.isRequiredd
 };
 export default Dialog;
