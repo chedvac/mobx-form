@@ -80,6 +80,6 @@ class Dialog extends React.Component {
 }
 Dialog.propTypes = {
   languageStore: PropTypes.any.isRequired,
-  classes: PropTypes.any.isRequiredd
+  classes: PropTypes.any.isRequired
 };
 export default Dialog;

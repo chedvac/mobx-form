@@ -8,15 +8,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
 
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const mockOk = jest.fn();
 const mockCancel = jest.fn();
-const mockSettings = {
+const settings = {
   title: 'Mock Title',
   content: 'Mock Message',
   buttons: {
@@ -37,29 +34,36 @@ const mockSettings = {
   }
 };
 
-let wrapper;
+let wrapper, wrapperShallow;
 
 describe('<Dialog />', () => {
   beforeAll(() => {
-    dialog.open(mockSettings);
-    wrapper = shallow(
-      <Dialog.wrappedComponent
-        languageStore={languageStore}
-        classes={{ direction: 'rtl' }}
-      />
+    dialog.open(settings);
+    wrapper = mount(
+      <Dialog languageStore={languageStore} classes={{ direction: 'rtl' }} />
     );
+    // wrapperShallow = shallow(
+    //   <Dialog.wrappedComponent
+    //     languageStore={languageStore}
+    //     classes={{ direction: 'rtl' }}
+    //   />
+    // );
   });
   describe('Title', () => {
     test('renders title', () => {
       expect(wrapper.find(DialogTitle)).toHaveLength(1);
     });
     test('title text mach the settings title', () => {
-      // expect(wrapper.find(DialogTitle).find('Mock Title')).toHaveLength(1);
-      expect(wrapper.find(DialogTitle).html()).toEqual(
-        expect.stringContaining('Mock Title')
-      );
+      expect(wrapper.find(DialogTitle).text()).toContain('Mock Title'); //" Mock Title"
     });
+    // test('title text mach the settings title', () => {
+    //   expect(wrapperShallow.find(DialogTitle).text()).toContain('Mock Title1');//"<WithStyles(DialogTitle) />"
+    // });
+    // test('title text mach the settings title', () => {
+    //   expect(wrapperShallow.find(DialogTitle).html()).toContain('Mock Title1'); //  "<div class=\"MuiDialogTitle-root-44\" id=\"alert-dialog-title\"><h2 class=\"MuiTypography-root-45 MuiTypography-title-51\"> Mock Title</h2></div>"
+    // });
   });
+
   describe('Content', () => {
     test('renders DialogContent', () => {
       expect(wrapper.find(DialogContent)).toHaveLength(1);
@@ -69,8 +73,8 @@ describe('<Dialog />', () => {
         expect(wrapper.find(DialogContentText)).toHaveLength(1);
       });
       test('content text match the settings content', () => {
-        expect(wrapper.find(DialogContentText).html()).toEqual(
-          expect.stringContaining('Mock Message')
+        expect(wrapper.find(DialogContentText).text()).toContain(
+          'Mock Message'
         );
       });
     });
@@ -78,7 +82,7 @@ describe('<Dialog />', () => {
   describe('Buttons', () => {
     test('renders sum of buttons as the settings.buttons', () => {
       expect(wrapper.find(Button)).toHaveLength(
-        Object.keys(mockSettings.buttons).length
+        Object.keys(settings.buttons).length
       );
     });
     test('buttons texts match the settings.buttonsTexts', () => {
@@ -86,14 +90,14 @@ describe('<Dialog />', () => {
         wrapper
           .find(Button)
           .at(0)
-          .html()
-      ).toEqual(expect.stringContaining('כן'));
+          .text()
+      ).toEqual('כן');
       expect(
         wrapper
           .find(Button)
           .at(1)
-          .html()
-      ).toEqual(expect.stringContaining('לא'));
+          .text()
+      ).toEqual('לא');
     });
     test('click on buttons call the  callback in the settings.buttons', () => {
       wrapper
@@ -122,11 +126,8 @@ describe('<Dialog />', () => {
     }
     beforeAll(() => {
       dialog.open({ content: SubComponent });
-      wrapperWithComponent = shallow(
-        <Dialog.wrappedComponent
-          languageStore={languageStore}
-          classes={{ direction: 'rtl' }}
-        />
+      wrapperWithComponent = mount(
+        <Dialog languageStore={languageStore} classes={{ direction: 'rtl' }} />
       );
     });
     test('not renders DialogContentText', () => {
