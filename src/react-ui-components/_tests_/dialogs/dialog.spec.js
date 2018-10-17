@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 
 import { shallow } from 'enzyme';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
+import renderer from 'react-test-renderer';
 
 const mockOk = jest.fn();
 const mockCancel = jest.fn();
@@ -31,7 +32,7 @@ const settings = {
 };
 
 describe('<Dialog />', () => {
-  let wrapperShallow;
+  let wrapper;
   beforeAll(() => {
     jest.doMock('reactUiComponents/dialogs/dialog', () => ({
       settings,
@@ -39,34 +40,43 @@ describe('<Dialog />', () => {
     }));
 
     const Dialog = require('reactUiComponents/dialogs/dialog.jsx').default;
-    wrapperShallow = shallow(
+    wrapper = shallow(
       <Dialog.wrappedComponent
         languageStore={languageStore}
         classes={{ direction: 'rtl' }}
       />
     );
   });
+  test('renders correctly', () => {
+    const tree = renderer
+      .create(
+        <Dialog.wrappedComponent
+          languageStore={languageStore}
+          classes={{ direction: 'rtl' }}
+        />
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
   describe('Title', () => {
     test('renders title', () => {
-      expect(wrapperShallow.find(DialogTitle)).toHaveLength(1);
+      expect(wrapper.find(DialogTitle)).toHaveLength(1);
     });
     test('title text mach the settings title', () => {
-      expect(wrapperShallow.find(DialogTitle).props().children).toEqual(
-        'Mock Title'
-      );
+      expect(wrapper.find(DialogTitle).props().children).toEqual('Mock Title');
     });
   });
 
   describe('Content', () => {
     test('renders DialogContent', () => {
-      expect(wrapperShallow.find(DialogContent)).toHaveLength(1);
+      expect(wrapper.find(DialogContent)).toHaveLength(1);
     });
     describe('settings content is String', () => {
       test('renders DialogContentText', () => {
-        expect(wrapperShallow.find(DialogContentText)).toHaveLength(1);
+        expect(wrapper.find(DialogContentText)).toHaveLength(1);
       });
       test('content text match the settings content', () => {
-        expect(wrapperShallow.find(DialogContentText).props().children).toEqual(
+        expect(wrapper.find(DialogContentText).props().children).toEqual(
           'Mock Message'
         );
       });
@@ -74,32 +84,32 @@ describe('<Dialog />', () => {
   });
   describe('Buttons', () => {
     test('renders sum of buttons as the settings.buttons', () => {
-      expect(wrapperShallow.find(Button)).toHaveLength(
+      expect(wrapper.find(Button)).toHaveLength(
         Object.keys(settings.buttons).length
       );
     });
     test('buttons texts match the settings.buttonsTexts', () => {
       expect(
-        wrapperShallow
+        wrapper
           .find(Button)
           .at(0)
           .props().children
       ).toEqual('כן');
       expect(
-        wrapperShallow
+        wrapper
           .find(Button)
           .at(1)
           .props().children
       ).toEqual('לא');
     });
     test('click on buttons call the  callback in the settings.buttons', () => {
-      wrapperShallow
+      wrapper
         .find(Button)
         .at(0)
         .simulate('click');
       expect(mockOk).toHaveBeenCalled();
 
-      wrapperShallow
+      wrapper
         .find(Button)
         .at(1)
         .simulate('click');
