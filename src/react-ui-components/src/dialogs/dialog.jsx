@@ -52,7 +52,7 @@ class Dialog extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title"> {title}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
           <DialogContent>
             {typeof Content === 'string' ? (
               <DialogContentText id="alert-dialog-description">

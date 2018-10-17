@@ -4,7 +4,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
 
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
 
 const mockOk = jest.fn();
@@ -30,9 +30,8 @@ const settings = {
   }
 };
 
-let wrapper;
-
 describe('<Dialog />', () => {
+  let wrapperShallow;
   beforeAll(() => {
     jest.doMock('reactUiComponents/dialogs/dialog', () => ({
       settings,
@@ -40,42 +39,34 @@ describe('<Dialog />', () => {
     }));
 
     const Dialog = require('reactUiComponents/dialogs/dialog.jsx').default;
-    // let wrapperShallow;
-    wrapper = mount(
-      <Dialog languageStore={languageStore} classes={{ direction: 'rtl' }} />
+    wrapperShallow = shallow(
+      <Dialog.wrappedComponent
+        languageStore={languageStore}
+        classes={{ direction: 'rtl' }}
+      />
     );
-    // wrapperShallow = shallow(
-    //   <Dialog.wrappedComponent
-    //     languageStore={languageStore}
-    //     classes={{ direction: 'rtl' }}
-    //   />
-    // );
   });
   describe('Title', () => {
     test('renders title', () => {
-      expect(wrapper.find(DialogTitle)).toHaveLength(1);
+      expect(wrapperShallow.find(DialogTitle)).toHaveLength(1);
     });
     test('title text mach the settings title', () => {
-      expect(wrapper.find(DialogTitle).text()).toContain('Mock Title'); //" Mock Title"
+      expect(wrapperShallow.find(DialogTitle).props().children).toEqual(
+        'Mock Title'
+      );
     });
-    // test('title text mach the settings title', () => {
-    //   expect(wrapperShallow.find(DialogTitle).text()).toContain('Mock Title1');//"<WithStyles(DialogTitle) />"
-    // });
-    // test('title text mach the settings title', () => {
-    //   expect(wrapperShallow.find(DialogTitle).html()).toContain('Mock Title1'); //  "<div class=\"MuiDialogTitle-root-44\" id=\"alert-dialog-title\"><h2 class=\"MuiTypography-root-45 MuiTypography-title-51\"> Mock Title</h2></div>"
-    // });
   });
 
   describe('Content', () => {
     test('renders DialogContent', () => {
-      expect(wrapper.find(DialogContent)).toHaveLength(1);
+      expect(wrapperShallow.find(DialogContent)).toHaveLength(1);
     });
     describe('settings content is String', () => {
       test('renders DialogContentText', () => {
-        expect(wrapper.find(DialogContentText)).toHaveLength(1);
+        expect(wrapperShallow.find(DialogContentText)).toHaveLength(1);
       });
       test('content text match the settings content', () => {
-        expect(wrapper.find(DialogContentText).text()).toContain(
+        expect(wrapperShallow.find(DialogContentText).props().children).toEqual(
           'Mock Message'
         );
       });
@@ -83,32 +74,32 @@ describe('<Dialog />', () => {
   });
   describe('Buttons', () => {
     test('renders sum of buttons as the settings.buttons', () => {
-      expect(wrapper.find(Button)).toHaveLength(
+      expect(wrapperShallow.find(Button)).toHaveLength(
         Object.keys(settings.buttons).length
       );
     });
     test('buttons texts match the settings.buttonsTexts', () => {
       expect(
-        wrapper
+        wrapperShallow
           .find(Button)
           .at(0)
-          .text()
+          .props().children
       ).toEqual('כן');
       expect(
-        wrapper
+        wrapperShallow
           .find(Button)
           .at(1)
-          .text()
+          .props().children
       ).toEqual('לא');
     });
     test('click on buttons call the  callback in the settings.buttons', () => {
-      wrapper
+      wrapperShallow
         .find(Button)
         .at(0)
         .simulate('click');
       expect(mockOk).toHaveBeenCalled();
 
-      wrapper
+      wrapperShallow
         .find(Button)
         .at(1)
         .simulate('click');
@@ -135,8 +126,11 @@ describe('<Dialog />', () => {
         isOpen: true
       }));
       const Dialog = require('reactUiComponents/dialogs/dialog.jsx').default;
-      wrapperWithComponent = mount(
-        <Dialog languageStore={languageStore} classes={{ direction: 'rtl' }} />
+      wrapperWithComponent = shallow(
+        <Dialog.wrappedComponent
+          languageStore={languageStore}
+          classes={{ direction: 'rtl' }}
+        />
       );
     });
     test('not renders DialogContentText', () => {
