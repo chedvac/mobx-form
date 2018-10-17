@@ -4,17 +4,12 @@ import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import { shallow } from 'enzyme';
 import page from 'page';
 jest.mock('page');
-class SimpleFieldsTab extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return <div />;
-  }
-}
 
 const TopNavigation = props => <div />;
-const Component = new SimpleFieldsTab();
+const BottomNavigation = props => <div />;
+const Component = props => <div className={'first-componenet'} />;
+const Component1 = props => <div className={'second-componenet'} />;
+
 const routeSettingsArray = [
   new RouteSettings({
     name: 'לשדות רגילים',
@@ -24,66 +19,106 @@ const routeSettingsArray = [
   new RouteSettings({
     name: 'טבלאות',
     path: '/Tables',
-    component: Component
+    component: Component1
   })
 ];
-let spy;
-beforeAll(() => {
-  const isNode = typeof window !== 'object';
+beforeEach(() => {
+  page.mockClear();
 });
 describe('<Router />', () => {
   describe('props', () => {
-    beforeEach(() => {
-      spy = jest.spyOn(console, 'error');
+    describe('routeSettings', () => {
+      beforeEach(() => {
+        // console.error = jest.fn();
+      });
+      test('is require', () => {
+        expect(() => {
+          shallow(<Router />);
+        }).toThrow();
+      });
+      test('should be array', () => {
+        expect(() => {
+          shallow(<Router routeSettings={routeSettingsArray[0]} />);
+        }).toThrow();
+      });
+      test('should be array of RouteSettings', () => {
+        // expect(() => {
+        //   shallow(<Router routeSettings={[1, 2]} />);
+        // }).toThrow();
+        const wrapper = shallow(<Router routeSettings={routeSettingsArray} />);
+        expect(wrapper).toBeDefined();
+      });
     });
-    afterEach(() => {
-      spy.mockRestore();
-    });
-    test('routeSettings is require', () => {
-      expect(() => {
-        const wrapper = shallow(<Router />);
-      }).toThrow();
-    });
-    test('routeSettings should be array', () => {
-      expect(() => {
+    describe('TopNavigation', () => {
+      test('render component if passed', () => {
         const wrapper = shallow(
-          <Router routeSettings={routeSettingsArray[0]} />
+          <Router
+            topNavigation={TopNavigation}
+            routeSettings={routeSettingsArray}
+          />
         );
-      }).toThrow();
+        expect(wrapper.find(TopNavigation)).toHaveLength(1);
+      });
+      test('not render component if not passed', () => {
+        const wrapper = shallow(<Router routeSettings={routeSettingsArray} />);
+        expect(wrapper.find(TopNavigation)).toHaveLength(0);
+      });
     });
-    test('routeSettings should be array of RouteSettings', () => {
-      shallow(<Router routeSettings={routeSettingsArray} />);
-      expect(console.error).not.toBeCalled();
+    describe('BottomNavigation', () => {
+      test('render component if passed', () => {
+        const wrapper = shallow(
+          <Router
+            bottomNavigation={BottomNavigation}
+            routeSettings={routeSettingsArray}
+          />
+        );
+        expect(wrapper.find(BottomNavigation)).toHaveLength(1);
+      });
+      test('not render component if not passed', () => {
+        const wrapper = shallow(<Router routeSettings={routeSettingsArray} />);
+        expect(wrapper.find(BottomNavigation)).toHaveLength(0);
+      });
     });
   });
-  describe('define routes', () => {
-    test('use page module', () => {
+  describe('define routes by routeSettings', () => {
+    test('call page module with path and callback', () => {
       shallow(<Router routeSettings={routeSettingsArray} />);
-      expect(page.mock.calls.length).toBe(2);
-      expect(page.mock.calls[0].args[0]).toBe(routeSettingsArray[0].path);
-<<<<<<< HEAD
-      expect(page.start).toBeCalled();
+      expect(page.mock.calls[0][0]).toBe(routeSettingsArray[0].path);
+      expect(page.mock.calls[1][0]).toBe(routeSettingsArray[1].path);
+    });
+    describe('start page with options object', () => {
+      test('from props', () => {
+        shallow(<Router options={{}} routeSettings={routeSettingsArray} />);
+        expect(page.start).toBeCalledWith({});
+      });
+      test('default', () => {
+        shallow(<Router routeSettings={routeSettingsArray} />);
+        expect(page.start).toBeCalledWith({ hashbang: false });
+      });
+    });
+    test('set base if needed', () => {
+      shallow(<Router base={'/bla'} routeSettings={routeSettingsArray} />);
+      expect(page.base).toBeCalledWith('/bla');
+    });
+    test('rediret to first route', () => {
+      shallow(<Router routeSettings={routeSettingsArray} />);
       expect(page.redirect).toBeCalledWith(routeSettingsArray[0].path);
     });
-    test('render component by path', () => {
+    test('render first component by path', () => {
       const wrapper = shallow(<Router routeSettings={routeSettingsArray} />);
-      expect(wrapper.find(wrapper.state.component)).toHaveLength(1);
+      let pageCallback = page.mock.calls[0][1];
+      pageCallback();
+      const wrapper1 = shallow(wrapper.instance().state.component);
+      expect(wrapper1.find('.first-componenet')).toHaveLength(1);
+      expect(wrapper1.find('.second-componenet')).toHaveLength(0);
     });
-  });
-  describe('TopNavigation', () => {
-    test('use page module', () => {
-      shallow(
-        <Router
-          TopNavigation={TopNavigation}
-          routeSettings={routeSettingsArray}
-        />
-      );
-      expect(page.mock.calls.length).toBe(2);
-      expect(page.mock.calls[0].args[0]).toBe(routeSettingsArray[0].path);
-      expect(page.start).toBeCalled();
-      expect(page.redirect).toBeCalledWith(routeSettingsArray[0].path);
-=======
->>>>>>> 49e3777982243fcafc361ad5195bdaf20b044ba0
+    test('render second component by path', () => {
+      const wrapper = shallow(<Router routeSettings={routeSettingsArray} />);
+      let pageCallback = page.mock.calls[1][1];
+      pageCallback();
+      const wrapper1 = shallow(wrapper.instance().state.component);
+      expect(wrapper1.find('.second-componenet')).toHaveLength(1);
+      expect(wrapper1.find('.first-componenet')).toHaveLength(0);
     });
   });
 });

@@ -8,10 +8,12 @@ class Router extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.props.routeSettings.forEach(route => {
+    const { routeSettings, base, options = { hashbang: false } } = this.props;
+    if (base) page.base(base);
+    routeSettings.forEach(route => {
       this.setRoute(route.path, route.component);
     });
-    page.start({ hashbang: false });
+    page.start(options);
     page.redirect(this.props.routeSettings[0].path);
   }
   state = { component: null, context: {} };
@@ -41,6 +43,8 @@ class Router extends React.Component {
   }
 }
 Router.propTypes = {
-  routeSettings: PropTypes.arrayOf(RouteSettings).isRequired
+  routeSettings: PropTypes.arrayOf(RouteSettings).isRequired,
+  options: PropTypes.object,
+  base: PropTypes.string
 };
 export default Router;
