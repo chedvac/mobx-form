@@ -60,6 +60,7 @@
     "react-scripts": "^1.1.4"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "./jestSetup.js",
     "moduleNameMapper": {
       "^_Demo(.*)$": "<rootDir>/src/_Demo$1",
       "^validations(.*)$": "<rootDir>/src/functional-validations/src$1",
