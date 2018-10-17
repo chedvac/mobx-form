@@ -1,8 +1,4 @@
 import React from 'react';
-// jest.mock('reactUiComponents/dialogs/dialog');
-// import dialog from 'reactUiComponents/dialogs/dialog.js';
-
-// import Dialog from 'reactUiComponents/dialogs/dialog.jsx';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -38,16 +34,15 @@ let wrapper;
 
 describe('<Dialog />', () => {
   beforeAll(() => {
-    jest.doMock('reactUiComponents/dialogs/dialog', () => {
-      return { settings, isOpen: true };
-    });
-    const Dialog = require('reactUiComponents/dialogs/dialog.jsx');
+    jest.doMock('reactUiComponents/dialogs/dialog', () => ({
+      settings,
+      isOpen: true
+    }));
+
+    const Dialog = require('reactUiComponents/dialogs/dialog.jsx').default;
     // let wrapperShallow;
     wrapper = mount(
-      <Dialog.default
-        languageStore={languageStore}
-        classes={{ direction: 'rtl' }}
-      />
+      <Dialog languageStore={languageStore} classes={{ direction: 'rtl' }} />
     );
     // wrapperShallow = shallow(
     //   <Dialog.wrappedComponent
@@ -139,12 +134,9 @@ describe('<Dialog />', () => {
         },
         isOpen: true
       }));
-      const Dialog = require('reactUiComponents/dialogs/dialog.jsx');
+      const Dialog = require('reactUiComponents/dialogs/dialog.jsx').default;
       wrapperWithComponent = mount(
-        <Dialog.default
-          languageStore={languageStore}
-          classes={{ direction: 'rtl' }}
-        />
+        <Dialog languageStore={languageStore} classes={{ direction: 'rtl' }} />
       );
     });
     test('not renders DialogContentText', () => {
