@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { withRouter } from 'react-router';
 import Button from '@material-ui/core/Button';
-import Row from 'reactUiComponents/structure/row';
+import Row from 'react-ui-components/structure/row';
 import Grid from '@material-ui/core/Grid';
-import BlueButton from 'reactUiComponents/buttons/blueButton';
-import WhiteButton from 'reactUiComponents/buttons/whiteButton';
+import BlueButton from 'react-ui-components/buttons/blueButton';
+import WhiteButton from 'react-ui-components/buttons/whiteButton';
 import {
   MuiThemeProvider,
   withStyles,
   createMuiTheme
 } from '@material-ui/core/styles';
-import customTheme from 'reactUiComponents/themes/customTheme';
+import customTheme from 'react-ui-components/themes/customTheme';
 
 const styles = theme => ({
   navigateButton: {

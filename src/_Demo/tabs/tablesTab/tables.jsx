@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Input from 'reactUiComponents/fields/Input';
-import { getPropsField } from 'mobxReactForm/getProps';
-import Container from 'mobxReactForm/Containers/container';
+import Input from 'react-ui-components/fields/Input';
+import { getPropsField } from 'mobx-react-form/getProps';
+import Container from 'mobx-business-components/container';
 
 @inject('applicationData')
 @inject('languageStore')

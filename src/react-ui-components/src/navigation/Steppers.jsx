@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'reactNavigationRouter/Link';
+import Link from 'react-navigation-router/Link';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
@@ -11,7 +11,7 @@ import {
   withStyles,
   createMuiTheme
 } from '@material-ui/core/styles';
-import customTheme from 'reactUiComponents/themes/customTheme';
+import customTheme from 'react-ui-components/themes/customTheme';
 
 const styles = theme => ({
   blueTitle: {
