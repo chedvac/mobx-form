@@ -30,9 +30,8 @@ class App extends Component {
     const { classes } = this.props;
     const rootStore = new RootStore();
     window.rootStore = rootStore;
-    customTheme.direction = 'rtl';
-    const applicationData = {
-    };
+    customTheme.direction = languageStore.direction;
+    const applicationData = {};
     languageStore.setAvaliableLanguages(['hebrew', 'english']);
     window.applicationData = applicationData;
     return (
