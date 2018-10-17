@@ -2,7 +2,6 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import control from 'mobxReactForm/control';
 
-@inject('applicationData')
 @inject('languageStore')
 @observer
 class BaseSelect extends React.Component {
@@ -17,7 +16,7 @@ class BaseSelect extends React.Component {
     };
     !props.noOptionsCaption ? this.addOptionCaption() : null;
   }
-  addOptionCaption = function() {
+  addOptionCaption = function () {
     const optionCaption =
       this.props.optionCaption || this.texts.optionCaption.get();
     this.props.options.unshift({ key: '', value: optionCaption });

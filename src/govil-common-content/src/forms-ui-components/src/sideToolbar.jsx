@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import ToolbarButton from 'govil-common-content/forms-ui-components/src/toolbarButton';
 import { toolbarButtonsObject } from './toolbarButtons';
 import fp from 'lodash/fp';
+import injectSheet from 'react-jss'
 
 const styles = theme => {
   return {
@@ -68,7 +68,7 @@ const styles = theme => {
   };
 };
 
-@withStyles(styles, { withTheme: true })
+@injectSheet(styles)
 @observer
 class SideToolbar extends React.Component {
   constructor(props) {
@@ -89,13 +89,14 @@ class SideToolbar extends React.Component {
         classes={{
           paper: classNames(classes.drawerPaper, !opened && classes.drawerPaperClose)
         }}
-        opened={opened}
+        opened={opened.toString()}
       >
         <Divider />
         {
           fp.entriesIn(toolbarButtonsObject).map((toolbarButton) =>
             toolbarButtonsStore.toolbarButtonsList[toolbarButton[0]] ? (
               <ToolbarButton
+                key={toolbarButton[0]}
                 classes={classes}
                 buttonText={toolbarButton[1].buttonText.hebrew}
                 className={toolbarButton[1].className}

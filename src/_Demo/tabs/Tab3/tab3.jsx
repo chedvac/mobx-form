@@ -3,30 +3,24 @@ import { observer, inject } from 'mobx-react';
 import Input from 'reactUiComponents/fields/Input';
 import { getPropsField } from 'mobxReactForm/getProps';
 
-@inject('applicationData')
+@inject('languageStore')
 @observer
 export default class Tab3 extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
-      hebrew: {
-        email: ' מייל',
-        houseNumber: ' מספר בית'
-      },
-      english: {
-        email: 'first name',
-        houseNumber: 'last name'
-      },
-      arabic: {
-        email: 'first name',
-        houseNumber: 'last name'
-      }
-    };
-    this.currentResources = this.currentResources.bind(this);
+      email: this.props.languageStore.computedResourcesProvider({
+        hebrew: ' מייל',
+        english: 'first name',
+        arabic: 'first name'
+      }),
+      houseNumber: this.props.languageStore.computedResourcesProvider({
+        hebrew: ' מספר בית',
+        english: 'last name',
+        arabic: 'last name'
+      })
+    }
   }
-  currentResources = function() {
-    return this.texts[this.props.applicationData.formLanguage.name];
-  };
   render() {
     const { tables } = this.props;
     return (

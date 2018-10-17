@@ -3,6 +3,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
+import injectSheet from 'react-jss'
 import { Icon } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -13,7 +14,7 @@ const styles = theme => {
   }
 };
 
-@withStyles(styles)
+@injectSheet(styles)
 class ToolbarButton extends React.Component {
   constructor(props) {
     super(props);

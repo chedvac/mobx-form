@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 import Header from './header';
 import SideToolbar from './sideToolbar';
+import injectSheet from 'react-jss'
 
 let closeWidth = '72';
 const openWidth = '275';
@@ -17,11 +18,21 @@ const styles = theme => {
     content: {
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3
-    }
+    },
+    dir: props => ({
+      flexGrow: 1,
+      direction: props.direction,
+      backgroundColor: '#fff'
+    })
+    // dir: {
+    //   flexGrow: 1,
+    //   direction: theme.direction,
+    //   backgroundColor: '#fff'
+    // }
   };
 };
 
-@withStyles(styles, { withTheme: true })
+@injectSheet(styles)
 @observer
 class FormSection extends Component {
   constructor(props) {
@@ -62,7 +73,7 @@ class FormSection extends Component {
     closeWidth = theme.isMobile ? '0' : '72';
 
     return (
-      <React.Fragment>
+      <div className={classes.dir}>
         <Header toggleToolbar={this.toggleToolbar} />
         <div className={classes.contentDiv}>
           <SideToolbar
@@ -75,9 +86,8 @@ class FormSection extends Component {
           {
             React.cloneElement(this.props.children, { drawerForContentWidth: this.state.drawerForContentWidth })
           }
-
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

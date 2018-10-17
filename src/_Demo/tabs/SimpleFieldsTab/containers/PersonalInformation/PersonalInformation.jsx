@@ -17,7 +17,6 @@ import DatePicker from 'reactUiComponents/fields/DatePicker/DatePicker';
 //   root: { flexGrow: 1 }
 // });
 
-@inject('applicationData')
 @inject('languageStore')
 @observer
 export default class PersonalInformation extends React.Component {

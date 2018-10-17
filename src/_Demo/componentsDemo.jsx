@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
 import Tab3 from './tabs/Tab3/tab3';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import Navigation from 'reactUiComponents/navigation/Navigation';
 import { inject } from 'mobx-react';
-import withPropsStyles from 'govil-common-content/forms-ui-components/src/styles'
+import injectSheet from 'react-jss'
 
-const styles = (props, theme) => {
+const styles = theme => {
   return {
-    content: {
+    content: props => ({
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3,
       [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: `${props.drawerForContentWidth}px`,
+      [`margin${theme.direction === 'rtl' ? 'Left' : 'Right'}`]: 0,
       width: `calc(100% - ${props.drawerForContentWidth}px)`
-    },
+    }),
   }
 };
 
-// @withStyles(styles, { withTheme: true })
+@injectSheet(styles)
 class ComponentsDemo extends Component {
   // destruct non-valid props
   constructor(props) {
@@ -87,4 +87,4 @@ class ComponentsDemo extends Component {
   }
 }
 
-export default withPropsStyles(styles, true)(ComponentsDemo)
+export default ComponentsDemo

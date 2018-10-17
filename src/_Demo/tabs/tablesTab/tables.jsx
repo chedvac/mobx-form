@@ -4,7 +4,6 @@ import Input from 'reactUiComponents/fields/Input';
 import { getPropsField } from 'mobxReactForm/getProps';
 import Container from 'mobxReactForm/Containers/container';
 
-@inject('applicationData')
 @inject('languageStore')
 @observer
 export default class Tables extends React.Component {
