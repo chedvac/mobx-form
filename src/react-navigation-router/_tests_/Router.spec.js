@@ -1,6 +1,6 @@
-import Router from 'reactNavigationRouter/Router';
+import Router from 'react-navigation-router/Router';
 import React from 'react';
-import RouteSettings from 'reactNavigationRouter/RouteSettings';
+import RouteSettings from 'react-navigation-router/RouteSettings';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 

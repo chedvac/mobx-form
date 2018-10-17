@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import PersonalInformation from './containers/PersonalInformation/PersonalInformation';
-import Container from 'mobxReactForm/Containers/container';
+import Container from 'mobx-business-components/container';
 @observer
 class SimpleFieldsTab extends React.Component {
   render() {

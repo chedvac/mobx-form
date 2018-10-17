@@ -68,11 +68,12 @@
       "^core(.*)$": "<rootDir>/src/Mobx-MVVM/src$1",
       "^utils(.*)$": "<rootDir>/src/utils/src$1",
       "^resources(.*)$": "<rootDir>/src/resources$1",
-      "^mobxReactForm(.*)$": "<rootDir>/src/mobx-react-form/src$1",
-      "^reactUiComponents(.*)$": "<rootDir>/src/react-ui-components/src$1",
-      "^reactNavigationRouter(.*)$": "<rootDir>/src/react-navigation-router/src$1",
+      "^mobx-react-form(.*)$": "<rootDir>/src/mobx-react-form/src$1",
+      "^react-ui-components(.*)$": "<rootDir>/src/react-ui-components/src$1",
+      "^react-navigation-router(.*)$": "<rootDir>/src/react-navigation-router/src$1",
       "^govil-common-content(.*)$": "<rootDir>/src/govil-common-content/src$1",
-      "^mobx-vm(.*)$": "<rootDir>/src/mobx-vm/src$1"
+      "^mobx-vm(.*)$": "<rootDir>/src/mobx-vm/src$1",
+      "^mobx-business-components(.*)$": "<rootDir>/src/mobx-business-components/src$1"
     }
   }
 }

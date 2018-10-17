@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 
 import { shallow } from 'enzyme';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
-import renderer from 'react-test-renderer';
 
 const mockOk = jest.fn();
 const mockCancel = jest.fn();
@@ -34,12 +33,12 @@ const settings = {
 describe('<Dialog />', () => {
   let wrapper;
   beforeAll(() => {
-    jest.doMock('reactUiComponents/dialogs/dialog', () => ({
+    jest.doMock('mobx-business-components/dialog', () => ({
       settings,
       isOpen: true
     }));
 
-    const Dialog = require('reactUiComponents/dialogs/dialog.jsx').default;
+    const Dialog = require('react-ui-components/dialog').default;
     wrapper = shallow(
       <Dialog.wrappedComponent
         languageStore={languageStore}
@@ -47,17 +46,7 @@ describe('<Dialog />', () => {
       />
     );
   });
-  test('renders correctly', () => {
-    const tree = renderer
-      .create(
-        <Dialog.wrappedComponent
-          languageStore={languageStore}
-          classes={{ direction: 'rtl' }}
-        />
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
-  });
+
   describe('Title', () => {
     test('renders title', () => {
       expect(wrapper.find(DialogTitle)).toHaveLength(1);
@@ -129,13 +118,13 @@ describe('<Dialog />', () => {
     }
     beforeAll(() => {
       jest.resetModules();
-      jest.doMock('reactUiComponents/dialogs/dialog', () => ({
+      jest.doMock('mobx-business-components/dialog', () => ({
         settings: {
           content: SubComponent
         },
         isOpen: true
       }));
-      const Dialog = require('reactUiComponents/dialogs/dialog.jsx').default;
+      const Dialog = require('react-ui-components/dialog').default;
       wrapperWithComponent = shallow(
         <Dialog.wrappedComponent
           languageStore={languageStore}

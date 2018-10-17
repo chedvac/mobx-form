@@ -4,8 +4,8 @@ import toolbarButtons from 'govil-common-content/application-data/src/toolbarSto
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
 import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/PersonalInformation';
-import Link from 'reactUiComponents/dialogs/Link';
-import dialog from 'reactUiComponents/dialogs/dialog.js';
+import Link from './Link';
+import dialog from 'mobx-business-components/dialog';
 import { toolbarButtonsNames } from 'govil-common-content/forms-ui-components/src/toolbarButtons';
 import examples from 'govil-common-content/application-data/src/DemoData';
 

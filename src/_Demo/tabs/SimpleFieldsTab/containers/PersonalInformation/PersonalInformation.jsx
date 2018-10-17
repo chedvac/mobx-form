@@ -3,15 +3,15 @@ import { observer, inject } from 'mobx-react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Row from 'reactUiComponents/structure/row';
-import SubTitle from 'reactUiComponents/titles/subTitle';
+import Row from 'react-ui-components/structure/row';
+import SubTitle from 'react-ui-components/titles/subTitle';
 
-import { getPropsField } from 'mobxReactForm/getProps';
+import { getPropsField } from 'mobx-react-form/getProps';
 
-import Input from 'reactUiComponents/fields/Input';
-import Textarea from 'reactUiComponents/fields/Textarea';
-import Select from 'reactUiComponents/fields/Select';
-import DatePicker from 'reactUiComponents/fields/DatePicker/DatePicker';
+import Input from 'react-ui-components/fields/Input';
+import Textarea from 'react-ui-components/fields/Textarea';
+import Select from 'react-ui-components/fields/Select';
+import DatePicker from 'react-ui-components/fields/DatePicker/DatePicker';
 
 // const styles = theme => ({
 //   root: { flexGrow: 1 }
