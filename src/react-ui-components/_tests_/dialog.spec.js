@@ -3,7 +3,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
-
+import Dialog from 'react-ui-components/dialog';
 import { shallow } from 'enzyme';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
 
@@ -33,16 +33,18 @@ const settings = {
 describe('<Dialog />', () => {
   let wrapper;
   beforeAll(() => {
-    jest.doMock('mobx-business-components/dialog', () => ({
-      settings,
-      isOpen: true
-    }));
+    // jest.doMock('mobx-business-components/dialog', () => ({
+    //   settings,
+    //   isOpen: true
+    // }));
 
-    const Dialog = require('react-ui-components/dialog').default;
+    // const Dialog = require('react-ui-components/dialog').default;
     wrapper = shallow(
       <Dialog.wrappedComponent
         languageStore={languageStore}
         classes={{ direction: 'rtl' }}
+        isOpen={true}
+        settings={settings}
       />
     );
   });
@@ -117,18 +119,20 @@ describe('<Dialog />', () => {
       }
     }
     beforeAll(() => {
-      jest.resetModules();
-      jest.doMock('mobx-business-components/dialog', () => ({
-        settings: {
-          content: SubComponent
-        },
-        isOpen: true
-      }));
-      const Dialog = require('react-ui-components/dialog').default;
+      // jest.resetModules();
+      // jest.doMock('mobx-business-components/dialog', () => ({
+      const settings = {
+        content: SubComponent
+      };
+      //   isOpen: true
+      // }));
+      // const Dialog = require('react-ui-components/dialog').default;
       wrapperWithComponent = shallow(
         <Dialog.wrappedComponent
           languageStore={languageStore}
           classes={{ direction: 'rtl' }}
+          isOpen={true}
+          settings={settings}
         />
       );
     });
