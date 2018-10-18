@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { withStyles } from '@material-ui/core/styles';
 import injectSheet from 'react-jss'
 import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';

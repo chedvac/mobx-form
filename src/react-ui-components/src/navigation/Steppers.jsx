@@ -5,10 +5,9 @@ import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router';
-
+import injectSheet from 'react-jss'
 import {
   MuiThemeProvider,
-  withStyles,
   createMuiTheme
 } from '@material-ui/core/styles';
 import customTheme from 'react-ui-components/themes/customTheme';
@@ -52,7 +51,7 @@ const customSteppersTheme = () => {
   });
 };
 
-@withStyles(styles)
+@injectSheet(styles)
 class Steppers extends React.Component {
   constructor(props) {
     super(props);

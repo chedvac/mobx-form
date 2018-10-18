@@ -73,9 +73,7 @@ const styles = theme => {
 @injectSheet(styles)
 @observer
 class SideToolbar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
   render() {
     const {
       classes,

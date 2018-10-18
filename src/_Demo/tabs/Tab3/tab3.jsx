@@ -1,7 +1,5 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Input from 'react-ui-components/fields/Input';
-import { getPropsField } from 'mobx-react-form/getProps';
 
 @inject('languageStore')
 @observer
@@ -22,7 +20,7 @@ export default class Tab3 extends React.Component {
     }
   }
   render() {
-    const { tables } = this.props;
+
     return (
       <div className="row">
         <div className="col-md-4">טאב 3</div>

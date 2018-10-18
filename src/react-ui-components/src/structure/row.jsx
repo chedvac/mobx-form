@@ -1,12 +1,12 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import injectSheet from 'react-jss'
 import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   row: { marginTop: theme.spacing.unit * 2 }
 });
 
-@withStyles(styles)
+@injectSheet(styles)
 class Row extends React.Component {
   constructor(props) {
     super(props);

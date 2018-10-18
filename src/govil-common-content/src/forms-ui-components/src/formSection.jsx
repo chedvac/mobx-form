@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 import Header from './header';
 import SideToolbar from './sideToolbar';

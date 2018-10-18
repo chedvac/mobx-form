@@ -9,14 +9,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import dialog from 'mobx-business-components/dialog';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import injectSheet from 'react-jss'
 
 const styles = theme => ({
   direction: {
     direction: theme.direction
   }
 });
-@withStyles(styles)
+@injectSheet(styles)
 @inject('languageStore')
 @observer
 class Dialog extends React.Component {
@@ -59,8 +59,8 @@ class Dialog extends React.Component {
                 {Content}
               </DialogContentText>
             ) : (
-              <Content />
-            )}
+                <Content />
+              )}
           </DialogContent>
           {buttons && (
             <DialogActions>

@@ -1,8 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import Row from 'react-ui-components/structure/row';
 import SubTitle from 'react-ui-components/titles/subTitle';
 

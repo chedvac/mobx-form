@@ -7,12 +7,7 @@ import Row from 'react-ui-components/structure/row';
 import Grid from '@material-ui/core/Grid';
 import BlueButton from 'react-ui-components/buttons/blueButton';
 import WhiteButton from 'react-ui-components/buttons/whiteButton';
-import {
-  MuiThemeProvider,
-  withStyles,
-  createMuiTheme
-} from '@material-ui/core/styles';
-import customTheme from 'react-ui-components/themes/customTheme';
+import injectSheet from 'react-jss'
 
 const styles = theme => ({
   navigateButton: {
@@ -22,7 +17,7 @@ const styles = theme => ({
   hide: theme.typography.hide
 });
 
-@withStyles(styles)
+@injectSheet(styles)
 class NextPrevButtons extends React.Component {
   constructor(props) {
     super(props);
@@ -67,7 +62,7 @@ class NextPrevButtons extends React.Component {
             to={this.getBackPath()}
             className={`${classes.navigateButton} ${
               this.isFirstRoute() ? classes.hide : ''
-            }`}
+              }`}
           >
             <BlueButton variant="outlined" className={classes.button}>
               לשלב הקודם
@@ -77,7 +72,7 @@ class NextPrevButtons extends React.Component {
             to={this.getNextPath()}
             className={`${classes.navigateButton} ${
               this.isLastRoute() ? classes.hide : ''
-            }`}
+              }`}
           >
             <WhiteButton>לשלב הבא</WhiteButton>
           </Link>
