@@ -24,11 +24,6 @@ const styles = theme => {
       direction: props.direction,
       backgroundColor: '#fff'
     })
-    // dir: {
-    //   flexGrow: 1,
-    //   direction: theme.direction,
-    //   backgroundColor: '#fff'
-    // }
   };
 };
 
@@ -77,6 +72,7 @@ class FormSection extends Component {
         <Header toggleToolbar={this.toggleToolbar} />
         <div className={classes.contentDiv}>
           <SideToolbar
+            direction={theme.direction}
             width={this.state.drawerWidth}
             toolbarButtonsStore={rootStore.toolbarButtons}
             opened={this.state.opened}

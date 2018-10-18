@@ -10,7 +10,7 @@ import injectSheet from 'react-jss'
 
 const styles = theme => {
   return {
-    drawerPaper: {
+    drawerPaper: props => ({
       display: 'flex',
       position: 'absolute',
       whiteSpace: 'nowrap',
@@ -18,7 +18,9 @@ const styles = theme => {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
-    },
+      left: props.direction === 'rtl' ? 'auto' : '0',
+      right: props.direction === 'rtl' ? '0' : 'auto',
+    }),
     drawerPaperClose: {
       display: theme.isMobile ? 'none' : '',
       overflowX: 'hidden',
