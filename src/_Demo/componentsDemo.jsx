@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
 import Tab3 from './tabs/Tab3/tab3';
-import RouteSettings from 'reactNavigationRouter/RouteSettings';
-import Navigation from 'reactUiComponents/navigation/Navigation';
+import RouteSettings from 'react-navigation-router/RouteSettings';
+import Navigation from 'react-ui-components/navigation/Navigation';
 import { inject } from 'mobx-react';
 import injectSheet from 'react-jss'
 
@@ -55,7 +55,8 @@ class ComponentsDemo extends Component {
     console.log('rootStore', this.props.rootStore);
 
     return (
-      <form className={classes.content}
+      <form
+        className={classes.content}
         ref={c => {
           this.Form = c;
         }}

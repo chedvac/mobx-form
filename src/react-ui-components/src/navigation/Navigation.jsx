@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'reactNavigationRouter/Router';
+import Router from 'react-navigation-router/Router';
 import Steppers from './Steppers';
 import NextPrevButtons from './nextPrevButtons';
 

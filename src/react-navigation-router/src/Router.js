@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
-import RouteSettings from 'reactNavigationRouter/RouteSettings';
+import RouteSettings from 'react-navigation-router/RouteSettings';
 import PropTypes from 'prop-types';
 
 class Router extends React.Component {

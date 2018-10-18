@@ -11,6 +11,7 @@ import 'moment/locale/ar';
 import 'moment/locale/he';
 import './DatePicker.css';
 
+@inject('applicationData')
 @inject('languageStore')
 @observer
 class DatePicker extends React.Component {
