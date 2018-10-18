@@ -85,6 +85,13 @@ class Dialog extends React.Component {
 }
 Dialog.propTypes = {
   languageStore: PropTypes.any.isRequired,
-  classes: PropTypes.any.isRequired
+  classes: PropTypes.any.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  settings: PropTypes.shape({
+    title: PropTypes.any,
+    content: PropTypes.any,
+    buttons: PropTypes.object,
+    buttonsTexts: PropTypes.object
+  })
 };
 export default Dialog;
