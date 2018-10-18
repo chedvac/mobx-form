@@ -33,12 +33,6 @@ const settings = {
 describe('<Dialog />', () => {
   let wrapper;
   beforeAll(() => {
-    // jest.doMock('mobx-business-components/dialog', () => ({
-    //   settings,
-    //   isOpen: true
-    // }));
-
-    // const Dialog = require('react-ui-components/dialog').default;
     wrapper = shallow(
       <Dialog.wrappedComponent
         languageStore={languageStore}
@@ -119,14 +113,10 @@ describe('<Dialog />', () => {
       }
     }
     beforeAll(() => {
-      // jest.resetModules();
-      // jest.doMock('mobx-business-components/dialog', () => ({
       const settings = {
         content: SubComponent
       };
-      //   isOpen: true
-      // }));
-      // const Dialog = require('react-ui-components/dialog').default;
+
       wrapperWithComponent = shallow(
         <Dialog.wrappedComponent
           languageStore={languageStore}
