@@ -9,7 +9,7 @@ class Dialog {
     this.defaultSettings = {
       title: '',
       content: '',
-      buttons: []
+      buttons: {}
     };
     this.settings = this.defaultSettings;
   }
@@ -49,6 +49,8 @@ class Dialog {
 
   _mergeSettings = (buttonsSettings, settings) =>
     Object.assign({}, this.defaultSettings, buttonsSettings, settings);
+  _mergeWithDefaultSettings = settings =>
+    Object.assign({}, this.defaultSettings, settings);
 
   _openByType = type => (settings = {}) => {
     const self = this;
@@ -58,7 +60,8 @@ class Dialog {
         resolve,
         reject
       });
-      const dialogSettings = self._mergeSettings(buttonsSettings, settings);
+      const dialogSettings = Object.assign(buttonsSettings, settings);
+      // const dialogSettings = self._mergeSettings(buttonsSettings, settings);
 
       self.open(dialogSettings);
     });
@@ -67,7 +70,8 @@ class Dialog {
 
   @action
   open = settings => {
-    this.settings = settings;
+    this.settings = this._mergeWithDefaultSettings(settings);
+    this.settings.onClose = this.close;
     this.isOpen = true;
   };
 

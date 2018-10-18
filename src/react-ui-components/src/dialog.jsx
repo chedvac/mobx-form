@@ -9,7 +9,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // import dialog from 'mobx-business-components/dialog';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const styles = theme => ({
   direction: {
@@ -44,7 +46,8 @@ class Dialog extends React.Component {
       title,
       content: Content,
       buttons,
-      buttonsTexts
+      buttonsTexts,
+      onClose
     } = this.props.settings;
     const texts = this.mergeButtonsTexts(buttonsTexts);
     const { classes } = this.props;
@@ -57,7 +60,13 @@ class Dialog extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">
+            <IconButton onClick={onClose}>
+              <CloseIcon />
+            </IconButton>
+
+            {title}
+          </DialogTitle>
           <DialogContent>
             {typeof Content === 'string' ? (
               <DialogContentText id="alert-dialog-description">
