@@ -67,10 +67,10 @@ export default class ModularViewModel {
 * @example 
   PersonalInfo.getAddAction('firstName');
 */
-@assertParametersType({ name: PropTypes.string.isRequired })
-getAddAction(name) {
-  return this[`add${upperFirst(name)}`];
-}
+  @assertParametersType({ name: PropTypes.string.isRequired })
+  getAddAction(name) {
+    return this[`add${upperFirst(name)}`];
+  }
 
   @action
   setValidationState(validationState) {
@@ -140,22 +140,19 @@ getAddAction(name) {
     );
   }
 
+  @assertParametersType({
+    data: PropTypes.object.isRequired,
+    mappingType: PropTypes.string
+  })
   fromJSON(data, mappingType) {
-    const mappedData = mappingViewModel.mapData(
-      data,
-      this,
-      mappingType,
-      'from'
-    );
-    mappingViewModel.setMappedDataToModelMembers(mappedData, this, mappingType);
+    mappingViewModel.fromJSON(data, this, mappingType);
   }
 
+  @assertParametersType({
+    mappingType: PropTypes.string
+  })
   toJSON(mappingType) {
-    const memberData = mappingViewModel.getDataFromModelMembers(
-      this,
-      mappingType
-    );
-    return mappingViewModel.mapData(memberData, this, mappingType, 'to');
+    return mappingViewModel.toJSON(this, mappingType);
   }
 
   reset() {

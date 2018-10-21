@@ -52,7 +52,7 @@ class PersonalInformation extends ModularViewModel {
   @observable
   @modelMember({
     map: { serverMap: { from: firstName => `${firstName} !` } },
-    resetIgnor: true
+    reset: { ignore: true }
   })
   @validateable({
     validations: [
@@ -70,7 +70,7 @@ class PersonalInformation extends ModularViewModel {
   firstName = 'כגד';
 
   @observable
-  @modelMember({ reset: () => false })
+  @modelMember({ map: () => false })
   @validateable({
     validations: [
       maxlength({

@@ -1,7 +1,7 @@
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
 
-const reset = () => true;
+const map = {};
 const descriptor = {
   configurable: false,
   enumerable: true,
@@ -16,7 +16,7 @@ describe('modelMember ', () => {
     class classA extends ModularViewModel {}
     const a = new classA();
     a.setModelMemberSettings = jest.fn();
-    modelMember({ reset })(a, 'firstName', descriptor);
+    modelMember({ map })(a, 'firstName', descriptor);
     expect(a.setModelMemberSettings).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'firstName',
@@ -29,11 +29,11 @@ describe('modelMember ', () => {
     class classA extends ModularViewModel {}
     const a = new classA();
     a.setModelMemberSettings = jest.fn();
-    modelMember({ reset })(a, 'firstName', descriptor);
+    modelMember({ map })(a, 'firstName', descriptor);
     expect(a.setModelMemberSettings).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'firstName',
-        reset
+        map
       })
     );
   });

@@ -58,7 +58,7 @@ class SimpleFieldsTab extends ModularViewModel {
         })
       }
     },
-    resetIgnor: true
+    reset: { ignore: true }
   })
   @validateable({
     validations: []
@@ -71,24 +71,8 @@ class SimpleFieldsTab extends ModularViewModel {
   }
 
   @action.bound
-  addUsers() {
-    //todo rename
-    // const settings = {
-    //   map: {
-    //     from: data => ({
-    //       firstName: data.name,
-    //       ...data
-    //     }),
-    //     to: userDetails => ({
-    //       nameArray: userDetails.firstName,
-    //       familyArray: userDetails.lastName
-    //     })
-    //   },
-    //   reset: {}
-    // };
-    //setting from model member array
-    //const settings=addMap
-    const item = new PersonalInformation();
+  addUsers(item) {
+    item = item || new PersonalInformation();
     this.users.push(item);
     return item;
   }

@@ -3,6 +3,7 @@ import ModularViewModel from 'mobx-vm/modularViewModel';
 import ValidationsManager from 'vm-validations/validationsManager';
 import ValidateableDefinition from 'mobx-vm/validateableDefinition';
 import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
+import mappingViewModel from 'mobx-vm/mappingViewModel';
 // jest.mock('../src/modelMemberDefinition');
 // jest.mock('mobx-vm/validateableDefinition');
 
@@ -20,6 +21,10 @@ const properties = {
     lastName: {
       name: 'lastName',
       defaultValue: 'ddd'
+    },
+    users: {
+      name: 'users',
+      defaultValue: []
     },
     subModular: {
       name: 'subModular'
@@ -48,6 +53,8 @@ class ModularExample extends ModularViewModel {
   firstName = properties.modelMembers.firstName.defaultValue;
   @observable
   lastName = properties.modelMembers.lastName.defaultValue;
+  @observable
+  users = properties.modelMembers.users.defaultValue;
 
   subModular;
   @action.bound
@@ -56,8 +63,11 @@ class ModularExample extends ModularViewModel {
   };
   @action.bound
   setLastName = () => {};
-}
 
+  @action.bound
+  addUsers = () => {};
+}
+let data;
 describe('ModularViewModel prototype methods', () => {
   describe('setModelMemberSettings', () => {
     test('settings.name is required', () => {
@@ -77,6 +87,12 @@ describe('ModularViewModel prototype methods', () => {
       );
       expect(ModularExample.prototype._modelMembersSettings.lastName).toBe(
         properties.modelMembers.lastName
+      );
+      ModularExample.prototype.setModelMemberSettings(
+        properties.modelMembers.users
+      );
+      expect(ModularExample.prototype._modelMembersSettings.users).toBe(
+        properties.modelMembers.users
       );
       ModularExample.prototype.setModelMemberSettings(
         properties.modelMembers.subModular
@@ -118,6 +134,9 @@ describe('ModularViewModel prototype methods', () => {
       });
       test('modelMembers', () => {
         expect(customTab.modelMembers).toBeDefined();
+      });
+      test('map', () => {
+        expect(customTab.map).toBeDefined();
       });
       describe('validationsManager', () => {
         test('is instanceof validationsManagerFactory', () => {
@@ -164,6 +183,16 @@ describe('ModularViewModel prototype methods', () => {
       });
       test('return action', () => {
         expect(customTab.getAction('firstName')).toBe(customTab.setFirstName);
+      });
+    });
+    describe('getAddAction', () => {
+      test('name is required', () => {
+        expect(() => {
+          customTab.getAddAction();
+        }).toThrow();
+      });
+      test('return add action', () => {
+        expect(customTab.getAddAction('users')).toBe(customTab.addUsers);
       });
     });
     describe('validate', () => {
@@ -217,6 +246,53 @@ describe('ModularViewModel prototype methods', () => {
       });
       test('return validation result', async () => {
         expect(await customTab.validateModel()).toBeFalsy();
+      });
+    });
+    describe('fromJSON', () => {
+      beforeAll(() => {
+        mappingViewModel.fromJSON = jest.fn();
+        data = {};
+      });
+      test('data param is required', () => {
+        expect(customTab.fromJSON()).toThrow();
+      });
+      test('call mappingViewModel.fromJSON', () => {
+        customTab.fromJSON(data);
+        expect(mappingViewModel.fromJSON).toHaveBeenCalled();
+      });
+      test('call mappingViewModel.fromJSON with data, modelMember and mappingType', () => {
+        const mappingType = 'serverMap';
+        customTab.fromJSON(data, mappingType);
+        expect(mappingViewModel.fromJSON).toHaveBeenCalledWith(
+          data,
+          customTab,
+          mappingType
+        );
+      });
+    });
+    describe('toJSON', () => {
+      beforeAll(() => {
+        data = {
+          firstName: 'aaa',
+          lastName: 'bbb'
+        };
+        mappingViewModel.toJSON = jest.fn().mockReturnValue(data);
+      });
+      test('call mappingViewModel.toJSON', () => {
+        customTab.toJSON();
+        expect(mappingViewModel.toJSON).toHaveBeenCalled();
+      });
+      test('call mappingViewModel.toJSON with modelMember and mappingType', () => {
+        const mappingType = 'serverMap';
+        customTab.toJSON(mappingType);
+        expect(mappingViewModel.toJSON).toHaveBeenCalledWith(
+          customTab,
+          mappingType
+        );
+      });
+      test('return json data', () => {
+        const jsonData = customTab.toJSON();
+        expect(jsonData).toEqual(data);
       });
     });
   });
