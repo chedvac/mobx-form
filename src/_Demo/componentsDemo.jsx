@@ -6,17 +6,19 @@ import Tab3Tab from './tabs/Tab3/tab3';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import Navigation from 'reactUiComponents/navigation/Navigation';
 import { inject } from 'mobx-react';
-import withPropsStyles from 'govil-common-content/forms-ui-components/src/styles'
+import withPropsStyles from 'govil-common-content/forms-ui-components/src/styles';
 
 const styles = (props, theme) => {
   return {
     content: {
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3,
-      [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: `${props.drawerForContentWidth}px`,
+      [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: `${
+        props.drawerForContentWidth
+      }px`,
       width: `calc(100% - ${props.drawerForContentWidth}px)`
-    },
-  }
+    }
+  };
 };
 
 // @withStyles(styles, { withTheme: true })
@@ -60,7 +62,8 @@ class ComponentsDemo extends Component {
     console.log('rootStore', this.props.rootStore);
 
     return (
-      <form className={classes.content}
+      <form
+        className={classes.content}
         ref={c => {
           this.Form = c;
         }}
@@ -92,4 +95,4 @@ class ComponentsDemo extends Component {
   }
 }
 
-export default withPropsStyles(styles, true)(ComponentsDemo)
+export default withPropsStyles(styles, true)(ComponentsDemo);
