@@ -37,17 +37,20 @@ class Dialog extends React.Component {
       }
     };
   }
-  mergeButtonsTexts = buttonTexts =>
-    Object.assign({}, this.defaultButtonsTexts, buttonTexts);
+  mergeButtonsTexts = buttonsTexts =>
+    Object.assign({}, this.defaultButtonsTexts, buttonsTexts);
 
   render() {
-    const isOpen = this.props.isOpen;
+    // const isOpen = this.props.isOpen;
     const {
+      isOpen,
       title,
       content: Content,
       buttons,
       buttonsTexts,
-      onClose
+      onClose,
+      fullWidth,
+      maxWidth
     } = this.props.settings;
     const texts = this.mergeButtonsTexts(buttonsTexts);
     const { classes } = this.props;
@@ -59,6 +62,8 @@ class Dialog extends React.Component {
           open={isOpen}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          fullWidth={fullWidth}
+          maxWidth={maxWidth}
         >
           <DialogTitle id="alert-dialog-title">
             <IconButton onClick={onClose}>
@@ -92,7 +97,7 @@ class Dialog extends React.Component {
     );
   }
 }
-Dialog.propTypes = {
+Dialog.wrappedComponent.propTypes = {
   languageStore: PropTypes.any.isRequired,
   classes: PropTypes.any.isRequired,
   isOpen: PropTypes.bool.isRequired,

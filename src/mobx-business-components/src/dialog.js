@@ -7,14 +7,16 @@ const ButtonTypes = Object.freeze({
 class Dialog {
   constructor() {
     this.defaultSettings = {
+      isOpen: false,
       title: '',
       content: '',
-      buttons: {}
+      buttons: {},
+      onClose: this.close,
+      fullWidth: false,
+      maxWidth: 'sm'
     };
-    this.settings = this.defaultSettings;
+    this.settings = observable(this.defaultSettings);
   }
-  @observable
-  isOpen = false;
 
   _getButtonsByType = params => {
     const { type, resolve, reject } = params;
@@ -47,8 +49,6 @@ class Dialog {
     return buttonsByType[type];
   };
 
-  _mergeSettings = (buttonsSettings, settings) =>
-    Object.assign({}, this.defaultSettings, buttonsSettings, settings);
   _mergeWithDefaultSettings = settings =>
     Object.assign({}, this.defaultSettings, settings);
 
@@ -61,7 +61,6 @@ class Dialog {
         reject
       });
       const dialogSettings = Object.assign(buttonsSettings, settings);
-      // const dialogSettings = self._mergeSettings(buttonsSettings, settings);
 
       self.open(dialogSettings);
     });
@@ -70,14 +69,14 @@ class Dialog {
 
   @action
   open = settings => {
-    this.settings = this._mergeWithDefaultSettings(settings);
-    this.settings.onClose = this.close;
-    this.isOpen = true;
+    delete this.settings.buttonsTexts;
+    Object.assign(this.settings, this._mergeWithDefaultSettings(settings));
+    this.settings.isOpen = true;
   };
 
   @action
   close = () => {
-    this.isOpen = false;
+    this.settings.isOpen = false;
   };
 
   alert = this._openByType('alert');

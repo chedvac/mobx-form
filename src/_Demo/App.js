@@ -43,7 +43,7 @@ class App extends Component {
           languageStore={languageStore}
         >
           <Grid container className={classes.root}>
-            <Dialog settings={dialog.settings} isOpen={dialog.isOpen} />
+            <Dialog settings={dialog.settings} /*isOpen={dialog.isOpen}*/ />
 
             <FormSection rootStore={rootStore}>
               <ComponentDemo rootStore={rootStore} />

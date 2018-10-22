@@ -13,9 +13,9 @@ class BlueButton extends React.Component {
   }
 
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, onClick } = this.props;
     return (
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={onClick}>
         {children}
       </Button>
     );

@@ -19,7 +19,7 @@ const styles = theme => {};
 @withStyles(styles)
 @inject('languageStore')
 // @observer
-class OptionsScreen extends React.Component {
+class EndProcessScreen extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
@@ -113,4 +113,4 @@ class OptionsScreen extends React.Component {
   }
 }
 
-export default OptionsScreen;
+export default EndProcessScreen;
