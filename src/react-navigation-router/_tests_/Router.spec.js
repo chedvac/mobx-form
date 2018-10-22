@@ -1,6 +1,6 @@
-import Router from 'reactNavigationRouter/router';
+import Router from 'react-navigation-router/router';
 import React from 'react';
-import RouteSettings from 'reactNavigationRouter/RouteSettings';
+import RouteSettings from 'react-navigation-router/RouteSettings';
 import { shallow } from 'enzyme';
 import page from 'page';
 jest.mock('page');

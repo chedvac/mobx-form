@@ -1,7 +1,7 @@
 import page from 'page';
 
 import React from 'react';
-import RouteSettingsType from 'reactNavigationRouter/RouteSettings';
+import RouteSettingsType from 'react-navigation-router/RouteSettings';
 import PropTypes from 'prop-types';
 import { omit } from 'lodash';
 class Router extends React.Component {

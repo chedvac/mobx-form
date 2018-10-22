@@ -10,8 +10,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
 
 import FormSection from 'govil-common-content/forms-ui-components/src/formSection';
-import customTheme from 'reactUiComponents/themes/customTheme';
-import Dialog from 'reactUiComponents/dialogs/dialog.jsx';
+import customTheme from 'react-ui-components/themes/customTheme';
+import Dialog from 'react-ui-components/dialog';
+import dialog from 'mobx-business-components/dialog';
 
 import ComponentDemo from './componentsDemo';
 
@@ -42,7 +43,7 @@ class App extends Component {
           languageStore={languageStore}
         >
           <Grid container className={classes.root}>
-            <Dialog />
+            <Dialog settings={dialog.settings} isOpen={dialog.isOpen} />
 
             <FormSection rootStore={rootStore}>
               <ComponentDemo rootStore={rootStore} />

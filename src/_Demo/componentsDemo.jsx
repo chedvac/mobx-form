@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
 import Tab3 from './tabs/Tab3/tab3';
-import RouteSettings from 'reactNavigationRouter/RouteSettings';
-import Navigation from 'reactUiComponents/navigation/navigation';
+import RouteSettings from 'react-navigation-router/RouteSettings';
+import Navigation from 'react-ui-components/navigation/navigation';
 import { inject } from 'mobx-react';
 import withPropsStyles from 'govil-common-content/forms-ui-components/src/styles';
 

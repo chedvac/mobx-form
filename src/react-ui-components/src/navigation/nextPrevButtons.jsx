@@ -1,8 +1,8 @@
 import React from 'react';
-import Row from 'reactUiComponents/structure/row';
+import Row from 'react-ui-components/structure/row';
 import Grid from '@material-ui/core/Grid';
-import BlueButton from 'reactUiComponents/buttons/blueButton';
-import WhiteButton from 'reactUiComponents/buttons/whiteButton';
+import BlueButton from 'react-ui-components/buttons/blueButton';
+import WhiteButton from 'react-ui-components/buttons/whiteButton';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';

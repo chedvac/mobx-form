@@ -1,8 +1,8 @@
-import Router from 'reactNavigationRouter/router';
-import Steppers from 'reactUiComponents/navigation/steppers';
-import NextPrevButtons from 'reactUiComponents/navigation/nextPrevButtons';
-import Navigation from 'reactUiComponents/navigation/navigation';
-jest.mock('reactNavigationRouter/router', () => 'mock-widget');
+import Router from 'react-navigation-router/router';
+import Steppers from 'react-ui-components/navigation/steppers';
+import NextPrevButtons from 'react-ui-components/navigation/nextPrevButtons';
+import Navigation from 'react-ui-components/navigation/navigation';
+jest.mock('react-navigation-router/router', () => 'mock-widget');
 
 import React from 'react';
 import { shallow } from 'enzyme';
