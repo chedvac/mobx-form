@@ -1,11 +1,11 @@
 import React from 'react';
 import { omit } from 'lodash';
 export default props => {
-  const { linkClassNames, to } = props;
-  props = omit(props, ['linkClassNames', 'to']);
+  const { linkClassNames, to, children } = props;
+  props = omit(props, ['linkClassNames', 'to', 'children']);
   return (
     <a href={to} className={linkClassNames || ''}>
-      {props.children ? React.cloneElement(props.children, { ...props }) : ''}
+      {children ? React.cloneElement(children, { ...props }) : ''}
     </a>
   );
 };

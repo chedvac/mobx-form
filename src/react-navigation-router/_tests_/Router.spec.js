@@ -1,4 +1,4 @@
-import Router from 'reactNavigationRouter/Router';
+import Router from 'reactNavigationRouter/router';
 import React from 'react';
 import RouteSettings from 'reactNavigationRouter/RouteSettings';
 import { shallow } from 'enzyme';
@@ -29,7 +29,7 @@ describe('<Router />', () => {
   describe('props', () => {
     describe('routeSettings', () => {
       beforeEach(() => {
-        // console.error = jest.fn();
+        console.error = jest.fn();
       });
       test('is require', () => {
         expect(() => {
@@ -86,9 +86,9 @@ describe('<Router />', () => {
       expect(page.mock.calls[0][0]).toBe(routeSettingsArray[0].path);
       expect(page.mock.calls[1][0]).toBe(routeSettingsArray[1].path);
     });
-    describe('start page with options object', () => {
+    describe('start page with pageOptions object', () => {
       test('from props', () => {
-        shallow(<Router options={{}} routeSettings={routeSettingsArray} />);
+        shallow(<Router pageOptions={{}} routeSettings={routeSettingsArray} />);
         expect(page.start).toBeCalledWith({});
       });
       test('default', () => {

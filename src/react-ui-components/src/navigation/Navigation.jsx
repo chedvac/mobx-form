@@ -1,6 +1,6 @@
 import React from 'react';
-import Router from 'reactNavigationRouter/Router';
-import Steppers from './Steppers';
+import Router from 'reactNavigationRouter/router';
+import Steppers from './steppers';
 import NextPrevButtons from './nextPrevButtons';
 
 export default class Navigation extends React.Component {

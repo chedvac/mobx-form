@@ -4,21 +4,35 @@ import Grid from '@material-ui/core/Grid';
 import BlueButton from 'reactUiComponents/buttons/blueButton';
 import WhiteButton from 'reactUiComponents/buttons/whiteButton';
 import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { inject } from 'mobx-react';
 
 const styles = theme => ({
   navigateButton: {
     'text-decoration': 'none',
     ...theme.typography.boldText
   },
-  hide: theme.typography.hide
+  hide: { display: 'none' } //theme.typography.hide
 });
-
 @withStyles(styles)
+@inject('languageStore')
 class NextPrevButtons extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
     this.pathesArray = this.props.routeSettings.map(route => route.path);
+    this.texts = {
+      back: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'לשלב הקודם',
+        english: 'back',
+        arabic: 'לשלב הקודם'
+      }),
+      next: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'לשלב הבא',
+        english: 'next',
+        arabic: 'לשלב הבא'
+      })
+    };
   }
 
   getCurrentStep() {
@@ -49,7 +63,7 @@ class NextPrevButtons extends React.Component {
             }`}
           >
             <BlueButton variant="outlined" className={classes.button}>
-              לשלב הקודם
+              {this.texts.back.get()}
             </BlueButton>
           </a>
           <a
@@ -58,11 +72,15 @@ class NextPrevButtons extends React.Component {
               this.isLastRoute(currentStep) ? classes.hide : ''
             }`}
           >
-            <WhiteButton>לשלב הבא</WhiteButton>
+            <WhiteButton>{this.texts.next.get()}</WhiteButton>
           </a>
         </Row>
       </Grid>
     );
   }
 }
+NextPrevButtons.wrappedComponent.propTypes = {
+  routeSettings: PropTypes.array.isRequired,
+  history: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired
+};
 export default NextPrevButtons;

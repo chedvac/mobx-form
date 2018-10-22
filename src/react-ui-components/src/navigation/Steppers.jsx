@@ -1,10 +1,10 @@
 import React from 'react';
-import Link from 'reactNavigationRouter/Link';
+import Link from 'reactNavigationRouter/link';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import Typography from '@material-ui/core/Typography';
-
+import PropTypes from 'prop-types';
 import {
   MuiThemeProvider,
   withStyles,
@@ -61,11 +61,12 @@ class Steppers extends React.Component {
     const step = this.props.routeSettings.findIndex(
       route => route.path === currentPath
     );
-    return step;
+    return step === -1 ? 0 : step;
   };
 
   render() {
     const { classes } = this.props;
+
     return (
       <MuiThemeProvider theme={customSteppersTheme}>
         <Stepper
@@ -74,7 +75,7 @@ class Steppers extends React.Component {
           activeStep={this.handleStep(this.props.history.path)}
         >
           {this.props.routeSettings.map((route, index) => (
-            <Step key={route.name} {...this.props}>
+            <Step key={route.name}>
               <Link to={route.path}>
                 <StepButton />
               </Link>
@@ -88,4 +89,8 @@ class Steppers extends React.Component {
     );
   }
 }
+Steppers.propTypes = {
+  routeSettings: PropTypes.array.isRequired, //*Of(PropTypes.instanceOf(RouteSettings1))*/
+  history: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired
+};
 export default Steppers;

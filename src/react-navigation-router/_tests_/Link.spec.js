@@ -1,31 +1,48 @@
-import Link from 'reactNavigationRouter/Link';
+import Link from 'reactNavigationRouter/link';
 import React from 'react';
 import { shallow } from 'enzyme';
-import StepButton from '@material-ui/core/StepButton';
-
+const InnerComponenet = props => <sapn className={props.className || ''} />;
 let wrapper;
 beforeEach(() => {
   wrapper = shallow(
     <Link to={'/SimpleFields'} prop1={'1'} prop2={'2'} linkClassNames={'link'}>
-      <StepButton className={'inner-span'} />
+      <InnerComponenet />
     </Link>
   );
 });
 describe('<Link />', () => {
-  describe('props', () => {
-    test('to - render a with to as href', () => {
-      expect(wrapper.find('a [href="/SimpleFields"]')).toHaveLength(1);
-    });
-    test('linkClassNames - add className to a', () => {
-      expect(wrapper.find('.link')).toHaveLength(1);
-    });
-    test('render children', () => {
-      console.log(wrapper.html());
-      expect(wrapper.find('.inner-span')).toHaveLength(1);
-    });
-    test('pass Link props to children without to and linkClassNames', () => {
-      console.log(wrapper.find('.inner-span').props());
-      expect(wrapper.find('.inner-span').props()).toHaveLength(1);
-    });
+  test('to prop- render <a> element  with "to" as href', () => {
+    expect(wrapper.find('a [href="/SimpleFields"]')).toHaveLength(1);
+  });
+  test('linkClassNames - add linkClassNames to <a> as className', () => {
+    expect(wrapper.find('.link')).toHaveLength(1);
+  });
+  test('render children', () => {
+    expect(wrapper.find(InnerComponenet)).toHaveLength(1);
+  });
+  test('not pass "to" prop to its children', () => {
+    expect(wrapper.find(InnerComponenet).props().to).not.toBeDefined();
+  });
+  test('not pass "linkClassNames" prop to its children', () => {
+    expect(
+      wrapper.find(InnerComponenet).props().linkClassNames
+    ).not.toBeDefined();
+  });
+  test('not pass "children" prop to its children', () => {
+    expect(wrapper.find(InnerComponenet).props().children).not.toBeDefined();
+  });
+  test('pass all other props to its children', () => {
+    expect(
+      wrapper
+        .find(InnerComponenet)
+        .first()
+        .props().prop1
+    ).toBe('1');
+    expect(
+      wrapper
+        .find(InnerComponenet)
+        .first()
+        .props().prop2
+    ).toBe('2');
   });
 });
