@@ -14,7 +14,7 @@ class Router extends React.Component {
       this.setRoute(route.path, route.component);
     });
   }
-  state = { component: null, context: {} };
+  state = { component: null, context: { path: '/' } };
   setRoute(path, Component) {
     page(path, ctx => {
       this.setState({
