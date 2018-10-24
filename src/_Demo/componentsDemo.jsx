@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
-import Tab3 from './tabs/Tab3/tab3';
+import Tab3Tab from './tabs/Tab3/tab3';
 import RouteSettings from 'react-navigation-router/RouteSettings';
 import Navigation from 'react-ui-components/navigation/Navigation';
 import { inject } from 'mobx-react';
@@ -34,6 +34,9 @@ class ComponentsDemo extends Component {
     const SimpleFields = inject(stores => ({
       simpleFields: this.props.rootStore.simpleFieldsTab
     }))(SimpleFieldsTab);
+    const Tab3 = inject(stores => ({
+      tab3: this.props.rootStore.tab3Tab
+    }))(Tab3Tab);
 
     const tabs = [
       new RouteSettings({

@@ -57,7 +57,7 @@ class NextPrevButtons extends React.Component {
     const { classes } = this.props;
     return (
       <Grid>
-        <Row>
+        <Row justify='space-between'>
           <Link
             to={this.getBackPath()}
             className={`${classes.navigateButton} ${

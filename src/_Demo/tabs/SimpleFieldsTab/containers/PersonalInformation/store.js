@@ -18,7 +18,7 @@ import {
 import { sumAges } from './validations';
 import { generateAsyncValidation } from 'vm-validations/validationsFactory';
 import axios from 'axios';
-const myRequest = function(value) {
+const myRequest = function (value) {
   return axios
     .get(
       'https://forms.gov.il/globalData/GetSequence/Gethtmlform.aspx?formType=componentsdemo@test.gov.il'
@@ -46,7 +46,7 @@ class PersonalInformation extends ModularViewModel {
     // this.propertiesManager.properties.age.dependedObservables = {
     //   fatherAge: this.propertiesManager.properties.fatherAge.ref
     // };
-    this.condition = function() {
+    this.condition = function () {
       return true;
     };
   }
@@ -137,6 +137,10 @@ class PersonalInformation extends ModularViewModel {
   })
   comments = '';
 
+  @modelMember()
+  @validateable()
+  gender = '2';
+
   @observable
   @modelMember()
   @validateable({ validations: [] })
@@ -191,6 +195,10 @@ class PersonalInformation extends ModularViewModel {
   @action.bound
   setComments(value) {
     this.comments = value;
+  }
+  @action.bound
+  setGender(value) {
+    this.gender = value;
   }
   @action.bound
   setStatus(value) {

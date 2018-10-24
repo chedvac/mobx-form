@@ -8,6 +8,7 @@ import { getPropsField } from 'mobx-react-form/getProps';
 
 import Input from 'react-ui-components/fields/Input';
 import Textarea from 'react-ui-components/fields/Textarea';
+import RadioButtonsGroup from 'react-ui-components/fields/RadioButtonsGroup';
 import Select from 'react-ui-components/fields/Select';
 import DatePicker from 'react-ui-components/fields/DatePicker/DatePicker';
 
@@ -46,6 +47,21 @@ export default class PersonalInformation extends React.Component {
         english: 'comments',
         arabic: ''
       }),
+      gender: this.props.languageStore.computedResourcesProvider({
+        hebrew: ' מין',
+        english: 'Gender',
+        arabic: 'Gender'
+      }),
+      female: this.props.languageStore.computedResourcesProvider({
+        hebrew: ' נקבה',
+        english: 'Female',
+        arabic: 'Female'
+      }),
+      male: this.props.languageStore.computedResourcesProvider({
+        hebrew: ' זכר',
+        english: 'Male',
+        arabic: 'Male'
+      }),
       status: this.props.languageStore.computedResourcesProvider({
         hebrew: 'מצב משפחתי',
         english: 'status',
@@ -66,6 +82,10 @@ export default class PersonalInformation extends React.Component {
       { key: '1', value: 'נשוי' },
       { key: '2', value: 'רווק' },
       { key: '3', value: 'גרוש' }
+    ];
+    this.genderRadioButtonsDetails = [
+      { value: '1', label: this.texts.female.get() },
+      { value: '2', label: this.texts.male.get() }
     ];
   }
 
@@ -101,6 +121,11 @@ export default class PersonalInformation extends React.Component {
               {...getPropsField(userDetails, 'comments')}
               rows={3}
               isAutoResize={false}
+            />
+            <RadioButtonsGroup
+              label={this.texts.gender.get()}
+              radioButtonsDetails={this.genderRadioButtonsDetails}
+              {...getPropsField(userDetails, 'gender')}
             />
           </Row>
           <br />

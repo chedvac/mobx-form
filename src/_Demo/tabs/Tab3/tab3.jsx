@@ -1,30 +1,59 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
+import Container from 'mobx-business-components/container';
+import Grid from '@material-ui/core/Grid';
+import Row from 'react-ui-components/structure/row';
+import SubTitle from 'react-ui-components/titles/subTitle';
+import RadioButtonsGroup from 'react-ui-components/fields/RadioButtonsGroup';
+import { getPropsField } from 'mobx-react-form/getProps';
 
 @inject('languageStore')
+@inject('tab3')
 @observer
-export default class Tab3 extends React.Component {
+class Tab3 extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
-      email: this.props.languageStore.computedResourcesProvider({
-        hebrew: ' מייל',
-        english: 'first name',
-        arabic: 'first name'
+      gender: this.props.languageStore.computedResourcesProvider({
+        hebrew: ' מין',
+        english: 'Gender',
+        arabic: 'Gender'
       }),
-      houseNumber: this.props.languageStore.computedResourcesProvider({
-        hebrew: ' מספר בית',
-        english: 'last name',
-        arabic: 'last name'
+      female: this.props.languageStore.computedResourcesProvider({
+        hebrew: ' נקבה',
+        english: 'Female',
+        arabic: 'Female'
+      }),
+      male: this.props.languageStore.computedResourcesProvider({
+        hebrew: ' זכר',
+        english: 'Male',
+        arabic: 'Male'
       })
-    }
+    };
+    this.genderRadioButtonsDetails = [
+      { value: '1', label: this.texts.female.get() },
+      { value: '2', label: this.texts.male.get() }
+    ];
   }
-  render() {
 
+  render() {
+    const { tab3 } = this.props;
     return (
-      <div className="row">
-        <div className="col-md-4">טאב 3</div>
-      </div>
+      <Container beforeLeave={this.props.tab3.validate} {...this.props}>
+        <Grid container>
+          <SubTitle>דוגמא לקבוצת רדיו</SubTitle>
+          <Row>
+            <RadioButtonsGroup
+              label={this.texts.gender.get()}
+              radioButtonsDetails={this.genderRadioButtonsDetails}
+              {...getPropsField(tab3, 'gender')}
+              tab3={tab3}
+            />
+          </Row>
+        </Grid>
+      </Container>
     );
   }
 }
+
+export default Tab3
