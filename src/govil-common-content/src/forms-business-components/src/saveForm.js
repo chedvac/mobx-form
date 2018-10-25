@@ -5,29 +5,33 @@ import EmailScreen from '../../forms-ui-components/src/saveForm/emailScreen';
 import ModularViewModel from 'mobx-vm/modularViewModel';
 import validateable from 'mobx-vm/validateable';
 import { email } from 'validations/rules/address';
+import { required } from 'validations/rules/basic';
 import request from 'utils/serviceRequest';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
 import EndProcessScreen from 'govil-common-content/forms-ui-components/src/saveForm/endProcessScreen';
+import { bind } from 'lodash-decorators';
+
 const endpoint = 'http://gov.forms.local/MW/forms/Data/'; //'/MW/forms/Data/';
 
 class SaveForm extends ModularViewModel {
   constructor() {
     super();
-    this.sendMail = this.sendMail.bind(this);
   }
   @observable
-  @validateable({ validations: [email()] })
+  @validateable({ validations: [email(), required()] })
   email = 'chedva@gov.il';
   @observable
-  @validateable({ validations: [email()] })
+  @validateable({ validations: [email(), required()] })
   emailValidation = '';
   @observable
   @validateable([
+    required()
     /*mobile()*/
   ])
   cellNumber = '';
   @observable
   @validateable([
+    required()
     /*mobile()*/
   ])
   cellNumberValidation = '';
@@ -58,20 +62,20 @@ class SaveForm extends ModularViewModel {
       (await this.validateables.emailValidation.validate(this.emailValidation))
     );
   }
+  async _isSmsFieldsValid() {
+    return (
+      (await this.validateables.cellNumber.validate(this.cellNumber)) &&
+      (await this.validateables.cellNumberValidation.validate(
+        this.cellNumberValidation
+      ))
+    );
+  }
   _handleSaveResponse(response) {
     // formInformation.formParams.process.processID = response.processID;
     //this.reset();
     dialog.open({ content: EndProcessScreen });
   }
   async _saveRequest(settings) {
-    // console.log(
-    //   '-------------------languageStore.getShortName()',
-    //   languageStore.getShortName()
-    // );
-    console.log(
-      '-------------------languageStore.getShortName',
-      languageStore.getShortName
-    );
     // loader.open(labels().pending);
     const settingsRequest = {
       url: endpoint,
@@ -104,6 +108,7 @@ class SaveForm extends ModularViewModel {
     // await this._waitFilesUploading();
     this._saveRequest(settings);
   }
+  @bind()
   async sendMail() {
     if (!(await this._isEmailFieldsValid())) {
       return;
@@ -111,6 +116,16 @@ class SaveForm extends ModularViewModel {
     this._invokeSaveEvent({
       data: this.email,
       type: 'email'
+    });
+  }
+  @bind()
+  async sendSMS() {
+    if (!(await this._isSmsFieldsValid())) {
+      return;
+    }
+    this._invokeSaveEvent({
+      data: this.cellNumber,
+      type: 'sms'
     });
   }
 }

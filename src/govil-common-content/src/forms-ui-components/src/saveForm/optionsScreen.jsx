@@ -50,7 +50,6 @@ class OptionsScreen extends React.Component {
         arabic: 'رسالة SMS'
       }
     };
-    this.emailClick = this.emailClick.bind(this);
   }
   emailClick() {
     dialog.open({

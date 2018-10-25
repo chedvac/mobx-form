@@ -13,6 +13,9 @@ import Divider from '@material-ui/core/Divider';
 import Input from 'react-ui-components/fields/Input';
 import { getPropsField } from 'mobx-react-form/getProps';
 import saveForm from 'govil-common-content/forms-business-components/src/saveForm';
+import dialog from 'mobx-business-components/dialog';
+import { bind } from 'lodash-decorators';
+
 const styles = theme => {};
 
 @withStyles(styles)
@@ -46,8 +49,24 @@ class EmailScreen extends React.Component {
         hebrew: 'אישור',
         english: 'Confirm',
         arabic: 'تاكيد'
+      },
+      manualTyping: {
+        hebrew: 'עליך להזין ערך בשדה זה ידנית',
+        english: 'You cannot paste details into this field.',
+        arabic: 'يجب إدخال قيمة خطيًا في هذا الحقل'
       }
     };
+  }
+  closeDialog() {
+    dialog.close();
+  }
+  @bind()
+  preventPaste() {
+    saveForm.validateables.emailValidation.setValidationState({
+      message: this.props.languageStore
+        .computedResourcesProvider(this.texts.manualTyping)
+        .get()
+    });
   }
   render() {
     const { classes } = this.props;
@@ -73,6 +92,7 @@ class EmailScreen extends React.Component {
               .computedResourcesProvider(this.texts.validateEmail)
               .get()}
             {...getPropsField(saveForm, 'emailValidation')}
+            onPaste={this.preventPaste}
             // lg={6}
             // sm={12}
           />
@@ -82,7 +102,7 @@ class EmailScreen extends React.Component {
           <WhiteButton
             variant="outlined"
             className={classes.button}
-            onClick={saveForm.sendMail}
+            onClick={this.closeDialog}
           >
             {this.props.languageStore
               .computedResourcesProvider(this.texts.cancelButton)

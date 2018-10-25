@@ -13,6 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import Input from 'react-ui-components/fields/Input';
 import { getPropsField } from 'mobx-react-form/getProps';
 import saveForm from 'govil-common-content/forms-business-components/src/saveForm';
+import dialog from 'mobx-business-components/dialog';
 
 const styles = theme => {};
 
@@ -50,6 +51,9 @@ class SmsScreen extends React.Component {
       }
     };
   }
+  closeDialog() {
+    dialog.close();
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -83,13 +87,17 @@ class SmsScreen extends React.Component {
           <WhiteButton
             variant="outlined"
             className={classes.button}
-            onClick={this.emailClick}
+            onClick={this.closeDialog}
           >
             {this.props.languageStore
               .computedResourcesProvider(this.texts.cancelButton)
               .get()}
           </WhiteButton>
-          <BlueButton variant="outlined" className={classes.button}>
+          <BlueButton
+            variant="outlined"
+            className={classes.button}
+            onClick={saveForm.sendSMS}
+          >
             {this.props.languageStore
               .computedResourcesProvider(this.texts.confirm)
               .get()}

@@ -7,11 +7,9 @@ import Row from 'react-ui-components/structure/row';
 
 import Typography from '@material-ui/core/Typography';
 import BlueButton from 'react-ui-components/buttons/blueButton';
-import AlternateEmail from '@material-ui/icons/AlternateEmail';
-import Sms from '@material-ui/icons/Sms';
 import Divider from '@material-ui/core/Divider';
-import EmailScreen from './emailScreen';
-import SmsScreen from './smsScreen';
+import OptionsScreen from 'govil-common-content/forms-ui-components/src/saveForm/optionsScreen';
+
 import dialog from 'mobx-business-components/dialog';
 
 const styles = theme => {};
@@ -28,43 +26,35 @@ class EndProcessScreen extends React.Component {
         english: 'Save form',
         hebrew: 'שמירה'
       },
-      notice: {
-        hebrew: 'קישור לשירות ששמרתם ישלח אליכם מיד',
-        english:
-          'You can get a link to your saved form by email, or SMS to your mobile.',
-        arabic: 'يرسل إليكم فورًا رابط للخدمة التي تم حفظها'
+      formSavedNotice: {
+        arabic: 'تم إرسال رابط للخدمة التي تم حفظها بناء على طلبكم.',
+        english: 'A link to your saved form has been sent.',
+        hebrew: 'קישור לשירות ששמרתם נשלח לפי בקשתכם.'
       },
-      selectOption: {
-        hebrew: 'בחרו את הדרך בה תרצו לקבל את הקישור:',
-        english: 'Choose how you would like to receive the link.',
-        arabic: 'اختاروا طريقة تلقي الرابط:'
+      formSavedLatencyNotice: {
+        arabic: ' يمكن فتح الخدمة خلال undefined أيام.',
+        english: 'You will be able to use the link for undefined days.',
+        hebrew: ' פתיחת השירות אפשרית למשך undefined ימים.'
       },
-      inEmail: {
-        hebrew: 'בדואר אלקטרוני',
-        english: 'Email',
-        arabic: 'بالبريد الإلكتروني'
+      resend: {
+        arabic: 'إعادة إرسال الرابط',
+        english: 'Send again',
+        hebrew: 'לשליחה חוזרת'
       },
-      inSMS: {
-        hebrew: 'במסרון',
-        english: 'SMS',
-        arabic: 'رسالة SMS'
+      confirm: {
+        arabic: 'تاكيد',
+        english: 'Confirm',
+        hebrew: 'אישור'
       }
     };
-    this.emailClick = this.emailClick.bind(this);
   }
-  emailClick() {
+  resendClick() {
     dialog.open({
-      content: EmailScreen,
-      fullWidth: true,
-      maxWidth: 'lg'
+      content: OptionsScreen
     });
   }
-  smsClick() {
-    dialog.open({
-      content: SmsScreen,
-      fullWidth: true,
-      maxWidth: 'lg'
-    });
+  confirmClick() {
+    dialog.close();
   }
   render() {
     const { classes } = this.props;
@@ -78,33 +68,31 @@ class EndProcessScreen extends React.Component {
         <Divider light />
         <Typography color="inherit">
           {this.props.languageStore
-            .computedResourcesProvider(this.texts.notice)
+            .computedResourcesProvider(this.texts.formSavedNotice)
             .get()}
         </Typography>
         <Typography color="inherit">
           {this.props.languageStore
-            .computedResourcesProvider(this.texts.selectOption)
+            .computedResourcesProvider(this.texts.formSavedLatencyNotice)
             .get()}
         </Typography>
         <Row>
           <BlueButton
             variant="outlined"
             className={classes.button}
-            onClick={this.emailClick}
+            onClick={this.resendClick}
           >
-            <AlternateEmail />
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.inEmail)
+              .computedResourcesProvider(this.texts.resend)
               .get()}
           </BlueButton>
           <BlueButton
             variant="outlined"
             className={classes.button}
-            onClick={this.smsClick}
+            onClick={this.confirmClick}
           >
-            <Sms />
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.inSMS)
+              .computedResourcesProvider(this.texts.confirm)
               .get()}
           </BlueButton>
         </Row>
