@@ -3,7 +3,7 @@ import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
 import Tab3 from './tabs/Tab3/tab3';
 import RouteSettings from 'react-navigation-router/RouteSettings';
-import Navigation from 'react-ui-components/navigation/Navigation';
+import Navigation from 'react-ui-components/navigation/navigation';
 import { inject } from 'mobx-react';
 import injectSheet from 'react-jss';
 

@@ -7,7 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import dialog from 'mobx-business-components/dialog';
+// import dialog from 'mobx-business-components/dialog';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss'
 
@@ -39,8 +39,13 @@ class Dialog extends React.Component {
     Object.assign({}, this.defaultButtonsTexts, buttonTexts);
 
   render() {
-    const isOpen = dialog.isOpen;
-    const { title, content: Content, buttons, buttonsTexts } = dialog.settings;
+    const isOpen = this.props.isOpen;
+    const {
+      title,
+      content: Content,
+      buttons,
+      buttonsTexts
+    } = this.props.settings;
     const texts = this.mergeButtonsTexts(buttonsTexts);
     const { classes } = this.props;
 
@@ -80,6 +85,13 @@ class Dialog extends React.Component {
 }
 Dialog.propTypes = {
   languageStore: PropTypes.any.isRequired,
-  classes: PropTypes.any.isRequired
+  classes: PropTypes.any.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  settings: PropTypes.shape({
+    title: PropTypes.any,
+    content: PropTypes.any,
+    buttons: PropTypes.object,
+    buttonsTexts: PropTypes.object
+  })
 };
 export default Dialog;
