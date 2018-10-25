@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import Header from './header';
 import SideToolbar from './sideToolbar';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 
 let closeWidth = '72';
 const openWidth = '275';
@@ -79,10 +79,10 @@ class FormSection extends Component {
             closeToolbarOnOut={this.closeToolbarOnOut}
           />
           {
-            React.cloneElement(this.props.children, { drawerForContentWidth: this.state.drawerForContentWidth })
+            this.props.children
           }
         </div>
-      </div>
+      </div >
     );
   }
 }
