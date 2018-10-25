@@ -38,11 +38,9 @@ function getPropertyFromArray(array, property) {
 }
 
 export default class ValidationsManager {
-  constructor(validations) {
-    //console.log('--------------validations', validations);
-
+  constructor(validations, type) {
     this.validations = concatValidationArray(validations, ValidationsManager);
-    //console.log('--------------this.validations', this.validations);
+    this.type = type;
 
     this.pattern = getPatternArray(this.validations);
     this.maxlength = getPropertyFromArray(this.validations, 'maxLength');
@@ -60,7 +58,49 @@ export default class ValidationsManager {
     };
   };
 
-  validate = async value => {
+  booleanValue = {
+    true: true,
+    yes: true,
+    '1': true,
+    false: false,
+    no: false,
+    '0': false,
+    null: false
+  };
+
+  enumfunction = {
+    boolean: value =>
+      this.booleanValue[value.toLowerCase().trim()] || Boolean(value),
+    date: value => Date.parse(value),
+    number: value => Number(value)
+  };
+
+  parsingByType = (value, parseType) => {
+    return parseType
+      ? this.enumfunction[parseType.name.toLowerCase()](value)
+      : value;
+  };
+
+  validateType = (value, parseType) => {
+    const messages = {
+      Number: {
+        hebrew: 'TYPE: עליך להזין ערך מספרי בלבד'
+      },
+      Date: {
+        hebrew: 'TYPE: עליך להזין תאריך בפורמט תקין'
+      }
+    };
+    const newValue = this.parsingByType(value, parseType);
+
+    // how to check false of boolean type??
+    Object.assign(validationState, {
+      message: newValue ? '' : messages[parseType.name].hebrew,
+      isValid: newValue ? true : false
+    });
+    return { validationState, value: newValue };
+  };
+
+  findFailedValidation = async value => {
     let failedValidation;
     for (const item of this.validations) {
       if (!(await item.validator(value))) {
@@ -68,6 +108,12 @@ export default class ValidationsManager {
         break;
       }
     }
+    return failedValidation;
+  };
+
+  validate = async value => {
+    const failedValidation = await this.findFailedValidation(value);
+
     return Object.assign(validationState, {
       message: failedValidation ? failedValidation.message(value).hebrew : '',
       isValid: failedValidation ? false : true

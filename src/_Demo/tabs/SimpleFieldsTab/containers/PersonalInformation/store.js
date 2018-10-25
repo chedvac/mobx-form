@@ -1,4 +1,4 @@
-import { action, computed, autorun, observable } from 'mobx';
+import { action, computed, autorun, observable, intercept } from 'mobx';
 import validateable from 'mobx-vm/validateable';
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
@@ -50,6 +50,7 @@ class PersonalInformation extends ModularViewModel {
       return true;
     };
   }
+
   @observable
   @modelMember()
   @validateable({
@@ -66,9 +67,11 @@ class PersonalInformation extends ModularViewModel {
     ]
   })
   firstName = 'כגד';
+
   @observable
   @modelMember({ reset: () => false })
   @validateable({
+    type: Date,
     validations: [
       maxlength({
         value: 15,
@@ -102,9 +105,11 @@ class PersonalInformation extends ModularViewModel {
   //     validations: [dependedGreaterThan({ number: 'age' })]
   //   })
   //   fatherAge = 0;
+
   @observable
   @modelMember()
   @validateable({
+    type: Number,
     validations: [
       maxlength({ value: 15 }),
       minlength({ value: 2 }),
@@ -115,18 +120,20 @@ class PersonalInformation extends ModularViewModel {
       })
     ]
   })
-  fatherAge = 0;
+  fatherAge;
 
   @observable
   @modelMember()
   @validateable({
+    type: String,
     validations: [] //conditionRequired({ condition: 'isAdult' })
   })
-  fatherName = 0;
+  fatherName = false;
 
   @observable
   @modelMember()
   @validateable({
+    type: String,
     validations: [
       generateAsyncValidation({
         name: 'tryAsyncValidation',
@@ -139,23 +146,23 @@ class PersonalInformation extends ModularViewModel {
 
   @observable
   @modelMember()
-  @validateable({ validations: [] })
+  @validateable({ type: String, validations: [] })
   status = 'true';
 
   @observable
   @modelMember()
-  @validateable({ validations: [] })
-  agreement = '';
+  @validateable({ type: String, validations: [] })
+  agreement;
 
   @observable
   @modelMember()
-  @validateable({ validations: [] })
+  @validateable({ type: String, validations: [] })
   city = '';
 
   @observable
   @modelMember()
-  @validateable({ validations: [] })
-  birthDate = '';
+  @validateable({ type: Date, validations: [] })
+  birthDate;
 
   // #region actions
   @action.bound

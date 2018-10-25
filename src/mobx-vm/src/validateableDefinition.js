@@ -6,9 +6,11 @@ import validationsManagerFactory from 'vm-validations/validationsManager';
 export default class ValidateableDefinition {
   constructor(settings) {
     this.name = settings.name;
+    this.type = settings.type;
     this.validationState = observable(validationState);
     this.validationsManager = new validationsManagerFactory(
-      settings.validations || []
+      settings.validations || [],
+      settings.type
     );
   }
   @action
@@ -20,4 +22,10 @@ export default class ValidateableDefinition {
     this.setValidationState(failedValidation);
     return failedValidation.isValid;
   }
+
+  validateType = (value, type) => {
+    const failedValidation = this.validationsManager.validateType(value, type);
+    this.setValidationState(failedValidation.validationState);
+    return failedValidation.value;
+  };
 }

@@ -1,7 +1,7 @@
 import validationsManagerFactory from 'vm-validations/validationsManager';
 import { validationStateMultiMessages } from 'vm-validations/validationState';
 import PropTypes from 'prop-types';
-import { observable, reaction, action } from 'mobx';
+import { observable, reaction, action, intercept } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import { forOwn, upperFirst } from 'lodash/fp';
 
@@ -34,6 +34,15 @@ export default class ModularViewModel {
   generateValidateable(propertySettings) {
     const validateable = new ValidateableDefinition(propertySettings);
     this.validateables[validateable.name] = validateable;
+    const type = this.validateables[validateable.name].type;
+    intercept(this, validateable.name, change => {
+      if (!change.newValue) {
+        return change;
+      }
+      const validateType = validateable.validateType(change.newValue, type);
+      change.newValue = validateType ? validateType : '';
+      return change;
+    });
     reaction(
       () => this[validateable.name],
       value => validateable.validate(value)

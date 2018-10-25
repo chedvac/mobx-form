@@ -24,15 +24,25 @@ function control(WrappedComponent) {
     });
 
     getEventValue = e => {
-      const value =
-        e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-      return value;
+      return e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     };
 
     handleBlur = e => {
       const newValue = this.getEventValue(e);
       this.props.update(newValue);
       this.setState({ message: this.props.validationState.message });
+
+      // if (!newValue) {
+      //   this.props.update(newValue);
+      // } else {
+      //   const validateType = this.props.validateType(newValue);
+      //   if (validateType.isParsed) {
+      //     this.props.update(validateType.value);
+      //     this.setState({ message: this.props.validationState.message });
+      //   } else {
+      //     this.setState({ message: validateType.message });
+      //   }
+      // }
     };
 
     handleChange = e => {

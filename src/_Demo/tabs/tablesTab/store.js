@@ -1,4 +1,4 @@
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 import validateable from 'mobx-vm/validateable';
 import modelMember from 'mobx-vm/modelMember';
 
@@ -13,9 +13,11 @@ class TablesTab extends ModularViewModel {
     this.setEmail = this.setEmail.bind(this);
     this.setHouseNumber = this.setHouseNumber.bind(this);
   }
+  @observable
   @modelMember()
   @validateable({ validations: [hebrew(), maxlength({ value: 5 })] })
   email = '';
+  @observable
   @modelMember()
   @validateable()
   houseNumber = '';
