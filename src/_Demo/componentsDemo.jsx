@@ -11,6 +11,7 @@ const styles = theme => {
 
   return {
     content: {
+      width: '100%',
       maxWidth: `${theme.contentMaxWidth}%`,
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3,
