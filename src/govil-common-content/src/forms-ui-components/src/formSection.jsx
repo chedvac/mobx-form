@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import Header from './header';
 import SideToolbar from './sideToolbar';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 
-let closeWidth = '72';
-const openWidth = '275';
+let closeWidth = '62';
+const openWidth = '220';
 
 const styles = theme => {
   return {
@@ -68,7 +68,10 @@ class FormSection extends Component {
 
     return (
       <div className={classes.dir}>
-        <Header toggleToolbar={this.toggleToolbar} />
+        <Header
+          toggleToolbar={this.toggleToolbar}
+          direction={theme.direction}
+        />
         <div className={classes.contentDiv}>
           <SideToolbar
             direction={theme.direction}
@@ -79,10 +82,10 @@ class FormSection extends Component {
             closeToolbarOnOut={this.closeToolbarOnOut}
           />
           {
-            React.cloneElement(this.props.children, { drawerForContentWidth: this.state.drawerForContentWidth })
+            this.props.children
           }
         </div>
-      </div>
+      </div >
     );
   }
 }

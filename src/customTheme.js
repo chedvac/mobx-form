@@ -5,11 +5,17 @@ const lightBasicColor = '#e9f4fa';
 const basicFontSize = '15px';
 const basicFontFamily = 'arimo, Arial';
 const boldBasicFontFamily = 'arimo-bold, Arial';
+const screenWidth = window.screen.width;
+const contentMaxWidth = screenWidth > 1280 ? 70 : screenWidth < 1000 ? 100 : 80;
+const sideSpace = (100 - contentMaxWidth) / 2;
 
 const customTheme = createMuiTheme({
   palette: {
     primary: {
       main: basicColor
+    },
+    background: {
+      default: 'white'
     }
   },
   direction: 'rtl',
@@ -36,7 +42,9 @@ const customTheme = createMuiTheme({
       textAlign: 'center'
     }
   },
-  isMobile: false
+  isMobile: false,
+  contentMaxWidth: contentMaxWidth,
+  sideSpace: sideSpace
   // ,overrides: {
   //   MuiStepIcon: {
   //     root: {

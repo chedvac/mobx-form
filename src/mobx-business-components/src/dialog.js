@@ -7,7 +7,6 @@ const ButtonTypes = Object.freeze({
 class Dialog {
   constructor() {
     this.defaultSettings = {
-      isOpen: false,
       title: '',
       content: '',
       buttons: []

@@ -3,19 +3,19 @@ import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
 import Tab3Tab from './tabs/Tab3/tab3';
 import RouteSettings from 'react-navigation-router/RouteSettings';
-import Navigation from 'react-ui-components/navigation/Navigation';
+import Navigation from 'react-ui-components/navigation/navigation';
 import { inject } from 'mobx-react';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 
 const styles = theme => {
+
   return {
-    content: props => ({
+    content: {
+      maxWidth: `${theme.contentMaxWidth}%`,
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3,
-      [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: `${props.drawerForContentWidth}px`,
-      [`margin${theme.direction === 'rtl' ? 'Left' : 'Right'}`]: 0,
-      width: `calc(100% - ${props.drawerForContentWidth}px)`
-    }),
+      margin: 'auto'
+    },
   }
 };
 

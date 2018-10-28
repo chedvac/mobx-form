@@ -7,8 +7,10 @@ import injectSheet, { ThemeProvider } from 'react-jss'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
 import FormSection from 'govil-common-content/forms-ui-components/src/formSection';
-import customTheme from 'react-ui-components/themes/customTheme';
+import customTheme from 'src/customTheme';
 import Dialog from 'react-ui-components/dialog';
+import dialog from 'mobx-business-components/dialog';
+
 import ComponentDemo from './componentsDemo';
 
 const styles = {};
@@ -31,7 +33,7 @@ class App extends Component {
           <CssBaseline />
           <Provider languageStore={languageStore} >
             <Grid container>
-              <Dialog />
+              <Dialog settings={dialog.settings} isOpen={dialog.isOpen} />
               <FormSection rootStore={this.rootStore} direction={customTheme.direction}>
                 <ComponentDemo rootStore={this.rootStore} />
               </FormSection>

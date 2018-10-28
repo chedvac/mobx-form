@@ -20,6 +20,7 @@ const styles = theme => {
       }),
       left: props.direction === 'rtl' ? 'auto' : '0',
       right: props.direction === 'rtl' ? '0' : 'auto',
+      width: props.opened ? 220 : 62
     }),
     drawerPaperClose: {
       display: theme.isMobile ? 'none' : '',
@@ -80,7 +81,8 @@ class SideToolbar extends React.Component {
       opened,
       openToolbarOnOver,
       closeToolbarOnOut,
-      toolbarButtonsStore
+      toolbarButtonsStore,
+      direction
     } = this.props;
     return (
       <Drawer
@@ -103,6 +105,7 @@ class SideToolbar extends React.Component {
                 buttonAction={toolbarButton[1].action}
                 isToolbarOpened={opened}
                 Popup={toolbarButton[1].popup}
+                direction={direction}
               />
             ) : (
                 ''

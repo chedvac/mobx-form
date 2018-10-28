@@ -30,6 +30,9 @@ module.exports = function override(config, env) {
   config.resolve.alias['govil-common-content'] = path.resolve(
     'src/govil-common-content/src'
   );
+  config.resolve.alias['src'] = path.resolve(
+    'src'
+  );
 
   return config;
 };
