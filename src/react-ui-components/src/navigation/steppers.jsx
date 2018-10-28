@@ -12,7 +12,7 @@ import {
   MuiThemeProvider,
   createMuiTheme
 } from '@material-ui/core/styles';
-import customTheme from 'react-ui-components/themes/customTheme';
+import customTheme from 'src/customTheme';
 
 const styles = theme => ({
   blueTitle: {

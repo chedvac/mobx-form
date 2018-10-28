@@ -73,7 +73,8 @@
       "^react-navigation-router(.*)$": "<rootDir>/src/react-navigation-router/src$1",
       "^govil-common-content(.*)$": "<rootDir>/src/govil-common-content/src$1",
       "^mobx-vm(.*)$": "<rootDir>/src/mobx-vm/src$1",
-      "^mobx-business-components(.*)$": "<rootDir>/src/mobx-business-components/src$1"
+      "^mobx-business-components(.*)$": "<rootDir>/src/mobx-business-components/src$1",
+      "^src(.*)$": "<rootDir>/src$1"
     }
   }
 }

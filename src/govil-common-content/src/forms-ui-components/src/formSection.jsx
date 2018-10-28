@@ -4,8 +4,8 @@ import Header from './header';
 import SideToolbar from './sideToolbar';
 import injectSheet from 'react-jss';
 
-let closeWidth = '72';
-const openWidth = '275';
+let closeWidth = '62';
+const openWidth = '220';
 
 const styles = theme => {
   return {
@@ -68,7 +68,10 @@ class FormSection extends Component {
 
     return (
       <div className={classes.dir}>
-        <Header toggleToolbar={this.toggleToolbar} />
+        <Header
+          toggleToolbar={this.toggleToolbar}
+          direction={theme.direction}
+        />
         <div className={classes.contentDiv}>
           <SideToolbar
             direction={theme.direction}

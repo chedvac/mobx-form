@@ -8,13 +8,14 @@ import { inject } from 'mobx-react';
 import injectSheet from 'react-jss';
 
 const styles = theme => {
+
   return {
-    content: props => ({
+    content: {
+      maxWidth: `${theme.contentMaxWidth}%`,
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3,
-      [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: 72,
-      [`margin${theme.direction === 'rtl' ? 'Left' : 'Right'}`]: 0
-    }),
+      margin: 'auto'
+    },
   }
 };
 
