@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["--inspect=5858"],
+      "runtimeExecutable":
+        "${workspaceRoot}/node_modules/.bin/react-app-rewired",
+      "env": {},
+      "args": ["test", "--runInBand", "--no-cache", "--env=jsdom"],
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Jest Test Current File",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["--inspect=5858"],
+      "runtimeExecutable":
+        "${workspaceRoot}/node_modules/.bin/react-app-rewired",
+      "env": {},
+      "args": ["test", "${fileBasename}"],
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+
+  ]
+}
