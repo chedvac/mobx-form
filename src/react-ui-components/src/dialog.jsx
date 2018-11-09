@@ -9,7 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // import dialog from 'mobx-business-components/dialog';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import injectSheet from 'react-jss';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -18,7 +18,7 @@ const styles = theme => ({
     direction: theme.direction
   }
 });
-@withStyles(styles)
+@injectSheet(styles)
 @inject('languageStore')
 @observer
 class Dialog extends React.Component {

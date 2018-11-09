@@ -2,18 +2,23 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles } from '@material-ui/core/styles';
+import injectSheet from 'react-jss'
 import { Icon } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
-const styles = theme => {
-  nested: {
-    marginRight: theme.spacing.unit * 4;
-  }
-};
 
-@withStyles(styles)
+const styles = theme => ({
+  iconMargin: props => ({
+    [`margin${props.direction === 'rtl' ? 'Right' : 'Left'}`]: theme.spacing.unit * 2,
+    [`margin${props.direction === 'rtl' ? 'Left' : 'Right'}`]: 0
+  }),
+  listItem: {
+    paddingRight: theme.spacing.unit / 2,
+    paddingLeft: theme.spacing.unit / 2
+  }
+});
+
+@injectSheet(styles)
 class ToolbarButton extends React.Component {
   constructor(props) {
     super(props);
@@ -48,16 +53,17 @@ class ToolbarButton extends React.Component {
           button
           visible={visible}
           onClick={this.listItemClickEvent}
+          className={classes.listItem}
         >
-          <ListItemIcon>
-            <Icon className={classes[className]} />
+          <ListItemIcon >
+            <Icon className={`${classes[className]} ${classes.iconMargin}`} />
           </ListItemIcon>
           <ListItemText primary={buttonText} />
           {Popup ? (
             this.state.isOpen ? (
-              <ExpandLess className={classes.nested} />
+              <ExpandLess className={classes.iconMargin} />
             ) : (
-                <ExpandMore className={classes.nested} />
+                <ExpandMore className={classes.iconMargin} />
               )
           ) : (
               false

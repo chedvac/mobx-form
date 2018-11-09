@@ -3,7 +3,6 @@ import TablesTab from './tabs/tablesTab/store';
 import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore';
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/modularViewModel';
-import PersonalInformation from './tabs/SimpleFieldsTab/containers/PersonalInformation/PersonalInformation';
 import Link from './Link';
 import dialog from 'mobx-business-components/dialog';
 import { toolbarButtonsNames } from 'govil-common-content/forms-ui-components/src/toolbarButtons';

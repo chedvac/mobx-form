@@ -1,89 +1,87 @@
-import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
 import React from 'react';
-import { withRouter } from 'react-router';
-import Button from '@material-ui/core/Button';
 import Row from 'react-ui-components/structure/row';
 import Grid from '@material-ui/core/Grid';
 import BlueButton from 'react-ui-components/buttons/blueButton';
 import WhiteButton from 'react-ui-components/buttons/whiteButton';
-import {
-  MuiThemeProvider,
-  withStyles,
-  createMuiTheme
-} from '@material-ui/core/styles';
-import customTheme from 'react-ui-components/themes/customTheme';
+import injectSheet from 'react-jss'
+import PropTypes from 'prop-types';
+import { inject } from 'mobx-react';
 
 const styles = theme => ({
   navigateButton: {
     'text-decoration': 'none',
     ...theme.typography.boldText
   },
-  hide: theme.typography.hide
+  hide: { display: 'none' } //theme.typography.hide
 });
 
-@withStyles(styles)
+@injectSheet(styles)
+@inject('languageStore')
 class NextPrevButtons extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
     this.pathesArray = this.props.routeSettings.map(route => route.path);
-    this.props.history.listen(location => {
-      this.saveCurrentStep(location);
-    });
+    this.texts = {
+      back: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'לשלב הקודם',
+        english: 'back',
+        arabic: 'לשלב הקודם'
+      }),
+      next: this.props.languageStore.computedResourcesProvider({
+        hebrew: 'לשלב הבא',
+        english: 'next',
+        arabic: 'לשלב הבא'
+      })
+    };
   }
-  state = {
-    currentStep: 0
-  };
 
-  saveCurrentStep = location => {
-    const currentStep = this.pathesArray.indexOf(
-      this.props.history.location.pathname
-    );
-    this.setState({
-      currentStep: currentStep,
-      prevStep: currentStep - 1,
-      nextStep: currentStep + 1
-    });
-  };
-  getNextPath() {
-    return this.pathesArray[this.state.nextStep] || '/';
+  getCurrentStep() {
+    return this.pathesArray.indexOf(this.props.history.path);
   }
-  getBackPath() {
-    return this.pathesArray[this.state.prevStep] || '/';
+  getNextPath(currentStep) {
+    return this.pathesArray[currentStep + 1] || '/';
   }
-  isFirstRoute() {
-    return this.state.currentStep === 0;
+  getBackPath(currentStep) {
+    return this.pathesArray[currentStep - 1] || '/';
   }
-  isLastRoute() {
-    return this.pathesArray.length === this.state.nextStep;
+  isFirstRoute(currentStep) {
+    return currentStep === 0;
+  }
+  isLastRoute(currentStep) {
+    return this.pathesArray.length === currentStep + 1;
   }
   render() {
     const { classes } = this.props;
+    const currentStep = this.getCurrentStep();
     return (
       <Grid>
         <Row>
-          <Link
-            to={this.getBackPath()}
+          <a
+            href={this.getBackPath(currentStep)}
             className={`${classes.navigateButton} ${
-              this.isFirstRoute() ? classes.hide : ''
-            }`}
+              this.isFirstRoute(currentStep) ? classes.hide : ''
+              }`}
           >
             <BlueButton variant="outlined" className={classes.button}>
-              לשלב הקודם
+              {this.texts.back.get()}
             </BlueButton>
-          </Link>
-          <Link
-            to={this.getNextPath()}
+          </a>
+          <a
+            href={this.getNextPath(currentStep)}
             className={`${classes.navigateButton} ${
-              this.isLastRoute() ? classes.hide : ''
-            }`}
+              this.isLastRoute(currentStep) ? classes.hide : ''
+              }`}
           >
-            <WhiteButton>לשלב הבא</WhiteButton>
-          </Link>
+            <WhiteButton>{this.texts.next.get()}</WhiteButton>
+          </a>
         </Row>
       </Grid>
     );
   }
 }
-export default withRouter(NextPrevButtons);
+NextPrevButtons.wrappedComponent.propTypes = {
+  routeSettings: PropTypes.array.isRequired,
+  history: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired
+};
+export default NextPrevButtons;
