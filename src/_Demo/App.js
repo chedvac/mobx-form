@@ -33,7 +33,7 @@ class App extends Component {
           <CssBaseline />
           <Provider languageStore={languageStore} >
             <Grid container>
-              <Dialog settings={dialog.settings} isOpen={dialog.isOpen} />
+              <Dialog settings={dialog.settings}  />
               <FormSection rootStore={this.rootStore} direction={customTheme.direction}>
                 <ComponentDemo rootStore={this.rootStore} />
               </FormSection>

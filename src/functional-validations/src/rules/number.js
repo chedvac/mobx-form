@@ -136,11 +136,11 @@ export const greaterThan2 = assertParametersType(
     ]);
   }
 );
-// export function notZeroDigits(params) {
-//   return generateRegexValidation({
-//     name: 'notZeroDigits',
-//     message: () => messages.notZeroDigits(),
-//     regex: /^(\d+){0,1}$/, //TODO:!!
-//     params
-//   });
-// }
+export function notZeroDigits(params) {
+  return generateRegexValidation({
+    name: 'notZeroDigits',
+    message: () => messages.notZeroDigits(),
+    regex: /^(\d+){0,1}$/, //TODO:!!
+    params
+  });
+}

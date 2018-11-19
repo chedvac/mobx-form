@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\mobx-vm",
+    "\\src\\mobx-vm\\src",
+    "\\src\\_Demo",
+    "\\src\\_Demo\\tabs",
+    "\\src\\_Demo\\tabs\\SimpleFieldsTab"
+  ],
+  "SelectedNode": "\\src\\mobx-vm\\src\\modularViewModel.js",
+  "PreviewInSolutionExplorer": false
+}
