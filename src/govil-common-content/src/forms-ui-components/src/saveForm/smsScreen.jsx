@@ -15,7 +15,7 @@ import { getPropsField } from 'mobx-react-form/getProps';
 import saveForm from 'govil-common-content/forms-business-components/src/saveForm';
 import dialog from 'mobx-business-components/dialog';
 
-const styles = theme => {};
+import styles from './styles';
 
 @withStyles(styles)
 @inject('languageStore')
@@ -26,18 +26,18 @@ class SmsScreen extends React.Component {
     this.texts = {
       saveBySMS: {
         hebrew: 'קבלת קישור לשירות באמצעות מסרון',
-        english: 'Get link by SMS',
-        arabic: 'الحفظ بواسطة رسالة SMS'
+        english: 'Get link by SMS text message',
+        arabic: 'تلقي الرابط بواسطة رسالة SMS'
       },
       insertPhoneNumber: {
         hebrew: 'הזינו מספר טלפון נייד',
         english: 'Enter your mobile number',
-        arabic: 'ادخلوا رقم الخلوي'
+        arabic: 'ادخلوا رقم الهاتف الخلوي'
       },
       validatePhoneNumber: {
         hebrew: 'אמתו את מספר הטלפון הנייד',
         english: 'Confirm your mobile number',
-        arabic: 'تأكيد الرقم الخلوي'
+        arabic: 'التحقق من رقم الخلوي'
       },
       cancelButton: {
         hebrew: 'ביטול',
@@ -47,7 +47,7 @@ class SmsScreen extends React.Component {
       confirm: {
         hebrew: 'אישור',
         english: 'Confirm',
-        arabic: 'تاكيد'
+        arabic: 'موافقة'
       }
     };
   }
@@ -63,23 +63,23 @@ class SmsScreen extends React.Component {
             .computedResourcesProvider(this.texts.saveBySMS)
             .get()}
         </Typography>
-        <Divider light />
+        <Divider light className={classes.divider} />
         <Row>
           <Input
             label={this.props.languageStore
               .computedResourcesProvider(this.texts.insertPhoneNumber)
               .get()}
             {...getPropsField(saveForm, 'cellNumber')}
-            // lg={6}
-            // sm={12}
+            lg={6}
+            sm={12}
           />
           <Input
             label={this.props.languageStore
               .computedResourcesProvider(this.texts.validatePhoneNumber)
               .get()}
             {...getPropsField(saveForm, 'cellNumberValidation')}
-            // lg={6}
-            // sm={12}
+            lg={6}
+            sm={12}
           />
         </Row>
 

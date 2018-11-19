@@ -12,7 +12,7 @@ class Dialog {
       content: '',
       buttons: {},
       onClose: this.close,
-      fullWidth: false,
+      fullWidth: true,
       maxWidth: 'sm'
     };
     this.settings = observable(this.defaultSettings);

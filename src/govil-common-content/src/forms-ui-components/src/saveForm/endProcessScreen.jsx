@@ -12,7 +12,7 @@ import OptionsScreen from 'govil-common-content/forms-ui-components/src/saveForm
 
 import dialog from 'mobx-business-components/dialog';
 
-const styles = theme => {};
+import styles from './styles';
 
 @withStyles(styles)
 @inject('languageStore')
@@ -32,17 +32,17 @@ class EndProcessScreen extends React.Component {
         hebrew: 'קישור לשירות ששמרתם נשלח לפי בקשתכם.'
       },
       formSavedLatencyNotice: {
-        arabic: ' يمكن فتح الخدمة خلال undefined أيام.',
-        english: 'You will be able to use the link for undefined days.',
+        arabic: ' يمكن فتح الخدمة خلال {} أيام.',
+        english: 'You can use the link for {} days.',
         hebrew: ' פתיחת השירות אפשרית למשך undefined ימים.'
       },
       resend: {
-        arabic: 'إعادة إرسال الرابط',
+        arabic: 'إعادة إرسال',
         english: 'Send again',
         hebrew: 'לשליחה חוזרת'
       },
       confirm: {
-        arabic: 'تاكيد',
+        arabic: 'موافقة',
         english: 'Confirm',
         hebrew: 'אישור'
       }
@@ -65,13 +65,13 @@ class EndProcessScreen extends React.Component {
             .computedResourcesProvider(this.texts.saveFormTitle)
             .get()}
         </Typography>
-        <Divider light />
-        <Typography color="inherit">
+        <Divider light className={classes.divider} />
+        <Typography color="inherit" align="center">
           {this.props.languageStore
             .computedResourcesProvider(this.texts.formSavedNotice)
             .get()}
         </Typography>
-        <Typography color="inherit">
+        <Typography color="inherit" align="center">
           {this.props.languageStore
             .computedResourcesProvider(this.texts.formSavedLatencyNotice)
             .get()}

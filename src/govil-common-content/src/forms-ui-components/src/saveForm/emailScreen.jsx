@@ -16,7 +16,7 @@ import saveForm from 'govil-common-content/forms-business-components/src/saveFor
 import dialog from 'mobx-business-components/dialog';
 import { bind } from 'lodash-decorators';
 
-const styles = theme => {};
+import styles from './styles';
 
 @withStyles(styles)
 @inject('languageStore')
@@ -27,8 +27,8 @@ class EmailScreen extends React.Component {
     this.texts = {
       saveByEmailTitle: {
         hebrew: 'קבלת קישור לשירות באמצעות דואר אלקטרוני',
-        english: 'Get link by email',
-        arabic: 'الحفظ بالبريد الإلكتروني'
+        english: 'Get the link by email',
+        arabic: 'تلقي الرابط للخدمة بالبريد الإلكتروني'
       },
       insertEmail: {
         hebrew: 'הזינו כתובת דואר אלקטרוני',
@@ -38,7 +38,7 @@ class EmailScreen extends React.Component {
       validateEmail: {
         hebrew: 'אמתו את כתובת הדואר האלקטרוני',
         english: 'Confirm your email',
-        arabic: 'تاكيد البريد الإلكتروني'
+        arabic: 'التحقق من البريد الإلكتروني'
       },
       cancelButton: {
         hebrew: 'ביטול',
@@ -48,7 +48,7 @@ class EmailScreen extends React.Component {
       confirm: {
         hebrew: 'אישור',
         english: 'Confirm',
-        arabic: 'تاكيد'
+        arabic: 'موافقة'
       },
       manualTyping: {
         hebrew: 'עליך להזין ערך בשדה זה ידנית',
@@ -77,15 +77,15 @@ class EmailScreen extends React.Component {
             .computedResourcesProvider(this.texts.saveByEmailTitle)
             .get()}
         </Typography>
-        <Divider light />
+        <Divider light className={classes.divider} />
         <Row>
           <Input
             label={this.props.languageStore
               .computedResourcesProvider(this.texts.insertEmail)
               .get()}
             {...getPropsField(saveForm, 'email')}
-            // lg={6}
-            // sm={12}
+            lg={6}
+            sm={12}
           />
           <Input
             label={this.props.languageStore
@@ -93,8 +93,8 @@ class EmailScreen extends React.Component {
               .get()}
             {...getPropsField(saveForm, 'emailValidation')}
             onPaste={this.preventPaste}
-            // lg={6}
-            // sm={12}
+            lg={6}
+            sm={12}
           />
         </Row>
 

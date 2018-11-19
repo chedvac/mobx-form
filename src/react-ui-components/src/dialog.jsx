@@ -65,13 +65,10 @@ class Dialog extends React.Component {
           fullWidth={fullWidth}
           maxWidth={maxWidth}
         >
-          <DialogTitle id="alert-dialog-title">
-            <IconButton onClick={onClose}>
-              <CloseIcon />
-            </IconButton>
-
-            {title}
-          </DialogTitle>
+          <IconButton onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+          {title && <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}
           <DialogContent>
             {typeof Content === 'string' ? (
               <DialogContentText id="alert-dialog-description">

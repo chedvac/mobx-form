@@ -13,11 +13,11 @@ import Divider from '@material-ui/core/Divider';
 import EmailScreen from './emailScreen';
 import SmsScreen from './smsScreen';
 import dialog from 'mobx-business-components/dialog';
-
-const styles = theme => {};
+import styles from './styles';
 
 @withStyles(styles)
 @inject('languageStore')
+
 // @observer
 class OptionsScreen extends React.Component {
   constructor(props) {
@@ -53,16 +53,12 @@ class OptionsScreen extends React.Component {
   }
   emailClick() {
     dialog.open({
-      content: EmailScreen,
-      fullWidth: true,
-      maxWidth: 'lg'
+      content: EmailScreen
     });
   }
   smsClick() {
     dialog.open({
-      content: SmsScreen,
-      fullWidth: true,
-      maxWidth: 'lg'
+      content: SmsScreen
     });
   }
   render() {
@@ -74,13 +70,13 @@ class OptionsScreen extends React.Component {
             .computedResourcesProvider(this.texts.saveFormTitle)
             .get()}
         </Typography>
-        <Divider light />
-        <Typography color="inherit">
+        <Divider light className={classes.divider} />
+        <Typography color="inherit" align="center">
           {this.props.languageStore
             .computedResourcesProvider(this.texts.notice)
             .get()}
         </Typography>
-        <Typography color="inherit">
+        <Typography color="inherit" align="center">
           {this.props.languageStore
             .computedResourcesProvider(this.texts.selectOption)
             .get()}
