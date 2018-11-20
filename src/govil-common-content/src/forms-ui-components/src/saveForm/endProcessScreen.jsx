@@ -7,19 +7,17 @@ import Row from 'react-ui-components/structure/row';
 
 import Typography from '@material-ui/core/Typography';
 import BlueButton from 'react-ui-components/buttons/blueButton';
-import AlternateEmail from '@material-ui/icons/AlternateEmail';
-import Sms from '@material-ui/icons/Sms';
 import Divider from '@material-ui/core/Divider';
-import EmailScreen from './emailScreen';
-import SmsScreen from './smsScreen';
+import OptionsScreen from 'govil-common-content/forms-ui-components/src/saveForm/optionsScreen';
+
 import dialog from 'mobx-business-components/dialog';
+
 import styles from './styles';
 
 @withStyles(styles)
 @inject('languageStore')
-
 // @observer
-class OptionsScreen extends React.Component {
+class EndProcessScreen extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
@@ -28,38 +26,35 @@ class OptionsScreen extends React.Component {
         english: 'Save form',
         hebrew: 'שמירה'
       },
-      notice: {
-        hebrew: 'קישור לשירות ששמרתם ישלח אליכם מיד',
-        english:
-          'You can get a link to your saved form by email, or SMS to your mobile.',
-        arabic: 'يرسل إليكم فورًا رابط للخدمة التي تم حفظها'
+      formSavedNotice: {
+        arabic: 'تم إرسال رابط للخدمة التي تم حفظها بناء على طلبكم.',
+        english: 'A link to your saved form has been sent.',
+        hebrew: 'קישור לשירות ששמרתם נשלח לפי בקשתכם.'
       },
-      selectOption: {
-        hebrew: 'בחרו את הדרך בה תרצו לקבל את הקישור:',
-        english: 'Choose how you would like to receive the link.',
-        arabic: 'اختاروا طريقة تلقي الرابط:'
+      formSavedLatencyNotice: {
+        arabic: ' يمكن فتح الخدمة خلال {} أيام.',
+        english: 'You can use the link for {} days.',
+        hebrew: ' פתיחת השירות אפשרית למשך undefined ימים.'
       },
-      inEmail: {
-        hebrew: 'בדואר אלקטרוני',
-        english: 'Email',
-        arabic: 'بالبريد الإلكتروني'
+      resend: {
+        arabic: 'إعادة إرسال',
+        english: 'Send again',
+        hebrew: 'לשליחה חוזרת'
       },
-      inSMS: {
-        hebrew: 'במסרון',
-        english: 'SMS',
-        arabic: 'رسالة SMS'
+      confirm: {
+        arabic: 'موافقة',
+        english: 'Confirm',
+        hebrew: 'אישור'
       }
     };
   }
-  emailClick() {
+  resendClick() {
     dialog.open({
-      content: EmailScreen
+      content: OptionsScreen
     });
   }
-  smsClick() {
-    dialog.open({
-      content: SmsScreen
-    });
+  confirmClick() {
+    dialog.close();
   }
   render() {
     const { classes } = this.props;
@@ -73,33 +68,31 @@ class OptionsScreen extends React.Component {
         <Divider light className={classes.divider} />
         <Typography color="inherit" align="center">
           {this.props.languageStore
-            .computedResourcesProvider(this.texts.notice)
+            .computedResourcesProvider(this.texts.formSavedNotice)
             .get()}
         </Typography>
         <Typography color="inherit" align="center">
           {this.props.languageStore
-            .computedResourcesProvider(this.texts.selectOption)
+            .computedResourcesProvider(this.texts.formSavedLatencyNotice)
             .get()}
         </Typography>
         <Row>
           <BlueButton
             variant="outlined"
             className={classes.button}
-            onClick={this.emailClick}
+            onClick={this.resendClick}
           >
-            <AlternateEmail />
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.inEmail)
+              .computedResourcesProvider(this.texts.resend)
               .get()}
           </BlueButton>
           <BlueButton
             variant="outlined"
             className={classes.button}
-            onClick={this.smsClick}
+            onClick={this.confirmClick}
           >
-            <Sms />
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.inSMS)
+              .computedResourcesProvider(this.texts.confirm)
               .get()}
           </BlueButton>
         </Row>
@@ -108,4 +101,4 @@ class OptionsScreen extends React.Component {
   }
 }
 
-export default OptionsScreen;
+export default EndProcessScreen;

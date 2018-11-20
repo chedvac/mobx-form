@@ -138,7 +138,7 @@ export class Languages extends ModularViewModel {
   * @description return true when current language dir is rtl
   * @returns {bool} true/false
   * @example 
-    var isRtl = languageViewModel.isRtl()// return true
+    var isRtl = languageViewModel.isRtl// return true
   */
   @computed
   get isRtl() {
@@ -149,7 +149,7 @@ export class Languages extends ModularViewModel {
   * @returns {string} "ltr"/"rtl"
   * @example 
   get direction() {
-    var גןרקבאןםמ = languageViewModel.direction()// "rtl"
+    var גןרקבאןםמ = languageViewModel.direction// "rtl"
   */
   @computed
   get direction() {
@@ -159,7 +159,7 @@ export class Languages extends ModularViewModel {
   * @description return the current language short name
   * @returns {string} short name
   * @example 
-  var shortName = languageViewModel.getShortName()// return 'he'
+  var shortName = languageViewModel.getShortName// return 'he'
   */
   @computed
   get getShortName() {
