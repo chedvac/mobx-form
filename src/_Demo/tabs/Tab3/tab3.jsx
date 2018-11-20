@@ -17,7 +17,7 @@ export default class Tab3 extends React.Component {
         english: 'last name',
         arabic: 'last name'
       })
-    }
+    };
   }
   render() {
 

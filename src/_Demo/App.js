@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { observer, Provider } from 'mobx-react';
-import './App.css';
 import RootStore from './rootStore';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
-import injectSheet, { ThemeProvider } from 'react-jss'
+import injectSheet, { ThemeProvider } from 'react-jss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
 import FormSection from 'govil-common-content/forms-ui-components/src/formSection';

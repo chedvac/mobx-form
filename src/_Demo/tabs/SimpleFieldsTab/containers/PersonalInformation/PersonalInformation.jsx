@@ -11,10 +11,6 @@ import Textarea from 'react-ui-components/fields/Textarea';
 import Select from 'react-ui-components/fields/Select';
 import DatePicker from 'react-ui-components/fields/DatePicker/DatePicker';
 
-// const styles = theme => ({
-//   root: { flexGrow: 1 }
-// });
-
 @inject('languageStore')
 @observer
 export default class PersonalInformation extends React.Component {
