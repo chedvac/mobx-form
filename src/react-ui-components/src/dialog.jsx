@@ -16,6 +16,9 @@ import CloseIcon from '@material-ui/icons/Close';
 const styles = theme => ({
   direction: {
     direction: theme.direction
+  },
+  closeIcon: {
+    width: 50
   }
 });
 @injectSheet(styles)
@@ -65,7 +68,7 @@ class Dialog extends React.Component {
           fullWidth={fullWidth}
           maxWidth={maxWidth}
         >
-          <IconButton onClick={onClose}>
+          <IconButton onClick={onClose} className={classes.closeIcon}>
             <CloseIcon />
           </IconButton>
           {title && <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}
