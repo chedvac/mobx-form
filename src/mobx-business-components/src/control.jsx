@@ -46,7 +46,8 @@ function control(WrappedComponent) {
     };
 
     render() {
-      const message = format(this.state.message, this.props.label);
+      const message =
+        this.props.message || format(this.state.message, this.props.label);
       return (
         <WrappedComponent
           {...this.props}
