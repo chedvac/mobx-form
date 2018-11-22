@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from 'mobx-business-components/control';
+import textField from 'mobx-business-components/textField';
 
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -56,4 +56,4 @@ class Textarea extends React.Component {
     );
   }
 }
-export default control(withStyles(styles)(Textarea));
+export default textField(withStyles(styles)(Textarea));
