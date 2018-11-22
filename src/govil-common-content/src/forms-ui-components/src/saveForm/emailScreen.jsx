@@ -1,10 +1,8 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
+import { inject } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 import { Grid } from '@material-ui/core';
 import Row from 'react-ui-components/structure/row';
-
 import Typography from '@material-ui/core/Typography';
 import BlueButton from 'react-ui-components/buttons/blueButton';
 import WhiteButton from 'react-ui-components/buttons/blueButton';
@@ -20,7 +18,6 @@ import styles from './styles';
 
 @withStyles(styles)
 @inject('languageStore')
-// @observer
 class EmailScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -56,17 +53,33 @@ class EmailScreen extends React.Component {
         arabic: 'يجب إدخال قيمة خطيًا في هذا الحقل'
       }
     };
+
+    this.state = {
+      message: ''
+    };
   }
   closeDialog() {
+    //saveForm.reset();
     dialog.close();
   }
   @bind()
-  preventPaste() {
-    saveForm.validateables.emailValidation.setValidationState({
+  emptyMessage() {
+    this.setState({ message: '' });
+  }
+
+  @bind()
+  preventPaste(e) {
+    this.setState({
       message: this.props.languageStore
         .computedResourcesProvider(this.texts.manualTyping)
         .get()
     });
+    e.preventDefault();
+    // saveForm.validateables.emailValidation.setValidationState({
+    //   message: this.props.languageStore
+    //     .computedResourcesProvider(this.texts.manualTyping)
+    //     .get()
+    // });
   }
   render() {
     const { classes } = this.props;
@@ -88,11 +101,13 @@ class EmailScreen extends React.Component {
             sm={12}
           />
           <Input
+            message={this.state.message}
             label={this.props.languageStore
               .computedResourcesProvider(this.texts.validateEmail)
               .get()}
             {...getPropsField(saveForm, 'emailValidation')}
             onPaste={this.preventPaste}
+            onFocus={this.emptyMessage}
             lg={6}
             sm={12}
           />

@@ -2,8 +2,9 @@ import React from 'react';
 import { enableUniqueIds } from 'react-html-id';
 import { format } from 'utils/stringExtension';
 import { autorun } from 'mobx';
-function control(WrappedComponent) {
-  return class control extends React.Component {
+
+function textField(WrappedComponent) {
+  return class textField extends React.Component {
     constructor(props) {
       super(props);
       enableUniqueIds(this);
@@ -24,25 +25,14 @@ function control(WrappedComponent) {
     });
 
     getEventValue = e => {
-      return e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+      return e.target.value;
     };
 
     handleBlur = e => {
       const newValue = this.getEventValue(e);
       this.props.update(newValue);
-      this.setState({ message: this.props.validationState.message });
 
-      // if (!newValue) {
-      //   this.props.update(newValue);
-      // } else {
-      //   const validateType = this.props.validateType(newValue);
-      //   if (validateType.isParsed) {
-      //     this.props.update(validateType.value);
-      //     this.setState({ message: this.props.validationState.message });
-      //   } else {
-      //     this.setState({ message: validateType.message });
-      //   }
-      // }
+      this.setState({ message: this.props.validationState.message });
     };
 
     handleChange = e => {
@@ -56,8 +46,7 @@ function control(WrappedComponent) {
     };
 
     render() {
-      const message =
-        this.props.message || format(this.state.message, this.props.label);
+      const message = format(this.state.message, this.props.label);
       return (
         <WrappedComponent
           {...this.props}
@@ -71,4 +60,4 @@ function control(WrappedComponent) {
     }
   };
 }
-export default control;
+export default textField;

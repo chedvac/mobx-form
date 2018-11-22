@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from 'mobx-business-components/control';
+import textField from 'mobx-business-components/textField';
 
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
@@ -56,4 +56,4 @@ class Textarea extends React.Component {
     );
   }
 }
-export default control(injectSheet(styles)(Textarea));
+export default textField(withStyles(styles)(Textarea));
