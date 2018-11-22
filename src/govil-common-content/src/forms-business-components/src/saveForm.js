@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 import dialog from 'mobx-business-components/dialog';
 import OptionsScreen from 'govil-common-content/forms-ui-components/src/saveForm/optionsScreen';
-import EmailScreen from '../../forms-ui-components/src/saveForm/emailScreen';
+
 import ModularViewModel from 'mobx-vm/modularViewModel';
 import validateable from 'mobx-vm/validateable';
 import { email } from 'validations/rules/address';
@@ -14,9 +14,6 @@ import { bind } from 'lodash-decorators';
 const endpoint = 'http://gov.forms.local/MW/forms/Data/'; //'/MW/forms/Data/';
 
 class SaveForm extends ModularViewModel {
-  constructor() {
-    super();
-  }
   @observable
   @validateable({ validations: [email(), required()] })
   email = 'chedva@gov.il';

@@ -1,7 +1,6 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
+import { inject } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 import { Grid } from '@material-ui/core';
 import Row from 'react-ui-components/structure/row';
 
@@ -19,7 +18,6 @@ import styles from './styles';
 
 @withStyles(styles)
 @inject('languageStore')
-// @observer
 class SmsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -52,6 +50,7 @@ class SmsScreen extends React.Component {
     };
   }
   closeDialog() {
+    //saveForm.reset();
     dialog.close();
   }
   render() {
