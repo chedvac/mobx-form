@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 import Header from './header';
 import SideToolbar from './sideToolbar';
+import injectSheet from 'react-jss';
 
-let closeWidth = '72';
-const openWidth = '275';
+let closeWidth = '62';
+const openWidth = '220';
 
 const styles = theme => {
   return {
     contentDiv: {
       width: '100%',
+      height: '100%',
       display: 'flex',
       position: 'relative',
     },
     content: {
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3
-    }
+    },
+    dir: props => ({
+      flexGrow: 1,
+      direction: props.direction,
+      backgroundColor: '#fff'
+    })
   };
 };
 
-@withStyles(styles, { withTheme: true })
+@injectSheet(styles)
 @observer
 class FormSection extends Component {
   constructor(props) {
@@ -62,10 +68,14 @@ class FormSection extends Component {
     closeWidth = theme.isMobile ? '0' : '72';
 
     return (
-      <React.Fragment>
-        <Header toggleToolbar={this.toggleToolbar} />
+      <div className={classes.dir}>
+        <Header
+          toggleToolbar={this.toggleToolbar}
+          direction={theme.direction}
+        />
         <div className={classes.contentDiv}>
           <SideToolbar
+            direction={theme.direction}
             width={this.state.drawerWidth}
             toolbarButtonsStore={rootStore.toolbarButtons}
             opened={this.state.opened}
@@ -73,11 +83,10 @@ class FormSection extends Component {
             closeToolbarOnOut={this.closeToolbarOnOut}
           />
           {
-            React.cloneElement(this.props.children, { drawerForContentWidth: this.state.drawerForContentWidth })
+            this.props.children
           }
-
         </div>
-      </React.Fragment>
+      </div >
     );
   }
 }

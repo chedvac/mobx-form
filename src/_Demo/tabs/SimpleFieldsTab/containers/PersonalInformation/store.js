@@ -12,8 +12,7 @@ import {
 import {
   //   dependedGreaterThan,
   //   dependedLessThan,
-  greaterThan,
-  lessThan
+  greaterThan
 } from 'validations/rules/number';
 import { sumAges } from './validations';
 import { generateAsyncValidation } from 'vm-validations/validationsFactory';
@@ -23,15 +22,13 @@ const myRequest = function(value) {
     .get(
       'https://forms.gov.il/globalData/GetSequence/Gethtmlform.aspx?formType=componentsdemo@test.gov.il'
     )
-    .then(res => {
+    .then(() => {
       if (value === 'error') {
         throw new Error();
       }
       return true;
     })
-    .catch(e => {
-      return false;
-    });
+    .catch(() => false);
 };
 
 class PersonalInformation extends ModularViewModel {

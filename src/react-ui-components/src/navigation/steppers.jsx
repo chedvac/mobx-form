@@ -1,22 +1,23 @@
 import React from 'react';
-import Link from 'reactNavigationRouter/Link';
+import Link from 'react-navigation-router/link';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router';
+import injectSheet from 'react-jss'
+import PropTypes from 'prop-types';
 
 import {
   MuiThemeProvider,
-  withStyles,
   createMuiTheme
 } from '@material-ui/core/styles';
-import customTheme from 'reactUiComponents/themes/customTheme';
+import customTheme from 'src/customTheme';
 
 const styles = theme => ({
   blueTitle: {
     ...theme.typography.blueTitle,
-    marginTop: '-30px'
+    marginTop: '-14px'
   }
 });
 
@@ -52,36 +53,31 @@ const customSteppersTheme = () => {
   });
 };
 
-@withStyles(styles)
+@injectSheet(styles)
 class Steppers extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.props.history.listen(location => {
-      this.handleStep(location);
-    });
   }
-  state = {
-    activeStep: 0
-  };
-
-  handleStep = location => {
+  handleStep = currentPath => {
     const step = this.props.routeSettings.findIndex(
-      route => route.path === location.pathname
+      route => route.path === currentPath
     );
-    this.setState({
-      activeStep: step
-    });
+    return step === -1 ? 0 : step;
   };
 
   render() {
-    const { activeStep } = this.state;
     const { classes } = this.props;
+
     return (
       <MuiThemeProvider theme={customSteppersTheme}>
-        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+        <Stepper
+          alternativeLabel
+          nonLinear
+          activeStep={this.handleStep(this.props.history.path)}
+        >
           {this.props.routeSettings.map((route, index) => (
-            <Step key={route.name} {...this.props}>
+            <Step key={route.name}>
               <Link to={route.path}>
                 <StepButton />
               </Link>
@@ -95,4 +91,8 @@ class Steppers extends React.Component {
     );
   }
 }
-export default withRouter(Steppers);
+Steppers.propTypes = {
+  routeSettings: PropTypes.array.isRequired, //*Of(PropTypes.instanceOf(RouteSettings1))*/
+  history: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired
+};
+export default Steppers;

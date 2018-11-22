@@ -1,21 +1,21 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import injectSheet from 'react-jss'
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   //subTitle: theme.typography.subTitle
 });
 
-@withStyles(styles)
+@injectSheet(styles)
 class BlueButton extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, onClick } = this.props;
     return (
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={onClick}>
         {children}
       </Button>
     );

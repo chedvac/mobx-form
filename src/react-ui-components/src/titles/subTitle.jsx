@@ -1,12 +1,12 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import injectSheet from 'react-jss'
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   subTitle: theme.typography.subTitle
 });
 
-@withStyles(styles)
+@injectSheet(styles)
 class SubTitle extends React.Component {
   constructor(props) {
     super(props);

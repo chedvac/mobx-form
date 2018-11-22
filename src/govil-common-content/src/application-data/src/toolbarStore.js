@@ -1,7 +1,7 @@
-import { action, observable, computed } from 'mobx';
+import { action, observable } from 'mobx';
 import { toolbarButtonsNames } from 'govil-common-content/forms-ui-components/src/toolbarButtons'
 import fp from 'lodash/fp';
-//TODO Toolbar
+
 class ToolbarButtonsStore {
 
     constructor(toolbarButtonsState = {}) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import control from 'mobxReactForm/control';
+import control from 'mobx-business-components/control';
 
 import { default as DayPickerInput } from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
@@ -11,7 +11,6 @@ import 'moment/locale/ar';
 import 'moment/locale/he';
 import './DatePicker.css';
 
-@inject('applicationData')
 @inject('languageStore')
 @observer
 class DatePicker extends React.Component {

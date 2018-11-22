@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from 'mobxReactForm/control';
-import { withStyles } from '@material-ui/core/styles';
+import control from 'mobx-business-components/control';
+import injectSheet from 'react-jss'
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
@@ -27,7 +27,7 @@ const styles = theme => ({
   // }
 });
 
-@withStyles(styles)
+@injectSheet(styles)
 @observer
 class Input extends React.Component {
   render() {
