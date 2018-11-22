@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import control from 'mobx-business-components/control';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
+import textField from 'mobx-business-components/textField';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
@@ -64,4 +64,4 @@ class Input extends React.Component {
     );
   }
 }
-export default control(Input);
+export default textField(Input);
