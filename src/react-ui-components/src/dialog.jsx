@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { observer, inject } from 'mobx-react';
 
 import Button from '@material-ui/core/Button';
@@ -37,6 +38,11 @@ class Dialog extends React.Component {
         hebrew: 'ביטול',
         english: 'Cancel',
         arabic: 'الغاء'
+      },
+      close: {
+        hebrew: 'סגירה',
+        english: 'Close',
+        arabic: 'اغلاق'
       }
     };
   }
@@ -59,7 +65,7 @@ class Dialog extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <div ref={this.ref}>
         <DialogMaterial
           className={classes.direction}
           open={isOpen}
@@ -67,8 +73,15 @@ class Dialog extends React.Component {
           aria-describedby="alert-dialog-description"
           fullWidth={fullWidth}
           maxWidth={maxWidth}
+          onClose={onClose}
         >
-          <IconButton onClick={onClose} className={classes.closeIcon}>
+          <IconButton
+            onClick={onClose}
+            className={classes.closeIcon}
+            aria-label={this.props.languageStore
+              .computedResourcesProvider(texts.close)
+              .get()}
+          >
             <CloseIcon />
           </IconButton>
           {title && <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}

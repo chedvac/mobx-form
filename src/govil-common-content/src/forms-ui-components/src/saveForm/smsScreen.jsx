@@ -57,7 +57,7 @@ class SmsScreen extends React.Component {
     const { classes } = this.props;
     return (
       <Grid>
-        <Typography color="inherit" align="center">
+        <Typography color="inherit" align="center" id="alert-dialog-title">
           {this.props.languageStore
             .computedResourcesProvider(this.texts.saveBySMS)
             .get()}

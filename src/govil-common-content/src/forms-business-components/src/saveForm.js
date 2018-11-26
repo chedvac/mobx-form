@@ -67,13 +67,20 @@ class SaveForm extends ModularViewModel {
       ))
     );
   }
+  texts = {
+    pending: {
+      hebrew: 'פעולת השמירה מתבצעת',
+      english: 'Saving',
+      arabic: 'يتم الحفظ حاليًا'
+    }
+  };
   _handleSaveResponse(response) {
     // formInformation.formParams.process.processID = response.processID;
     //this.reset();
     dialog.open({ content: EndProcessScreen });
   }
   async _saveRequest(settings) {
-    // loader.open(labels().pending);
+    // loader.open(texts.pending);
     const settingsRequest = {
       url: endpoint,
       method: 'POST',
