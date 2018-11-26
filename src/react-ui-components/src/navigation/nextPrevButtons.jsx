@@ -23,12 +23,12 @@ class NextPrevButtons extends React.Component {
     this.props = props;
     this.pathesArray = this.props.routeSettings.map(route => route.path);
     this.texts = {
-      back: this.props.languageStore.computedResourcesProvider({
+      back: this.props.languageStore.resourcesProvider({
         hebrew: 'לשלב הקודם',
         english: 'back',
         arabic: 'לשלב הקודם'
       }),
-      next: this.props.languageStore.computedResourcesProvider({
+      next: this.props.languageStore.resourcesProvider({
         hebrew: 'לשלב הבא',
         english: 'next',
         arabic: 'לשלב הבא'

@@ -17,42 +17,42 @@ export default class PersonalInformation extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
-      firstName: this.props.languageStore.computedResourcesProvider({
+      firstName: this.props.languageStore.resourcesProvider({
         hebrew: ' שם פרטי',
         english: 'first name',
         arabic: ' שם פרטי'
       }),
-      lastName: this.props.languageStore.computedResourcesProvider({
+      lastName: this.props.languageStore.resourcesProvider({
         hebrew: 'שם משפחה',
         english: 'last name',
         arabic: ''
       }),
-      age: this.props.languageStore.computedResourcesProvider({
+      age: this.props.languageStore.resourcesProvider({
         hebrew: 'גיל הבן',
         english: 'age',
         arabic: ''
       }),
-      fatherAge: this.props.languageStore.computedResourcesProvider({
+      fatherAge: this.props.languageStore.resourcesProvider({
         hebrew: 'גיל האב',
         english: 'father Age',
         arabic: ''
       }),
-      comments: this.props.languageStore.computedResourcesProvider({
+      comments: this.props.languageStore.resourcesProvider({
         hebrew: 'הערות',
         english: 'comments',
         arabic: ''
       }),
-      status: this.props.languageStore.computedResourcesProvider({
+      status: this.props.languageStore.resourcesProvider({
         hebrew: 'מצב משפחתי',
         english: 'status',
         arabic: ''
       }),
-      agreement: this.props.languageStore.computedResourcesProvider({
+      agreement: this.props.languageStore.resourcesProvider({
         hebrew: 'אני מצהיר...',
         english: 'I Agree...',
         arabic: ''
       }),
-      birthDate: this.props.languageStore.computedResourcesProvider({
+      birthDate: this.props.languageStore.resourcesProvider({
         hebrew: 'תאריך לידה',
         english: 'birth date',
         arabic: ''

@@ -89,13 +89,13 @@ export class Languages extends ModularViewModel {
           );
     });
   }
-  /* @function <b>computedResourcesProvider</b>
+  /* @function <b>resourcesProvider</b>
   * @description return computed of text in current language, if th eobject not include key for the current language throw error
   * @param {object} texts - object with available languages as keys and texts for each one as value 
   * @returns {computed} 
   */
   @assertParametersType({ texts: PropTypes.object.isRequired })
-  computedResourcesProvider(texts = {}) {
+  resourcesProvider(texts = {}) {
     return computed(() => {
       return (
         texts[this.languageName] ||

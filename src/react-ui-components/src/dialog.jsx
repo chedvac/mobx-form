@@ -79,7 +79,7 @@ class Dialog extends React.Component {
             onClick={onClose}
             className={classes.closeIcon}
             aria-label={this.props.languageStore
-              .computedResourcesProvider(texts.close)
+              .resourcesProvider(texts.close)
               .get()}
           >
             <CloseIcon />
@@ -99,7 +99,7 @@ class Dialog extends React.Component {
               {Object.values(buttons).map((btn, index) => (
                 <Button key={index} onClick={btn.click} color="primary">
                   {this.props.languageStore
-                    .computedResourcesProvider(texts[btn.type])
+                    .resourcesProvider(texts[btn.type])
                     .get()}
                 </Button>
               ))}

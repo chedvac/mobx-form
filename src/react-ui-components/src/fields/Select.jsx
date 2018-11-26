@@ -8,7 +8,7 @@ class BaseSelect extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
-      optionCaption: this.props.languageStore.computedResourcesProvider({
+      optionCaption: this.props.languageStore.resourcesProvider({
         english: 'Choose',
         hebrew: 'בחר',
         arabic: 'اختر'

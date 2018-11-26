@@ -66,19 +66,19 @@ class OptionsScreen extends React.Component {
       <Grid>
         <Typography color="inherit" align="center" id="alert-dialog-title">
           {this.props.languageStore
-            .computedResourcesProvider(this.texts.saveFormTitle)
+            .resourcesProvider(this.texts.saveFormTitle)
             .get()}
         </Typography>
         <Divider light className={classes.divider} />
         <Grid id="alert-dialog-description">
           <Typography color="inherit" align="center">
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.notice)
+              .resourcesProvider(this.texts.notice)
               .get()}
           </Typography>
           <Typography color="inherit" align="center">
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.selectOption)
+              .resourcesProvider(this.texts.selectOption)
               .get()}
           </Typography>
         </Grid>
@@ -90,7 +90,7 @@ class OptionsScreen extends React.Component {
           >
             <AlternateEmail />
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.inEmail)
+              .resourcesProvider(this.texts.inEmail)
               .get()}
           </BlueButton>
           <BlueButton
@@ -100,7 +100,7 @@ class OptionsScreen extends React.Component {
           >
             <Sms />
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.inSMS)
+              .resourcesProvider(this.texts.inSMS)
               .get()}
           </BlueButton>
         </Row>
