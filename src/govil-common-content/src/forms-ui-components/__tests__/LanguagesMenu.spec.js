@@ -1,7 +1,7 @@
 // import React from 'react';
 // import Adapter from 'enzyme-adapter-react-16';
 // import Enzyme, { shallow } from 'enzyme';
-// import LanguagesMenu from 'govil-common-content/forms-ui-components/src/languagesMenu';
+// import LanguagesMenu from 'govil-common-content/forms-ui-components/src/LanguagesMenu';
 // import languageStore from 'govil-common-content/forms-business-components/src/language';
 // import ListItem from '@material-ui/core/ListItem';
 // import List from '@material-ui/core/List';

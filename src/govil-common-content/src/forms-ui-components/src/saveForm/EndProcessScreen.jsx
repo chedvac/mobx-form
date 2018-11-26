@@ -5,9 +5,9 @@ import { Grid } from '@material-ui/core';
 import Row from 'react-ui-components/structure/row';
 
 import Typography from '@material-ui/core/Typography';
-import BlueButton from 'react-ui-components/buttons/blueButton';
+import BlueButton from 'react-ui-components/buttons/BlueButton';
 import Divider from '@material-ui/core/Divider';
-import OptionsScreen from 'govil-common-content/forms-ui-components/src/saveForm/optionsScreen';
+import OptionsScreen from 'govil-common-content/forms-ui-components/src/saveForm/OptionsScreen';
 
 import dialog from 'mobx-business-components/dialog';
 

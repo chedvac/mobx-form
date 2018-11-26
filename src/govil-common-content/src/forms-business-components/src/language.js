@@ -1,9 +1,9 @@
 import { action, computed, autorun, observable } from 'mobx';
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 import PropTypes from 'prop-types';
 import assertParametersType from 'utils/typeVerifications';
 import fail from 'utils/fail';
-import LanguageDefinition from './languageDefinition';
+import LanguageDefinition from './LanguageDefinition';
 const languagesDefinitions = [
   new LanguageDefinition({
     longName: 'english',
@@ -73,10 +73,10 @@ export class Languages extends ModularViewModel {
     this.languageName = languageName;
   }
   /* @function <b>setAvaliableLanguges</b>
-  * @description  set definition object of the requested languages in availableLanguagesList array 
-  * @param {array} availableLanguages - array of  languages longName
-  * @example  setAvaliableLanguges(['english', 'hebrew'])
-  */
+   * @description  set definition object of the requested languages in availableLanguagesList array
+   * @param {array} availableLanguages - array of  languages longName
+   * @example  setAvaliableLanguges(['english', 'hebrew'])
+   */
   @action
   setAvaliableLanguages(availableLanguages) {
     this.availableLanguagesList = [];
@@ -90,10 +90,10 @@ export class Languages extends ModularViewModel {
     });
   }
   /* @function <b>resourcesProvider</b>
-  * @description return computed of text in current language, if th eobject not include key for the current language throw error
-  * @param {object} texts - object with available languages as keys and texts for each one as value 
-  * @returns {computed} 
-  */
+   * @description return computed of text in current language, if th eobject not include key for the current language throw error
+   * @param {object} texts - object with available languages as keys and texts for each one as value
+   * @returns {computed}
+   */
   @assertParametersType({ texts: PropTypes.object.isRequired })
   resourcesProvider(texts = {}) {
     return computed(() => {
@@ -106,10 +106,10 @@ export class Languages extends ModularViewModel {
     });
   }
   /* @function <b>getLanguageDefinition</b>
-  * @description return language object from languagesDefinitions by sent language
-  * @param {string} languageLongName - long name of language
-  * @returns {object} language object from languagesDefinitions or null
-  */
+   * @description return language object from languagesDefinitions by sent language
+   * @param {string} languageLongName - long name of language
+   * @returns {object} language object from languagesDefinitions or null
+   */
   @assertParametersType({ languageLongName: PropTypes.string.isRequired })
   getLanguageDefinition(languageLongName) {
     return languagesDefinitions.find(
@@ -127,9 +127,9 @@ export class Languages extends ModularViewModel {
     return this.getLanguageDefinition(this.languageName);
   }
   /* @computed <b>isMultiLanguages</b>
-  * @description return  is defined more then one language
-  * @returns {bool} 
-  */
+   * @description return  is defined more then one language
+   * @returns {bool}
+   */
   @computed
   get isMultiLanguages() {
     return this.availableLanguagesList.length > 1;
@@ -166,10 +166,10 @@ export class Languages extends ModularViewModel {
     return this.languageDefinition.shortName;
   }
   /* @function <b>getDefaultLanguage</b>
-    * @description return the default language for sent language
-    * @param {string} languageName - long name of language
-    * @returns {string} default language
-    */
+   * @description return the default language for sent language
+   * @param {string} languageName - long name of language
+   * @returns {string} default language
+   */
   @assertParametersType({ languageName: PropTypes.string.isRequired })
   getDefaultLanguage(languageName) {
     return this.getLanguageDefinition(languageName).defaultLanguage;

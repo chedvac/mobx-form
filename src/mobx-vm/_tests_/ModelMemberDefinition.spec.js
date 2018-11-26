@@ -1,4 +1,4 @@
-import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
+import ModelMemberDefinition from 'mobx-vm/ModelMemberDefinition';
 
 let modelMember;
 beforeAll(() => {

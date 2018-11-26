@@ -1,4 +1,4 @@
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 import assertParametersType from 'utils/typeVerifications';
 import PropTypes from 'prop-types';
 

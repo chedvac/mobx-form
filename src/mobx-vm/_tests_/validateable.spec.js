@@ -1,5 +1,5 @@
 import validateable from 'mobx-vm/validateable';
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 
 const validations = [() => true];
 

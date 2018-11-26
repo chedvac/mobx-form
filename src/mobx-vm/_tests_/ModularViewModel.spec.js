@@ -1,10 +1,10 @@
 import { action, observable } from 'mobx';
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 import ValidationsManager from 'vm-validations/validationsManager';
-import ValidateableDefinition from 'mobx-vm/validateableDefinition';
-import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
-// jest.mock('../src/modelMemberDefinition');
-// jest.mock('mobx-vm/validateableDefinition');
+import ValidateableDefinition from 'mobx-vm/ValidateableDefinition';
+import ModelMemberDefinition from 'mobx-vm/ModelMemberDefinition';
+// jest.mock('../src/ModelMemberDefinition');
+// jest.mock('mobx-vm/ValidateableDefinition');
 
 jest.mock('vm-validations/validationsManager');
 

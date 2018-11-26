@@ -1,17 +1,14 @@
 import React from 'react';
-import Link from 'react-navigation-router/link';
+import Link from 'react-navigation-router/Link';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 
-import {
-  MuiThemeProvider,
-  createMuiTheme
-} from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import customTheme from 'src/customTheme';
 
 const styles = theme => ({

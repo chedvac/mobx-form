@@ -5,12 +5,12 @@ import { Grid } from '@material-ui/core';
 import Row from 'react-ui-components/structure/row';
 
 import Typography from '@material-ui/core/Typography';
-import BlueButton from 'react-ui-components/buttons/blueButton';
+import BlueButton from 'react-ui-components/buttons/BlueButton';
 import AlternateEmail from '@material-ui/icons/AlternateEmail';
 import Sms from '@material-ui/icons/Sms';
 import Divider from '@material-ui/core/Divider';
-import EmailScreen from './emailScreen';
-import SmsScreen from './smsScreen';
+import EmailScreen from './EmailScreen';
+import SmsScreen from './SmsScreen';
 import dialog from 'mobx-business-components/dialog';
 import styles from './styles';
 
@@ -99,9 +99,7 @@ class OptionsScreen extends React.Component {
             onClick={this.smsClick}
           >
             <Sms />
-            {this.props.languageStore
-              .resourcesProvider(this.texts.inSMS)
-              .get()}
+            {this.props.languageStore.resourcesProvider(this.texts.inSMS).get()}
           </BlueButton>
         </Row>
       </Grid>

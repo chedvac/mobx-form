@@ -1,8 +1,8 @@
 import NextPrevButtons from 'react-ui-components/navigation/nextPrevButtons';
 import RouteSettings from 'react-navigation-router/RouteSettings';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
-import BlueButton from 'react-ui-components/buttons/blueButton';
-import WhiteButton from 'react-ui-components/buttons/whiteButton';
+import BlueButton from 'react-ui-components/buttons/BlueButton';
+import WhiteButton from 'react-ui-components/buttons/WhiteButton';
 
 import React from 'react';
 import { shallow } from 'enzyme';

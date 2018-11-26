@@ -5,8 +5,8 @@ import { observable, reaction, action } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import { forOwn, upperFirst } from 'lodash/fp';
 
-import ValidateableDefinition from 'mobx-vm/validateableDefinition';
-import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
+import ValidateableDefinition from 'mobx-vm/ValidateableDefinition';
+import ModelMemberDefinition from 'mobx-vm/ModelMemberDefinition';
 
 export default class ModularViewModel {
   constructor(settings = {}) {

@@ -1,10 +1,8 @@
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
-import toolbarButtons from 'govil-common-content/application-data/src/toolbarStore';
+import toolbarButtons from 'govil-common-content/application-data/src/ToolbarStore';
 import modelMember from 'mobx-vm/modelMember';
-import ModularViewModel from 'mobx-vm/modularViewModel';
-import Link from './Link';
-import dialog from 'mobx-business-components/dialog';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 import { toolbarButtonsNames } from 'govil-common-content/forms-ui-components/src/toolbarButtons';
 import examples from 'govil-common-content/application-data/src/DemoData';
 

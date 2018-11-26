@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Input from 'react-ui-components/fields/Input';
 import { getPropsField } from 'mobx-react-form/getProps';
-import Container from 'mobx-business-components/container';
+import Container from 'mobx-business-components/Container';
 
 @inject('languageStore')
 @observer

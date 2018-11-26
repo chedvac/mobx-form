@@ -1,4 +1,4 @@
-import ValidateableDefinition from 'mobx-vm/validateableDefinition';
+import ValidateableDefinition from 'mobx-vm/ValidateableDefinition';
 import validationsManagerFactory from 'vm-validations/validationsManager';
 import { isObservable } from 'mobx';
 
