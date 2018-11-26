@@ -4,7 +4,7 @@ import { format } from 'utils/stringExtension';
 import { autorun } from 'mobx';
 
 function textField(WrappedComponent) {
-  return class textField extends React.Component {
+  return class TextField extends React.Component {
     constructor(props) {
       super(props);
       enableUniqueIds(this);

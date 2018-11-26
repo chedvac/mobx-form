@@ -5,9 +5,9 @@ import languageStore from 'govil-common-content/forms-business-components/src/la
 import injectSheet, { ThemeProvider } from 'react-jss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
-import FormSection from 'govil-common-content/forms-ui-components/src/formSection';
+import FormSection from 'govil-common-content/forms-ui-components/src/FormSection';
 import customTheme from 'src/customTheme';
-import Dialog from 'react-ui-components/dialog';
+import Dialog from 'react-ui-components/Dialog';
 import dialog from 'mobx-business-components/dialog';
 
 import ComponentDemo from './componentsDemo';

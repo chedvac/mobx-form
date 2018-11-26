@@ -1,14 +1,14 @@
 import { observable, action } from 'mobx';
 import dialog from 'mobx-business-components/dialog';
-import OptionsScreen from 'govil-common-content/forms-ui-components/src/saveForm/optionsScreen';
+import OptionsScreen from 'govil-common-content/forms-ui-components/src/saveForm/OptionsScreen';
 
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 import validateable from 'mobx-vm/validateable';
 import { email } from 'validations/rules/address';
 import { required } from 'validations/rules/basic';
 import request from 'utils/serviceRequest';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
-import EndProcessScreen from 'govil-common-content/forms-ui-components/src/saveForm/endProcessScreen';
+import EndProcessScreen from 'govil-common-content/forms-ui-components/src/saveForm/EndProcessScreen';
 import { bind } from 'lodash-decorators';
 
 const endpoint = 'http://gov.forms.local/MW/forms/Data/'; //'/MW/forms/Data/';

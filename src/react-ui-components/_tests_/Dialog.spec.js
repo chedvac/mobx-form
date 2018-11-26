@@ -3,7 +3,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
-import Dialog from 'react-ui-components/dialog';
+import Dialog from 'react-ui-components/Dialog';
 import { shallow } from 'enzyme';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
 

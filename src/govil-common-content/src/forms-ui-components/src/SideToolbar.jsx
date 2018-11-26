@@ -3,10 +3,10 @@ import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import ToolbarButton from 'govil-common-content/forms-ui-components/src/toolbarButton';
+import ToolbarButton from 'govil-common-content/forms-ui-components/src/ToolbarButton';
 import { toolbarButtonsObject } from './toolbarButtons';
 import fp from 'lodash/fp';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 
 const styles = theme => {
   return {
@@ -16,7 +16,7 @@ const styles = theme => {
       whiteSpace: 'nowrap',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.enteringScreen
       }),
       left: props.direction === 'rtl' ? 'auto' : '0',
       right: props.direction === 'rtl' ? '0' : 'auto',
@@ -27,10 +27,10 @@ const styles = theme => {
       overflowX: 'hidden',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: theme.transitions.duration.leavingScreen
       }),
       [theme.breakpoints.up('sm')]: {
-        width: theme.spacing.unit * 9,
+        width: theme.spacing.unit * 9
       }
     },
     'ic-language': {
@@ -74,7 +74,6 @@ const styles = theme => {
 @injectSheet(styles)
 @observer
 class SideToolbar extends React.Component {
-
   render() {
     const {
       classes,
@@ -86,16 +85,25 @@ class SideToolbar extends React.Component {
     } = this.props;
     return (
       <Drawer
-        onMouseEnter={() => { openToolbarOnOver() }} onMouseLeave={() => { closeToolbarOnOut() }}
+        onMouseEnter={() => {
+          openToolbarOnOver();
+        }}
+        onMouseLeave={() => {
+          closeToolbarOnOut();
+        }}
         variant="permanent"
         classes={{
-          paper: classNames(classes.drawerPaper, !opened && classes.drawerPaperClose)
+          paper: classNames(
+            classes.drawerPaper,
+            !opened && classes.drawerPaperClose
+          )
         }}
         opened={opened.toString()}
       >
         <Divider />
-        {
-          fp.entriesIn(toolbarButtonsObject).map((toolbarButton) =>
+        {fp
+          .entriesIn(toolbarButtonsObject)
+          .map(toolbarButton =>
             toolbarButtonsStore.toolbarButtonsList[toolbarButton[0]] ? (
               <ToolbarButton
                 key={toolbarButton[0]}
@@ -108,8 +116,8 @@ class SideToolbar extends React.Component {
                 direction={direction}
               />
             ) : (
-                ''
-              )
+              ''
+            )
           )}
       </Drawer>
     );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Grid from '@material-ui/core/Grid';
-import Row from 'react-ui-components/structure/row';
-import SubTitle from 'react-ui-components/titles/subTitle';
+import Row from 'react-ui-components/structure/Row';
+import SubTitle from 'react-ui-components/titles/SubTitle';
 
 import { getPropsField } from 'mobx-react-form/getProps';
 

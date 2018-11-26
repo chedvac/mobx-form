@@ -1,5 +1,5 @@
-import ValidateableDefinition from 'mobx-vm/validateableDefinition';
-import validationsManagerFactory from 'vm-validations/validationsManager';
+import ValidateableDefinition from 'mobx-vm/ValidateableDefinition';
+import validationsManagerFactory from 'vm-validations/ValidationsManager';
 import { isObservable } from 'mobx';
 
 let validateableDefinition;

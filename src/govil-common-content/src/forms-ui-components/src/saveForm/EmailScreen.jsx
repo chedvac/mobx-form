@@ -2,10 +2,10 @@ import React from 'react';
 import { inject } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import Row from 'react-ui-components/structure/row';
+import Row from 'react-ui-components/structure/Row';
 import Typography from '@material-ui/core/Typography';
-import BlueButton from 'react-ui-components/buttons/blueButton';
-import WhiteButton from 'react-ui-components/buttons/blueButton';
+import BlueButton from 'react-ui-components/buttons/BlueButton';
+import WhiteButton from 'react-ui-components/buttons/BlueButton';
 import Divider from '@material-ui/core/Divider';
 
 import Input from 'react-ui-components/fields/Input';

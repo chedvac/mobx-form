@@ -1,5 +1,5 @@
 import examples from 'govil-common-content/application-data/src/DemoData';
-import LanguagesMenu from 'govil-common-content/forms-ui-components/src/languagesMenu';
+import LanguagesMenu from 'govil-common-content/forms-ui-components/src/LanguagesMenu';
 import saveForm from 'govil-common-content/forms-business-components/src/saveForm';
 
 export const toolbarButtonsNames = {

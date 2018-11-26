@@ -1,4 +1,4 @@
-import Router from 'react-navigation-router/router';
+import Router from 'react-navigation-router/Router';
 import React from 'react';
 import RouteSettings from 'react-navigation-router/RouteSettings';
 import { shallow } from 'enzyme';

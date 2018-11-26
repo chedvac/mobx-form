@@ -1,7 +1,6 @@
 import LanguageStore, {
   Languages
 } from 'govil-common-content/forms-business-components/src/language';
-import LanguageDefinition from 'govil-common-content/forms-business-components/src/languageDefinition';
 import { computed } from 'mobx';
 
 describe('Language Store', () => {

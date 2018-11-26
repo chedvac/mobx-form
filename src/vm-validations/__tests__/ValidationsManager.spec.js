@@ -1,4 +1,4 @@
-import ValidationManager from 'vm-validations/validationsManager';
+import ValidationManager from 'vm-validations/ValidationsManager';
 import { greaterThan } from 'validations/rules/number';
 import { maxlength, minlength, required } from 'validations/rules/basic';
 import { hebrew } from 'validations/rules/text';

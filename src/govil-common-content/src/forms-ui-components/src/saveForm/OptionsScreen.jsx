@@ -2,20 +2,23 @@ import React from 'react';
 import { inject } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import Row from 'react-ui-components/structure/row';
+import Row from 'react-ui-components/structure/Row';
 
 import Typography from '@material-ui/core/Typography';
-import BlueButton from 'react-ui-components/buttons/blueButton';
+import BlueButton from 'react-ui-components/buttons/BlueButton';
+import AlternateEmail from '@material-ui/icons/AlternateEmail';
+import Sms from '@material-ui/icons/Sms';
 import Divider from '@material-ui/core/Divider';
-import OptionsScreen from 'govil-common-content/forms-ui-components/src/saveForm/optionsScreen';
-
+import EmailScreen from './EmailScreen';
+import SmsScreen from './SmsScreen';
 import dialog from 'mobx-business-components/dialog';
-
 import styles from './styles';
 
 @withStyles(styles)
 @inject('languageStore')
-class EndProcessScreen extends React.Component {
+
+// @observer
+class OptionsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
@@ -24,37 +27,38 @@ class EndProcessScreen extends React.Component {
         english: 'Save form',
         hebrew: 'שמירה'
       },
-      formSavedNotice: {
-        arabic: 'تم إرسال رابط للخدمة التي تم حفظها بناء على طلبكم.',
-        english: 'A link to your saved form has been sent.',
-        hebrew: 'קישור לשירות ששמרתם נשלח לפי בקשתכם.'
+      notice: {
+        hebrew: 'קישור לשירות ששמרתם ישלח אליכם מיד',
+        english:
+          'You can get a link to your saved form by email, or SMS to your mobile.',
+        arabic: 'يرسل إليكم فورًا رابط للخدمة التي تم حفظها'
       },
-      formSavedLatencyNotice: {
-        arabic: ' يمكن فتح الخدمة خلال {} أيام.',
-        english: 'You can use the link for {} days.',
-        hebrew: ' פתיחת השירות אפשרית למשך undefined ימים.'
+      selectOption: {
+        hebrew: 'בחרו את הדרך בה תרצו לקבל את הקישור:',
+        english: 'Choose how you would like to receive the link.',
+        arabic: 'اختاروا طريقة تلقي الرابط:'
       },
-      resend: {
-        arabic: 'إعادة إرسال',
-        english: 'Send again',
-        hebrew: 'לשליחה חוזרת'
+      inEmail: {
+        hebrew: 'בדואר אלקטרוני',
+        english: 'Email',
+        arabic: 'بالبريد الإلكتروني'
       },
-      confirm: {
-        arabic: 'موافقة',
-        english: 'Confirm',
-        hebrew: 'אישור'
+      inSMS: {
+        hebrew: 'במסרון',
+        english: 'SMS',
+        arabic: 'رسالة SMS'
       }
     };
   }
-  resendClick() {
-    //saveForm.reset();
+  emailClick() {
     dialog.open({
-      content: OptionsScreen
+      content: EmailScreen
     });
   }
-  confirmClick() {
-    //saveForm.reset();
-    dialog.close();
+  smsClick() {
+    dialog.open({
+      content: SmsScreen
+    });
   }
   render() {
     const { classes } = this.props;
@@ -69,12 +73,12 @@ class EndProcessScreen extends React.Component {
         <Grid id="alert-dialog-description">
           <Typography color="inherit" align="center">
             {this.props.languageStore
-              .resourcesProvider(this.texts.formSavedNotice)
+              .resourcesProvider(this.texts.notice)
               .get()}
           </Typography>
           <Typography color="inherit" align="center">
             {this.props.languageStore
-              .resourcesProvider(this.texts.formSavedLatencyNotice)
+              .resourcesProvider(this.texts.selectOption)
               .get()}
           </Typography>
         </Grid>
@@ -82,20 +86,20 @@ class EndProcessScreen extends React.Component {
           <BlueButton
             variant="outlined"
             className={classes.button}
-            onClick={this.resendClick}
+            onClick={this.emailClick}
           >
+            <AlternateEmail />
             {this.props.languageStore
-              .resourcesProvider(this.texts.resend)
+              .resourcesProvider(this.texts.inEmail)
               .get()}
           </BlueButton>
           <BlueButton
             variant="outlined"
             className={classes.button}
-            onClick={this.confirmClick}
+            onClick={this.smsClick}
           >
-            {this.props.languageStore
-              .resourcesProvider(this.texts.confirm)
-              .get()}
+            <Sms />
+            {this.props.languageStore.resourcesProvider(this.texts.inSMS).get()}
           </BlueButton>
         </Row>
       </Grid>
@@ -103,4 +107,4 @@ class EndProcessScreen extends React.Component {
   }
 }
 
-export default EndProcessScreen;
+export default OptionsScreen;

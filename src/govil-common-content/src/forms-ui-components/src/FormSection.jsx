@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import Header from './header';
-import SideToolbar from './sideToolbar';
+import Header from './Header';
+import SideToolbar from './SideToolbar';
 import injectSheet from 'react-jss';
 
 let closeWidth = '62';
@@ -13,7 +13,7 @@ const styles = theme => {
       width: '100%',
       height: '100%',
       display: 'flex',
-      position: 'relative',
+      position: 'relative'
     },
     content: {
       backgroundColor: theme.palette.background.default,
@@ -82,11 +82,9 @@ class FormSection extends Component {
             openToolbarOnOver={this.openToolbarOnOver}
             closeToolbarOnOut={this.closeToolbarOnOut}
           />
-          {
-            this.props.children
-          }
+          {this.props.children}
         </div>
-      </div >
+      </div>
     );
   }
 }
