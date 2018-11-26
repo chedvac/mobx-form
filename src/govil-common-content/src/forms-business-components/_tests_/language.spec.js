@@ -30,16 +30,16 @@ describe('Language Store', () => {
     //   );
     // });
   });
-  describe('computedResourcesProvider', () => {
+  describe('resourcesProvider', () => {
     test('get require object parameter', () => {
       expect(() => {
-        LanguageStore.computedResourcesProvider('da');
+        LanguageStore.resourcesProvider('da');
       }).toThrow();
       expect(() => {
-        LanguageStore.computedResourcesProvider();
+        LanguageStore.resourcesProvider();
       }).toThrow();
       expect(() => {
-        LanguageStore.computedResourcesProvider({
+        LanguageStore.resourcesProvider({
           english: 'get',
           hebrew: 'בחר'
         });
@@ -47,7 +47,7 @@ describe('Language Store', () => {
     });
     describe('retun computed', () => {
       test('that update by current language', () => {
-        const text = LanguageStore.computedResourcesProvider({
+        const text = LanguageStore.resourcesProvider({
           english: 'get',
           hebrew: 'בחר'
         });
@@ -56,7 +56,7 @@ describe('Language Store', () => {
         expect(text.get()).toBe('get');
       });
       test('that throw error when parameter object not include text in current language', () => {
-        const text = LanguageStore.computedResourcesProvider({
+        const text = LanguageStore.resourcesProvider({
           english: 'get',
           hebrew: 'בחר'
         });

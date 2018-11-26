@@ -7,12 +7,12 @@ export default class Tab3 extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
-      email: this.props.languageStore.computedResourcesProvider({
+      email: this.props.languageStore.resourcesProvider({
         hebrew: ' מייל',
         english: 'first name',
         arabic: 'first name'
       }),
-      houseNumber: this.props.languageStore.computedResourcesProvider({
+      houseNumber: this.props.languageStore.resourcesProvider({
         hebrew: ' מספר בית',
         english: 'last name',
         arabic: 'last name'

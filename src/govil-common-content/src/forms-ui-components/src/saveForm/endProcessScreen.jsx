@@ -62,19 +62,19 @@ class EndProcessScreen extends React.Component {
       <Grid>
         <Typography color="inherit" align="center" id="alert-dialog-title">
           {this.props.languageStore
-            .computedResourcesProvider(this.texts.saveFormTitle)
+            .resourcesProvider(this.texts.saveFormTitle)
             .get()}
         </Typography>
         <Divider light className={classes.divider} />
         <Grid id="alert-dialog-description">
           <Typography color="inherit" align="center">
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.formSavedNotice)
+              .resourcesProvider(this.texts.formSavedNotice)
               .get()}
           </Typography>
           <Typography color="inherit" align="center">
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.formSavedLatencyNotice)
+              .resourcesProvider(this.texts.formSavedLatencyNotice)
               .get()}
           </Typography>
         </Grid>
@@ -85,7 +85,7 @@ class EndProcessScreen extends React.Component {
             onClick={this.resendClick}
           >
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.resend)
+              .resourcesProvider(this.texts.resend)
               .get()}
           </BlueButton>
           <BlueButton
@@ -94,7 +94,7 @@ class EndProcessScreen extends React.Component {
             onClick={this.confirmClick}
           >
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.confirm)
+              .resourcesProvider(this.texts.confirm)
               .get()}
           </BlueButton>
         </Row>

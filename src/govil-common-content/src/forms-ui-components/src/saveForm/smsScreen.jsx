@@ -59,14 +59,14 @@ class SmsScreen extends React.Component {
       <Grid>
         <Typography color="inherit" align="center" id="alert-dialog-title">
           {this.props.languageStore
-            .computedResourcesProvider(this.texts.saveBySMS)
+            .resourcesProvider(this.texts.saveBySMS)
             .get()}
         </Typography>
         <Divider light className={classes.divider} />
         <Row>
           <Input
             label={this.props.languageStore
-              .computedResourcesProvider(this.texts.insertPhoneNumber)
+              .resourcesProvider(this.texts.insertPhoneNumber)
               .get()}
             {...getPropsField(saveForm, 'cellNumber')}
             lg={6}
@@ -74,7 +74,7 @@ class SmsScreen extends React.Component {
           />
           <Input
             label={this.props.languageStore
-              .computedResourcesProvider(this.texts.validatePhoneNumber)
+              .resourcesProvider(this.texts.validatePhoneNumber)
               .get()}
             {...getPropsField(saveForm, 'cellNumberValidation')}
             lg={6}
@@ -89,7 +89,7 @@ class SmsScreen extends React.Component {
             onClick={this.closeDialog}
           >
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.cancelButton)
+              .resourcesProvider(this.texts.cancelButton)
               .get()}
           </WhiteButton>
           <BlueButton
@@ -98,7 +98,7 @@ class SmsScreen extends React.Component {
             onClick={saveForm.sendSMS}
           >
             {this.props.languageStore
-              .computedResourcesProvider(this.texts.confirm)
+              .resourcesProvider(this.texts.confirm)
               .get()}
           </BlueButton>
         </Row>

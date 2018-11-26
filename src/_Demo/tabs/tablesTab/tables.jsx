@@ -11,12 +11,12 @@ export default class Tables extends React.Component {
     super(props);
 
     this.texts = {
-      email: this.props.languageStore.computedResourcesProvider({
+      email: this.props.languageStore.resourcesProvider({
         hebrew: 'מייל',
         english: 'email',
         arabic: ''
       }),
-      houseNumber: this.props.languageStore.computedResourcesProvider({
+      houseNumber: this.props.languageStore.resourcesProvider({
         hebrew: 'מספר בית',
         english: 'House Number',
         arabic: ''
