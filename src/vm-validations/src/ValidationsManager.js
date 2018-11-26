@@ -52,7 +52,7 @@ export default class ValidationsManager {
 
   validateCharsPattern = value => {
     const faildCharsPatern = this.validations.find(element => {
-      return element.charsPattern ? !element.charsPattern.test(value) : false;
+      element.charsPattern ? !element.charsPattern.test(value) : false;
     });
     return {
       message: faildCharsPatern ? faildCharsPatern.message().hebrew : '',
@@ -68,10 +68,12 @@ export default class ValidationsManager {
         break;
       }
     }
-    return Object.assign(validationState, {
-      message: failedValidation ? failedValidation.message(value).hebrew : '',
-      isValid: failedValidation ? false : true
-    });
+    return failedValidation
+      ? Object.assign(validationState, {
+          message: failedValidation.message(value).hebrew,
+          isValid: false
+        })
+      : Object.assign(validationState, { message: '', isValid: true });
   };
   validateMultiResults = async value => {
     const messages = [];
