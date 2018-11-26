@@ -1,4 +1,4 @@
-import validationsManagerFactory from 'vm-validations/validationsManager';
+import validationsManagerFactory from 'vm-validations/ValidationsManager';
 import { validationStateMultiMessages } from 'vm-validations/validationState';
 import PropTypes from 'prop-types';
 import { observable, reaction, action } from 'mobx';

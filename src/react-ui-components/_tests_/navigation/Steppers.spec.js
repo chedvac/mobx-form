@@ -1,4 +1,4 @@
-import Steppers from 'react-ui-components/navigation/steppers';
+import Steppers from 'react-ui-components/navigation/Steppers';
 import RouteSettings from 'react-navigation-router/RouteSettings';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';

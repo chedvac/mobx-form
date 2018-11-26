@@ -1,5 +1,5 @@
 import { generateRegexValidation } from 'vm-validations/validationsFactory';
-import validationsManager from 'vm-validations/validationsManager';
+import validationsManager from 'vm-validations/ValidationsManager';
 import regex, { charsPattern } from '../regularExpressions/address';
 import messages from '../messages/address';
 import { minlength, maxlength, length } from './basic';

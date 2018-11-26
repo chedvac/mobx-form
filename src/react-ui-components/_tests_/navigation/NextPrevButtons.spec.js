@@ -1,4 +1,4 @@
-import NextPrevButtons from 'react-ui-components/navigation/nextPrevButtons';
+import NextPrevButtons from 'react-ui-components/navigation/NextPrevButtons';
 import RouteSettings from 'react-navigation-router/RouteSettings';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
 import BlueButton from 'react-ui-components/buttons/BlueButton';

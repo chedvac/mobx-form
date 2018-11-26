@@ -1,12 +1,12 @@
 import { action, observable } from 'mobx';
 import ModularViewModel from 'mobx-vm/ModularViewModel';
-import ValidationsManager from 'vm-validations/validationsManager';
+import ValidationsManager from 'vm-validations/ValidationsManager';
 import ValidateableDefinition from 'mobx-vm/ValidateableDefinition';
 import ModelMemberDefinition from 'mobx-vm/ModelMemberDefinition';
 // jest.mock('../src/ModelMemberDefinition');
 // jest.mock('mobx-vm/ValidateableDefinition');
 
-jest.mock('vm-validations/validationsManager');
+jest.mock('vm-validations/ValidationsManager');
 
 let customTab, orginalValidateModel;
 const settings = { validations: [() => true] };

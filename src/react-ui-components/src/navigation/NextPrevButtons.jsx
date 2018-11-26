@@ -1,5 +1,5 @@
 import React from 'react';
-import Row from 'react-ui-components/structure/row';
+import Row from 'react-ui-components/structure/Row';
 import Grid from '@material-ui/core/Grid';
 import BlueButton from 'react-ui-components/buttons/BlueButton';
 import WhiteButton from 'react-ui-components/buttons/WhiteButton';

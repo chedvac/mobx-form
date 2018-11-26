@@ -1,5 +1,5 @@
 import { email, url } from '../../rules/address';
-import validationsManager from '../../core/validationsManager';
+import validationsManager from '../../core/ValidationsManager';
 
 describe('email', () => {
   const emailValidation = email();

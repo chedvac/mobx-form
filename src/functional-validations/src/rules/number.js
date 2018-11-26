@@ -5,7 +5,7 @@ import {
   generateBasicValidation,
   generateRegexValidation
 } from 'vm-validations/validationsFactory';
-import validationsManager from 'vm-validations/validationsManager';
+import validationsManager from 'vm-validations/ValidationsManager';
 
 // TODO:
 // decimal,
