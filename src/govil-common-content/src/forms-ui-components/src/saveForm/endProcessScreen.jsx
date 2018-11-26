@@ -60,22 +60,24 @@ class EndProcessScreen extends React.Component {
     const { classes } = this.props;
     return (
       <Grid>
-        <Typography color="inherit" align="center">
+        <Typography color="inherit" align="center" id="alert-dialog-title">
           {this.props.languageStore
             .computedResourcesProvider(this.texts.saveFormTitle)
             .get()}
         </Typography>
         <Divider light className={classes.divider} />
-        <Typography color="inherit" align="center">
-          {this.props.languageStore
-            .computedResourcesProvider(this.texts.formSavedNotice)
-            .get()}
-        </Typography>
-        <Typography color="inherit" align="center">
-          {this.props.languageStore
-            .computedResourcesProvider(this.texts.formSavedLatencyNotice)
-            .get()}
-        </Typography>
+        <Grid id="alert-dialog-description">
+          <Typography color="inherit" align="center">
+            {this.props.languageStore
+              .computedResourcesProvider(this.texts.formSavedNotice)
+              .get()}
+          </Typography>
+          <Typography color="inherit" align="center">
+            {this.props.languageStore
+              .computedResourcesProvider(this.texts.formSavedLatencyNotice)
+              .get()}
+          </Typography>
+        </Grid>
         <Row>
           <BlueButton
             variant="outlined"

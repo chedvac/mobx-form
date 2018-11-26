@@ -21,48 +21,12 @@ class RootStore extends ModularViewModel {
     this.toolbarButtons = new toolbarButtons({
       [toolbarButtonsNames.submit]: examples.obsVal
     });
-    this.validateForm = this.validateForm.bind(this);
-    this.submitForm = this.submitForm.bind(this);
   }
   @modelMember()
   simpleFieldsTab;
   @modelMember()
   tablesTab;
-  async submitForm() {
-    // submitAction(this.formInformation.setIsFormSent);
-    try {
-      await dialog.confirm({
-        content: Link,
-        title: 'שליחת טופס',
-        buttonsTexts: {
-          ok: {
-            hebrew: 'כן',
-            english: 'Yes',
-            arabic: 'التأكيد'
-          },
-          cancel: {
-            hebrew: 'לא',
-            english: 'No',
-            arabic: 'الغاء'
-          }
-        }
-      });
-      console.log('resolve');
-    } catch (err) {
-      console.log('reject');
-    }
-    // dialog.confirm({
-    //   message: 'הטופס נשלח בהצלחה',
-    //   title: 'שליחת טופס'
-    // });
-  }
 
-  async validateForm() {
-    const isStoreValid = await this.validate();
-    if (isStoreValid) {
-      dialog.alert({ content: 'נתוני הטופס תקינים', maxWidth: 'xs' });
-    }
-  }
   getStoreAsJSon = () => toJS(this.model.getModel());
 
   getStoreAsJSon = () => toJS(this.model.getModel());
