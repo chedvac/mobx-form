@@ -3,12 +3,11 @@ import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
 import Tab3 from './tabs/Tab3/tab3';
 import RouteSettings from 'react-navigation-router/RouteSettings';
-import Navigation from 'react-ui-components/navigation/navigation';
+import Navigation from 'react-ui-components/navigation/Navigation';
 import { inject } from 'mobx-react';
 import injectSheet from 'react-jss';
 
 const styles = theme => {
-
   return {
     content: {
       width: '100%',
@@ -16,8 +15,8 @@ const styles = theme => {
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3,
       margin: 'auto'
-    },
-  }
+    }
+  };
 };
 
 @injectSheet(styles)
@@ -63,30 +62,9 @@ class ComponentsDemo extends Component {
         }}
       >
         <Navigation routeSettings={tabs} />
-        <div className="row">
-          <div className="small-12 columns">
-            <button
-              className="button"
-              type="button"
-              onClick={this.props.rootStore.validateForm}
-            >
-              בדוק תקינות{' '}
-            </button>
-          </div>
-
-          <div className="small-12 columns">
-            <button
-              className="button"
-              type="button"
-              onClick={this.props.rootStore.submitForm}
-            >
-              שלח{' '}
-            </button>
-          </div>
-        </div>
       </form>
     );
   }
 }
 
-export default ComponentsDemo
+export default ComponentsDemo;

@@ -1,7 +1,7 @@
-import { action, computed, autorun, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import validateable from 'mobx-vm/validateable';
 import modelMember from 'mobx-vm/modelMember';
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 import { hebrew } from 'validations/rules/text';
 import {
   maxlength,
@@ -21,15 +21,13 @@ const myRequest = function(value) {
     .get(
       'https://forms.gov.il/globalData/GetSequence/Gethtmlform.aspx?formType=componentsdemo@test.gov.il'
     )
-    .then(res => {
+    .then(() => {
       if (value === 'error') {
         throw new Error();
       }
       return true;
     })
-    .catch(e => {
-      return false;
-    });
+    .catch(() => false);
 };
 
 class PersonalInformation extends ModularViewModel {

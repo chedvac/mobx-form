@@ -6,7 +6,7 @@ import {
   generateRegexValidation,
   generateDependedValidation
 } from 'vm-validations/validationsFactory';
-import validationsManager from 'vm-validations/validationsManager';
+import validationsManager from 'vm-validations/ValidationsManager';
 
 // TODO:
 // decimal,
@@ -144,11 +144,3 @@ export function dependedGreaterThan(params) {
     validator: greaterThanChecker
   });
 }
-// export function notZeroDigits(params) {
-//   return generateRegexValidation({
-//     name: 'notZeroDigits',
-//     message: () => messages.notZeroDigits(),
-//     regex: /^(\d+){0,1}$/, //TODO:!!
-//     params
-//   });
-// }

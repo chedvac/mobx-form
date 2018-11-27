@@ -1,4 +1,4 @@
-import Link from 'react-navigation-router/link';
+import Link from 'react-navigation-router/Link';
 import React from 'react';
 import { shallow } from 'enzyme';
 const InnerComponenet = props => <sapn className={props.className || ''} />;

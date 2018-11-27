@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Input from 'react-ui-components/fields/Input';
 import { getPropsField } from 'mobx-react-form/getProps';
-import Container from 'mobx-business-components/container';
+import Container from 'mobx-business-components/Container';
 
 @inject('languageStore')
 @observer
@@ -11,12 +11,12 @@ export default class Tables extends React.Component {
     super(props);
 
     this.texts = {
-      email: this.props.languageStore.computedResourcesProvider({
+      email: this.props.languageStore.resourcesProvider({
         hebrew: 'מייל',
         english: 'email',
         arabic: ''
       }),
-      houseNumber: this.props.languageStore.computedResourcesProvider({
+      houseNumber: this.props.languageStore.resourcesProvider({
         hebrew: 'מספר בית',
         english: 'House Number',
         arabic: ''

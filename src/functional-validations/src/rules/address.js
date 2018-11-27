@@ -1,6 +1,6 @@
 import { generateRegexValidation } from 'vm-validations/validationsFactory';
-import validationsManager from '../core/validationsManager';
-import regex from '../regularExpressions/address';
+import validationsManager from 'vm-validations/ValidationsManager';
+import regex, { charsPattern } from '../regularExpressions/address';
 import messages from '../messages/address';
 import { minlength, maxlength, length } from './basic';
 import { integer, notZeroDigits } from './number';
@@ -9,6 +9,7 @@ export function email(params) {
   const pattern = generateRegexValidation({
     name: 'emailRegex',
     regex: regex.email,
+    charsPattern: charsPattern.email,
     message: () => messages.email(),
     params
   });

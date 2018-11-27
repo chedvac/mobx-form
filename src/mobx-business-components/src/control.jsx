@@ -3,7 +3,7 @@ import { enableUniqueIds } from 'react-html-id';
 import { format } from 'utils/stringExtension';
 import { autorun } from 'mobx';
 function control(WrappedComponent) {
-  return class control extends React.Component {
+  return class Control extends React.Component {
     constructor(props) {
       super(props);
       enableUniqueIds(this);
@@ -46,7 +46,12 @@ function control(WrappedComponent) {
     };
 
     render() {
+<<<<<<< HEAD
       const message = format(this.state.message, this.props.name);
+=======
+      const message =
+        this.props.message || format(this.state.message, this.props.label);
+>>>>>>> 0287b8a3d207a40133476fb241b797c58f652161
       return (
         <WrappedComponent
           {...this.props}

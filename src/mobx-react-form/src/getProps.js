@@ -1,8 +1,4 @@
 export function getPropsField(store, name, texts) {
-  // if(store.propertiesManager){
-  //             store.propertiesManager.properties[name] = store.propertiesManager.properties[name] ?store.propertiesManager.properties[name] : {@observable message: '', @observable isValid: ''};
-
-  // }
   const {
     maxlength,
     minlength,
@@ -13,7 +9,7 @@ export function getPropsField(store, name, texts) {
   return {
     update: store.getAction(name),
     name: texts[name].get(),
-    value: store[name],
+    value: store,
     validationState: store.validateables[name].validationState,
     validateCharsPattern,
     maxlength,

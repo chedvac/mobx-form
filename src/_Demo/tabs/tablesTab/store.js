@@ -2,7 +2,7 @@ import { action } from 'mobx';
 import validateable from 'mobx-vm/validateable';
 import modelMember from 'mobx-vm/modelMember';
 
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 
