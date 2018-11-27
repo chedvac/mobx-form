@@ -15,6 +15,9 @@ const styles = theme => ({
   listItem: {
     paddingRight: theme.spacing.unit / 2,
     paddingLeft: theme.spacing.unit / 2
+  },
+  noMarge: {
+    marginRight: 0
   }
 });
 
@@ -55,7 +58,7 @@ class ToolbarButton extends React.Component {
           onClick={this.listItemClickEvent}
           className={classes.listItem}
         >
-          <ListItemIcon >
+          <ListItemIcon className={classes.noMarge}>
             <Icon className={`${className} ${classes.iconMargin}`} />
           </ListItemIcon>
           <ListItemText primary={buttonText} />
