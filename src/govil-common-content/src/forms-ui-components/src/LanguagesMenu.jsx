@@ -17,11 +17,10 @@ export default class LanguagesMenu extends React.Component {
   render() {
     return (
       <List component="div" disablePadding>
-        {console.log('in')}
         {this.props.languageStore.availableLanguagesList.map((language, i) => {
-          console.log('in');
           return (
             <ListItem
+              key={i}
               className={'language-item'}
               button
               onClick={() => {

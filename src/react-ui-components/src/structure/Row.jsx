@@ -16,7 +16,7 @@ class Row extends React.Component {
     const {
       classes,
       spacing = 16,
-      justify = 'space-around',
+      justify = 'flex-start',
       children
     } = this.props;
     return (
