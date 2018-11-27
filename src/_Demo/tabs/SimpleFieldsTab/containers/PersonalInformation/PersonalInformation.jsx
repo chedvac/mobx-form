@@ -1,10 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import Row from 'react-ui-components/structure/row';
-import SubTitle from 'react-ui-components/titles/subTitle';
+import Row from 'react-ui-components/structure/Row';
+import SubTitle from 'react-ui-components/titles/SubTitle';
 
 import { getPropsField } from 'mobx-react-form/getProps';
 
@@ -13,53 +11,48 @@ import Textarea from 'react-ui-components/fields/Textarea';
 import Select from 'react-ui-components/fields/Select';
 import DatePicker from 'react-ui-components/fields/DatePicker/DatePicker';
 
-// const styles = theme => ({
-//   root: { flexGrow: 1 }
-// });
-
-@inject('applicationData')
 @inject('languageStore')
 @observer
 export default class PersonalInformation extends React.Component {
   constructor(props) {
     super(props);
     this.texts = {
-      firstName: this.props.languageStore.computedResourcesProvider({
+      firstName: this.props.languageStore.resourcesProvider({
         hebrew: ' שם פרטי',
         english: 'first name',
         arabic: ' שם פרטי'
       }),
-      lastName: this.props.languageStore.computedResourcesProvider({
+      lastName: this.props.languageStore.resourcesProvider({
         hebrew: 'שם משפחה',
         english: 'last name',
         arabic: ''
       }),
-      age: this.props.languageStore.computedResourcesProvider({
+      age: this.props.languageStore.resourcesProvider({
         hebrew: 'גיל הבן',
         english: 'age',
         arabic: ''
       }),
-      fatherAge: this.props.languageStore.computedResourcesProvider({
+      fatherAge: this.props.languageStore.resourcesProvider({
         hebrew: 'גיל האב',
         english: 'father Age',
         arabic: ''
       }),
-      comments: this.props.languageStore.computedResourcesProvider({
+      comments: this.props.languageStore.resourcesProvider({
         hebrew: 'הערות',
         english: 'comments',
         arabic: ''
       }),
-      status: this.props.languageStore.computedResourcesProvider({
+      status: this.props.languageStore.resourcesProvider({
         hebrew: 'מצב משפחתי',
         english: 'status',
         arabic: ''
       }),
-      agreement: this.props.languageStore.computedResourcesProvider({
+      agreement: this.props.languageStore.resourcesProvider({
         hebrew: 'אני מצהיר...',
         english: 'I Agree...',
         arabic: ''
       }),
-      birthDate: this.props.languageStore.computedResourcesProvider({
+      birthDate: this.props.languageStore.resourcesProvider({
         hebrew: 'תאריך לידה',
         english: 'birth date',
         arabic: ''

@@ -1,5 +1,6 @@
-import examples from 'govil-common-content/application-data/src/DemoData'
-import LanguagesMenu from 'govil-common-content/forms-ui-components/src/languagesMenu';
+import examples from 'govil-common-content/application-data/src/DemoData';
+import LanguagesMenu from 'govil-common-content/forms-ui-components/src/LanguagesMenu';
+import saveForm from 'govil-common-content/forms-business-components/src/saveForm';
 
 export const toolbarButtonsNames = {
   validateForm: 'validateForm',
@@ -9,7 +10,7 @@ export const toolbarButtonsNames = {
   attachments: 'attachments',
   save: 'save',
   selectLanguage: 'selectLanguage'
-}
+};
 
 export const toolbarButtonsObject = {
   [toolbarButtonsNames.validateForm]: {
@@ -74,8 +75,7 @@ export const toolbarButtonsObject = {
     },
     className: 'ic-save',
     action: () => {
-      console.log('שומר את הטופס');
+      saveForm.openSaveModal();
     }
   }
-}
-
+};

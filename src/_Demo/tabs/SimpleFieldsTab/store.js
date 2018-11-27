@@ -1,5 +1,5 @@
 import PersonalInformation from './containers/PersonalInformation/store';
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 import modelMember from 'mobx-vm/modelMember';
 
 class SimpleFieldsTab extends ModularViewModel {

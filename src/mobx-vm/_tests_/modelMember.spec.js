@@ -1,5 +1,5 @@
 import modelMember from 'mobx-vm/modelMember';
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 
 const reset = () => true;
 const descriptor = {

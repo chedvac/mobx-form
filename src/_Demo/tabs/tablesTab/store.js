@@ -7,7 +7,7 @@ import PersonalInformation from '_Demo/tabs/SimpleFieldsTab//containers/Personal
 import PropTypes from 'prop-types';
 // import PropTypes from 'prop-types';
 
-import ModularViewModel from 'mobx-vm/modularViewModel';
+import ModularViewModel from 'mobx-vm/ModularViewModel';
 import { hebrew } from 'validations/rules/text';
 import { maxlength } from 'validations/rules/basic';
 

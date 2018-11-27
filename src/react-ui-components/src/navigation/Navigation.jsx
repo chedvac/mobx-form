@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from 'react-navigation-router/Router';
 import Steppers from './Steppers';
-import NextPrevButtons from './nextPrevButtons';
+import NextPrevButtons from './NextPrevButtons';
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -12,8 +12,8 @@ export default class Navigation extends React.Component {
     return (
       <Router
         {...this.props}
-        aboveContentElements={Steppers}
-        belowContentElements={NextPrevButtons}
+        topNavigation={Steppers}
+        bottomNavigation={NextPrevButtons}
       />
     );
   }
