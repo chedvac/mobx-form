@@ -137,6 +137,7 @@ class PersonalInformation extends ModularViewModel {
   })
   comments = '';
 
+  @observable
   @modelMember()
   @validateable()
   gender = '2';

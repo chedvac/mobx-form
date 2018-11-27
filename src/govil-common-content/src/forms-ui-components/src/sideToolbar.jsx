@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import ToolbarButton from 'govil-common-content/forms-ui-components/src/toolbarButton';
 import { toolbarButtonsObject } from './toolbarButtons';
 import fp from 'lodash/fp';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 
 const styles = theme => {
   return {
@@ -18,12 +18,14 @@ const styles = theme => {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      left: props.direction === 'rtl' ? 'auto' : '0',
-      right: props.direction === 'rtl' ? '0' : 'auto',
+      left: theme.direction === 'rtl' ? 'auto' : '0',
+      right: theme.direction === 'rtl' ? '0' : 'auto',
       width: props.opened ? 220 : 62
     }),
     drawerPaperClose: {
-      display: theme.isMobile ? 'none' : '',
+      [theme.breakpoints.down('sm')]: {
+        display: 'none !important'
+      },
       overflowX: 'hidden',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
@@ -81,8 +83,7 @@ class SideToolbar extends React.Component {
       opened,
       openToolbarOnOver,
       closeToolbarOnOut,
-      toolbarButtonsStore,
-      direction
+      toolbarButtonsStore
     } = this.props;
     return (
       <Drawer
@@ -93,19 +94,18 @@ class SideToolbar extends React.Component {
         }}
         opened={opened.toString()}
       >
+
         <Divider />
         {
           fp.entriesIn(toolbarButtonsObject).map((toolbarButton) =>
             toolbarButtonsStore.toolbarButtonsList[toolbarButton[0]] ? (
               <ToolbarButton
                 key={toolbarButton[0]}
-                classes={classes}
                 buttonText={toolbarButton[1].buttonText.hebrew}
-                className={toolbarButton[1].className}
+                className={classes[toolbarButton[1].className]}
                 buttonAction={toolbarButton[1].action}
                 isToolbarOpened={opened}
                 Popup={toolbarButton[1].popup}
-                direction={direction}
               />
             ) : (
                 ''

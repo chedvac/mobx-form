@@ -83,15 +83,14 @@ export default class PersonalInformation extends React.Component {
       { key: '2', value: 'רווק' },
       { key: '3', value: 'גרוש' }
     ];
-    this.genderRadioButtonsDetails = [
-      { value: '1', label: this.texts.female.get() },
-      { value: '2', label: this.texts.male.get() }
-    ];
   }
 
   render() {
     const { userDetails } = this.props;
-
+    const genderRadioButtonsDetails = [
+      { value: '1', label: this.texts.female.get() },
+      { value: '2', label: this.texts.male.get() }
+    ];
     return (
       <div>
         <Grid container>
@@ -124,7 +123,7 @@ export default class PersonalInformation extends React.Component {
             />
             <RadioButtonsGroup
               label={this.texts.gender.get()}
-              radioButtonsDetails={this.genderRadioButtonsDetails}
+              radioButtonsDetails={genderRadioButtonsDetails}
               {...getPropsField(userDetails, 'gender')}
             />
           </Row>

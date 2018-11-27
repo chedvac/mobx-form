@@ -30,14 +30,14 @@ class Tab3 extends React.Component {
         arabic: 'Male'
       })
     };
-    this.genderRadioButtonsDetails = [
-      { value: '1', label: this.texts.female.get() },
-      { value: '2', label: this.texts.male.get() }
-    ];
   }
 
   render() {
     const { tab3 } = this.props;
+    const genderRadioButtonsDetails = [
+      { value: '1', label: this.texts.female.get() },
+      { value: '2', label: this.texts.male.get() }
+    ];
     return (
       <Container beforeLeave={this.props.tab3.validate} {...this.props}>
         <Grid container>
@@ -45,7 +45,7 @@ class Tab3 extends React.Component {
           <Row>
             <RadioButtonsGroup
               label={this.texts.gender.get()}
-              radioButtonsDetails={this.genderRadioButtonsDetails}
+              radioButtonsDetails={genderRadioButtonsDetails}
               {...getPropsField(tab3, 'gender')}
               tab3={tab3}
             />

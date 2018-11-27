@@ -7,7 +7,7 @@ class ToolbarButtonsStore {
     constructor(toolbarButtonsState = {}) {
         fp.entriesIn(toolbarButtonsNames).map((toolbarButton) => {
             const toolbarButtonName = toolbarButton[0];
-            this.toolbarButtonsList[toolbarButtonName] = toolbarButtonsState[toolbarButtonName] !== undefined ? toolbarButtonsState[toolbarButtonName] : true;
+            return this.toolbarButtonsList[toolbarButtonName] = toolbarButtonsState[toolbarButtonName] !== undefined ? toolbarButtonsState[toolbarButtonName] : true;
         })
     }
 

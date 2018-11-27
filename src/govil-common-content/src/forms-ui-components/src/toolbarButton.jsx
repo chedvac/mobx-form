@@ -8,10 +8,10 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
 const styles = theme => ({
-  iconMargin: props => ({
-    [`margin${props.direction === 'rtl' ? 'Right' : 'Left'}`]: theme.spacing.unit * 2,
-    [`margin${props.direction === 'rtl' ? 'Left' : 'Right'}`]: 0
-  }),
+  iconMargin: {
+    [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: theme.spacing.unit * 2,
+    [`margin${theme.direction === 'rtl' ? 'Left' : 'Right'}`]: 0
+  },
   listItem: {
     paddingRight: theme.spacing.unit / 2,
     paddingLeft: theme.spacing.unit / 2
@@ -56,7 +56,7 @@ class ToolbarButton extends React.Component {
           className={classes.listItem}
         >
           <ListItemIcon >
-            <Icon className={`${classes[className]} ${classes.iconMargin}`} />
+            <Icon className={`${className} ${classes.iconMargin}`} />
           </ListItemIcon>
           <ListItemText primary={buttonText} />
           {Popup ? (
