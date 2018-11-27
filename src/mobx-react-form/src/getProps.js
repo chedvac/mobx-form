@@ -8,7 +8,7 @@ export function getPropsField(store, name, texts) {
   } = store.validateables[name].validationsManager;
   return {
     update: store.getAction(name),
-    name: texts[name].get(),
+    name: texts ? texts[name].get() : '',
     value: store,
     validationState: store.validateables[name].validationState,
     validateCharsPattern,

@@ -144,3 +144,11 @@ export function dependedGreaterThan(params) {
     validator: greaterThanChecker
   });
 }
+export function notZeroDigits(params) {
+  return generateRegexValidation({
+    name: 'notZeroDigits',
+    message: () => messages.notZeroDigits(),
+    regex: /^(\d+){0,1}$/, //TODO:!!
+    params
+  });
+}

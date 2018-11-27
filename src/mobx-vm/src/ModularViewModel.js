@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { observable, reaction, action } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import { forOwn, upperFirst } from 'lodash/fp';
-import autobind from 'autobind-decorator';
+import { Bind } from 'lodash-decorators';
 
 import ValidateableDefinition from 'mobx-vm/ValidateableDefinition';
 import ModelMemberDefinition from 'mobx-vm/ModelMemberDefinition';
@@ -41,7 +41,7 @@ export default class ModularViewModel {
     );
   }
 
-  @autobind
+  @Bind()
   getDepended(propertyName) {
     return this[propertyName];
   }

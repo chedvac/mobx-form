@@ -46,7 +46,6 @@ function control(WrappedComponent) {
     };
 
     render() {
-<<<<<<< HEAD
       const message = format(this.state.message, this.props.name);
 =======
       const message =
