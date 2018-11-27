@@ -15,8 +15,11 @@ export default class ValidateableDefinition {
   setValidationState(validationState) {
     Object.assign(this.validationState, validationState);
   }
-  async validate(value) {
-    const failedValidation = await this.validationsManager.validate(value);
+  async validate(value, getDepended) {
+    const failedValidation = await this.validationsManager.validate(
+      value,
+      getDepended
+    );
     this.setValidationState(failedValidation);
     return failedValidation.isValid;
   }

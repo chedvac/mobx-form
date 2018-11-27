@@ -10,10 +10,8 @@ import {
   //   conditionRequired
 } from 'validations/rules/basic';
 import {
-  //   dependedGreaterThan,
-  //   dependedLessThan,
-  greaterThan,
-  lessThan
+  dependedGreaterThan,
+  dependedLessThan
 } from 'validations/rules/number';
 import { sumAges } from './validations';
 import { generateAsyncValidation } from 'vm-validations/validationsFactory';
@@ -39,13 +37,6 @@ class PersonalInformation extends ModularViewModel {
     const validations = [sumAges({ number: 60 })];
     super({ validations });
 
-    // this.setPropertiesReferences();
-    // this.propertiesManager.properties.fatherAge.dependedObservables = {
-    //   age: this.propertiesManager.properties.age.ref
-    // };
-    // this.propertiesManager.properties.age.dependedObservables = {
-    //   fatherAge: this.propertiesManager.properties.fatherAge.ref
-    // };
     this.condition = function() {
       return true;
     };
@@ -106,12 +97,8 @@ class PersonalInformation extends ModularViewModel {
   @modelMember()
   @validateable({
     validations: [
-      maxlength({ value: 15 }),
-      minlength({ value: 2 }),
-      greaterThan({
-        value: 20
-        // compareToName: 'compareToName',
-        // message: { hebrew: 'my message' }
+      dependedGreaterThan({
+        compareTo: 'age'
       })
     ]
   })

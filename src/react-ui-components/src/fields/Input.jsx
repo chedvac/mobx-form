@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import control from 'mobx-business-components/control';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
@@ -42,7 +42,7 @@ class Input extends React.Component {
     return (
       <Grid item xs={xs} sm={sm} lg={lg}>
         <TextField
-          {...this.props}
+          {...this.prop}
           className={classes.textField}
           margin="normal"
           error={props.message ? true : false}

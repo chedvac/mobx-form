@@ -8,7 +8,7 @@ function control(WrappedComponent) {
       super(props);
       enableUniqueIds(this);
       this.state = {
-        value: props.value[props.name],
+        value: props.value,
         message: props.validationState.message
       };
       this.handleBlur = this.handleBlur.bind(this);
@@ -16,7 +16,7 @@ function control(WrappedComponent) {
     }
 
     reactionValue = autorun(() => {
-      this.setState({ value: this.props.value[this.props.name] });
+      this.setState({ value: this.props.value });
     });
 
     reactionMessage = autorun(() => {
@@ -46,7 +46,7 @@ function control(WrappedComponent) {
     };
 
     render() {
-      const message = format(this.state.message, this.props.label);
+      const message = format(this.state.message, this.props.name);
       return (
         <WrappedComponent
           {...this.props}

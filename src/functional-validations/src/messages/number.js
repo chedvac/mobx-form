@@ -5,7 +5,7 @@ export default {
     arabic: `Please enter a valid numeric value`
   }),
   greaterThan: value => {
-    value = value.value || value;
+    value = value || '{1}';
     return {
       hebrew: `עליך להזין מספר גדול מ ${value}`,
       arabic: `أدخل رقما أكبر من ${value}`,

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { observable, reaction, action } from 'mobx';
 import assertParametersType from 'utils/typeVerifications';
 import { forOwn, upperFirst } from 'lodash/fp';
+import autobind from 'autobind-decorator';
 
 import ValidateableDefinition from 'mobx-vm/validateableDefinition';
 import ModelMemberDefinition from 'mobx-vm/modelMemberDefinition';
@@ -36,10 +37,14 @@ export default class ModularViewModel {
     this.validateables[validateable.name] = validateable;
     reaction(
       () => this[validateable.name],
-      value => validateable.validate(value)
+      value => validateable.validate(value, this.getDepended)
     );
   }
 
+  @autobind
+  getDepended(propertyName) {
+    return this[propertyName];
+  }
   /**     
 * @memberof ModularViewModel         
 * @function "getAction"
@@ -98,7 +103,7 @@ export default class ModularViewModel {
     const instance = this[name];
     return (await instance) instanceof ModularViewModel
       ? instance.validate()
-      : this.validateables[name].validate(this[name]);
+      : this.validateables[name].validate(this[name], this.getDepended);
   }
   /**     
     * @memberof ModularViewModel         

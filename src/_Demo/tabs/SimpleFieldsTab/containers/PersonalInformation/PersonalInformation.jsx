@@ -86,8 +86,8 @@ export default class PersonalInformation extends React.Component {
               {...getPropsField(userDetails, 'lastName')}
             />
             <Input
-              label={this.texts.age.get()}
-              {...getPropsField(userDetails, 'age')}
+              //  label={this.texts.age.get()}
+              {...getPropsField(userDetails, 'age', this.texts)}
             />
             <Input
               label={this.texts.fatherAge.get()}

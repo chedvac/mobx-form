@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import messages from 'validations/messages/number';
 import {
   generateBasicValidation,
-  generateRegexValidation
+  generateRegexValidation,
+  generateDependedValidation
 } from 'vm-validations/validationsFactory';
 import validationsManager from 'vm-validations/validationsManager';
 
@@ -77,12 +78,11 @@ export const greaterThan = assertParametersType(
     })
   },
   function greaterThan(params) {
-    const { value, compareToName } = params;
     return new validationsManager([
       number(params),
       generateBasicValidation({
         name: 'greaterThan',
-        message: () => messages.greaterThan(compareToName || value),
+        message: () => messages.greaterThan(),
         params,
         validator: greaterThanChecker(params)
       })
@@ -136,6 +136,14 @@ export const greaterThan2 = assertParametersType(
     ]);
   }
 );
+export function dependedGreaterThan(params) {
+  return generateDependedValidation({
+    name: 'dependedGreaterThan',
+    message: () => messages.greaterThan(),
+    params,
+    validator: greaterThanChecker
+  });
+}
 // export function notZeroDigits(params) {
 //   return generateRegexValidation({
 //     name: 'notZeroDigits',

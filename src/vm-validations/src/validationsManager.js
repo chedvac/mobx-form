@@ -48,6 +48,7 @@ export default class ValidationsManager {
     this.maxlength = getPropertyFromArray(this.validations, 'maxLength');
     this.minlength = getPropertyFromArray(this.validations, 'minLength');
     this.required = getPropertyFromArray(this.validations, 'required');
+    // this.depended =getPropertyFromArray(this.validations,)
   }
 
   validateCharsPattern = value => {
@@ -60,16 +61,18 @@ export default class ValidationsManager {
     };
   };
 
-  validate = async value => {
+  validate = async (value, getDepended) => {
     let failedValidation;
     for (const item of this.validations) {
-      if (!(await item.validator(value))) {
+      if (!(await item.validator(value, getDepended))) {
         failedValidation = item;
         break;
       }
     }
     return Object.assign(validationState, {
-      message: failedValidation ? failedValidation.message(value).hebrew : '',
+      message: failedValidation
+        ? failedValidation.message(value, getDepended).hebrew
+        : '',
       isValid: failedValidation ? false : true
     });
   };
