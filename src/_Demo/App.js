@@ -25,24 +25,22 @@ class App extends Component {
   }
 
   render() {
-    customTheme.direction = languageStore.direction;
     return (
       <ThemeProvider theme={customTheme}>
-        <React.Fragment>
-          <CssBaseline />
-          <Provider languageStore={languageStore}>
-            <Grid container>
-              <Dialog settings={dialog.settings} />
-              <FormSection
-                rootStore={this.rootStore}
-                direction={customTheme.direction}
-              >
-                <ComponentDemo rootStore={this.rootStore} />
-              </FormSection>
-            </Grid>
-          </Provider>
-        </React.Fragment>
-      </ThemeProvider>
+        <ThemeProvider theme={{ direction: languageStore.direction }} >
+          <React.Fragment>
+            <CssBaseline />
+            <Provider languageStore={languageStore} >
+              <Grid container>
+                <Dialog settings={dialog.settings} isOpen={dialog.isOpen} />
+                <FormSection rootStore={this.rootStore}>
+                  <ComponentDemo rootStore={this.rootStore} />
+                </FormSection>
+              </Grid>
+            </Provider>
+          </React.Fragment>
+        </ThemeProvider >
+      </ThemeProvider >
     );
   }
 }
