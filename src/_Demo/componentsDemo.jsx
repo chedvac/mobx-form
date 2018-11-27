@@ -12,7 +12,18 @@ const styles = theme => {
   return {
     content: {
       width: '100%',
-      maxWidth: `${theme.contentMaxWidth}%`,
+      [theme.breakpoints.down('sm')]: {
+        maxWidth: '100%',
+      },
+      [theme.breakpoints.up('md')]: {
+        maxWidth: '80%',
+      },
+      [theme.breakpoints.up('lg')]: {
+        maxWidth: '80%',
+      },
+      [theme.breakpoints.up('xl')]: {
+        maxWidth: '70%',
+      },
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3,
       margin: 'auto'

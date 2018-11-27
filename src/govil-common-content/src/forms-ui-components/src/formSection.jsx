@@ -4,9 +4,6 @@ import Header from './header';
 import SideToolbar from './sideToolbar';
 import injectSheet from 'react-jss';
 
-let closeWidth = '62';
-const openWidth = '220';
-
 const styles = theme => {
   return {
     contentDiv: {
@@ -19,11 +16,11 @@ const styles = theme => {
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3
     },
-    dir: props => ({
+    dir: {
       flexGrow: 1,
-      direction: props.direction,
+      direction: theme.direction,
       backgroundColor: '#fff'
-    })
+    }
   };
 };
 
@@ -33,50 +30,41 @@ class FormSection extends Component {
   constructor(props) {
     super(props);
     this.props = props;
+    this.state = {
+      opened: false,
+      openedByToolbarButton: false
+    };
   }
-
-  state = {
-    opened: false,
-    openedByToolbarButton: false,
-    drawerWidth: this.props.theme.isMobile ? '0' : closeWidth,
-    drawerForContentWidth: this.props.theme.isMobile ? '0' : closeWidth
-  };
 
   toggleToolbar = () => {
     this.setState({
       opened: !this.state.opened,
-      openedByToolbarButton: !this.state.opened,
-      drawerWidth: !this.state.opened ? openWidth : closeWidth,
-      drawerForContentWidth: !this.state.opened ? openWidth : closeWidth
+      openedByToolbarButton: !this.state.opened
     });
   };
 
   openToolbarOnOver = () => {
     if (!this.state.opened) {
-      this.setState({ opened: true, drawerWidth: openWidth });
+      this.setState({ opened: true });
     }
   };
 
   closeToolbarOnOut = () => {
     if (!this.state.openedByToolbarButton) {
-      this.setState({ opened: false, drawerWidth: closeWidth });
+      this.setState({ opened: false });
     }
   };
 
   render() {
-    const { classes, rootStore, theme } = this.props;
-    closeWidth = theme.isMobile ? '0' : '72';
+    const { classes, rootStore } = this.props;
 
     return (
       <div className={classes.dir}>
         <Header
           toggleToolbar={this.toggleToolbar}
-          direction={theme.direction}
         />
         <div className={classes.contentDiv}>
           <SideToolbar
-            direction={theme.direction}
-            width={this.state.drawerWidth}
             toolbarButtonsStore={rootStore.toolbarButtons}
             opened={this.state.opened}
             openToolbarOnOver={this.openToolbarOnOver}

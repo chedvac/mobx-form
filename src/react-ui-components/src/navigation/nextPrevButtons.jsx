@@ -56,7 +56,7 @@ class NextPrevButtons extends React.Component {
     const currentStep = this.getCurrentStep();
     return (
       <Grid>
-        <Row>
+        <Row justify='space-between'>
           <a
             href={this.getBackPath(currentStep)}
             className={`${classes.navigateButton} ${

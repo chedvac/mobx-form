@@ -3,7 +3,7 @@ import { observer, Provider } from 'mobx-react';
 import './App.css';
 import RootStore from './rootStore';
 import languageStore from 'govil-common-content/forms-business-components/src/language';
-import injectSheet, { ThemeProvider } from 'react-jss'
+import injectSheet, { ThemeProvider } from 'react-jss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Grid } from '@material-ui/core';
 import FormSection from 'govil-common-content/forms-ui-components/src/formSection';
@@ -26,20 +26,21 @@ class App extends Component {
   }
 
   render() {
-    customTheme.direction = languageStore.direction;
     return (
       <ThemeProvider theme={customTheme}>
-        <React.Fragment>
-          <CssBaseline />
-          <Provider languageStore={languageStore} >
-            <Grid container>
-              <Dialog settings={dialog.settings} isOpen={dialog.isOpen} />
-              <FormSection rootStore={this.rootStore} direction={customTheme.direction}>
-                <ComponentDemo rootStore={this.rootStore} />
-              </FormSection>
-            </Grid>
-          </Provider>
-        </React.Fragment>
+        <ThemeProvider theme={{ direction: languageStore.direction }} >
+          <React.Fragment>
+            <CssBaseline />
+            <Provider languageStore={languageStore} >
+              <Grid container>
+                <Dialog settings={dialog.settings} isOpen={dialog.isOpen} />
+                <FormSection rootStore={this.rootStore} direction={customTheme.direction}>
+                  <ComponentDemo rootStore={this.rootStore} />
+                </FormSection>
+              </Grid>
+            </Provider>
+          </React.Fragment>
+        </ThemeProvider >
       </ThemeProvider >
     );
   }
