@@ -3,6 +3,8 @@ import { observer, inject } from 'mobx-react';
 import Input from 'react-ui-components/fields/Input';
 import { getPropsField } from 'mobx-react-form/getProps';
 import Container from 'mobx-business-components/container';
+import RepeatedFields from 'govil-common-content/forms-ui-components/src/repeatedFields/repeatedFields';
+import PersonalInformation from '_Demo/tabs/SimpleFieldsTab/containers/PersonalInformation/PersonalInformation';
 
 @inject('applicationData')
 @inject('languageStore')
@@ -28,6 +30,12 @@ export default class Tables extends React.Component {
     const { tables } = this.props;
     return (
       <Container beforeLeave={this.props.tables.validate} {...this.props}>
+        <RepeatedFields
+          array={tables.users}
+          // propName="userDetails"
+          rowTitle="ttttt"
+          renderComponent={item => <PersonalInformation userDetails={item} />}
+        />
         <div className="row">
           <div className="col-md-4">
             <Input
