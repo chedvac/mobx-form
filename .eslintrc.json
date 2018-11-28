@@ -15,7 +15,7 @@
       "jsx": true
     }
   },
-  "plugins": ["jest", "react"],
+  "plugins": ["jest", "react", "jsx-a11y"],
   "rules": {
     "react/jsx-sort-prop-types": "off",
     "react/require-extension": "off",
@@ -165,5 +165,9 @@
     "es6": true
   },
   "parser": "babel-eslint",
-  "extends": ["eslint:recommended", "plugin:react/recommended"]
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended"
+  ]
 }
