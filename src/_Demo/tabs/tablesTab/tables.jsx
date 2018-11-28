@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Input from 'react-ui-components/fields/Input';
+import TextField from 'react-ui-components/fields/TextField';
 import { getPropsField } from 'mobx-react-form/getProps';
 import Container from 'mobx-business-components/Container';
 
@@ -29,13 +29,13 @@ export default class Tables extends React.Component {
       <Container beforeLeave={this.props.tables.validate} {...this.props}>
         <div className="row">
           <div className="col-md-4">
-            <Input
+            <TextField
               label={this.texts.email.get()}
               {...getPropsField(tables, 'email')}
             />
           </div>
           <div className="col-md-4">
-            <Input
+            <TextField
               label={this.texts.houseNumber.get()}
               {...getPropsField(tables, 'houseNumber')}
             />

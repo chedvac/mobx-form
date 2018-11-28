@@ -8,7 +8,7 @@ import BlueButton from 'react-ui-components/buttons/BlueButton';
 import WhiteButton from 'react-ui-components/buttons/BlueButton';
 import Divider from '@material-ui/core/Divider';
 
-import Input from 'react-ui-components/fields/Input';
+import TextField from 'react-ui-components/fields/TextField';
 import { getPropsField } from 'mobx-react-form/getProps';
 import saveForm from 'govil-common-content/forms-business-components/src/saveForm';
 import dialog from 'mobx-business-components/dialog';
@@ -92,7 +92,7 @@ class EmailScreen extends React.Component {
         </Typography>
         <Divider light className={classes.divider} />
         <Row>
-          <Input
+          <TextField
             label={this.props.languageStore
               .resourcesProvider(this.texts.insertEmail)
               .get()}
@@ -100,7 +100,7 @@ class EmailScreen extends React.Component {
             lg={6}
             sm={12}
           />
-          <Input
+          <TextField
             message={this.state.message}
             label={this.props.languageStore
               .resourcesProvider(this.texts.validateEmail)

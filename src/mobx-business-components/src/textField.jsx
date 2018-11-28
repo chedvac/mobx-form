@@ -24,9 +24,7 @@ function textField(WrappedComponent) {
       this.setState({ message: this.props.validationState.message });
     });
 
-    getEventValue = e => {
-      return e.target.value;
-    };
+    getEventValue = e => e.target.value;
 
     handleBlur = e => {
       const newValue = this.getEventValue(e);

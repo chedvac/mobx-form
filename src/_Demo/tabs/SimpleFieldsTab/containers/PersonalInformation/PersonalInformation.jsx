@@ -6,7 +6,7 @@ import SubTitle from 'react-ui-components/titles/SubTitle';
 
 import { getPropsField } from 'mobx-react-form/getProps';
 
-import Input from 'react-ui-components/fields/Input';
+import TextField from 'react-ui-components/fields/TextField';
 import Textarea from 'react-ui-components/fields/Textarea';
 import Select from 'react-ui-components/fields/Select';
 import DatePicker from 'react-ui-components/fields/DatePicker/DatePicker';
@@ -73,21 +73,31 @@ export default class PersonalInformation extends React.Component {
         <Grid container>
           <SubTitle>דוגמא לשדות רגילים</SubTitle>
           <Row>
-            <Input
+            <TextField
               label={this.texts.firstName.get()}
               {...getPropsField(userDetails, 'firstName')}
             />
-            <Input
+            <TextField
               label={this.texts.lastName.get()}
               {...getPropsField(userDetails, 'lastName')}
             />
-            <Input
+            <TextField
               label={this.texts.age.get()}
               {...getPropsField(userDetails, 'age')}
             />
-            <Input
+            <TextField
               label={this.texts.fatherAge.get()}
               {...getPropsField(userDetails, 'fatherAge')}
+            />
+          </Row>
+          <Row>
+            <TextField
+              label={this.texts.firstName.get()}
+              {...getPropsField(userDetails, 'firstName')}
+            />
+            <TextField
+              label={this.texts.lastName.get()}
+              {...getPropsField(userDetails, 'lastName')}
             />
           </Row>
           <Row>
