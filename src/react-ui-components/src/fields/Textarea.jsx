@@ -56,4 +56,4 @@ class Textarea extends React.Component {
     );
   }
 }
-export default textField(withStyles(styles)(Textarea));
+export default textField(injectSheet(styles)(Textarea));

@@ -21,10 +21,16 @@ export const number = assertParametersType(
     })
   },
   function number(params) {
-    return generateBasicValidation({
+    // return generateBasicValidation({
+    //   name: 'number',
+    //   message: () => messages.number(),
+    //   validator: val => !isNaN(parseFloat(val)) && !isNaN(val - 0),
+    //   params
+    // });
+    return generateRegexValidation({
       name: 'number',
       message: () => messages.number(),
-      validator: val => !isNaN(parseFloat(val)) && !isNaN(val - 0),
+      regex: /^-?[0-9]\d*(\.\d+)?$/,
       params
     });
   }

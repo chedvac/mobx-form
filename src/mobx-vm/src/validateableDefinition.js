@@ -23,9 +23,9 @@ export default class ValidateableDefinition {
     return failedValidation.isValid;
   }
 
-  validateType = (value, type) => {
-    const failedValidation = this.validationsManager.validateType(value, type);
-    this.setValidationState(failedValidation.validationState);
-    return failedValidation.value;
+  parseByType = (value, type) => {
+    const parsedResult = this.validationsManager.parseByType(value, type);
+    this.setValidationState(parsedResult.validationState);
+    return parsedResult.value;
   };
 }

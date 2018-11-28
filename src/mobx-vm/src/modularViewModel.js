@@ -39,8 +39,11 @@ export default class ModularViewModel {
       if (!change.newValue) {
         return change;
       }
-      const validateType = validateable.validateType(change.newValue, type);
-      change.newValue = validateType ? validateType : '';
+      const parsedValue = validateable.parseByType(change.newValue, type);
+      if (!parsedValue) {
+        return null;
+      }
+      change.newValue = parsedValue; // || '';
       return change;
     });
     reaction(

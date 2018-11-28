@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import validationState, {
   validationStateMultiMessages
 } from 'vm-validations/validationState';
+import parsingByType from 'vm-validations/parsingByType';
 
 const concatValidationArray = assertParametersType(
   {
@@ -58,46 +59,8 @@ export default class ValidationsManager {
     };
   };
 
-  booleanValue = {
-    true: true,
-    yes: true,
-    '1': true,
-    false: false,
-    no: false,
-    '0': false,
-    null: false
-  };
-
-  enumfunction = {
-    boolean: value =>
-      this.booleanValue[value.toLowerCase().trim()] || Boolean(value),
-    date: value => Date.parse(value),
-    number: value => Number(value)
-  };
-
-  parsingByType = (value, parseType) => {
-    return parseType
-      ? this.enumfunction[parseType.name.toLowerCase()](value)
-      : value;
-  };
-
-  validateType = (value, parseType) => {
-    const messages = {
-      Number: {
-        hebrew: 'TYPE: עליך להזין ערך מספרי בלבד'
-      },
-      Date: {
-        hebrew: 'TYPE: עליך להזין תאריך בפורמט תקין'
-      }
-    };
-    const newValue = this.parsingByType(value, parseType);
-
-    // how to check false of boolean type??
-    Object.assign(validationState, {
-      message: newValue ? '' : messages[parseType.name].hebrew,
-      isValid: newValue ? true : false
-    });
-    return { validationState, value: newValue };
+  parseByType = (value, parseType) => {
+    return parsingByType(value, parseType);
   };
 
   findFailedValidation = async value => {
