@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/SimpleFieldsTab';
 import TablesTab from './tabs/tablesTab/tables';
-import Tab3 from './tabs/Tab3/tab3';
+import ExamplesTab from './tabs/ExamplesTab/ExamplesTab';
 import RouteSettings from 'react-navigation-router/RouteSettings';
 import Navigation from 'react-ui-components/navigation/Navigation';
 import { inject } from 'mobx-react';
@@ -12,16 +12,16 @@ const styles = theme => {
     content: {
       width: '100%',
       [theme.breakpoints.down('sm')]: {
-        maxWidth: '100%',
+        maxWidth: '100%'
       },
       [theme.breakpoints.up('md')]: {
-        maxWidth: '80%',
+        maxWidth: '80%'
       },
       [theme.breakpoints.up('lg')]: {
-        maxWidth: '80%',
+        maxWidth: '80%'
       },
       [theme.breakpoints.up('xl')]: {
-        maxWidth: '70%',
+        maxWidth: '70%'
       },
       backgroundColor: theme.palette.background.default,
       padding: theme.spacing.unit * 3,
@@ -45,10 +45,13 @@ class ComponentsDemo extends Component {
     const SimpleFields = inject(stores => ({
       simpleFields: this.props.rootStore.simpleFieldsTab
     }))(SimpleFieldsTab);
+    const Examples = inject(stores => ({
+      examples: this.props.rootStore.examplesTab
+    }))(ExamplesTab);
 
     const tabs = [
       new RouteSettings({
-        name: 'לשדות רגילים',
+        name: 'שדות רגילים',
         path: '/SimpleFields',
         component: SimpleFields
       }),
@@ -58,9 +61,9 @@ class ComponentsDemo extends Component {
         component: Tables
       }),
       new RouteSettings({
-        name: 'טאב 3',
-        path: '/Tab3',
-        component: Tab3
+        name: ' רכיבים',
+        path: '/ExamplesTab',
+        component: Examples
       })
     ];
     console.log('rootStore', this.props.rootStore);

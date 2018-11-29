@@ -1,5 +1,5 @@
 import React from 'react';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
@@ -13,9 +13,9 @@ class WhiteButton extends React.Component {
   }
 
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, onClick } = this.props;
     return (
-      <Button variant="outlined" color="primary">
+      <Button variant="outlined" color="primary" onClick={onClick}>
         {children}
       </Button>
     );
