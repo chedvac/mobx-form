@@ -6,7 +6,7 @@ class ExamplesTab extends ModularViewModel {
     try {
       await dialog.confirm({
         title: 'דוגמא לconfirm',
-        content: 'הטופס נשלח בהצלחה',
+        content: 'האם ברצונך לצאת?',
         buttonsTexts: {
           ok: {
             hebrew: 'כן',
