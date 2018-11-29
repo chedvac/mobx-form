@@ -1,5 +1,6 @@
 import SimpleFieldsTab from './tabs/SimpleFieldsTab/store';
 import TablesTab from './tabs/tablesTab/store';
+import ExamplesTab from './tabs/ExamplesTab/store';
 import toolbarButtons from 'govil-common-content/application-data/src/ToolbarStore';
 import modelMember from 'mobx-vm/modelMember';
 import ModularViewModel from 'mobx-vm/ModularViewModel';
@@ -16,6 +17,7 @@ class RootStore extends ModularViewModel {
     super();
     this.simpleFieldsTab = new SimpleFieldsTab();
     this.tablesTab = new TablesTab();
+    this.examplesTab = new ExamplesTab();
     this.toolbarButtons = new toolbarButtons({
       [toolbarButtonsNames.submit]: examples.obsVal
     });

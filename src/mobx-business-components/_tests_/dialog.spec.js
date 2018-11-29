@@ -80,30 +80,4 @@ describe('dialog ', () => {
       expect(dialog.settings.isOpen).toBeFalsy();
     });
   });
-
-  test('example resolve/reject', async () => {
-    try {
-      await dialog.confirm({
-        title: 'שליחת טופס',
-        buttonsTexts: {
-          ok: {
-            hebrew: 'כן',
-            english: 'Yes',
-            arabic: 'التأكيد'
-          },
-          cancel: {
-            hebrew: 'לא',
-            english: 'No',
-            arabic: 'الغاء'
-          }
-        }
-      });
-      return 'resolve';
-    } catch (err) {
-      return 'reject';
-    }
-  });
-  test('example maxWidth', async () => {
-    dialog.alert({ content: 'נתוני הטופס תקינים', maxWidth: 'xs' });
-  });
 });

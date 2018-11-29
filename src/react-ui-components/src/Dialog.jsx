@@ -8,7 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import dialog from 'mobx-business-components/dialog';
+
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import IconButton from '@material-ui/core/IconButton';
@@ -65,48 +65,47 @@ class Dialog extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div ref={this.ref}>
-        <DialogMaterial
-          className={classes.direction}
-          open={isOpen}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          fullWidth={fullWidth}
-          maxWidth={maxWidth}
-          onClose={onClose}
+      <DialogMaterial
+        className={classes.direction}
+        open={isOpen}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth={fullWidth}
+        maxWidth={maxWidth}
+        onClose={onClose}
+      >
+        <IconButton
+          onClick={onClose}
+          className={classes.closeIcon}
+          aria-label={this.props.languageStore
+            .resourcesProvider(texts.close)
+            .get()}
+          autoFocus
         >
-          <IconButton
-            onClick={onClose}
-            className={classes.closeIcon}
-            aria-label={this.props.languageStore
-              .resourcesProvider(texts.close)
-              .get()}
-          >
-            <CloseIcon />
-          </IconButton>
-          {title && <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}
-          <DialogContent>
-            {typeof Content === 'string' ? (
-              <DialogContentText id="alert-dialog-description">
-                {Content}
-              </DialogContentText>
-            ) : (
-              <Content />
-            )}
-          </DialogContent>
-          {buttons && (
-            <DialogActions>
-              {Object.values(buttons).map((btn, index) => (
-                <Button key={index} onClick={btn.click} color="primary">
-                  {this.props.languageStore
-                    .resourcesProvider(texts[btn.type])
-                    .get()}
-                </Button>
-              ))}
-            </DialogActions>
+          <CloseIcon />
+        </IconButton>
+        {title && <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}
+        <DialogContent>
+          {typeof Content === 'string' ? (
+            <DialogContentText id="alert-dialog-description">
+              {Content}
+            </DialogContentText>
+          ) : (
+            <Content />
           )}
-        </DialogMaterial>
-      </div>
+        </DialogContent>
+        {buttons && (
+          <DialogActions>
+            {Object.values(buttons).map((btn, index) => (
+              <Button key={index} onClick={btn.click} color="primary">
+                {this.props.languageStore
+                  .resourcesProvider(texts[btn.type])
+                  .get()}
+              </Button>
+            ))}
+          </DialogActions>
+        )}
+      </DialogMaterial>
     );
   }
 }

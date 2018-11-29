@@ -1,5 +1,5 @@
 import React from 'react';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
@@ -21,4 +21,5 @@ class BlueButton extends React.Component {
     );
   }
 }
+
 export default BlueButton;
