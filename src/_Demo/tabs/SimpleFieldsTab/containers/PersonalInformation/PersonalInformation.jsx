@@ -10,6 +10,7 @@ import Input from 'react-ui-components/fields/Input';
 import Textarea from 'react-ui-components/fields/Textarea';
 import Select from 'react-ui-components/fields/Select';
 import DatePicker from 'react-ui-components/fields/DatePicker/DatePicker';
+import RadioButtonsGroup from 'react-ui-components/fields/RadioButtonsGroup';
 
 @inject('languageStore')
 @observer
@@ -42,6 +43,21 @@ export default class PersonalInformation extends React.Component {
         english: 'comments',
         arabic: ''
       }),
+      gender: this.props.languageStore.resourcesProvider({
+        hebrew: ' מין',
+        english: 'Gender',
+        arabic: 'Gender'
+      }),
+      female: this.props.languageStore.resourcesProvider({
+        hebrew: ' נקבה',
+        english: 'Female',
+        arabic: 'Female'
+      }),
+      male: this.props.languageStore.resourcesProvider({
+        hebrew: ' זכר',
+        english: 'Male',
+        arabic: 'Male'
+      }),
       status: this.props.languageStore.resourcesProvider({
         hebrew: 'מצב משפחתי',
         english: 'status',
@@ -67,7 +83,10 @@ export default class PersonalInformation extends React.Component {
 
   render() {
     const { userDetails } = this.props;
-
+    const genderRadioButtonsDetails = [
+      { value: '1', label: this.texts.female.get() },
+      { value: '2', label: this.texts.male.get() }
+    ];
     return (
       <div>
         <Grid container>
@@ -97,6 +116,11 @@ export default class PersonalInformation extends React.Component {
               {...getPropsField(userDetails, 'comments')}
               rows={3}
               isAutoResize={false}
+            />
+            <RadioButtonsGroup
+              label={this.texts.gender.get()}
+              radioButtonsDetails={genderRadioButtonsDetails}
+              {...getPropsField(userDetails, 'gender')}
             />
           </Row>
           <br />

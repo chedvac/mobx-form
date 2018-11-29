@@ -2,14 +2,15 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import injectSheet from 'react-jss'
+import injectSheet from 'react-jss';
 import { Icon } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
 const styles = theme => ({
   iconMargin: {
-    [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]: theme.spacing.unit * 2,
+    [`margin${theme.direction === 'rtl' ? 'Right' : 'Left'}`]:
+      theme.spacing.unit * 2,
     [`margin${theme.direction === 'rtl' ? 'Left' : 'Right'}`]: 0
   },
   listItem: {
@@ -42,13 +43,7 @@ class ToolbarButton extends React.Component {
     }
   }
   render() {
-    const {
-      classes,
-      className,
-      buttonText,
-      visible,
-      Popup
-    } = this.props;
+    const { classes, className, buttonText, visible, Popup } = this.props;
 
     return (
       <div>
@@ -66,14 +61,15 @@ class ToolbarButton extends React.Component {
             this.state.isOpen ? (
               <ExpandLess className={classes.iconMargin} />
             ) : (
-                <ExpandMore className={classes.iconMargin} />
-              )
+              <ExpandMore className={classes.iconMargin} />
+            )
           ) : (
-              false
-            )}
+            false
+          )}
         </ListItem>
-        {this.state.isOpen &&
-          this.props.isToolbarOpened && <Popup isOpen={this.state.isOpen} />}
+        {this.state.isOpen && this.props.isToolbarOpened && (
+          <Popup isOpen={this.state.isOpen} />
+        )}
       </div>
     );
   }

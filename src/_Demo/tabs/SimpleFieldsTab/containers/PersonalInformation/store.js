@@ -141,6 +141,11 @@ class PersonalInformation extends ModularViewModel {
 
   @observable
   @modelMember()
+  @validateable()
+  gender = '2';
+
+  @observable
+  @modelMember()
   @validateable({ validations: [] })
   agreement = '';
 
@@ -188,6 +193,10 @@ class PersonalInformation extends ModularViewModel {
   @action.bound
   setComments(value) {
     this.comments = value;
+  }
+  @action.bound
+  setGender(value) {
+    this.gender = value;
   }
   @action.bound
   setStatus(value) {
